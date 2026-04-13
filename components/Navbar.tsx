@@ -1,15 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const links = [
-    { label: "Home", href: "#", active: true },
-    { label: "Services", href: "#" },
-    { label: "Portfolio", href: "#" },
-    { label: "Contact", href: "#" },
+    { label: "Home", href: "/", active: pathname === "/" },
+    { label: "Services", href: "/services", active: pathname === "/services" },
+    { label: "Portfolio", href: "/portfolio", active: pathname === "/portfolio" },
+    { label: "Contact", href: "/contact", active: pathname === "/contact" },
   ];
 
   return (
@@ -29,7 +32,7 @@ export default function Navbar() {
 
         <div className="hidden md:flex gap-10">
           {links.map((link) => (
-            <a
+            <Link
               key={link.label}
               href={link.href}
               className={`font-headline tracking-tighter uppercase font-bold transition-colors duration-300 pb-1 ${
@@ -39,7 +42,7 @@ export default function Navbar() {
               }`}
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -66,9 +69,10 @@ export default function Navbar() {
             </div>
             <nav className="flex flex-col gap-2">
               {links.map((link) => (
-                <a
+                <Link
                   key={link.label}
                   href={link.href}
+                  onClick={() => setIsOpen(false)}
                   className={`flex items-center gap-4 p-3 font-label tracking-[0.05em] uppercase text-xs font-bold transition-all duration-300 ${
                     link.active 
                       ? "bg-[#00daf3]/10 text-[#00daf3] border-l-2 border-[#00daf3]" 
@@ -81,7 +85,7 @@ export default function Navbar() {
                      link.label === "Portfolio" ? "collections" : "mail"}
                   </span>
                   {link.label}
-                </a>
+                </Link>
               ))}
             </nav>
           </aside>

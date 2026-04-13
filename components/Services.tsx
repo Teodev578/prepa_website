@@ -1,109 +1,370 @@
-export default function Services() {
-  const stats = [
-    { value: "500+", label: "VÉHICULES TRAITÉS" },
-    { value: "10Y", label: "D'EXPERTISE" },
-    { value: "9H+", label: "GRADE CÉRAMIQUE" },
-    { value: "100%", label: "SATISFACTION" },
-  ];
+"use client";
+import React from 'react';
 
-  return (
-    <section className="py-20 md:py-32 px-6 md:px-12 bg-surface">
-      <div className="mb-12 md:mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
-        <div>
-          <span className="font-label text-primary tracking-widest uppercase text-xs font-black">
-            CORE CAPABILITIES
-          </span>
-          <h2 className="text-4xl md:text-5xl font-headline font-bold text-white uppercase tracking-tighter mt-4 italic">
-            INGÉNIERIE DU DÉTAIL
-          </h2>
-        </div>
-        <div className="max-w-md">
-          <p className="text-secondary/80 font-body text-sm leading-loose">
-            Chaque véhicule qui entre dans notre atelier est traité comme une pièce d'orfèvrerie. Nous utilisons exclusivement des composants de grade aérospatial pour des résultats dépassant l'usine.
-          </p>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-        {/* Main Feature */}
-        <div className="md:col-span-8 group relative overflow-hidden bg-surface-container-low h-[400px] md:h-[500px]">
-          <img
-            className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700"
-            alt="Professional detailer applying ceramic coating"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBojH10RpldKyZejzH4g7HohDT7vj3LhjwAoVS4rw7-wKY7xekwLjGoa6qDYiAeRJ0q6rOwNQ-hxDoARIxAIguMnWT-oVBBs6_uUOPGFVnxMiuq_rrwKTp8bHLHVYOdE6yc8hgoieozWXawMt4KK3Xy0HnTWnbmBOxSldZVNGh5N54HimFSn7WaX5yGotVpLhOHYwzcGvbkzcxJXvNSLJYsKr0qL4dvau0thiW_19YoK-WOWIehZ0uNHduEdrJKP6oZuT25lY6cilo"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
-          <div className="absolute bottom-0 left-0 p-6 md:p-10">
-            <span className="inline-block bg-primary text-on-primary font-label text-[10px] font-black tracking-widest px-3 py-1 mb-4">
-              PLATINUM LEVEL
-            </span>
-            <h3 className="text-3xl md:text-4xl font-headline font-bold text-white uppercase mb-4 italic">
-              PROTECTION CÉRAMIQUE
-            </h3>
-            <p className="text-secondary max-w-md font-body text-sm mb-6">
-              Bouclier hydrophobe permanent contre les UV, les contaminants chimiques et les micro-rayures.
-            </p>
-            <a
-              className="inline-flex items-center text-primary font-headline font-bold uppercase tracking-widest text-xs group-hover:gap-4 transition-all"
-              href="#"
-            >
-              En savoir plus <span className="material-symbols-outlined ml-2">arrow_forward</span>
-            </a>
-          </div>
-        </div>
-
-        {/* Secondary Feature 1 */}
-        <div className="md:col-span-4 group relative overflow-hidden bg-surface-container-low h-[300px] md:h-auto">
-          <img
-            className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
-            alt="Close-up of a high-speed orbital polisher"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBh6h17-TSksxOSdSuTqrKK61OWp2n6z9hGpB0OTWDfOcRpfchea87znrNYAmf0bEvdryQ1VPbIB_dL2Sl3cP_pGiy1Xc_WhdRV-kBa2ew7UQezNjHFc4RnWwX5tVzwwGNEJq82FhdX_10TkLGkdeJRl9SpOYfhlxjmDW_KKYezvn0-a7GjCz47DVsZYp7PpNOfpWMLENBOcEdULnOP2RiT9pOFweIRdEFyd41BqHABng66W3VNX3SZjyCf9RWesw4bIpUn8ahUTw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
-          <div className="absolute bottom-0 left-0 p-6 md:p-8">
-            <h3 className="text-xl md:text-2xl font-headline font-bold text-white uppercase italic">
-              POLISSAGE 3 ÉTAPES
-            </h3>
-            <p className="text-secondary/70 font-body text-xs mt-2">
-              Correction totale des défauts de vernis pour un fini miroir absolu.
-            </p>
-          </div>
-        </div>
-
-        {/* Secondary Feature 2 */}
-        <div className="md:col-span-4 group relative overflow-hidden bg-surface-container-low h-[300px] md:h-[400px]">
-          <img
-            className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
-            alt="Interior of a luxury sports car"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAo92lO_ISWydlOlU8OO5y_7ZFbi6Ck4EZ_Krqs6AZZPrvxgvCmhdtqAby1-qAMswOWJZnphkUTpAAKAlW8j4m406B2-Q_6zumtqUrFozFctFa6cxPToyQOVnkg5aWpws2_rnt7tcW5C1yylFAutNlcDCC8Gz-WsJA8VeMqVuUG_aadgEYW3YSkp-4i4nf1EyEI0lJLT_narn9aJpWjiHZfz6gif6PAujlLLeXKFKc7g4KgXJGiycy0j0b7xgD8hu6RN6qeDPOcUOU"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
-          <div className="absolute bottom-0 left-0 p-6 md:p-8">
-            <h3 className="text-xl md:text-2xl font-headline font-bold text-white uppercase italic">
-              DETAIL INTÉRIEUR
-            </h3>
-            <p className="text-secondary/70 font-body text-xs mt-2">
-              Nettoyage chirurgical et nutrition des cuirs et alcantaras originels.
-            </p>
-          </div>
-        </div>
-
-        {/* Tech Stats Block */}
-        <div className="md:col-span-8 bg-surface-container-highest border-l-4 border-primary p-8 md:p-12 flex flex-col justify-center">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-3xl md:text-4xl font-headline font-bold text-primary mb-2">
-                  {stat.value}
+const Services = () => {
+    return (
+        <div className="bg-surface text-on-surface min-h-screen pt-20">
+            {/* Hero Section */}
+            <section className="relative h-[300px] md:h-[614px] flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 z-0 hidden md:block">
+                    <img 
+                        alt="Automotive detail" 
+                        className="w-full h-full object-cover opacity-40" 
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjdpRwt6nlrzk0W0ImbPSSyJMaMQxY6nELQ_EAwpPPk-iZRpUofGYSeQ0h7ykUf-wwJ2oyW36Eg3F0sLXMhBQxjldJNAgZs8q8KbJ4r86WpFWfM3t439VeEzlerLWqiGCnG69sCbfeRAuK11nLeWbZw10-LiCGgy2WudvpHvCO7EKjqaUloNz-O4i1zSJC-CS4Mh3FWeAqg-jtWKxta14ISBG0pNfFifNVjUVEAB9c90SVfwV6c7q2TTgVILQgwgwM1JX4R8mDia8"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-surface/20 via-surface to-surface"></div>
                 </div>
-                <div className="text-[10px] font-label text-secondary tracking-widest uppercase">
-                  {stat.label}
+
+                {/* Mobile Hero View (Smaller image block) */}
+                <div className="absolute inset-0 z-0 md:hidden flex flex-col justify-start">
+                    <div className="relative w-full h-48 overflow-hidden group">
+                        <img 
+                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1T4d3treezpVxQW9LRZ5OTXSnj2qkTnmp-9gzrRmq7n9x_mV8SK7CDDpk7A-b6d1dBFqN7LrKVIWd9Mg3Ufrg7sJl0M73C4UKsxItvyV7_DZChuaIW8k0HBpK5tZ9DPvGv6-zgHaA7em0vnGLVyexEENImiDJSBQxy-0xbjEv5nvRbp6OPeBLIRGP3tJJ3IPPoR5YvizdzdKxipVk7BO0e4H-q5d5dcTROwTdKegxEgibaVXIMQ2TmHoBHtZS0yKWV9COhxYaJSI"
+                            alt="Mobile Hero"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent"></div>
+                    </div>
                 </div>
-              </div>
-            ))}
-          </div>
+
+                <div className="relative z-10 text-left md:text-center px-6 mt-32 md:mt-0 w-full md:w-auto">
+                    <span className="hidden md:block font-label text-primary uppercase tracking-[0.3em] text-xs mb-4">PRESTATIONS &amp; INGÉNIERIE</span>
+                    <h1 className="font-headline text-5xl md:text-8xl font-extrabold md:font-black tracking-tighter text-white uppercase md:italic leading-none">
+                        NOS FORFAITS <br className="md:hidden" />
+                        <span className="text-primary">DÉTAILLÉS</span>
+                    </h1>
+                    <p className="max-w-2xl mx-auto mt-4 md:mt-6 text-on-surface-variant font-body text-sm md:text-lg tracking-wide md:tracking-normal">
+                        <span className="md:hidden">Une ingénierie de précision appliquée à l'esthétique automobile. Choisissez le niveau de protection adapté à votre véhicule.</span>
+                        <span className="hidden md:inline">Une précision chirurgicale appliquée à chaque centimètre carré de votre véhicule. Choisissez le niveau d'excellence adapté à vos exigences.</span>
+                    </p>
+                </div>
+            </section>
+
+            {/* Pricing Section */}
+            <section className="px-6 md:px-12 py-12 md:py-24 bg-surface max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-0 md:border border-outline-variant/20">
+                    
+                    {/* Package: ESSENTIEL */}
+                    <article className="bg-surface-container-low md:bg-surface-container-lowest flex flex-col p-8 md:p-12 md:border-b lg:border-b-0 lg:border-r border-outline-variant/10 border-l-2 md:border-l-0 border-outline-variant">
+                        <div className="mb-8 md:mb-12">
+                            <span className="font-label text-secondary uppercase tracking-[0.2em] md:tracking-widest text-[10px] font-bold md:font-normal">
+                                <span className="md:hidden">Niveau 01</span>
+                                <span className="hidden md:inline">BASIC CARE</span>
+                            </span>
+                            
+                            <div className="md:hidden flex justify-between items-start mt-1">
+                                <h3 className="font-headline text-3xl font-bold uppercase text-white">ESSENTIEL</h3>
+                                <div className="text-right">
+                                    <span className="font-headline text-2xl font-bold text-primary">149€</span>
+                                </div>
+                            </div>
+
+                            <div className="hidden md:block">
+                                <h2 className="font-headline text-4xl font-black text-white mt-2 uppercase italic">ESSENTIEL</h2>
+                                <div className="mt-4 flex items-baseline gap-1">
+                                    <span className="font-headline text-4xl font-bold text-primary italic tracking-tighter">€149</span>
+                                    <span className="font-label text-on-secondary-container text-xs uppercase tracking-widest">À PARTIR DE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex-grow space-y-4 md:space-y-8 mb-8 md:mb-0">
+                            <ul className="space-y-4">
+                                {/* Mobile bullets */}
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Lavage extérieur à la main (PH neutre)
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Nettoyage complet des jantes et pneus
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Aspiration approfondie de l'habitacle
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Nettoyage des vitres intérieures
+                                </li>
+
+                                {/* Desktop bullets */}
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">water_drop</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Lavage Premium</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Technique des deux seaux, décontamination ferreuse des jantes.</p>
+                                    </div>
+                                </li>
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">vacuum</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Intérieur Focus</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Aspiration profonde, nettoyage des surfaces et vitres.</p>
+                                    </div>
+                                </li>
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">tire_repair</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Finition Brillance</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Dressage des pneus et protection rapide hydrophobe.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="md:mt-12">
+                            <button className="w-full py-4 border md:border-outline/30 border-outline-variant bg-transparent md:bg-transparent font-label md:font-headline text-xs font-bold uppercase tracking-widest hover:bg-surface-container-high md:hover:bg-white md:hover:text-surface transition-all duration-300">
+                                SÉLECTIONNER
+                            </button>
+                        </div>
+                    </article>
+
+                    {/* Package: ÉCLAT (Featured) */}
+                    <article className="bg-surface-container-highest flex flex-col p-8 md:p-12 relative md:border-b lg:border-b-0 lg:border-r border-outline-variant/10 overflow-hidden md:overflow-visible">
+                        <div className="md:hidden absolute top-0 right-0 bg-primary px-4 py-1">
+                            <span className="font-label text-[9px] font-black tracking-widest text-on-primary uppercase">RECOMMANDÉ</span>
+                        </div>
+                        <div className="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+                        
+                        <div className="mb-8 md:mb-12">
+                            <div className="flex justify-between items-start">
+                                <span className="font-label text-primary uppercase tracking-[0.2em] md:tracking-widest text-[10px] font-bold md:font-normal">
+                                    <span className="md:hidden">Niveau 02</span>
+                                    <span className="hidden md:inline">MOST POPULAR</span>
+                                </span>
+                            </div>
+                            
+                            <div className="md:hidden flex justify-between items-start mt-1">
+                                <h3 className="font-headline text-3xl font-bold uppercase text-white">ÉCLAT</h3>
+                                <div className="text-right">
+                                    <span className="font-headline text-2xl font-bold text-primary">399€</span>
+                                </div>
+                            </div>
+
+                            <div className="hidden md:block">
+                                <h2 className="font-headline text-4xl font-black text-white mt-2 uppercase italic">ÉCLAT</h2>
+                                <div className="mt-4 flex items-baseline gap-1">
+                                    <span className="font-headline text-4xl font-bold text-primary italic tracking-tighter">€399</span>
+                                    <span className="font-label text-on-secondary-container text-xs uppercase tracking-widest">À PARTIR DE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex-grow space-y-4 md:space-y-8 mb-8 md:mb-0">
+                            <p className="hidden md:block text-on-surface-variant text-sm border-l-2 border-primary/30 pl-4 py-2 italic">Correction modérée des défauts et rehaussement de la brillance.</p>
+                            <ul className="space-y-4">
+                                {/* Mobile bullets */}
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>verified</span>
+                                    Tout le forfait <span className="font-bold">Essentiel</span>
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Décontamination ferreuse de la carrosserie
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Polissage de finition (One-step)
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Cire de protection haute performance
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Nettoyage vapeur des cuirs/tissus
+                                </li>
+
+                                {/* Desktop bullets */}
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">auto_fix_high</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Polissage 1 Étape</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Élimination des micro-rayures légères (swirls).</p>
+                                    </div>
+                                </li>
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">cleaning_services</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Lustrage Haute Définition</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Application d'un compound de finition pour un effet miroir.</p>
+                                    </div>
+                                </li>
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">shield</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Cire de Carnauba</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Protection naturelle haut de gamme (durée 3-6 mois).</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="md:mt-12">
+                            <button className="w-full py-4 md:bg-[linear-gradient(135deg,#00daf3_0%,#009fb2_100%)] bg-[linear-gradient(135deg,#00daf3_0%,#009fb2_100%)] text-on-primary font-label md:font-headline text-xs font-bold tracking-widest uppercase hover:brightness-110 md:hover:shadow-[0_0_20px_rgba(0,218,243,0.3)] shadow-[0_0_20px_rgba(0,218,243,0.2)] md:shadow-none transition-all duration-300">
+                                <span className="md:hidden">RÉSERVER MAINTENANT</span>
+                                <span className="hidden md:inline">SÉLECTIONNER</span>
+                            </button>
+                        </div>
+                    </article>
+
+                    {/* Package: ÉLITE */}
+                    <article className="bg-surface-container-low md:bg-surface-container-lowest flex flex-col p-8 md:p-12 border-l-2 md:border-l-0 border-outline-variant md:border-transparent">
+                        <div className="mb-8 md:mb-12">
+                            <span className="font-label text-secondary uppercase tracking-[0.2em] md:tracking-widest text-[10px] font-bold md:font-normal">
+                                <span className="md:hidden">Niveau 03</span>
+                                <span className="hidden md:inline">ULTIMATE PROTECTION</span>
+                            </span>
+                            
+                            <div className="md:hidden flex justify-between items-start mt-1">
+                                <h3 className="font-headline text-3xl font-bold uppercase text-white">ÉLITE</h3>
+                                <div className="text-right">
+                                    <span className="font-headline text-2xl font-bold text-primary">899€</span>
+                                </div>
+                            </div>
+
+                            <div className="hidden md:block">
+                                <h2 className="font-headline text-4xl font-black text-white mt-2 uppercase italic">ÉLITE</h2>
+                                <div className="mt-4 flex items-baseline gap-1">
+                                    <span className="font-headline text-4xl font-bold text-primary italic tracking-tighter">€899</span>
+                                    <span className="font-label text-on-secondary-container text-xs uppercase tracking-widest">À PARTIR DE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex-grow space-y-4 md:space-y-8 mb-8 md:mb-0">
+                            <ul className="space-y-4">
+                                {/* Mobile bullets */}
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>stars</span>
+                                    Tout le forfait <span className="font-bold">Éclat</span>
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Correction de peinture multi-étapes
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Traitement Céramique 9H (2 ans)
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Détail complet du compartiment moteur
+                                </li>
+                                <li className="md:hidden flex items-center gap-3 text-sm font-body text-on-surface-variant">
+                                    <span className="material-symbols-outlined text-primary text-lg" style={{fontVariationSettings: "'FILL' 1"}}>check_circle</span>
+                                    Protection hydrophobe des vitres
+                                </li>
+
+                                {/* Desktop bullets */}
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">layers</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Protection Céramique 9H</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Traitement nanotechnologique multicouche permanent.</p>
+                                    </div>
+                                </li>
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">precision_manufacturing</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Correction Multi-Étapes</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Restauration complète du vernis (jusqu'à 95% de correction).</p>
+                                    </div>
+                                </li>
+                                <li className="hidden md:flex items-start gap-4">
+                                    <span className="material-symbols-outlined text-primary text-xl">diamond</span>
+                                    <div>
+                                        <h4 className="font-headline text-sm font-bold text-white uppercase tracking-tight">Pack Full Protection</h4>
+                                        <p className="text-on-surface-variant text-xs mt-1">Céramique sur jantes, vitres et cuirs incluse.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className="md:mt-12">
+                            <button className="w-full py-4 border border-outline-variant md:border-outline/30 bg-transparent font-label md:font-headline text-xs font-bold tracking-widest uppercase hover:bg-surface-container-high md:hover:bg-white md:hover:text-surface transition-all duration-300">
+                                <span className="md:hidden">DEVIS PERSONNALISÉ</span>
+                                <span className="hidden md:inline">SÉLECTIONNER</span>
+                            </button>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            {/* Quality Assurance Section (Mobile) & Technical Specs (Desktop) */}
+            <section className="bg-surface md:bg-surface-container-low py-12 md:py-24 px-6 md:px-12 border-t border-outline-variant/10 md:border-t-0">
+                <div className="max-w-7xl mx-auto">
+                    
+                    {/* Mobile Only: 2x2 Grid Assurance */}
+                    <div className="md:hidden">
+                        <h4 className="font-headline text-sm font-bold tracking-[0.3em] uppercase text-primary mb-10 text-center">NOTRE ENGAGEMENT QUALITÉ</h4>
+                        <div className="grid grid-cols-2 gap-8">
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-16 h-16 mb-4 flex items-center justify-center bg-surface-container-high">
+                                    <span className="material-symbols-outlined text-primary text-3xl">verified_user</span>
+                                </div>
+                                <span className="font-label text-[10px] font-bold tracking-widest uppercase text-white">9H HARDNESS</span>
+                                <p className="text-[9px] text-on-surface-variant mt-1">CERTIFIED COATINGS</p>
+                            </div>
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-16 h-16 mb-4 flex items-center justify-center bg-surface-container-high">
+                                    <span className="material-symbols-outlined text-primary text-3xl">precision_manufacturing</span>
+                                </div>
+                                <span className="font-label text-[10px] font-bold tracking-widest uppercase text-white">MACHINED</span>
+                                <p className="text-[9px] text-on-surface-variant mt-1">SWISS INSTRUMENTS</p>
+                            </div>
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-16 h-16 mb-4 flex items-center justify-center bg-surface-container-high">
+                                    <span className="material-symbols-outlined text-primary text-3xl">shutter_speed</span>
+                                </div>
+                                <span className="font-label text-[10px] font-bold tracking-widest uppercase text-white">RAPID SERVICE</span>
+                                <p className="text-[9px] text-on-surface-variant mt-1">24H TURNAROUND</p>
+                            </div>
+                            <div className="flex flex-col items-center text-center">
+                                <div className="w-16 h-16 mb-4 flex items-center justify-center bg-surface-container-high">
+                                    <span className="material-symbols-outlined text-primary text-3xl">workspace_premium</span>
+                                </div>
+                                <span className="font-label text-[10px] font-bold tracking-widest uppercase text-white">WARRANTY</span>
+                                <p className="text-[9px] text-on-surface-variant mt-1">LIFE-LONG SUPPORT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Desktop Only: Technical Specs Layering */}
+                    <div className="hidden md:grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h3 className="font-headline text-4xl font-black text-white uppercase italic tracking-tight leading-tight">
+                                PROCESSUS DE <br/><span className="text-primary">PRÉCISION</span> CERTIFIÉ
+                            </h3>
+                            <p className="mt-6 text-on-surface-variant leading-relaxed">
+                                Chaque intervention suit un protocole strict. Nous n'utilisons que des produits biodégradables de grade professionnel et des techniques de polissage qui respectent l'épaisseur de votre vernis d'origine.
+                            </p>
+                            <div className="mt-12 grid grid-cols-2 gap-6">
+                                <div className="p-6 bg-surface-container-highest border-l-4 border-primary">
+                                    <div className="font-label text-primary text-[10px] uppercase tracking-widest mb-2">DURETÉ</div>
+                                    <div className="font-headline text-2xl font-bold text-white italic">9H RATING</div>
+                                </div>
+                                <div className="p-6 bg-surface-container-highest border-l-4 border-secondary">
+                                    <div className="font-label text-secondary text-[10px] uppercase tracking-widest mb-2">CURING</div>
+                                    <div className="font-headline text-2xl font-bold text-white italic">24H INFRARED</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="relative group">
+                            <div className="absolute -inset-4 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-2xl"></div>
+                            <img 
+                                alt="Detailing process" 
+                                className="relative w-full aspect-video object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0U0x4hzR96AOt_1IlXvf5DuKtwVitoBPpyhk-HyxdVZImg-3SOTSrQHNaastioPijN--UxOzkz8Y6-hbsJiV8Efmsxb4eYKd4-pKmGPgVd9MLn_gumrp4dSmC_wx-4P8TX3iVc9ofCrnNJmxfa76C1NRHMHhHLAl7T_YhfEeDkmxHLeZXb8sbHAAS1JSN_pCaOPBbw_lu3nYHFAoM97R5jxOlPUuB8OLyGGphgpF1mAFNWEybQmobYP3kG_I8wOujwBXcOwZCIcI"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-      </div>
-    </section>
-  );
-}
+    );
+};
+
+export default Services;

@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr" className="dark">
+    <html lang="fr" className="dark" suppressHydrationWarning>
       <head>
         <link
           rel="stylesheet"
@@ -37,6 +37,7 @@ export default function RootLayout({
       </head>
       <body
         className={`${spaceGrotesk.variable} ${manrope.variable} ${inter.variable} antialiased`}
+        suppressHydrationWarning
       >
         {children}
       </body>
