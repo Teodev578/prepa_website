@@ -1,20 +1,23 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Manrope, Inter } from "next/font/google";
+import { Poppins, IBM_Plex_Mono, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
+const sans = Poppins({
   subsets: ["latin"],
-  variable: "--font-headline",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-sans",
 });
 
-const manrope = Manrope({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-body",
+  weight: ["400", "500"],
+  variable: "--font-mono",
 });
 
-const inter = Inter({
+const serif = Libre_Baskerville({
   subsets: ["latin"],
-  variable: "--font-label",
+  weight: ["400", "700"],
+  variable: "--font-serif",
 });
 
 export const metadata: Metadata = {
@@ -36,7 +39,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${manrope.variable} ${inter.variable} antialiased`}
+        className={`${sans.variable} ${mono.variable} ${serif.variable} antialiased`}
         suppressHydrationWarning
       >
         {children}

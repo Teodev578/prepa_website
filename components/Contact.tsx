@@ -3,7 +3,7 @@ import React from "react";
 
 const Contact = () => {
     return (
-        <div className="bg-background text-on-background min-h-screen pt-20">
+        <div className="bg-background text-foreground min-h-screen pt-20">
             {/* Hero Section */}
             <section className="relative h-[250px] md:h-[409px] flex items-center justify-center overflow-hidden">
                 <div className="absolute inset-0 z-0 hidden md:block">
@@ -17,10 +17,10 @@ const Contact = () => {
                 {/* Mobile Hero (simple) vs Desktop Hero */}
                 <div className="relative z-10 text-center px-6 md:px-4 w-full md:w-auto text-left md:text-center mt-8 md:mt-0">
                     <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-2 md:mb-4">
-                        Contact &amp; <span className="text-primary md:text-on-background">Devis</span>
+                        Contact &amp; <span className="text-primary md:text-foreground">Devis</span>
                     </h1>
                     <div className="h-1 w-24 bg-primary md:hidden mb-4"></div>
-                    <p className="font-label text-secondary tracking-widest uppercase text-[10px] md:text-sm">Une précision millimétrée pour votre véhicule d'exception</p>
+                    <p className="font-label text-muted-foreground tracking-widest uppercase text-[10px] md:text-sm">Une précision millimétrée pour votre véhicule d'exception</p>
                 </div>
             </section>
 
@@ -29,7 +29,7 @@ const Contact = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
                     
                     {/* Form Section */}
-                    <div className="lg:col-span-7 bg-surface-container-low p-6 md:p-12 relative overflow-hidden">
+                    <div className="lg:col-span-7 bg-card p-6 md:p-12 relative overflow-hidden">
                         <div className="absolute top-0 left-0 w-1 h-full md:h-20 bg-primary"></div>
                         <h2 className="hidden md:block font-headline text-3xl font-bold uppercase tracking-tighter mb-8">Demander un Devis Précis</h2>
                         <form className="space-y-8 md:space-y-10">
@@ -38,110 +38,110 @@ const Contact = () => {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                 <div className="relative flex flex-col gap-2 md:gap-0 mt-4 md:mt-0">
                                     <label htmlFor="name" className="md:hidden absolute left-0 -top-3 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-outline peer-placeholder-shown:top-3 peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-primary z-10">NOM COMPLET</label>
-                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary">Nom Complet</label>
-                                    <input id="name" className="peer bg-transparent border-0 border-b border-outline-variant py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-white font-body placeholder-transparent md:placeholder:text-surface-variant transition-all w-full" placeholder="JEAN DUPONT" type="text"/>
+                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground">Nom Complet</label>
+                                    <input id="name" className="peer bg-transparent border-0 border-b border-border py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-foreground font-sans placeholder-transparent md:placeholder:text-muted-foreground transition-all w-full" placeholder="JEAN DUPONT" type="text"/>
                                 </div>
                                 <div className="relative flex flex-col gap-2 md:gap-0 mt-4 md:mt-0">
                                     <label htmlFor="email" className="md:hidden absolute left-0 -top-3 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-outline peer-placeholder-shown:top-3 peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-primary z-10">ADRESSE EMAIL</label>
-                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary">Email</label>
-                                    <input id="email" className="peer bg-transparent border-0 border-b border-outline-variant py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-white font-body placeholder-transparent md:placeholder:text-surface-variant transition-all w-full" placeholder="CONTACT@EXEMPLE.COM" type="email"/>
+                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground">Email</label>
+                                    <input id="email" className="peer bg-transparent border-0 border-b border-border py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-foreground font-sans placeholder-transparent md:placeholder:text-muted-foreground transition-all w-full" placeholder="CONTACT@EXEMPLE.COM" type="email"/>
                                 </div>
                             </div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                 <div className="relative flex flex-col gap-2 md:gap-0 mt-4 md:mt-0">
                                     <label htmlFor="phone" className="md:hidden absolute left-0 -top-3 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-outline peer-placeholder-shown:top-3 peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-primary z-10">TÉLÉPHONE</label>
-                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary">Téléphone</label>
-                                    <input id="phone" className="peer bg-transparent border-0 border-b border-outline-variant py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-white font-body placeholder-transparent md:placeholder:text-surface-variant transition-all w-full" placeholder="+33 0 00 00 00 00" type="tel"/>
+                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground">Téléphone</label>
+                                    <input id="phone" className="peer bg-transparent border-0 border-b border-border py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-foreground font-sans placeholder-transparent md:placeholder:text-muted-foreground transition-all w-full" placeholder="+33 0 00 00 00 00" type="tel"/>
                                 </div>
                                 <div className="relative flex flex-col gap-2 md:gap-0 mt-4 md:mt-0">
                                     <label htmlFor="year" className="md:hidden absolute left-0 -top-3 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-outline peer-placeholder-shown:top-3 peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-primary z-10">ANNÉE</label>
-                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary">Année du Véhicule</label>
-                                    <input id="year" className="peer bg-transparent border-0 border-b border-outline-variant py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-white font-body placeholder-transparent md:placeholder:text-surface-variant transition-all w-full" placeholder="2024" type="number"/>
+                                    <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground">Année du Véhicule</label>
+                                    <input id="year" className="peer bg-transparent border-0 border-b border-border py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-foreground font-sans placeholder-transparent md:placeholder:text-muted-foreground transition-all w-full" placeholder="2024" type="number"/>
                                 </div>
                             </div>
 
                             {/* Vehicle Specs */}
                             <div className="relative flex flex-col gap-2 md:gap-0 mt-4 md:mt-0">
                                 <label htmlFor="model" className="md:hidden absolute left-0 -top-3 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-outline peer-placeholder-shown:top-3 peer-focus:-top-3 peer-focus:text-[10px] peer-focus:text-primary z-10">MARQUE / MODÈLE</label>
-                                <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary">Marque &amp; Modèle</label>
-                                <input id="model" className="peer bg-transparent border-0 border-b border-outline-variant py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-white font-body placeholder-transparent md:placeholder:text-surface-variant transition-all w-full" placeholder="PORSCHE 911 GT3 RS" type="text"/>
+                                <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground">Marque &amp; Modèle</label>
+                                <input id="model" className="peer bg-transparent border-0 border-b border-border py-3 md:py-2 px-0 focus:ring-0 focus:border-primary text-foreground font-sans placeholder-transparent md:placeholder:text-muted-foreground transition-all w-full" placeholder="PORSCHE 911 GT3 RS" type="text"/>
                             </div>
                             
                             <div className="hidden md:flex flex-col gap-2">
-                                <label className="font-label text-[10px] uppercase tracking-widest text-secondary">État Général de la Carrosserie</label>
-                                <select className="bg-transparent border-0 border-b border-outline-variant py-2 px-0 focus:ring-0 focus:border-primary text-white font-body appearance-none cursor-pointer">
-                                    <option className="bg-surface-container-highest">NEUF (SORTIE CONCESSION)</option>
-                                    <option className="bg-surface-container-highest">TRÈS BON ÉTAT (MICRO-RAYURES LÉGÈRES)</option>
-                                    <option className="bg-surface-container-highest">ÉTAT MOYEN (CONTAMINATION VISIBLE)</option>
-                                    <option className="bg-surface-container-highest">À RESTAURER (OXYDATION / RAYURES PROFONDES)</option>
+                                <label className="font-label text-[10px] uppercase tracking-widest text-muted-foreground">État Général de la Carrosserie</label>
+                                <select className="bg-transparent border-0 border-b border-border py-2 px-0 focus:ring-0 focus:border-primary text-foreground font-sans appearance-none cursor-pointer">
+                                    <option className="bg-muted">NEUF (SORTIE CONCESSION)</option>
+                                    <option className="bg-muted">TRÈS BON ÉTAT (MICRO-RAYURES LÉGÈRES)</option>
+                                    <option className="bg-muted">ÉTAT MOYEN (CONTAMINATION VISIBLE)</option>
+                                    <option className="bg-muted">À RESTAURER (OXYDATION / RAYURES PROFONDES)</option>
                                 </select>
                             </div>
 
                             {/* Services Checkboxes */}
                             <div className="pt-4 md:pt-0 space-y-4">
-                                <h3 className="md:hidden text-xs font-bold tracking-[0.1em] uppercase text-secondary">Services Requis</h3>
-                                <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary mb-4">Services Souhaités</label>
+                                <h3 className="md:hidden text-xs font-bold tracking-[0.1em] uppercase text-muted-foreground">Services Requis</h3>
+                                <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground mb-4">Services Souhaités</label>
                                 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                                     {/* Service 1 */}
-                                    <label className="flex items-center gap-3 md:p-4 md:bg-surface-container-lowest md:border md:border-white/5 cursor-pointer md:hover:bg-surface-container-high transition-all group">
+                                    <label className="flex items-center gap-3 md:p-4 md:bg-muted/50 md:border md:border-border/5 cursor-pointer md:hover:bg-muted transition-all group">
                                         <div className="md:hidden relative w-5 h-5 flex items-center justify-center">
                                             <input type="checkbox" className="peer w-5 h-5 opacity-0 absolute cursor-pointer"/>
-                                            <div className="w-5 h-5 border border-outline-variant peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
-                                                <span className="material-symbols-outlined text-[14px] text-on-primary hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
+                                            <div className="w-5 h-5 border border-border peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
+                                                <span className="material-symbols-outlined text-[14px] text-primary-foreground hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
                                             </div>
                                         </div>
-                                        <input className="hidden md:block w-4 h-4 rounded-none border-secondary bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
-                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-on-surface-variant md:text-on-surface group-hover:text-primary md:group-hover:text-on-surface transition-colors">Ceramic Coating 9H</span>
+                                        <input className="hidden md:block w-4 h-4 rounded-none border-muted-foreground bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
+                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-foreground/80 md:text-foreground group-hover:text-primary md:group-hover:text-foreground transition-colors">Ceramic Coating 9H</span>
                                     </label>
                                     
                                     {/* Service 2 */}
-                                    <label className="flex items-center gap-3 md:p-4 md:bg-surface-container-lowest md:border md:border-white/5 cursor-pointer md:hover:bg-surface-container-high transition-all group">
+                                    <label className="flex items-center gap-3 md:p-4 md:bg-muted/50 md:border md:border-border/5 cursor-pointer md:hover:bg-muted transition-all group">
                                         <div className="md:hidden relative w-5 h-5 flex items-center justify-center">
                                             <input type="checkbox" className="peer w-5 h-5 opacity-0 absolute cursor-pointer"/>
-                                            <div className="w-5 h-5 border border-outline-variant peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
-                                                <span className="material-symbols-outlined text-[14px] text-on-primary hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
+                                            <div className="w-5 h-5 border border-border peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
+                                                <span className="material-symbols-outlined text-[14px] text-primary-foreground hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
                                             </div>
                                         </div>
-                                        <input className="hidden md:block w-4 h-4 rounded-none border-secondary bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
-                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-on-surface-variant md:text-on-surface group-hover:text-primary md:group-hover:text-on-surface transition-colors">Paint Correction Multi-étapes</span>
+                                        <input className="hidden md:block w-4 h-4 rounded-none border-muted-foreground bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
+                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-foreground/80 md:text-foreground group-hover:text-primary md:group-hover:text-foreground transition-colors">Paint Correction Multi-étapes</span>
                                     </label>
 
                                     {/* Service 3 */}
-                                    <label className="flex items-center gap-3 md:p-4 md:bg-surface-container-lowest md:border md:border-white/5 cursor-pointer md:hover:bg-surface-container-high transition-all group">
+                                    <label className="flex items-center gap-3 md:p-4 md:bg-muted/50 md:border md:border-border/5 cursor-pointer md:hover:bg-muted transition-all group">
                                         <div className="md:hidden relative w-5 h-5 flex items-center justify-center">
                                             <input type="checkbox" className="peer w-5 h-5 opacity-0 absolute cursor-pointer"/>
-                                            <div className="w-5 h-5 border border-outline-variant peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
-                                                <span className="material-symbols-outlined text-[14px] text-on-primary hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
+                                            <div className="w-5 h-5 border border-border peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
+                                                <span className="material-symbols-outlined text-[14px] text-primary-foreground hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
                                             </div>
                                         </div>
-                                        <input className="hidden md:block w-4 h-4 rounded-none border-secondary bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
-                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-on-surface-variant md:text-on-surface group-hover:text-primary md:group-hover:text-on-surface transition-colors">Nettoyage Intérieur Premium</span>
+                                        <input className="hidden md:block w-4 h-4 rounded-none border-muted-foreground bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
+                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-foreground/80 md:text-foreground group-hover:text-primary md:group-hover:text-foreground transition-colors">Nettoyage Intérieur Premium</span>
                                     </label>
 
                                     {/* Service 4 */}
-                                    <label className="flex items-center gap-3 md:p-4 md:bg-surface-container-lowest md:border md:border-white/5 cursor-pointer md:hover:bg-surface-container-high transition-all group">
+                                    <label className="flex items-center gap-3 md:p-4 md:bg-muted/50 md:border md:border-border/5 cursor-pointer md:hover:bg-muted transition-all group">
                                         <div className="md:hidden relative w-5 h-5 flex items-center justify-center">
                                             <input type="checkbox" className="peer w-5 h-5 opacity-0 absolute cursor-pointer"/>
-                                            <div className="w-5 h-5 border border-outline-variant peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
-                                                <span className="material-symbols-outlined text-[14px] text-on-primary hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
+                                            <div className="w-5 h-5 border border-border peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center pointer-events-none">
+                                                <span className="material-symbols-outlined text-[14px] text-primary-foreground hidden peer-checked:block" style={{fontVariationSettings: "'FILL' 1"}}>check</span>
                                             </div>
                                         </div>
-                                        <input className="hidden md:block w-4 h-4 rounded-none border-secondary bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
-                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-on-surface-variant md:text-on-surface group-hover:text-primary md:group-hover:text-on-surface transition-colors">Protection PPF</span>
+                                        <input className="hidden md:block w-4 h-4 rounded-none border-muted-foreground bg-transparent checked:bg-primary checked:border-primary focus:ring-0" type="checkbox"/>
+                                        <span className="font-label text-xs uppercase tracking-tight md:tracking-tight text-foreground/80 md:text-foreground group-hover:text-primary md:group-hover:text-foreground transition-colors">Protection PPF</span>
                                     </label>
                                 </div>
                             </div>
 
                             {/* Detailed Message */}
                             <div className="relative pt-4 md:pt-0 flex flex-col gap-2">
-                                <label htmlFor="message" className="md:hidden absolute left-4 top-1 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-outline peer-placeholder-shown:top-8 peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-primary z-10">DÉTAILS SUPPLÉMENTAIRES</label>
-                                <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-secondary">Message / Détails Complémentaires</label>
-                                <textarea id="message" className="peer bg-surface-container-highest md:bg-transparent border-0 border-b border-outline-variant p-4 md:p-0 md:py-2 focus:ring-0 focus:outline-none focus:border-primary text-white font-body placeholder-transparent md:placeholder:text-surface-variant transition-all resize-none w-full" placeholder="DÉTAILLEZ VOS ATTENTES PARTICULIÈRES..." rows={4}></textarea>
+                                <label htmlFor="message" className="md:hidden absolute left-4 top-1 text-[10px] tracking-widest uppercase text-primary transition-all peer-placeholder-shown:text-xs peer-placeholder-shown:text-border peer-placeholder-shown:top-8 peer-focus:top-1 peer-focus:text-[10px] peer-focus:text-primary z-10">DÉTAILS SUPPLÉMENTAIRES</label>
+                                <label className="hidden md:block font-label text-[10px] uppercase tracking-widest text-muted-foreground">Message / Détails Complémentaires</label>
+                                <textarea id="message" className="peer bg-muted md:bg-transparent border-0 border-b border-border p-4 md:p-0 md:py-2 focus:ring-0 focus:outline-none focus:border-primary text-foreground font-sans placeholder-transparent md:placeholder:text-muted-foreground transition-all resize-none w-full" placeholder="DÉTAILLEZ VOS ATTENTES PARTICULIÈRES..." rows={4}></textarea>
                             </div>
 
-                            <button type="submit" className="w-full bg-gradient-to-r from-primary to-primary-container md:bg-transparent text-on-primary md:text-white md:bg-[linear-gradient(135deg,#00daf3_0%,#009fb2_100%)] py-5 font-headline font-bold uppercase tracking-[0.2em] md:tracking-widest text-sm md:text-lg flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(0,218,243,0.3)] transition-all active:scale-95">
+                            <button type="submit" className="w-full bg-gradient-to-r from-primary to-primary/80 md:bg-primary text-primary-foreground py-5 font-headline font-bold uppercase tracking-[0.2em] md:tracking-widest text-sm md:text-lg flex items-center justify-center gap-2 hover:shadow-[0_0_20px_rgba(155,44,44,0.3)] transition-all active:scale-95">
                                 Envoyer la Demande <span className="hidden md:inline">de Devis</span>
                                 <span className="material-symbols-outlined text-lg md:hidden">arrow_forward</span>
                             </button>
@@ -152,7 +152,7 @@ const Contact = () => {
                     <div className="lg:col-span-5 space-y-6 md:space-y-12">
                         
                         {/* Workshop Info */}
-                        <div className="bg-surface-container-high md:bg-surface-container-highest border-t md:border-t-0 border-primary/20 md:border-transparent p-0 md:p-8 relative overflow-hidden">
+                        <div className="bg-muted md:bg-card border-t md:border-t-0 border-primary/20 md:border-transparent p-0 md:p-8 relative overflow-hidden">
                             <div className="hidden md:block absolute -right-10 -top-10 opacity-5">
                                 <span className="material-symbols-outlined text-[160px]">precision_manufacturing</span>
                             </div>
@@ -163,8 +163,8 @@ const Contact = () => {
                                 <div className="flex items-start gap-4">
                                     <span className="material-symbols-outlined text-primary" style={{fontVariationSettings: "'FILL' 1"}}>location_on</span>
                                     <div>
-                                        <p className="font-label text-[10px] md:text-[10px] uppercase tracking-widest text-primary md:text-secondary mb-2 md:mb-1 font-bold md:font-normal">Quartier Général</p>
-                                        <p className="font-body text-sm text-on-surface-variant md:text-white font-medium md:font-normal leading-relaxed">
+                                        <p className="font-label text-[10px] md:text-[10px] uppercase tracking-widest text-primary md:text-muted-foreground mb-2 md:mb-1 font-bold md:font-normal">Quartier Général</p>
+                                        <p className="font-sans text-sm text-foreground/80 md:text-foreground font-medium md:font-normal leading-relaxed">
                                             75 Avenue des Champs-Élysées<br/>
                                             75008 Paris, France
                                         </p>
@@ -174,28 +174,28 @@ const Contact = () => {
                                 <div className="flex items-start md:items-center gap-4">
                                     <span className="material-symbols-outlined text-primary">schedule</span>
                                     <div>
-                                        <p className="font-label text-[10px] md:text-[10px] uppercase tracking-widest text-primary md:text-secondary mb-1 md:mb-1 font-bold md:font-normal">Horaires</p>
-                                        <div className="hidden md:grid grid-cols-2 gap-x-8 gap-y-1 font-body text-white text-sm">
+                                        <p className="font-label text-[10px] md:text-[10px] uppercase tracking-widest text-primary md:text-muted-foreground mb-1 md:mb-1 font-bold md:font-normal">Horaires</p>
+                                        <div className="hidden md:grid grid-cols-2 gap-x-8 gap-y-1 font-sans text-foreground text-sm">
                                             <span>LUN - VEN</span> <span>08:00 - 19:00</span>
                                             <span>SAMEDI</span> <span>09:00 - 17:00</span>
-                                            <span className="text-error">DIMANCHE</span> <span className="text-error uppercase">Fermé</span>
+                                            <span className="text-destructive">DIMANCHE</span> <span className="text-destructive uppercase">Fermé</span>
                                         </div>
-                                        <p className="md:hidden text-on-surface-variant text-sm font-medium mt-1">LUN — SAM: 08:00 - 19:00</p>
+                                        <p className="md:hidden text-foreground/80 text-sm font-medium mt-1">LUN — SAM: 08:00 - 19:00</p>
                                     </div>
                                 </div>
 
                                 <div className="hidden md:flex gap-4">
                                     <span className="material-symbols-outlined text-primary">call</span>
                                     <div>
-                                        <p className="font-label text-[10px] uppercase tracking-widest text-secondary mb-1">Ligne Directe</p>
-                                        <p className="font-headline font-bold text-xl text-white">+33 1 23 45 67 89</p>
+                                        <p className="font-label text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Ligne Directe</p>
+                                        <p className="font-headline font-bold text-xl text-foreground">+33 1 23 45 67 89</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         {/* Map Container */}
-                        <div className="w-full h-64 md:h-80 bg-surface-container-low border md:border-white/5 border-transparent relative group">
+                        <div className="w-full h-64 md:h-80 bg-card border border-border/5 relative group">
                             <div className="absolute inset-0 grayscale contrast-125 opacity-70 md:group-hover:grayscale-0 md:group-hover:opacity-100 transition-all duration-700">
                                 <img 
                                     className="w-full h-full object-cover hidden md:block" 
@@ -212,15 +212,15 @@ const Contact = () => {
                             
                             {/* Mobile marker */}
                             <div className="md:hidden absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                <div className="w-8 h-8 bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(0,218,243,0.6)]">
-                                    <span className="material-symbols-outlined text-on-primary" style={{fontVariationSettings: "'FILL' 1"}}>location_on</span>
+                                <div className="w-8 h-8 bg-primary flex items-center justify-center shadow-[0_0_15px_rgba(155,44,44,0.6)]">
+                                    <span className="material-symbols-outlined text-primary-foreground" style={{fontVariationSettings: "'FILL' 1"}}>location_on</span>
                                 </div>
                             </div>
 
                             {/* Desktop marker */}
                             <div className="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center">
-                                <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary-container flex items-center justify-center animate-pulse shadow-[0_0_20px_rgba(0,218,243,0.3)]">
-                                    <span className="material-symbols-outlined text-on-primary">garage</span>
+                                <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center animate-pulse shadow-[0_0_20px_rgba(155,44,44,0.3)]">
+                                    <span className="material-symbols-outlined text-primary-foreground">garage</span>
                                 </div>
                                 <div className="bg-background px-3 py-1 mt-2 border border-primary/30">
                                     <span className="font-label text-[8px] uppercase tracking-tighter text-primary">Precision Auto HQ</span>
@@ -230,15 +230,15 @@ const Contact = () => {
 
                         {/* Assurance Block (Desktop only) */}
                         <div className="hidden md:grid grid-cols-2 gap-4">
-                            <div className="p-4 border border-outline-variant bg-surface-container-lowest">
+                            <div className="p-4 border border-border bg-card">
                                 <span className="material-symbols-outlined text-primary mb-2">verified_user</span>
                                 <h4 className="font-headline text-xs font-bold uppercase tracking-widest mb-1">Véhicule Assuré</h4>
-                                <p className="font-body text-[10px] text-secondary">Garantie multirisque totale pendant le séjour.</p>
+                                <p className="font-sans text-[10px] text-muted-foreground">Garantie multirisque totale pendant le séjour.</p>
                             </div>
-                            <div className="p-4 border border-outline-variant bg-surface-container-lowest">
+                            <div className="p-4 border border-border bg-card">
                                 <span className="material-symbols-outlined text-primary mb-2">workspace_premium</span>
                                 <h4 className="font-headline text-xs font-bold uppercase tracking-widest mb-1">Certifié Detailer</h4>
-                                <p className="font-body text-[10px] text-secondary">Accréditation officielle Gtechniq &amp; Swissvax.</p>
+                                <p className="font-sans text-[10px] text-muted-foreground">Accréditation officielle Gtechniq &amp; Swissvax.</p>
                             </div>
                         </div>
 

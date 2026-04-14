@@ -23,9 +23,9 @@ export default function Navbar() {
             onClick={() => setIsOpen(true)} 
             className="md:hidden flex items-center"
           >
-            <span className="material-symbols-outlined text-[#00daf3]">menu</span>
+            <span className="material-symbols-outlined text-primary">menu</span>
           </button>
-          <div className="text-xl md:text-2xl font-black tracking-tighter text-white uppercase italic font-headline">
+          <div className="text-xl md:text-2xl font-black tracking-tighter text-foreground uppercase italic font-headline">
             PRECISION AUTO
           </div>
         </div>
@@ -37,8 +37,8 @@ export default function Navbar() {
               href={link.href}
               className={`font-headline tracking-tighter uppercase font-bold transition-colors duration-300 pb-1 ${
                 link.active 
-                  ? "text-[#00daf3] border-b-2 border-[#00daf3]" 
-                  : "text-[#c6c6c6] hover:text-[#00daf3]"
+                  ? "text-primary border-b-2 border-primary" 
+                  : "text-muted-foreground hover:text-primary"
               }`}
             >
               {link.label}
@@ -46,7 +46,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        <button className="bg-gradient-to-br from-primary to-primary-container text-on-primary font-headline font-bold uppercase tracking-widest px-6 md:px-8 py-3 text-[10px] md:text-xs scale-95 hover:scale-100 transition-all duration-200 ease-in-out shadow-[0_0_20px_rgba(0,218,243,0.3)]">
+        <button className="bg-gradient-to-br from-primary to-primary/80 text-primary-foreground font-headline font-bold uppercase tracking-widest px-6 md:px-8 py-3 text-[10px] md:text-xs scale-95 hover:scale-100 transition-all duration-200 ease-in-out shadow-[0_0_20px_rgba(155,44,44,0.3)]">
           Get Quote
         </button>
       </nav>
@@ -58,11 +58,11 @@ export default function Navbar() {
           onClick={() => setIsOpen(false)}
         >
           <aside 
-            className="bg-[#131313] h-full w-80 border-r border-[#c6c6c6]/10 flex flex-col gap-4 p-8 shadow-[60px_0_100px_rgba(0,218,243,0.05)]"
+            className="bg-card h-full w-80 border-r border-border flex flex-col gap-4 p-8 shadow-[60px_0_100px_rgba(0,0,0,0.1)]"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-8">
-              <span className="text-[#00daf3] font-headline font-bold text-xl uppercase">PRECISION MENU</span>
+              <span className="text-primary font-headline font-bold text-xl uppercase">PRECISION MENU</span>
               <button onClick={() => setIsOpen(false)}>
                 <span className="material-symbols-outlined text-secondary">close</span>
               </button>
@@ -75,8 +75,8 @@ export default function Navbar() {
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center gap-4 p-3 font-label tracking-[0.05em] uppercase text-xs font-bold transition-all duration-300 ${
                     link.active 
-                      ? "bg-[#00daf3]/10 text-[#00daf3] border-l-2 border-[#00daf3]" 
-                      : "text-[#c6c6c6] hover:bg-[#c6c6c6]/5 hover:pl-2"
+                      ? "bg-primary/10 text-primary border-l-2 border-primary" 
+                      : "text-muted-foreground hover:bg-muted hover:pl-2"
                   }`}
                 >
                   <span className="material-symbols-outlined">

@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-surface">
+    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden bg-background">
       <div className="absolute inset-0 z-0">
         <img
           className="w-full h-full object-cover opacity-60"
@@ -16,20 +16,20 @@ export default function Hero() {
           <span className="font-label uppercase tracking-[0.3em] text-primary text-sm font-black mb-6 block">
             ENGINEERED PERFECTION
           </span>
-          <h1 className="text-6xl md:text-9xl font-headline font-bold text-white leading-[0.85] tracking-tighter uppercase italic mb-8">
+          <h1 className="text-6xl md:text-9xl font-headline font-bold text-foreground leading-[0.85] tracking-tighter uppercase italic mb-8">
             L'ART DE LA <br />
-            <span className="text-transparent border-t-2 border-b-2 border-primary/30 bg-clip-text bg-gradient-to-r from-primary to-white">
+            <span className="text-transparent border-t-2 border-b-2 border-primary/30 bg-clip-text bg-gradient-to-r from-primary to-primary-foreground">
               PRÉCISION
             </span>
           </h1>
-          <p className="text-secondary text-base md:text-lg max-w-xl font-body leading-relaxed mb-10 border-l-2 border-primary/40 pl-6">
+          <p className="text-foreground/80 text-base md:text-lg max-w-xl font-sans leading-relaxed mb-10 border-l-2 border-primary/40 pl-6">
             Sublimez chaque courbe. Protégez chaque micron. Nous redéfinissons l'esthétique automobile à travers une expertise technique sans compromis.
           </p>
           <div className="flex flex-wrap gap-6">
-            <button className="bg-primary text-on-primary font-headline font-black uppercase tracking-widest px-8 md:px-10 py-4 md:py-5 text-xs md:text-sm hover:shadow-[0_0_30px_rgba(0,218,243,0.5)] transition-all">
+            <button className="bg-primary text-primary-foreground font-headline font-black uppercase tracking-widest px-8 md:px-10 py-4 md:py-5 text-xs md:text-sm hover:shadow-[0_0_30px_rgba(155,44,44,0.5)] transition-all">
               DÉCOUVRIR NOS SERVICES
             </button>
-            <button className="border border-outline-variant text-white font-headline font-black uppercase tracking-widest px-8 md:px-10 py-4 md:py-5 text-xs md:text-sm hover:bg-surface-container-high transition-all">
+            <button className="border border-border text-foreground font-headline font-black uppercase tracking-widest px-8 md:px-10 py-4 md:py-5 text-xs md:text-sm hover:bg-muted transition-all">
               NOTRE PORTFOLIO
             </button>
           </div>
@@ -37,7 +37,7 @@ export default function Hero() {
       </div>
 
       {/* Technical specs overlay */}
-      <div className="absolute right-0 bottom-24 hidden lg:block bg-surface-container-low/80 backdrop-blur-md p-8 border-l border-primary/20">
+      <div className="absolute right-0 bottom-24 hidden lg:block bg-card/80 backdrop-blur-md p-8 border-l border-primary/20">
         <div className="space-y-6">
           <SpecItem label="HARDNESS RATING" value="9H+ CERAMIC" />
           <SpecItem label="CURING PROCESS" value="INFRARED HEAT" />
