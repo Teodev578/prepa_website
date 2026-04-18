@@ -11,59 +11,69 @@ import { useTheme } from "@/components/ThemeProvider";
 type NavLink = { label: string; href: string; active: boolean };
 type Position = { left: number; width: number; opacity: number };
 
-// ─── Sliding cursor nav list (desktop) ───────────────────────────────────────
+// ─── New Navigation Items ──────────────────────────────────────────────────
 
 function NavLinks({ links }: { links: NavLink[] }) {
-  const [position, setPosition] = useState<Position>({ left: 0, width: 0, opacity: 0 });
+  const [position, setPosition] = useState<Position>({
+    left: 0,
+    width: 0,
+    opacity: 0,
+  });
 
   return (
     <ul
-      className="relative hidden md:flex items-center"
-      onMouseLeave={() => setPosition((p) => ({ ...p, opacity: 0 }))}
+      className="relative hidden md:flex items-center w-fit"
+      onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
     >
       {links.map((link) => (
-        <NavTab key={link.label} link={link} setPosition={setPosition} />
+        <Tab key={link.label} setPosition={setPosition} link={link}>
+          {link.label}
+        </Tab>
       ))}
-      {/* Animated sliding pill */}
-      <motion.li
-        animate={position}
-        transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="absolute z-0 h-8 rounded-lg bg-[#f5f5f4] pointer-events-none"
-      />
+
+      <Cursor position={position} />
     </ul>
   );
 }
 
-function NavTab({
-  link,
+const Tab = ({
+  children,
   setPosition,
+  link,
 }: {
+  children: React.ReactNode;
+  setPosition: any;
   link: NavLink;
-  setPosition: React.Dispatch<React.SetStateAction<Position>>;
-}) {
+}) => {
   const ref = useRef<HTMLLIElement>(null);
-
   return (
     <li
       ref={ref}
       onMouseEnter={() => {
         if (!ref.current) return;
+
         const { width } = ref.current.getBoundingClientRect();
-        setPosition({ width, opacity: 1, left: ref.current.offsetLeft });
+        setPosition({
+          width,
+          opacity: 1,
+          left: ref.current.offsetLeft,
+        });
       }}
-      className="relative z-10"
+      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase text-foreground mix-blend-difference md:px-5 md:py-2 md:text-sm font-bold tracking-tight"
     >
-      <Link
-        href={link.href}
-        className={`block px-5 py-2 font-sans tracking-wide uppercase font-medium text-sm mix-blend-difference ${
-          link.active ? "text-primary" : "text-[#f5f5f4]"
-        }`}
-      >
-        {link.label}
-      </Link>
+      <Link href={link.href}>{children}</Link>
     </li>
   );
-}
+};
+
+const Cursor = ({ position }: { position: any }) => {
+  return (
+    <motion.li
+      animate={position}
+      className="absolute z-0 h-8 rounded-full bg-foreground md:h-9"
+    />
+  );
+};
 
 // ─── Main Navbar ──────────────────────────────────────────────────────────────
 
@@ -76,41 +86,48 @@ export default function Navbar() {
     { label: "Home", href: "/", active: pathname === "/" },
     { label: "Services", href: "/services", active: pathname === "/services" },
     { label: "Portfolio", href: "/portfolio", active: pathname === "/portfolio" },
+    { label: "About", href: "/about", active: pathname === "/about" },
     { label: "Contact", href: "/contact", active: pathname === "/contact" },
   ];
 
   return (
     <>
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] rounded-2xl md:rounded-[1.25rem] bg-[#1c1917] flex justify-between items-center px-5 md:px-8 h-14 shadow-lg text-[#f5f5f4] transition-colors duration-300">
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-14 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] border border-foreground/10 shadow-lg transition-colors duration-300">
+        {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="text-lg font-bold tracking-tight uppercase font-sans">
+          <Link href="/" className="text-base md:text-lg font-bold tracking-tight uppercase font-sans text-foreground py-2 px-2">
             PRECISION AUTO
           </Link>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-4">
+        {/* Center Nav (Sticky tabs style) */}
+        <div className="flex items-center">
           <NavLinks links={links} />
+        </div>
 
-          <div className="flex items-center gap-4">
-            <button className="text-sm font-semibold hover:text-primary transition-colors">
-              Fr/En
-            </button>
-            <button
-              onClick={toggleTheme}
-              className="flex items-center justify-center hover:text-primary transition-colors"
-              aria-label="Changer de thème"
-            >
-              <span className="material-symbols-outlined">
-                {theme === "dark" ? "light_mode" : "dark_mode"}
-              </span>
-            </button>
+        {/* Actions (Language & Theme) */}
+        <div className="flex items-center gap-1 md:gap-3">
+          <div className="flex items-center gap-2">
+             <button className="text-xs md:text-sm font-semibold hover:text-primary transition-colors text-foreground px-2">
+               Fr/En
+             </button>
+             <button
+               onClick={toggleTheme}
+               className="flex items-center justify-center hover:text-primary transition-colors text-foreground p-2"
+               aria-label="Changer de thème"
+             >
+               <span className="material-symbols-outlined text-lg">
+                 {theme === "dark" ? "light_mode" : "dark_mode"}
+               </span>
+             </button>
           </div>
 
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(true)}
-            className="md:hidden flex items-center justify-center hover:text-primary transition-colors"
+            className="md:hidden flex items-center justify-center p-2 rounded-lg bg-foreground text-background"
           >
-            <span className="material-symbols-outlined text-3xl">menu</span>
+            <span className="material-symbols-outlined text-xl">menu</span>
           </button>
         </div>
       </nav>
@@ -118,17 +135,17 @@ export default function Navbar() {
       {/* NavigationDrawer Overlay */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm md:hidden"
           onClick={() => setIsOpen(false)}
         >
           <aside
-            className="bg-card h-full w-80 border-r border-border flex flex-col gap-4 p-8 shadow-[60px_0_100px_rgba(0,0,0,0.1)] ml-auto"
+            className="bg-background h-full w-80 border-r border-border flex flex-col gap-4 p-8 shadow-[60px_0_100px_rgba(0,0,0,0.1)] ml-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-between items-center mb-8">
               <span className="text-primary font-headline font-bold text-xl uppercase">MENU</span>
               <button onClick={() => setIsOpen(false)}>
-                <span className="material-symbols-outlined text-secondary-foreground">close</span>
+                <span className="material-symbols-outlined text-foreground">close</span>
               </button>
             </div>
             <nav className="flex flex-col gap-2">
@@ -146,7 +163,8 @@ export default function Navbar() {
                   <span className="material-symbols-outlined">
                     {link.label === "Home" ? "home" :
                      link.label === "Services" ? "layers" :
-                     link.label === "Portfolio" ? "collections" : "mail"}
+                     link.label === "Portfolio" ? "collections" :
+                     link.label === "About" ? "info" : "mail"}
                   </span>
                   {link.label}
                 </Link>
