@@ -92,7 +92,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-14 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] border border-foreground/10 shadow-lg transition-colors duration-300">
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-14 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] border-2 border-foreground/80 dark:border-foreground/80 shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-colors duration-300">
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="text-base md:text-lg font-bold tracking-tight uppercase font-sans text-foreground py-2 px-2">
