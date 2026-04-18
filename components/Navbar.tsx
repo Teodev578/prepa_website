@@ -28,7 +28,7 @@ function NavLinks({ links }: { links: NavLink[] }) {
       <motion.li
         animate={position}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="absolute z-0 h-8 rounded-full bg-background pointer-events-none"
+        className="absolute z-0 h-9 rounded-lg bg-[#f5f5f4] pointer-events-none"
       />
     </ul>
   );
@@ -55,8 +55,8 @@ function NavTab({
     >
       <Link
         href={link.href}
-        className={`block px-4 py-1.5 font-headline tracking-wider uppercase font-bold text-sm mix-blend-difference ${
-          link.active ? "text-primary" : "text-background"
+        className={`block px-5 py-2 font-sans tracking-wide uppercase font-medium text-sm mix-blend-difference ${
+          link.active ? "text-primary" : "text-[#f5f5f4]"
         }`}
       >
         {link.label}
@@ -81,9 +81,9 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-50 rounded-full bg-foreground/50 backdrop-blur-xl flex justify-between items-center px-6 md:px-8 h-16 border border-white/10 shadow-lg text-background text-shadow-sm transition-colors duration-300">
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] rounded-2xl md:rounded-[1.25rem] bg-[#1c1917] flex justify-between items-center px-5 md:px-8 h-16 sm:h-[72px] shadow-lg text-[#f5f5f4] transition-colors duration-300">
         <div className="flex items-center">
-          <Link href="/" className="text-lg md:text-xl font-black tracking-tighter uppercase italic font-headline">
+          <Link href="/" className="text-lg md:text-xl font-bold tracking-tight uppercase font-sans">
             PRECISION AUTO
           </Link>
         </div>
