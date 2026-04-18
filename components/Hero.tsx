@@ -13,7 +13,7 @@ export default function Hero() {
         </div>
 
         {/* Text and Actions */}
-        <div className="shrink-0 grid grid-cols-1 md:grid-cols-[1fr_1fr] gap-4 md:gap-10 lg:gap-12 items-start">
+        <div className="shrink-0 grid grid-cols-1 md:grid-cols-[1.618fr_1fr] gap-4 md:gap-10 lg:gap-12 items-start">
 
           {/* Header */}
           <div>
