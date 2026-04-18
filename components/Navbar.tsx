@@ -28,7 +28,7 @@ function NavLinks({ links }: { links: NavLink[] }) {
       <motion.li
         animate={position}
         transition={{ type: "spring", stiffness: 400, damping: 30 }}
-        className="absolute z-0 h-9 rounded-lg bg-[#f5f5f4] pointer-events-none"
+        className="absolute z-0 h-8 rounded-lg bg-[#f5f5f4] pointer-events-none"
       />
     </ul>
   );
@@ -81,9 +81,9 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] rounded-2xl md:rounded-[1.25rem] bg-[#1c1917] flex justify-between items-center px-5 md:px-8 h-16 sm:h-[72px] shadow-lg text-[#f5f5f4] transition-colors duration-300">
+      <nav className="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] rounded-2xl md:rounded-[1.25rem] bg-[#1c1917] flex justify-between items-center px-5 md:px-8 h-14 shadow-lg text-[#f5f5f4] transition-colors duration-300">
         <div className="flex items-center">
-          <Link href="/" className="text-lg md:text-xl font-bold tracking-tight uppercase font-sans">
+          <Link href="/" className="text-lg font-bold tracking-tight uppercase font-sans">
             PRECISION AUTO
           </Link>
         </div>

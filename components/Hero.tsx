@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="bg-background min-h-[100dvh] lg:h-[100dvh] xl:max-h-[1200px] pt-24 md:pt-[100px] pb-6 md:pb-8 flex flex-col">
+    <section className="bg-background min-h-[100dvh] lg:h-[100dvh] xl:max-h-[1200px] pt-24 md:pt-24 pb-6 md:pb-8 flex flex-col">
       <div className="container mx-auto px-4 md:px-8 flex-1 flex flex-col min-h-0">
         
         {/* Image Block: Made more prominent */}
