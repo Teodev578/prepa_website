@@ -59,7 +59,7 @@ const Tab = ({
           left: ref.current.offsetLeft,
         });
       }}
-      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase text-foreground mix-blend-difference md:px-5 md:py-2 md:text-sm font-bold tracking-tight"
+      className="relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase text-white mix-blend-difference md:px-4 md:py-1.5 md:text-sm font-bold tracking-tight"
     >
       <Link href={link.href}>{children}</Link>
     </li>
@@ -104,7 +104,7 @@ export default function Navbar() {
   return (
     <>
       <nav 
-        className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-14 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 ${
+        className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-12 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 ${
           isScrolled 
             ? "border border-transparent" 
             : "border-2 border-foreground/80 dark:border-foreground/80"
@@ -112,7 +112,7 @@ export default function Navbar() {
       >
         {/* Logo */}
         <div className="flex items-center">
-          <Link href="/" className="text-base md:text-lg font-bold tracking-tight uppercase font-sans text-foreground py-2 px-2">
+          <Link href="/" className="text-base md:text-lg font-bold tracking-tight uppercase font-sans text-foreground py-1 px-2">
             PRECISION AUTO
           </Link>
         </div>
