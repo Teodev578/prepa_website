@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #faf7f5;
+  --background: #f6f6f6;
   --foreground: #1a1a1a;
   --card: #faf7f5;
   --card-foreground: #1a1a1a;
@@ -96,6 +96,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground;
     min-height: 100dvh;
@@ -106,19 +107,24 @@
   .material-symbols-outlined {
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
+
   .glass-header {
     background: color-mix(in srgb, var(--background) 60%, transparent);
     backdrop-filter: blur(20px);
   }
+
   .hero-gradient {
     background: linear-gradient(to bottom, color-mix(in srgb, var(--background) 0%, transparent) 0%, color-mix(in srgb, var(--background) 90%, transparent) 80%, var(--background) 100%);
   }
+
   .primary-gradient {
     background: linear-gradient(135deg, var(--primary) 0%, color-mix(in srgb, var(--primary) 80%, black) 100%);
   }
+
   .text-shadow-glow {
     text-shadow: 0 0 15px color-mix(in srgb, var(--primary) 40%, transparent);
   }
+
   .glass-nav {
     background: color-mix(in srgb, var(--background) 60%, transparent);
     backdrop-filter: blur(40px);

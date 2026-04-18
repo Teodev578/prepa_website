@@ -104,7 +104,7 @@ export default function Navbar() {
   return (
     <>
       <nav 
-        className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-12 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 ${
+        className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl z-[60] flex justify-between items-center px-4 md:px-6 h-12 bg-background/50 backdrop-blur-md rounded-2xl md:rounded-[1.25rem] transition-all duration-300 ${
           isScrolled 
             ? "border border-transparent" 
             : "border-2 border-foreground/80 dark:border-foreground/80"
