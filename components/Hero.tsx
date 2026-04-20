@@ -1,4 +1,24 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+
+const images = [
+  "/images/image_2.png",
+  "/images/image_3.jpeg",
+  "/images/image_4.jpeg",
+];
+
 export default function Hero() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="bg-background min-h-[100dvh] pt-[72px] md:pt-0 flex flex-col justify-center overflow-hidden relative border-b border-border">
       <div className="flex flex-col lg:flex-row w-full h-full min-h-[100dvh] lg:min-h-0">
@@ -29,12 +49,28 @@ export default function Hero() {
           </div>
 
           <div className="flex-grow relative overflow-hidden bg-background">
-            <img
-              className="w-full h-full object-cover"
-              alt="Detailing Porsche Technical"
-              src="/images/hero_picture_1.png"
-            />
-            {/* Image brute - pas de texte superposé */}
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currentIndex}
+                src={images[currentIndex]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="w-full h-full object-cover"
+                alt={`Precision Auto Technical - ${currentIndex + 1}`}
+              />
+            </AnimatePresence>
+            
+            {/* Technical Overlay - Minimal Indicators */}
+            <div className="absolute bottom-6 right-6 flex gap-2 z-20">
+              {images.map((_, idx) => (
+                <div 
+                  key={idx}
+                  className={`w-12 h-[2px] transition-colors duration-500 ${idx === currentIndex ? 'bg-primary' : 'bg-foreground/20'}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
