@@ -3,11 +3,11 @@
 :root {
   /* Fond ultra-propre, blanc "galerie" */
   --background: #f7f5f6;
-  --foreground: #0a0a0a;
+  --foreground: #201c1d;
 
   /* Cartes et sections : on oublie le beige, on reste sur du neutre */
   --card: #ffffff;
-  --card-foreground: #0a0a0a;
+  --card-foreground: #201c1d;
 
   /* L'ACCENT FORT : Ton bordeaux technique */
   --primary: #fe3333;
