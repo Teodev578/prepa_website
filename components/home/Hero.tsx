@@ -49,16 +49,16 @@ export default function Hero() {
   ];
 
   return (
-    <section className="bg-background h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border">
+    <section className="bg-background min-h-[100dvh] lg:h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border pt-20 lg:pt-0">
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col lg:flex-row w-full h-full"
+        className="flex flex-col lg:flex-row w-full h-full flex-grow"
       >
 
         {/* Left Column : Image (Mobile: Top, Desktop: Left) */}
-        <div className="w-full lg:w-1/2 relative flex items-stretch border-b lg:border-b-0 lg:border-r border-technical h-[35vh] lg:h-full">
+        <div className="w-full lg:w-1/2 relative flex items-stretch border-b lg:border-b-0 lg:border-r border-technical min-h-[40vh] lg:min-h-0 lg:h-full p-6 lg:p-0">
 
           {/* Edge Menu/Annotations (Desktop left border) */}
           <div className="hidden lg:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
@@ -76,7 +76,6 @@ export default function Hero() {
               GPS: 48°52'5.6"N 2°19'59.5"E
             </motion.div>
 
-            {/* Minimal burger menu hint */}
             <motion.div 
               variants={itemVariants}
               whileHover={{ opacity: 0.7 }}
@@ -106,7 +105,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: BEZIER }}
-            className="flex-grow relative overflow-hidden bg-background"
+            className="flex-grow relative overflow-hidden bg-background h-full w-full"
           >
             <AnimatePresence mode="wait">
               <motion.img
@@ -122,14 +121,14 @@ export default function Hero() {
             </AnimatePresence>
 
             {/* Technical Overlay - Minimal Indicators */}
-            <div className="absolute bottom-6 right-6 flex gap-2 z-20">
+            <div className="absolute bottom-4 right-4 lg:bottom-6 lg:right-6 flex gap-2 z-20">
               {images.map((_, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ width: 0 }}
                   animate={{ width: 48 }}
                   transition={{ delay: 0.5 + idx * 0.1, duration: 0.4, ease: BEZIER }}
-                  className={`h-[2px] transition-colors duration-500 ${idx === currentIndex ? 'bg-primary' : 'bg-foreground/20'}`}
+                  className={`h-[2px] transition-colors duration-500 ${idx === currentIndex ? 'bg-primary' : 'bg-white/40'}`}
                 />
               ))}
             </div>
@@ -137,7 +136,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column : Typography (Mobile: Bottom, Desktop: Right) */}
-        <div className="w-full lg:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-10 lg:py-0 border-technical h-[65vh] lg:h-full">
+        <div className="w-full lg:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-12 lg:py-0 border-technical flex-grow lg:h-full">
           <div className="absolute top-0 left-0 tech-corner hidden lg:block"></div>
 
           {/* Massive Cutoff Number (Aligned with Content) */}
@@ -153,13 +152,13 @@ export default function Hero() {
           <div className="relative z-10 max-w-xl">
             <motion.div 
               variants={itemVariants}
-              className="lg:hidden font-mono text-xs uppercase font-bold tracking-widest text-foreground mb-6 flex justify-between w-full"
+              className="md:hidden font-mono text-[10px] uppercase font-bold tracking-widest text-muted-foreground mb-4 flex justify-between w-full"
             >
               <span>GPS: 48°52'5.6"N 2°19'59.5"E</span>
               <span>SPEC. 01</span>
             </motion.div>
 
-            <h1 className="font-sans font-black text-[clamp(2rem,8vh,7.5rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-6 md:mb-10 relative">
+            <h1 className="font-sans font-black text-[14vw] sm:text-[11vw] md:text-[8vw] lg:text-[clamp(4.5rem,7vw,7.5rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-8 md:mb-10 relative">
               {titleLines.map((line, i) => (
                 <div key={i} className="overflow-hidden">
                   <motion.div
@@ -179,7 +178,7 @@ export default function Hero() {
 
             <motion.p 
               variants={itemVariants}
-              className="text-foreground font-medium text-sm md:text-base leading-relaxed mb-8 md:mb-12 lg:max-w-[400px]"
+              className="text-foreground/80 font-medium text-sm md:text-base leading-relaxed mb-8 md:mb-12 lg:max-w-[400px]"
             >
               Ici, aucun compromis. Le travail bien fait nous importe plus que tout, afin que votre véhicule ne reparte jamais le même de notre atelier.
             </motion.p>
@@ -187,12 +186,12 @@ export default function Hero() {
             {/* Buttons Technical Pattern */}
             <motion.div 
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold"
+              className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold w-full"
             >
               <motion.button 
                 whileHover={{ backgroundColor: "var(--primary)", color: "white" }}
                 whileTap={{ scale: 0.98 }}
-                className="relative px-8 py-5 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors duration-300"
+                className="w-full sm:w-auto min-h-[48px] relative px-6 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors duration-300"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   DÉCOUVRIR NOS SERVICES
@@ -205,7 +204,7 @@ export default function Hero() {
               <motion.button 
                 whileHover={{ backgroundColor: "var(--foreground)", color: "var(--background)" }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-5 border border-primary bg-transparent text-foreground group flex items-center justify-center gap-3 rounded-[var(--radius)] transition-colors duration-300"
+                className="w-full sm:w-auto min-h-[48px] px-6 py-4 border border-primary bg-transparent text-foreground group flex items-center justify-center gap-3 rounded-[var(--radius)] transition-colors duration-300"
               >
                 <span className="w-1.5 h-1.5 bg-primary group-hover:bg-background block rounded-full transition-colors"></span>
                 NOTRE PORTFOLIO

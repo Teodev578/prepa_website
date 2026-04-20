@@ -94,7 +94,7 @@ const ExcellencePhilosophy = () => {
                                 className="h-[1px] bg-foreground"
                             ></motion.div>
                         </motion.div>
-                        <h2 className="font-sans font-black text-5xl md:text-7xl lg:text-8xl uppercase tracking-tighter mb-8 leading-[0.8] text-foreground">
+                        <h2 className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] uppercase tracking-tighter mb-8 leading-[0.8] text-foreground">
                             {["LA PHILOSOPHIE", "DE L'EXCELLENCE."].map((line, i) => (
                                 <div key={i} className="overflow-hidden">
                                     <motion.span
@@ -122,7 +122,7 @@ const ExcellencePhilosophy = () => {
                             transition={{ duration: 0.6, delay: 0.5, ease: BEZIER }}
                         >
                             {/* Barcode separator */}
-                            <div className="flex gap-px mb-6 items-end h-6 opacity-30">
+                            <div className="hidden md:flex gap-px mb-6 items-end h-6 opacity-30">
                                 {[1, 3, 2, 1, 4].map((w, idx) => (
                                     <motion.div 
                                         key={idx}
@@ -135,7 +135,7 @@ const ExcellencePhilosophy = () => {
                                     ></motion.div>
                                 ))}
                             </div>
-                            <p className="mb-6 opacity-80">
+                            <p className="mb-6 opacity-80 md:mt-2">
                                 Chaque intervention suit un protocole d'ingénierie stricte. Nous ne considérons pas le detailing comme un simple nettoyage d'apparat, mais comme une science appliquée à la préservation ultime de l'automobile.
                             </p>
                         </motion.div>
@@ -148,12 +148,11 @@ const ExcellencePhilosophy = () => {
                             <p className="mb-8 opacity-80">
                                 Les processus de correction des vernis et de pose des protections nanotechnologiques sont exécutés sous un éclairage professionnel calibré, utilisant des instruments garantissant des tolérances microscopiques.
                             </p>
-                            
                             {/* Geometric Button */}
                             <motion.button 
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                className="group relative border border-border px-8 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all w-full md:w-auto"
+                                className="group min-h-[48px] relative border border-border px-8 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all w-full md:w-auto mt-4"
                             >
                                 <div className="absolute top-0 left-0 w-2 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></div>
                                 <div className="absolute bottom-0 right-0 w-2 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></div>

@@ -27,7 +27,7 @@ const TechnicalServices = () => {
                     whileInView={{ opacity: [0, 1, 0.5, 1] }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.2 }}
-                    className="absolute top-0 left-0 -translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none"
+                    className="absolute top-0 left-0 -translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
@@ -36,7 +36,7 @@ const TechnicalServices = () => {
                     whileInView={{ opacity: [0, 1, 0.5, 1] }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.3 }}
-                    className="absolute top-0 right-0 translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none"
+                    className="absolute top-0 right-0 translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
@@ -45,7 +45,7 @@ const TechnicalServices = () => {
                     whileInView={{ opacity: [0, 1, 0.5, 1] }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.4 }}
-                    className="absolute bottom-0 left-0 -translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none"
+                    className="absolute bottom-0 left-0 -translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
@@ -54,12 +54,12 @@ const TechnicalServices = () => {
                     whileInView={{ opacity: [0, 1, 0.5, 1] }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.4, delay: 0.5 }}
-                    className="absolute bottom-0 right-0 translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none"
+                    className="absolute bottom-0 right-0 translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
                 
-                <h2 className="font-sans font-black text-6xl md:text-[11vw] leading-[0.8] tracking-tighter uppercase max-w-full break-words relative z-10">
+                <h2 className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] leading-[0.8] tracking-tighter uppercase max-w-full break-words relative z-10">
                     {titleLines.map((line, i) => (
                         <div key={i} className="overflow-hidden">
                             <motion.div

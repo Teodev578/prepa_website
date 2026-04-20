@@ -53,7 +53,7 @@ export default function CTA() {
             ></motion.div>
           </motion.div>
           
-          <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.85]">
+          <h2 className="text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] font-sans font-black uppercase tracking-tighter mb-6 leading-[0.85]">
             {titleLines.map((line, i) => (
               <div key={i} className="overflow-hidden">
                 <motion.div
@@ -108,10 +108,10 @@ export default function CTA() {
             <div className="absolute -top-1 -left-1 w-2 h-2 bg-primary opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
             
             <div className="flex flex-col md:flex-row w-full h-full">
-              <div className="flex-grow flex items-center px-4 py-2 border-b md:border-b-0 md:border-r border-background/20">
+              <div className="flex-grow flex items-center px-4 py-2 min-h-[48px] border-b md:border-b-0 md:border-r border-background/20">
                 <span className="font-mono text-primary text-sm mr-4">{">"}</span>
                 <input
-                  className="w-full bg-transparent border-none text-background font-mono text-xs placeholder:text-background/40 focus:ring-0 outline-none uppercase tracking-widest"
+                  className="w-full h-full bg-transparent border-none text-background font-mono text-xs placeholder:text-background/40 focus:ring-0 outline-none uppercase tracking-widest"
                   placeholder="VOTRE_ADRESSE_EMAIL"
                   type="email"
                 />
@@ -119,7 +119,7 @@ export default function CTA() {
               <motion.button 
                 whileHover={{ backgroundColor: "var(--primary-hover, #a11d33)" }} // Assuming primary hover color
                 whileTap={{ scale: 0.98 }}
-                className="bg-primary text-primary-foreground font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-5 transition-colors flex items-center justify-center gap-2"
+                className="bg-primary text-primary-foreground min-h-[48px] font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-4 transition-colors flex items-center justify-center gap-2"
               >
                 TRANSMETTRE
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>

@@ -100,7 +100,7 @@ export default function Testimonials() {
             ></motion.div>
           </motion.div>
           
-          <h2 className="text-5xl md:text-7xl font-sans font-black text-foreground tracking-tighter uppercase leading-[0.85] mb-6">
+          <h2 className="text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.85] mb-6">
             {["RAPPORTS", "CLIENTS."].map((line, i) => (
               <div key={i} className="overflow-hidden">
                 <motion.div
