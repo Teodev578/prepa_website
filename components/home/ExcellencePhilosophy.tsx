@@ -12,7 +12,7 @@ const ExcellencePhilosophy = () => {
                 </div>
                 <div className="flex-1 grid grid-cols-2 md:grid-cols-4 w-full">
                     <div className="border-r border-b md:border-b-0 border-border p-4 md:p-8 flex flex-col justify-between h-28 md:h-40 group hover:bg-muted transition-colors relative">
-                        <span className="font-mono text-[10px] text-pink-500 uppercase tracking-widest">SYS.01</span>
+                        <span className="font-mono text-[10px] text-primary uppercase tracking-widest">SYS.01</span>
                         <div>
                             <h4 className="font-sans font-bold text-lg md:text-2xl uppercase tracking-tighter">9H Hardness</h4>
                             <p className="font-mono text-[9px] md:text-[10px] text-muted-foreground mt-1">CERTIFIED COATINGS</p>
@@ -20,7 +20,7 @@ const ExcellencePhilosophy = () => {
                     </div>
                     
                     <div className="border-b md:border-b-0 md:border-r border-border p-4 md:p-8 flex flex-col justify-between h-28 md:h-40 group hover:bg-muted transition-colors relative">
-                        <span className="font-mono text-[10px] text-pink-500 uppercase tracking-widest">SYS.02</span>
+                        <span className="font-mono text-[10px] text-primary uppercase tracking-widest">SYS.02</span>
                         <div>
                             <h4 className="font-sans font-bold text-lg md:text-2xl uppercase tracking-tighter">Machined</h4>
                             <p className="font-mono text-[9px] md:text-[10px] text-muted-foreground mt-1">SWISS INSTRUMENTS</p>
@@ -28,7 +28,7 @@ const ExcellencePhilosophy = () => {
                     </div>
                     
                     <div className="border-r border-border p-4 md:p-8 flex flex-col justify-between h-28 md:h-40 group hover:bg-muted transition-colors relative">
-                        <span className="font-mono text-[10px] text-pink-500 uppercase tracking-widest">SYS.03</span>
+                        <span className="font-mono text-[10px] text-primary uppercase tracking-widest">SYS.03</span>
                         <div>
                             <h4 className="font-sans font-bold text-lg md:text-2xl uppercase tracking-tighter">Rapid</h4>
                             <p className="font-mono text-[9px] md:text-[10px] text-muted-foreground mt-1">24H TURNAROUND</p>
@@ -36,7 +36,7 @@ const ExcellencePhilosophy = () => {
                     </div>
                     
                     <div className="p-4 md:p-8 flex flex-col justify-between h-28 md:h-40 group hover:bg-muted transition-colors relative">
-                        <span className="font-mono text-[10px] text-pink-500 uppercase tracking-widest">SYS.04</span>
+                        <span className="font-mono text-[10px] text-primary uppercase tracking-widest">SYS.04</span>
                         <div>
                             <h4 className="font-sans font-bold text-lg md:text-2xl uppercase tracking-tighter">Warranty</h4>
                             <p className="font-mono text-[9px] md:text-[10px] text-muted-foreground mt-1">LIFE-LONG SUPPORT</p>
@@ -57,11 +57,11 @@ const ExcellencePhilosophy = () => {
                     {/* Left: The Massive Title */}
                     <div className="flex-1">
                         <div className="flex items-center gap-4 mb-8">
-                            <div className="font-mono text-xs text-pink-500 border border-pink-500 px-2 py-1">PH-01</div>
+                            <div className="font-mono text-xs text-primary border border-primary px-2 py-1">PH-01</div>
                             <div className="w-12 h-[1px] bg-foreground"></div>
                         </div>
-                        <h2 className="font-sans font-black text-5xl md:text-7xl lg:text-8xl uppercase tracking-tighter mb-8 leading-[0.85]">
-                            LA PHILOSOPHIE<br/> DE L'<span className="text-pink-500">EXCELLENCE</span>.
+                        <h2 className="font-sans font-black text-5xl md:text-7xl lg:text-8xl uppercase tracking-tighter mb-8 leading-[0.8] text-foreground">
+                            LA PHILOSOPHIE<br/> DE L'<span className="text-primary">EXCELLENCE</span>.
                         </h2>
                     </div>
 
@@ -86,12 +86,12 @@ const ExcellencePhilosophy = () => {
                             </p>
                             
                             {/* Geometric Button */}
-                            <button className="group relative border border-border px-8 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-foreground hover:text-background transition-all w-full md:w-auto">
-                                <div className="absolute top-0 left-0 w-2 h-[1px] bg-pink-500 transition-all duration-300 group-hover:w-full"></div>
-                                <div className="absolute bottom-0 right-0 w-2 h-[1px] bg-pink-500 transition-all duration-300 group-hover:w-full"></div>
+                            <button className="group relative border border-border px-8 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground transition-all w-full md:w-auto">
+                                <div className="absolute top-0 left-0 w-2 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></div>
+                                <div className="absolute bottom-0 right-0 w-2 h-[1px] bg-primary transition-all duration-300 group-hover:w-full"></div>
                                 <div className="flex items-center justify-between gap-4">
                                     <span>// LANCER LE PROTOCOLE</span>
-                                    <span className="text-pink-500 group-hover:text-background">→</span>
+                                    <span className="text-primary group-hover:text-primary-foreground">→</span>
                                 </div>
                             </button>
                         </div>
