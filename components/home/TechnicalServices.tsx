@@ -116,7 +116,7 @@ const TechnicalServices = () => {
                         <h3 className="font-sans font-black text-4xl lg:text-5xl uppercase tracking-tighter">ESSENTIEL.</h3>
                     </div>
                     
-                    <div className="space-y-8 font-mono text-[11px] lg:text-xs">
+                    <div className="space-y-8 font-mono text-xs md:text-sm">
                         {/* Subtitle: Spécifications */}
                         <div>
                             <div className="flex justify-between items-end border-b border-border pb-2 mb-3">
@@ -174,7 +174,7 @@ const TechnicalServices = () => {
                         <h3 className="font-sans font-black text-4xl lg:text-5xl uppercase tracking-tighter text-background leading-[0.9]">ÉCLAT.</h3>
                     </div>
                     
-                    <div className="space-y-8 font-mono text-[11px] lg:text-xs">
+                    <div className="space-y-8 font-mono text-xs md:text-sm">
                         <div>
                             <div className="flex justify-between items-end border-b border-background/20 pb-2 mb-3">
                                 <span className="uppercase text-background/50 tracking-widest font-bold">Spécifications</span>
@@ -225,7 +225,7 @@ const TechnicalServices = () => {
                         <h3 className="font-sans font-black text-4xl lg:text-5xl uppercase tracking-tighter">ÉLITE.</h3>
                     </div>
                     
-                    <div className="space-y-8 font-mono text-[11px] lg:text-xs">
+                    <div className="space-y-8 font-mono text-xs md:text-sm">
                         <div>
                             <div className="flex justify-between items-end border-b border-border pb-2 mb-3">
                                 <span className="uppercase text-muted-foreground tracking-widest font-bold">Spécifications</span>

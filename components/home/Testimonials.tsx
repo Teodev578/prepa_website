@@ -136,7 +136,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.5, ease: BEZIER }}
-            className="font-mono text-[11px] md:text-xs text-muted-foreground w-full max-w-[400px] leading-relaxed uppercase tracking-wider"
+            className="font-mono text-xs md:text-sm lg:text-base text-muted-foreground w-full max-w-[500px] leading-relaxed uppercase tracking-wider"
           >
             Extractions des retours de télémetrie client post-intervention. Satisfaction validée avec un taux de réussite de 99.8%.
           </motion.p>
@@ -174,7 +174,7 @@ export default function Testimonials() {
               
               {/* Content */}
               <div className="p-6 md:p-8 flex-1">
-                <p className="mb-8 font-sans font-medium text-sm md:text-base leading-relaxed text-foreground uppercase tracking-tight">
+                <p className="mb-8 font-sans font-medium text-base md:text-lg lg:text-xl leading-relaxed text-foreground uppercase tracking-tight">
                   <span className="text-primary font-black mr-2">"</span>
                   {testimonial.quote}
                   <span className="text-primary font-black ml-2">"</span>

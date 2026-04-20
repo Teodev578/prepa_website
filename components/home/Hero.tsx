@@ -34,23 +34,21 @@ export default function Hero() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.6, ease: BEZIER } 
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: BEZIER }
     },
   };
 
   const titleLines = [
-    "LA MAÎTRISE",
-    "TECHNIQUE",
-    "EST NOTRE",
-    "CULTURE."
+    "LE CHOIX",
+    "NUMERO #1",
   ];
 
   return (
     <section className="bg-background min-h-[100dvh] lg:h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border pt-20 lg:pt-0">
-      <motion.div 
+      <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -62,21 +60,21 @@ export default function Hero() {
 
           {/* Edge Menu/Annotations (Desktop left border) */}
           <div className="hidden lg:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0.5, 1] }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-                className="absolute top-0 right-0 tech-corner"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.5, 1] }}
+              transition={{ duration: 0.4, delay: 0.6 }}
+              className="absolute top-0 right-0 tech-corner"
             ></motion.div>
 
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mt-32 text-foreground"
             >
               GPS: 48°52'5.6"N 2°19'59.5"E
             </motion.div>
 
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               whileHover={{ opacity: 0.7 }}
               className="flex flex-col gap-1.5 cursor-pointer transition-opacity"
@@ -86,22 +84,22 @@ export default function Hero() {
               <div className="w-8 h-[1.5px] bg-foreground"></div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mb-20 text-foreground"
             >
               SPEC. 01
             </motion.div>
 
-            <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0.5, 1] }}
-                transition={{ duration: 0.4, delay: 0.8 }}
-                className="absolute bottom-0 right-0 tech-corner"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: [0, 1, 0.5, 1] }}
+              transition={{ duration: 0.4, delay: 0.8 }}
+              className="absolute bottom-0 right-0 tech-corner"
             ></motion.div>
           </div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.5, ease: BEZIER }}
@@ -140,7 +138,7 @@ export default function Hero() {
           <div className="absolute top-0 left-0 tech-corner hidden lg:block"></div>
 
           {/* Massive Cutoff Number (Aligned with Content) */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 0.1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: BEZIER }}
@@ -150,7 +148,7 @@ export default function Hero() {
           </motion.div>
 
           <div className="relative z-10 max-w-xl">
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="md:hidden font-mono text-[10px] uppercase font-bold tracking-widest text-muted-foreground mb-4 flex justify-between w-full"
             >
@@ -164,10 +162,10 @@ export default function Hero() {
                   <motion.div
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
-                    transition={{ 
-                      duration: 0.7, 
-                      delay: 0.4 + (i * 0.1), 
-                      ease: BEZIER 
+                    transition={{
+                      duration: 0.7,
+                      delay: 0.4 + (i * 0.1),
+                      ease: BEZIER
                     }}
                   >
                     {line}
@@ -176,19 +174,19 @@ export default function Hero() {
               ))}
             </h1>
 
-            <motion.p 
+            <motion.p
               variants={itemVariants}
-              className="text-foreground/80 font-medium text-sm md:text-base leading-relaxed mb-8 md:mb-12 lg:max-w-[400px]"
+              className="text-foreground/80 font-medium text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-12 lg:max-w-[500px]"
             >
-              Ici, aucun compromis. Le travail bien fait nous importe plus que tout, afin que votre véhicule ne reparte jamais le même de notre atelier.
+              La perfection n'est pas une option. Notre protocole de restauration et de protection vise un seul objectif : le standard d'usine, ou mieux.
             </motion.p>
 
             {/* Buttons Technical Pattern */}
-            <motion.div 
+            <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold w-full"
             >
-              <motion.button 
+              <motion.button
                 whileHover={{ backgroundColor: "var(--primary)", color: "white" }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full sm:w-auto min-h-[48px] relative px-6 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors duration-300"
@@ -201,7 +199,7 @@ export default function Hero() {
                 <div className="absolute inset-0 border border-primary-foreground/20 scale-105 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300"></div>
               </motion.button>
 
-              <motion.button 
+              <motion.button
                 whileHover={{ backgroundColor: "var(--foreground)", color: "var(--background)" }}
                 whileTap={{ scale: 0.98 }}
                 className="w-full sm:w-auto min-h-[48px] px-6 py-4 border border-primary bg-transparent text-foreground group flex items-center justify-center gap-3 rounded-[var(--radius)] transition-colors duration-300"
@@ -213,7 +211,7 @@ export default function Hero() {
           </div>
 
           {/* EST. 2026 annotation */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 1, repeat: 0 }}
@@ -226,11 +224,11 @@ export default function Hero() {
               EST. 2026
             </motion.span>
           </motion.div>
-          <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 0.5, 1] }}
-                transition={{ duration: 0.4, delay: 1.0 }}
-                className="absolute bottom-0 right-0 tech-corner hidden lg:block"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: [0, 1, 0.5, 1] }}
+            transition={{ duration: 0.4, delay: 1.0 }}
+            className="absolute bottom-0 right-0 tech-corner hidden lg:block"
           ></motion.div>
         </div>
 

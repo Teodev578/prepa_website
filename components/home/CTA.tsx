@@ -89,7 +89,7 @@ export default function CTA() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.6, ease: BEZIER }}
-            className="font-mono text-[11px] md:text-xs text-muted-foreground max-w-md uppercase leading-relaxed tracking-wide"
+            className="font-mono text-xs md:text-sm lg:text-base text-muted-foreground max-w-md uppercase leading-relaxed tracking-wide"
           >
             Déclenchez le protocole d'ingénierie. Entrez vos coordonnées ci-contre pour une analyse complète de votre véhicule. Devis calibré sous 24h.
           </motion.p>

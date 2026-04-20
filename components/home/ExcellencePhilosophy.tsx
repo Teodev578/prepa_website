@@ -114,7 +114,7 @@ const ExcellencePhilosophy = () => {
                     </div>
 
                     {/* Right: The Technical Description */}
-                    <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 font-mono text-[11px] lg:text-xs leading-relaxed uppercase pt-4 lg:pt-24 border-t lg:border-t-0 border-border">
+                    <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 font-mono text-xs md:text-sm lg:text-base leading-relaxed uppercase pt-4 lg:pt-24 border-t lg:border-t-0 border-border">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
