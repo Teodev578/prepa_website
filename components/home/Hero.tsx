@@ -29,7 +29,7 @@ export default function Hero() {
           {/* Edge Menu/Annotations (Desktop left border) */}
           <div className="hidden lg:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
             <div className="absolute top-0 right-0 tech-corner"></div>
-            
+
             <div className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mt-32 text-foreground">
               GPS: 48°52'5.6"N 2°19'59.5"E
             </div>
@@ -61,11 +61,11 @@ export default function Hero() {
                 alt={`Precision Auto Technical - ${currentIndex + 1}`}
               />
             </AnimatePresence>
-            
+
             {/* Technical Overlay - Minimal Indicators */}
             <div className="absolute bottom-6 right-6 flex gap-2 z-20">
               {images.map((_, idx) => (
-                <div 
+                <div
                   key={idx}
                   className={`w-12 h-[2px] transition-colors duration-500 ${idx === currentIndex ? 'bg-primary' : 'bg-foreground/20'}`}
                 />
@@ -78,9 +78,9 @@ export default function Hero() {
         <div className="w-full lg:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-10 lg:py-0 border-technical h-[65vh] lg:h-full">
           <div className="absolute top-0 left-0 tech-corner hidden lg:block"></div>
 
-          {/* Massive Cutoff Number (Edge Right) */}
-          <div className="absolute top-1/2 right-0 -translate-y-1/2 translate-x-[35%] lg:translate-x-[40%] text-[60vw] lg:text-[35vw] font-sans font-black text-primary leading-none pointer-events-none z-0 select-none opacity-10">
-            01
+          {/* Massive Cutoff Number (Aligned with Content) */}
+          <div className="absolute top-1/2 left-6 md:left-16 lg:left-24 -translate-y-1/2 text-[60vw] lg:text-[35vw] font-sans font-black text-primary leading-none pointer-events-none z-0 select-none opacity-10">
+            #1
           </div>
 
           <div className="relative z-10 max-w-xl">

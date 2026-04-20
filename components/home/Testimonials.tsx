@@ -54,14 +54,14 @@ export default function Testimonials() {
         {/* Header - Poster Style */}
         <div className="mb-16 md:mb-24 relative">
           <div className="flex items-center gap-4 mb-4">
-            <span className="font-mono text-xs text-pink-500 uppercase tracking-widest bg-pink-500/10 px-2 py-1">
+            <span className="font-mono text-xs text-primary uppercase tracking-widest bg-primary/10 px-2 py-1">
               SYS.LOG.03
             </span>
             <div className="h-[1px] w-24 bg-foreground opacity-20"></div>
           </div>
           
           <h2 className="text-5xl md:text-7xl font-sans font-black text-foreground tracking-tighter uppercase leading-[0.85] mb-6">
-            RAPPORTS <br/> <span className="text-pink-500">CLIENTS.</span>
+            RAPPORTS <br/> <span className="text-primary">CLIENTS.</span>
           </h2>
           
           <div className="flex gap-1 items-end h-6 opacity-30 mb-8">
@@ -92,7 +92,7 @@ export default function Testimonials() {
                 <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
                   ID: {testimonial.initials}-{index.toString().padStart(4, '0')}
                 </span>
-                <span className="font-mono text-[9px] text-pink-500 uppercase tracking-widest">
+                <span className="font-mono text-[9px] text-primary uppercase tracking-widest">
                   {"// VALIDATED"}
                 </span>
               </div>
@@ -100,9 +100,9 @@ export default function Testimonials() {
               {/* Content */}
               <div className="p-6 md:p-8 flex-1">
                 <p className="mb-8 font-sans font-medium text-sm md:text-base leading-relaxed text-foreground uppercase tracking-tight">
-                  <span className="text-pink-500 font-black mr-2">"</span>
+                  <span className="text-primary font-black mr-2">"</span>
                   {testimonial.quote}
-                  <span className="text-pink-500 font-black ml-2">"</span>
+                  <span className="text-primary font-black ml-2">"</span>
                 </p>
 
                 {/* Patient / Vehicle data terminal format */}
@@ -116,7 +116,7 @@ export default function Testimonials() {
                     </div>
                     <div className="text-right">
                       <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">UNITÉ</span>
-                      <span className="font-bold text-[10px] text-pink-500 tracking-wider">
+                      <span className="font-bold text-[10px] text-primary tracking-wider">
                         {testimonial.title}
                       </span>
                     </div>
@@ -125,13 +125,13 @@ export default function Testimonials() {
               </div>
               
               {/* Corner cross (technical style) */}
-              <div className="absolute top-1/2 -right-2 text-pink-500 font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="absolute top-1/2 -right-2 text-primary font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity">
                 +
               </div>
               
               {/* Small status bar on hover */}
               <div className="w-full h-1 bg-border relative">
-                <div className="absolute top-0 left-0 h-full w-0 bg-pink-500 group-hover:w-full transition-all duration-700 ease-out"></div>
+                <div className="absolute top-0 left-0 h-full w-0 bg-primary group-hover:w-full transition-all duration-700 ease-out"></div>
               </div>
             </motion.div>
           ))}

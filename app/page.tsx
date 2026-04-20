@@ -1,9 +1,9 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
-import TechnicalServices from "@/components/TechnicalServices";
-import ExcellencePhilosophy from "@/components/ExcellencePhilosophy";
-import Testimonials from "@/components/Testimonials";
-import CTA from "@/components/CTA";
+import Hero from "@/components/home/Hero";
+import TechnicalServices from "@/components/home/TechnicalServices";
+import ExcellencePhilosophy from "@/components/home/ExcellencePhilosophy";
+import Testimonials from "@/components/home/Testimonials";
+import CTA from "@/components/home/CTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
