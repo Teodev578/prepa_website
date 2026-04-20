@@ -1,44 +1,108 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
 export default function CTA() {
+  const titleLines = ["PRÊT POUR", "L'EXCELLENCE."];
+
   return (
     <section className="py-32 px-6 md:px-20 bg-background text-foreground relative border-b border-border overflow-hidden">
       {/* Technical background marks */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-10 left-10 text-primary font-mono text-xl">+</div>
-        <div className="absolute top-10 right-10 text-primary font-mono text-xl">+</div>
-        <div className="absolute bottom-10 left-10 text-primary font-mono text-xl">+</div>
-        <div className="absolute bottom-10 right-10 text-primary font-mono text-xl">+</div>
+        {[
+          { pos: "top-10 left-10", delay: 0.1 },
+          { pos: "top-10 right-10", delay: 0.2 },
+          { pos: "bottom-10 left-10", delay: 0.3 },
+          { pos: "bottom-10 right-10", delay: 0.4 },
+        ].map((marker, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: [0, 1, 0.5, 1] }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4, delay: marker.delay }}
+            className={`absolute ${marker.pos} text-primary font-mono text-xl`}
+          >
+            +
+          </motion.div>
+        ))}
       </div>
 
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-16 relative z-10">
         
         {/* Massive Text Area */}
         <div className="flex-1">
-          <div className="flex items-center gap-4 mb-6">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: BEZIER }}
+            className="flex items-center gap-4 mb-6"
+          >
             <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-1 uppercase tracking-widest">
               STATUS: READY
             </span>
-            <div className="h-[1px] w-16 bg-foreground opacity-30"></div>
-          </div>
+            <motion.div 
+              initial={{ width: 0 }}
+              whileInView={{ width: 64 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2, ease: BEZIER }}
+              className="h-[1px] bg-foreground opacity-30"
+            ></motion.div>
+          </motion.div>
           
           <h2 className="text-5xl md:text-7xl font-sans font-black uppercase tracking-tighter mb-6 leading-[0.85]">
-            PRÊT POUR <br/> L'<span className="text-primary">EXCELLENCE</span>.
+            {titleLines.map((line, i) => (
+              <div key={i} className="overflow-hidden">
+                <motion.div
+                  initial={{ y: "100%" }}
+                  whileInView={{ y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: 0.2 + (i * 0.1), ease: BEZIER }}
+                >
+                  {line.includes("EXCELLENCE") ? (
+                    <>L'<span className="text-primary">EXCELLENCE</span>.</>
+                  ) : line}
+                </motion.div>
+              </div>
+            ))}
           </h2>
           
-          <div className="flex gap-1 items-end h-8 opacity-40 mb-8">
-            <div className="w-[1px] h-full bg-foreground"></div>
-            <div className="w-[3px] h-[70%] bg-foreground"></div>
-            <div className="w-[1px] h-full bg-foreground"></div>
-            <div className="w-[4px] h-[40%] bg-foreground"></div>
-            <div className="w-[2px] h-[90%] bg-foreground"></div>
+          <div className="flex gap-px items-end h-8 opacity-40 mb-8">
+            {[1, 3, 1, 4, 2].map((w, idx) => (
+              <motion.div 
+                key={idx}
+                initial={{ height: 0 }}
+                whileInView={{ height: idx === 0 || idx === 2 ? "100%" : (idx === 1 ? "70%" : (idx === 3 ? "40%" : "90%")) }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.5 + idx * 0.05 }}
+                className="bg-foreground" 
+                style={{ width: `${w}px` }}
+              ></motion.div>
+            ))}
           </div>
 
-          <p className="font-mono text-[11px] md:text-xs text-muted-foreground max-w-md uppercase leading-relaxed tracking-wide">
+          <motion.p 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6, ease: BEZIER }}
+            className="font-mono text-[11px] md:text-xs text-muted-foreground max-w-md uppercase leading-relaxed tracking-wide"
+          >
             Déclenchez le protocole d'ingénierie. Entrez vos coordonnées ci-contre pour une analyse complète de votre véhicule. Devis calibré sous 24h.
-          </p>
+          </motion.p>
         </div>
 
         {/* Input & Action Area - Terminal feeling */}
-        <div className="flex-1 w-full max-w-lg">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.5, ease: BEZIER }}
+          className="flex-1 w-full max-w-lg"
+        >
           <div className="border border-border bg-foreground text-background p-1 relative group">
             {/* Corner technical accents on input wrapper */}
             <div className="absolute -top-1 -left-1 w-2 h-2 bg-primary opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
@@ -52,19 +116,30 @@ export default function CTA() {
                   type="email"
                 />
               </div>
-              <button className="bg-primary text-primary-foreground font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-5 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+              <motion.button 
+                whileHover={{ backgroundColor: "var(--primary-hover, #a11d33)" }} // Assuming primary hover color
+                whileTap={{ scale: 0.98 }}
+                className="bg-primary text-primary-foreground font-mono text-[10px] font-bold uppercase tracking-[0.2em] px-8 py-5 transition-colors flex items-center justify-center gap-2"
+              >
                 TRANSMETTRE
                 <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </button>
+              </motion.button>
             </div>
             
             {/* Terminal decorative bottom border */}
-            <div className="absolute -bottom-6 right-0 font-mono text-[8px] text-muted-foreground tracking-widest uppercase">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.2 }}
+              className="absolute -bottom-6 right-0 font-mono text-[8px] text-muted-foreground tracking-widest uppercase"
+            >
               SECURE_CONN_ESTABLISHED
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
 }
+

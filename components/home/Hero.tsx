@@ -9,6 +9,8 @@ const images = [
   "/images/image_4.jpeg",
 ];
 
+const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
+
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -19,36 +21,93 @@ export default function Hero() {
     return () => clearInterval(timer);
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0, 
+      transition: { duration: 0.6, ease: BEZIER } 
+    },
+  };
+
+  const titleLines = [
+    "LA MAÎTRISE",
+    "TECHNIQUE",
+    "EST NOTRE",
+    "CULTURE."
+  ];
+
   return (
     <section className="bg-background h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border">
-      <div className="flex flex-col lg:flex-row w-full h-full">
+      <motion.div 
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex flex-col lg:flex-row w-full h-full"
+      >
 
         {/* Left Column : Image (Mobile: Top, Desktop: Left) */}
         <div className="w-full lg:w-1/2 relative flex items-stretch border-b lg:border-b-0 lg:border-r border-technical h-[35vh] lg:h-full">
 
           {/* Edge Menu/Annotations (Desktop left border) */}
           <div className="hidden lg:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
-            <div className="absolute top-0 right-0 tech-corner"></div>
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1] }}
+                transition={{ duration: 0.4, delay: 0.6 }}
+                className="absolute top-0 right-0 tech-corner"
+            ></motion.div>
 
-            <div className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mt-32 text-foreground">
+            <motion.div 
+              variants={itemVariants}
+              className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mt-32 text-foreground"
+            >
               GPS: 48°52'5.6"N 2°19'59.5"E
-            </div>
+            </motion.div>
 
             {/* Minimal burger menu hint */}
-            <div className="flex flex-col gap-1.5 cursor-pointer hover:opacity-70 transition-opacity">
+            <motion.div 
+              variants={itemVariants}
+              whileHover={{ opacity: 0.7 }}
+              className="flex flex-col gap-1.5 cursor-pointer transition-opacity"
+            >
               <div className="w-6 h-[1.5px] bg-foreground"></div>
               <div className="w-4 h-[1.5px] bg-foreground"></div>
               <div className="w-8 h-[1.5px] bg-foreground"></div>
-            </div>
+            </motion.div>
 
-            <div className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mb-20 text-foreground">
+            <motion.div 
+              variants={itemVariants}
+              className="font-mono text-xs uppercase font-bold tracking-widest -rotate-90 whitespace-nowrap mb-20 text-foreground"
+            >
               SPEC. 01
-            </div>
+            </motion.div>
 
-            <div className="absolute bottom-0 right-0 tech-corner"></div>
+            <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1] }}
+                transition={{ duration: 0.4, delay: 0.8 }}
+                className="absolute bottom-0 right-0 tech-corner"
+            ></motion.div>
           </div>
 
-          <div className="flex-grow relative overflow-hidden bg-background">
+          <motion.div 
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.5, ease: BEZIER }}
+            className="flex-grow relative overflow-hidden bg-background"
+          >
             <AnimatePresence mode="wait">
               <motion.img
                 key={currentIndex}
@@ -65,13 +124,16 @@ export default function Hero() {
             {/* Technical Overlay - Minimal Indicators */}
             <div className="absolute bottom-6 right-6 flex gap-2 z-20">
               {images.map((_, idx) => (
-                <div
+                <motion.div
                   key={idx}
-                  className={`w-12 h-[2px] transition-colors duration-500 ${idx === currentIndex ? 'bg-primary' : 'bg-foreground/20'}`}
+                  initial={{ width: 0 }}
+                  animate={{ width: 48 }}
+                  transition={{ delay: 0.5 + idx * 0.1, duration: 0.4, ease: BEZIER }}
+                  className={`h-[2px] transition-colors duration-500 ${idx === currentIndex ? 'bg-primary' : 'bg-foreground/20'}`}
                 />
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Right Column : Typography (Mobile: Bottom, Desktop: Right) */}
@@ -79,51 +141,102 @@ export default function Hero() {
           <div className="absolute top-0 left-0 tech-corner hidden lg:block"></div>
 
           {/* Massive Cutoff Number (Aligned with Content) */}
-          <div className="absolute top-1/2 left-6 md:left-16 lg:left-24 -translate-y-1/2 text-[60vw] lg:text-[35vw] font-sans font-black text-primary leading-none pointer-events-none z-0 select-none opacity-10">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 0.1, x: 0 }}
+            transition={{ duration: 1, delay: 0.4, ease: BEZIER }}
+            className="absolute top-1/2 left-6 md:left-16 lg:left-24 -translate-y-1/2 text-[60vw] lg:text-[35vw] font-sans font-black text-primary leading-none pointer-events-none z-0 select-none opacity-10"
+          >
             #1
-          </div>
+          </motion.div>
 
           <div className="relative z-10 max-w-xl">
-            <div className="lg:hidden font-mono text-xs uppercase font-bold tracking-widest text-foreground mb-6 flex justify-between w-full">
+            <motion.div 
+              variants={itemVariants}
+              className="lg:hidden font-mono text-xs uppercase font-bold tracking-widest text-foreground mb-6 flex justify-between w-full"
+            >
               <span>GPS: 48°52'5.6"N 2°19'59.5"E</span>
               <span>SPEC. 01</span>
-            </div>
+            </motion.div>
 
             <h1 className="font-sans font-black text-[clamp(2rem,8vh,7.5rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-6 md:mb-10 relative">
-              LA MAÎTRISE<br />
-              TECHNIQUE<br />
-              EST NOTRE<br />
-              CULTURE.
+              {titleLines.map((line, i) => (
+                <div key={i} className="overflow-hidden">
+                  <motion.div
+                    initial={{ y: "100%" }}
+                    animate={{ y: 0 }}
+                    transition={{ 
+                      duration: 0.7, 
+                      delay: 0.4 + (i * 0.1), 
+                      ease: BEZIER 
+                    }}
+                  >
+                    {line}
+                  </motion.div>
+                </div>
+              ))}
             </h1>
 
-            <p className="text-foreground font-medium text-sm md:text-base leading-relaxed mb-8 md:mb-12 lg:max-w-[400px]">
+            <motion.p 
+              variants={itemVariants}
+              className="text-foreground font-medium text-sm md:text-base leading-relaxed mb-8 md:mb-12 lg:max-w-[400px]"
+            >
               Ici, aucun compromis. Le travail bien fait nous importe plus que tout, afin que votre véhicule ne reparte jamais le même de notre atelier.
-            </p>
+            </motion.p>
 
             {/* Buttons Technical Pattern */}
-            <div className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold">
-              <button className="relative px-8 py-5 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)]">
+            <motion.div 
+              variants={itemVariants}
+              className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold"
+            >
+              <motion.button 
+                whileHover={{ backgroundColor: "var(--primary)", color: "white" }}
+                whileTap={{ scale: 0.98 }}
+                className="relative px-8 py-5 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors duration-300"
+              >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   DÉCOUVRIR NOS SERVICES
                   <span className="material-symbols-outlined text-[14px]">arrow_outward</span>
                 </span>
-              </button>
+                {/* Visual border stretch effect on hover (optional enhancement) */}
+                <div className="absolute inset-0 border border-primary-foreground/20 scale-105 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300"></div>
+              </motion.button>
 
-              <button className="px-8 py-5 border border-primary bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground transition-colors group flex items-center justify-center gap-3 rounded-[var(--radius)]">
-                <span className="w-1.5 h-1.5 bg-primary group-hover:bg-primary-foreground block rounded-full transition-colors"></span>
+              <motion.button 
+                whileHover={{ backgroundColor: "var(--foreground)", color: "var(--background)" }}
+                whileTap={{ scale: 0.98 }}
+                className="px-8 py-5 border border-primary bg-transparent text-foreground group flex items-center justify-center gap-3 rounded-[var(--radius)] transition-colors duration-300"
+              >
+                <span className="w-1.5 h-1.5 bg-primary group-hover:bg-background block rounded-full transition-colors"></span>
                 NOTRE PORTFOLIO
-              </button>
-            </div>
+              </motion.button>
+            </motion.div>
           </div>
 
-          {/* Subtle menu or corner indication top right */}
-          <div className="absolute top-10 right-10 font-mono text-xs font-bold tracking-widest text-foreground uppercase hidden lg:block hover:opacity-70 cursor-pointer transition-opacity">
-            EST. 2026
-          </div>
-          <div className="absolute bottom-0 right-0 tech-corner hidden lg:block"></div>
+          {/* EST. 2026 annotation */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 1, repeat: 0 }}
+            className="absolute top-10 right-10 font-mono text-xs font-bold tracking-widest text-foreground uppercase hidden lg:block hover:opacity-70 cursor-pointer transition-opacity"
+          >
+            <motion.span
+              animate={{ opacity: [0, 1, 0.5, 1] }}
+              transition={{ duration: 0.4, delay: 1.5 }}
+            >
+              EST. 2026
+            </motion.span>
+          </motion.div>
+          <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1] }}
+                transition={{ duration: 0.4, delay: 1.0 }}
+                className="absolute bottom-0 right-0 tech-corner hidden lg:block"
+          ></motion.div>
         </div>
 
-      </div>
+      </motion.div>
     </section>
   );
 }
+
