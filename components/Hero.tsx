@@ -53,7 +53,7 @@ export default function Hero() {
               <span>SPEC. 01</span>
             </div>
 
-            <h1 className="font-sans font-black text-5xl md:text-7xl lg:text-[6rem] tracking-tighter uppercase text-primary leading-[0.85] mb-10 relative">
+            <h1 className="font-sans font-black text-5xl md:text-7xl lg:text-[6rem] tracking-tighter uppercase text-foreground leading-[0.85] mb-10 relative">
               LA MAÎTRISE<br />
               TECHNIQUE<br />
               EST NOTRE<br />
