@@ -60,15 +60,6 @@ export default function Navbar() {
 
                     {/* Technical Actions Toolbar */}
                     <div className="flex items-center text-xs font-mono text-foreground font-bold uppercase tracking-widest">
-                        {/* Selector FR / EN */}
-                        <div className="flex gap-1 items-center">
-                            <button className={`min-w-[44px] min-h-[44px] transition-none ${lang === 'fr' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
-                            <span className="text-border px-1">/</span>
-                            <button className={`min-w-[44px] min-h-[44px] transition-none ${lang === 'en' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
-                        </div>
-
-                        <span className="text-border px-4">|</span>
-
                         {/* Contact Link */}
                         <Link
                             href="/contact"
@@ -79,6 +70,15 @@ export default function Navbar() {
                             </span>
                             CONTACT
                         </Link>
+
+                        <span className="text-border px-4">|</span>
+
+                        {/* Selector FR / EN */}
+                        <div className="flex gap-1 items-center">
+                            <button className={`min-w-[44px] min-h-[44px] transition-none ${lang === 'fr' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
+                            <span className="text-border px-1">/</span>
+                            <button className={`min-w-[44px] min-h-[44px] transition-none ${lang === 'en' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
+                        </div>
 
                         <span className="text-border px-4">|</span>
 
@@ -101,6 +101,13 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex items-center gap-2">
+                    {/* Selector FR / EN Mobile */}
+                    <div className="flex gap-2 items-center font-mono text-[10px] font-bold px-2 border-r border-border/50">
+                        <button className={`transition-none ${lang === 'fr' ? 'text-primary' : 'text-foreground/50 hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
+                        <span className="text-border/30">/</span>
+                        <button className={`transition-none ${lang === 'en' ? 'text-primary' : 'text-foreground/50 hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
+                    </div>
+
                     <button id="theme-toggle-mobile" className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-primary transition-none text-foreground" onClick={toggleTheme} aria-label="Toggle Theme Mobile">
                         {theme === 'dark' ? (
                             <svg className="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -125,7 +132,14 @@ export default function Navbar() {
                     <Link href="/" className="text-foreground font-sans font-black tracking-tighter uppercase text-xl" onClick={() => setIsMenuOpen(false)}>
                         PRECISION AUTO
                     </Link>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-2">
+                        {/* Selector FR / EN Mobile Menu */}
+                        <div className="flex gap-2 items-center font-mono text-[10px] font-bold px-4 border-r border-border">
+                            <button className={`transition-none ${lang === 'fr' ? 'text-primary' : 'text-foreground/50 hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
+                            <span className="text-border/30">/</span>
+                            <button className={`transition-none ${lang === 'en' ? 'text-primary' : 'text-foreground/50 hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
+                        </div>
+
                         <button id="theme-toggle-mobile-menu" className="min-w-[44px] min-h-[44px] flex flex-col justify-center items-center hover:text-primary transition-none text-foreground" onClick={toggleTheme} aria-label="Toggle Theme Mobile">
                             {theme === 'dark' ? (
                                 <svg className="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -161,14 +175,9 @@ export default function Navbar() {
                     </ul>
                 </div>
 
-                <div className="px-8 pb-12 mt-auto flex flex-col gap-8 text-xs font-mono font-bold text-foreground uppercase tracking-widest">
+                <div className="px-8 pb-12 mt-auto flex flex-col gap-8 text-[10px] font-mono font-bold text-muted-foreground uppercase opacity-50 tracking-[0.2em]">
                     <div className="w-12 h-[1px] bg-border"></div>
-                    <div className="flex gap-4 items-center">
-                        <span className="text-muted-foreground mr-2">LANG:</span>
-                        <button className={`min-w-[44px] min-h-[44px] flex items-center transition-colors ${lang === 'fr' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
-                        <span className="text-border">/</span>
-                        <button className={`min-w-[44px] min-h-[44px] flex items-center transition-colors ${lang === 'en' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
-                    </div>
+                    <div>SEC.AUTH_V3.0 // READY_FOR_DEPLOYMENT</div>
                 </div>
             </div>
         </header>
