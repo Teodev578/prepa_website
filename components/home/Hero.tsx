@@ -47,19 +47,19 @@ export default function Hero() {
   ];
 
   return (
-    <section className="bg-background min-h-[100dvh] lg:h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border pt-20 lg:pt-0">
+    <section className="bg-background min-h-[100dvh] h-[100dvh] box-border w-full flex flex-col overflow-hidden relative border-b border-border pt-20 md:pt-0">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col lg:flex-row w-full h-full flex-grow"
+        className="flex flex-col md:flex-row w-full h-full flex-grow"
       >
 
         {/* Left Column : Image (Mobile: Top, Desktop: Left) */}
-        <div className="w-full lg:w-1/2 relative flex items-stretch border-b lg:border-b-0 lg:border-r border-technical min-h-[40vh] lg:min-h-0 lg:h-full p-6 lg:p-0">
+        <div className="w-full h-[45%] md:h-full md:w-1/2 relative flex items-stretch border-b md:border-b-0 md:border-r border-technical box-border p-4 md:p-0 shrink-0 md:shrink">
 
           {/* Edge Menu/Annotations (Desktop left border) */}
-          <div className="hidden lg:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
+          <div className="hidden md:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: [0, 1, 0.5, 1] }}
@@ -119,7 +119,7 @@ export default function Hero() {
             </AnimatePresence>
 
             {/* Technical Overlay - Minimal Indicators */}
-            <div className="absolute bottom-4 right-4 lg:bottom-6 lg:right-6 flex gap-2 z-20">
+            <div className="absolute bottom-4 right-4 md:bottom-6 md:right-6 flex gap-2 z-20">
               {images.map((_, idx) => (
                 <motion.div
                   key={idx}
@@ -134,15 +134,15 @@ export default function Hero() {
         </div>
 
         {/* Right Column : Typography (Mobile: Bottom, Desktop: Right) */}
-        <div className="w-full lg:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-12 lg:py-0 border-technical flex-grow lg:h-full">
-          <div className="absolute top-0 left-0 tech-corner hidden lg:block"></div>
+        <div className="flex-1 w-full md:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-4 md:py-0 border-technical box-border">
+          <div className="absolute top-0 left-0 tech-corner hidden md:block"></div>
 
           {/* Massive Cutoff Number (Aligned with Content) */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 0.1, x: 0 }}
             transition={{ duration: 1, delay: 0.4, ease: BEZIER }}
-            className="absolute top-1/2 left-6 md:left-16 lg:left-24 -translate-y-1/2 text-[60vw] lg:text-[35vw] font-sans font-black text-primary leading-none pointer-events-none z-0 select-none opacity-10"
+            className="absolute top-1/2 left-6 md:left-16 lg:left-24 -translate-y-1/2 text-[45vw] md:text-[35vw] font-sans font-black text-primary leading-none pointer-events-none z-0 select-none opacity-10"
           >
             #1
           </motion.div>
@@ -156,7 +156,7 @@ export default function Hero() {
               <span>SPEC. 01</span>
             </motion.div>
 
-            <h1 className="font-sans font-black text-[14vw] sm:text-[11vw] md:text-[8vw] lg:text-[clamp(4.5rem,7vw,7.5rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-8 md:mb-10 relative">
+            <h1 className="font-sans font-black text-[clamp(3rem,12vw,6rem)] md:text-[clamp(4.5rem,7vw,7.5rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-6 md:mb-10 relative">
               {titleLines.map((line, i) => (
                 <div key={i} className="overflow-hidden">
                   <motion.div
@@ -176,7 +176,7 @@ export default function Hero() {
 
             <motion.p
               variants={itemVariants}
-              className="text-foreground/80 font-medium text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-12 lg:max-w-[500px]"
+              className="text-foreground/80 font-medium text-sm sm:text-base md:text-lg lg:text-xl leading-relaxed mb-6 md:mb-12 lg:max-w-[500px]"
             >
               La perfection n'est pas une option. Notre protocole de restauration et de protection vise un seul objectif : le standard d'usine, ou mieux.
             </motion.p>
@@ -215,7 +215,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.2, duration: 1, repeat: 0 }}
-            className="absolute top-10 right-10 font-mono text-xs font-bold tracking-widest text-foreground uppercase hidden lg:block hover:opacity-70 cursor-pointer transition-opacity"
+            className="absolute top-10 right-10 font-mono text-xs font-bold tracking-widest text-foreground uppercase hidden md:block hover:opacity-70 cursor-pointer transition-opacity"
           >
             <motion.span
               animate={{ opacity: [0, 1, 0.5, 1] }}
@@ -228,7 +228,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: [0, 1, 0.5, 1] }}
             transition={{ duration: 0.4, delay: 1.0 }}
-            className="absolute bottom-0 right-0 tech-corner hidden lg:block"
+            className="absolute bottom-0 right-0 tech-corner hidden md:block"
           ></motion.div>
         </div>
 
