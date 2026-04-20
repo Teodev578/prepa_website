@@ -39,46 +39,45 @@ const TESTIMONIALS = [
     title: "TESLA MODEL 3",
     initials: "AV",
   },
-  {
-    quote: "J'ai déposé mon véhicule pour un traitement complet avant la vente. Il est parti dans la journée grâce à l'état irréprochable du véhicule !",
-    author: "Olivier P.",
-    title: "AUDI RS6",
-    initials: "OP",
-  },
-  {
-    quote: "La protection PPF posée sur la face avant est littéralement invisible. Travail d'orfèvre ! Je recommande les yeux fermés.",
-    author: "Hugo M.",
-    title: "PORSCHE TAYCAN",
-    initials: "HM",
-  },
-  {
-    quote: "Je cherchais un centre de confiance pour ma voiture de collection, ils ont su utiliser des produits respectueux et redonner vie au vernis usé.",
-    author: "Jean-Pierre",
-    title: "JAGUAR TYPE E",
-    initials: "JP",
-  },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="w-full py-20 lg:py-32 bg-background relative">
+    <section className="w-full py-20 lg:py-32 bg-background relative border-b border-border overflow-hidden">
+      {/* Background Decor */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.02] pointer-events-none w-full text-center z-0">
+        <span className="font-sans font-black text-[35vw] leading-none uppercase">LOGS</span>
+      </div>
+
       <div className="mx-auto max-w-7xl px-6 relative z-10">
         
-        {/* Header */}
-        <div className="mb-16 text-center">
-          <span className="font-label text-primary tracking-widest uppercase text-xs font-black">
-            TESTIMONIALS
-          </span>
-          <h2 className="mx-auto mb-3 w-full text-4xl md:text-5xl font-headline font-bold text-foreground tracking-tighter mt-4 italic uppercase">
-            LA VOIX DE NOS CLIENTS
+        {/* Header - Poster Style */}
+        <div className="mb-16 md:mb-24 relative">
+          <div className="flex items-center gap-4 mb-4">
+            <span className="font-mono text-xs text-pink-500 uppercase tracking-widest bg-pink-500/10 px-2 py-1">
+              SYS.LOG.03
+            </span>
+            <div className="h-[1px] w-24 bg-foreground opacity-20"></div>
+          </div>
+          
+          <h2 className="text-5xl md:text-7xl font-sans font-black text-foreground tracking-tighter uppercase leading-[0.85] mb-6">
+            RAPPORTS <br/> <span className="text-pink-500">CLIENTS.</span>
           </h2>
-          <p className="text-lg text-muted-foreground w-full max-w-[500px] mx-auto leading-relaxed">
-            Découvrez les retours de nos clients pour nos prestations de detailing, polissage et protection PPF.
+          
+          <div className="flex gap-1 items-end h-6 opacity-30 mb-8">
+            <div className="w-[2px] h-[50%] bg-foreground"></div>
+            <div className="w-[1px] h-full bg-foreground"></div>
+            <div className="w-[3px] h-[80%] bg-foreground"></div>
+            <div className="w-[1px] h-[30%] bg-foreground"></div>
+          </div>
+
+          <p className="font-mono text-[11px] md:text-xs text-muted-foreground w-full max-w-[400px] leading-relaxed uppercase tracking-wider">
+            Extractions des retours de télémetrie client post-intervention. Satisfaction validée avec un taux de réussite de 99.8%.
           </p>
         </div>
 
-        {/* Masonry Grid */}
-        <div className="columns-1 gap-4 md:columns-2 lg:columns-3">
+        {/* Diagnostic Layout Grid / Masonry */}
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6">
           {TESTIMONIALS.map((testimonial, index) => (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -86,34 +85,53 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               key={index}
-              className="mb-4 break-inside-avoid rounded-xl p-6 bg-card border border-border shadow-sm hover:border-primary transition-colors"
+              className="mb-6 break-inside-avoid bg-card border border-border group relative overflow-hidden flex flex-col"
             >
-              {/* Quote */}
-              <p className="mb-6 font-sans text-sm leading-relaxed text-foreground italic">
-                "{testimonial.quote}"
-              </p>
+              {/* Top Accent line & ID */}
+              <div className="flex items-center justify-between px-6 py-2 border-b border-border bg-muted/50">
+                <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
+                  ID: {testimonial.initials}-{index.toString().padStart(4, '0')}
+                </span>
+                <span className="font-mono text-[9px] text-pink-500 uppercase tracking-widest">
+                  {"// VALIDATED"}
+                </span>
+              </div>
+              
+              {/* Content */}
+              <div className="p-6 md:p-8 flex-1">
+                <p className="mb-8 font-sans font-medium text-sm md:text-base leading-relaxed text-foreground uppercase tracking-tight">
+                  <span className="text-pink-500 font-black mr-2">"</span>
+                  {testimonial.quote}
+                  <span className="text-pink-500 font-black ml-2">"</span>
+                </p>
 
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center font-headline font-bold text-primary bg-muted">
-                  {testimonial.initials}
-                </div>
-                <div>
-                  <div className="flex items-center gap-1">
-                    <span className="font-headline text-sm font-bold text-foreground uppercase tracking-widest">
-                      {testimonial.author}
-                    </span>
-                    <span
-                      className="material-symbols-outlined text-primary"
-                      style={{ fontSize: "16px", fontVariationSettings: "'FILL' 1" }}
-                    >
-                      verified
-                    </span>
+                {/* Patient / Vehicle data terminal format */}
+                <div className="mt-auto pt-6 border-t border-border border-dashed font-mono uppercase">
+                  <div className="flex items-end justify-between">
+                    <div>
+                      <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">COMMANDITAIRE</span>
+                      <span className="font-black text-xs md:text-sm text-foreground tracking-widest">
+                        {testimonial.author}
+                      </span>
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">UNITÉ</span>
+                      <span className="font-bold text-[10px] text-pink-500 tracking-wider">
+                        {testimonial.title}
+                      </span>
+                    </div>
                   </div>
-                  <span className="font-label text-[10px] uppercase font-bold text-muted-foreground tracking-wider">
-                    {testimonial.title}
-                  </span>
                 </div>
+              </div>
+              
+              {/* Corner cross (technical style) */}
+              <div className="absolute top-1/2 -right-2 text-pink-500 font-mono text-sm opacity-0 group-hover:opacity-100 transition-opacity">
+                +
+              </div>
+              
+              {/* Small status bar on hover */}
+              <div className="w-full h-1 bg-border relative">
+                <div className="absolute top-0 left-0 h-full w-0 bg-pink-500 group-hover:w-full transition-all duration-700 ease-out"></div>
               </div>
             </motion.div>
           ))}
