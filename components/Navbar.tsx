@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useTheme } from '@/components/ThemeProvider';
 
 export default function Navbar() {
@@ -9,6 +10,7 @@ export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { theme, toggleTheme } = useTheme();
+    const pathname = usePathname();
     const headerRef = useRef<HTMLElement>(null);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
@@ -26,9 +28,13 @@ export default function Navbar() {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
-        setIsMenuOpen(false);
-    };
+    const links = [
+        { label: "HOME", href: "/" },
+        { label: "SERVICES", href: "/services" },
+        { label: "PORTFOLIO", href: "/portfolio" },
+        { label: "ABOUT", href: "/about" },
+        { label: "CONTACT", href: "/contact" },
+    ];
 
     return (
         <header
@@ -44,11 +50,16 @@ export default function Navbar() {
                 <div className="header-right hidden md:flex items-center gap-8">
                     <nav className={`main-nav ${isMenuOpen ? 'nav-active' : ''}`} id="main-nav">
                         <ul className="nav-links flex gap-6 text-xs font-mono uppercase tracking-[0.2em] font-bold">
-                            <li><Link href="/" onClick={(e) => handleLinkClick(e, '#accueil')} className="hover:text-primary transition-colors">HOME</Link></li>
-                            <li><Link href="/services" onClick={(e) => handleLinkClick(e, '#services')} className="hover:text-primary transition-colors">SERVICES</Link></li>
-                            <li><Link href="/portfolio" onClick={(e) => handleLinkClick(e, '#projets')} className="hover:text-primary transition-colors">PORTFOLIO</Link></li>
-                            <li><Link href="/about" onClick={(e) => handleLinkClick(e, '#about')} className="hover:text-primary transition-colors">ABOUT</Link></li>
-                            <li><Link href="/contact" onClick={(e) => handleLinkClick(e, '#contact')} className="hover:text-primary transition-colors">CONTACT</Link></li>
+                            {links.map((link) => (
+                                <li key={link.label}>
+                                    <Link 
+                                        href={link.href} 
+                                        className={`transition-colors ${pathname === link.href ? 'text-primary' : 'hover:text-primary text-foreground'}`}
+                                    >
+                                        {link.label}
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </nav>
 
@@ -90,11 +101,17 @@ export default function Navbar() {
             {/* Mobile Nav Overlay */}
             <div className={`absolute top-full left-0 w-full bg-background border-b border-border shadow-xl md:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen py-8 opacity-100 border-t' : 'max-h-0 py-0 opacity-0 border-t-0'}`}>
                 <ul className="nav-links flex flex-col gap-6 px-8 text-sm font-mono uppercase tracking-[0.2em] font-bold">
-                    <li><Link href="/" onClick={() => setIsMenuOpen(false)} className="block w-full border-b border-border/50 pb-2">HOME</Link></li>
-                    <li><Link href="/services" onClick={() => setIsMenuOpen(false)} className="block w-full border-b border-border/50 pb-2">SERVICES</Link></li>
-                    <li><Link href="/portfolio" onClick={() => setIsMenuOpen(false)} className="block w-full border-b border-border/50 pb-2">PORTFOLIO</Link></li>
-                    <li><Link href="/about" onClick={() => setIsMenuOpen(false)} className="block w-full border-b border-border/50 pb-2">ABOUT</Link></li>
-                    <li><Link href="/contact" onClick={() => setIsMenuOpen(false)} className="block w-full border-b border-border/50 pb-2">CONTACT</Link></li>
+                    {links.map((link) => (
+                        <li key={link.label}>
+                            <Link 
+                                href={link.href} 
+                                onClick={() => setIsMenuOpen(false)} 
+                                className={`block w-full border-b border-border/50 pb-2 ${pathname === link.href ? 'text-primary' : 'text-foreground hover:text-primary'}`}
+                            >
+                                {link.label}
+                            </Link>
+                        </li>
+                    ))}
                 </ul>
                 <div className="px-8 mt-8 language-switcher flex gap-4 text-xs font-mono font-bold text-muted-foreground uppercase">
                     <button className={`lang-link transition-colors ${lang === 'fr' ? 'text-primary' : ''}`} onClick={() => setLang('fr')}>FR</button>
