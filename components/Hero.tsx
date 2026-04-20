@@ -20,11 +20,11 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="bg-background min-h-[100dvh] pt-[72px] md:pt-0 flex flex-col justify-center overflow-hidden relative border-b border-border">
-      <div className="flex flex-col lg:flex-row w-full h-full min-h-[100dvh] lg:min-h-0">
+    <section className="bg-background h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border">
+      <div className="flex flex-col lg:flex-row w-full h-full">
 
         {/* Left Column : Image (Mobile: Top, Desktop: Left) */}
-        <div className="w-full lg:w-1/2 relative flex items-stretch border-b lg:border-b-0 lg:border-r border-technical min-h-[45vh] lg:min-h-[100dvh]">
+        <div className="w-full lg:w-1/2 relative flex items-stretch border-b lg:border-b-0 lg:border-r border-technical h-[35vh] lg:h-full">
 
           {/* Edge Menu/Annotations (Desktop left border) */}
           <div className="hidden lg:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
@@ -75,7 +75,7 @@ export default function Hero() {
         </div>
 
         {/* Right Column : Typography (Mobile: Bottom, Desktop: Right) */}
-        <div className="w-full lg:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-16 lg:py-0 border-technical">
+        <div className="w-full lg:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-10 lg:py-0 border-technical h-[65vh] lg:h-full">
           <div className="absolute top-0 left-0 tech-corner hidden lg:block"></div>
 
           {/* Massive Cutoff Number (Edge Right) */}
@@ -89,14 +89,14 @@ export default function Hero() {
               <span>SPEC. 01</span>
             </div>
 
-            <h1 className="font-sans font-black text-5xl md:text-7xl lg:text-[6rem] tracking-tighter uppercase text-foreground leading-[0.85] mb-10 relative">
+            <h1 className="font-sans font-black text-[clamp(2.2rem,9vw,7rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-6 md:mb-10 relative">
               LA MAÎTRISE<br />
               TECHNIQUE<br />
               EST NOTRE<br />
               CULTURE.
             </h1>
 
-            <p className="text-foreground font-medium text-sm md:text-base leading-relaxed mb-12 lg:max-w-[400px]">
+            <p className="text-foreground font-medium text-sm md:text-base leading-relaxed mb-8 md:mb-12 lg:max-w-[400px]">
               Ici, aucun compromis. Le travail bien fait nous importe plus que tout, afin que votre véhicule ne reparte jamais le même de notre atelier.
             </p>
 
