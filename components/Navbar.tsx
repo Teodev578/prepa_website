@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useTheme } from '@/components/ThemeProvider';
+import Logo from '@/components/Logo';
+
 
 export default function Navbar() {
     const [lang, setLang] = useState('fr');
@@ -30,9 +32,9 @@ export default function Navbar() {
                         </span>
                     </div>
                     {/* Logo Space */}
-                    <div className="flex-grow flex items-center pl-6">
-                        <Link href="/" className="text-foreground font-sans font-black tracking-tighter uppercase text-3xl">
-                            PRECISION AUTO
+                    <div className="flex-grow flex items-center pl-10 md:pl-16">
+                        <Link href="/" className="group" onClick={() => setIsMenuOpen(false)}>
+                            <Logo />
                         </Link>
                     </div>
                 </div>
@@ -96,8 +98,8 @@ export default function Navbar() {
 
             {/* Mobile / Tablet Header */}
             <div className="lg:hidden flex items-center justify-between w-full h-full px-6 bg-background relative z-[101]">
-                <Link href="/" className="logo text-foreground font-sans font-black tracking-tighter uppercase text-xl md:text-2xl" onClick={() => setIsMenuOpen(false)}>
-                    PRECISION AUTO
+                <Link href="/" onClick={() => setIsMenuOpen(false)}>
+                    <Logo className="scale-90 origin-left" />
                 </Link>
 
                 <div className="flex items-center gap-2">
@@ -129,8 +131,8 @@ export default function Navbar() {
             <div className={`fixed inset-0 top-0 left-0 w-full h-[100dvh] bg-background border-border lg:hidden transition-all duration-500 overflow-hidden flex flex-col z-[100] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 {/* Header padding compensation area */}
                 <div className="h-20 shrink-0 w-full border-b border-border flex items-center justify-between px-6">
-                    <Link href="/" className="text-foreground font-sans font-black tracking-tighter uppercase text-xl" onClick={() => setIsMenuOpen(false)}>
-                        PRECISION AUTO
+                    <Link href="/" onClick={() => setIsMenuOpen(false)}>
+                        <Logo className="scale-90 origin-left" />
                     </Link>
                     <div className="flex items-center gap-2">
                         {/* Selector FR / EN Mobile Menu */}
