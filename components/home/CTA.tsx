@@ -7,6 +7,26 @@ const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
 export default function CTA() {
   const titleLines = ["PRÊT POUR", "L'EXCELLENCE."];
 
+  const flickerVariants = {
+    initial: { opacity: 0 },
+    visible: {
+        opacity: [0, 1, 0.3, 1, 0.8],
+        transition: {
+            duration: 0.5,
+            times: [0, 0.2, 0.4, 0.6, 1],
+            ease: "linear" as const,
+        }
+    }
+  };
+
+  const lineVariants = {
+    hidden: { scaleX: 0 },
+    visible: { 
+        scaleX: 1, 
+        transition: { duration: 0.8, ease: BEZIER } 
+    }
+  };
+
   return (
     <section className="py-32 px-6 md:px-20 bg-background text-foreground relative border-b border-border overflow-hidden">
       {/* Technical background marks */}
@@ -19,10 +39,11 @@ export default function CTA() {
         ].map((marker, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: [0, 1, 0.5, 1] }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: marker.delay }}
+            initial="initial"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.2 }}
+            variants={flickerVariants}
+            transition={{ delay: marker.delay }}
             className={`absolute ${marker.pos} text-primary font-mono text-xl`}
           >
             +
@@ -35,32 +56,38 @@ export default function CTA() {
         {/* Massive Text Area */}
         <div className="flex-1">
           <motion.div 
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -15 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: BEZIER }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.5, ease: BEZIER }}
             className="flex items-center gap-4 mb-6"
           >
             <span className="font-mono text-xs text-primary bg-primary/10 px-2 py-1 uppercase tracking-widest">
               STATUS: READY
             </span>
             <motion.div 
-              initial={{ width: 0 }}
-              whileInView={{ width: 64 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: 0.2, ease: BEZIER }}
-              className="h-[1px] bg-foreground opacity-30"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={lineVariants}
+              className="h-[1px] bg-foreground opacity-30 origin-left w-16"
             ></motion.div>
           </motion.div>
           
-          <h2 className="text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] font-sans font-black uppercase tracking-tighter mb-6 leading-[0.85]">
+          <motion.h2 
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+            className="text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] font-sans font-black uppercase tracking-tighter mb-6 leading-[0.85] relative"
+          >
             {titleLines.map((line, i) => (
-              <div key={i} className="overflow-hidden">
+              <div key={i} className="overflow-hidden relative">
                 <motion.div
-                  initial={{ y: "100%" }}
-                  whileInView={{ y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: 0.2 + (i * 0.1), ease: BEZIER }}
+                  variants={{
+                    hidden: { y: "110%" },
+                    visible: { y: 0 }
+                  }}
+                  transition={{ duration: 0.7, delay: 0.1 + (i * 0.1), ease: BEZIER }}
                 >
                   {line.includes("EXCELLENCE") ? (
                     <>L'<span className="text-primary">EXCELLENCE</span>.</>
@@ -68,7 +95,7 @@ export default function CTA() {
                 </motion.div>
               </div>
             ))}
-          </h2>
+          </motion.h2>
           
           <div className="flex gap-px items-end h-8 opacity-40 mb-8">
             {[1, 3, 1, 4, 2].map((w, idx) => (
@@ -87,8 +114,8 @@ export default function CTA() {
           <motion.p 
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.6, ease: BEZIER }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.3, ease: BEZIER }}
             className="font-mono text-xs md:text-sm lg:text-base text-muted-foreground max-w-md uppercase leading-relaxed tracking-wide"
           >
             Déclenchez le protocole d'ingénierie. Entrez vos coordonnées ci-contre pour une analyse complète de votre véhicule. Devis calibré sous 24h.
@@ -99,8 +126,8 @@ export default function CTA() {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.5, ease: BEZIER }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.6, delay: 0.4, ease: BEZIER }}
           className="flex-1 w-full max-w-lg"
         >
           <div className="border border-border bg-foreground text-background p-1 relative group">
@@ -128,10 +155,11 @@ export default function CTA() {
             
             {/* Terminal decorative bottom border */}
             <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 1.2 }}
+              initial="initial"
+              whileInView="visible"
+              viewport={{ once: false, amount: 0.2 }}
+              variants={flickerVariants}
+              transition={{ delay: 0.8 }}
               className="absolute -bottom-6 right-0 font-mono text-[8px] text-muted-foreground tracking-widest uppercase"
             >
               SECURE_CONN_ESTABLISHED

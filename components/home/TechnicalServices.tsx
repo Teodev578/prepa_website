@@ -9,11 +9,31 @@ const TechnicalServices = () => {
     const titleLines = ["INGÉNIERIE", "DU DETAILING."];
 
     const cardVariants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: 15 },
         visible: { 
             opacity: 1, 
             y: 0, 
-            transition: { duration: 0.6, ease: BEZIER } 
+            transition: { duration: 0.5, ease: BEZIER } 
+        }
+    };
+
+    const flickerVariants = {
+        initial: { opacity: 0 },
+        visible: {
+            opacity: [0, 1, 0.3, 1, 0.8],
+            transition: {
+                duration: 0.5,
+                times: [0, 0.2, 0.4, 0.6, 1],
+                ease: "linear" as const,
+            }
+        }
+    };
+
+    const lineVariants = {
+        hidden: { scaleX: 0 },
+        visible: { 
+            scaleX: 1, 
+            transition: { duration: 0.8, ease: BEZIER } 
         }
     };
 
@@ -23,56 +43,65 @@ const TechnicalServices = () => {
             <div className="py-16 md:py-32 px-4 md:px-8 border-b border-border relative">
                 {/* Crosshairs + Decor */}
                 <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: [0, 1, 0.5, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
+                    initial="initial"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={flickerVariants}
                     className="absolute top-0 left-0 -translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
                 <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: [0, 1, 0.5, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.3 }}
+                    initial="initial"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={flickerVariants}
+                    transition={{ delay: 0.1 }}
                     className="absolute top-0 right-0 translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
                 <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: [0, 1, 0.5, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.4 }}
+                    initial="initial"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={flickerVariants}
+                    transition={{ delay: 0.2 }}
                     className="absolute bottom-0 left-0 -translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
                 <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: [0, 1, 0.5, 1] }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: 0.5 }}
+                    initial="initial"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={flickerVariants}
+                    transition={{ delay: 0.3 }}
                     className="absolute bottom-0 right-0 translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
                 >
                     +
                 </motion.div>
                 
-                <h2 className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] leading-[0.8] tracking-tighter uppercase max-w-full break-words relative z-10">
+                <motion.h2 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] leading-[0.8] tracking-tighter uppercase max-w-full break-words relative z-10"
+                >
                     {titleLines.map((line, i) => (
-                        <div key={i} className="overflow-hidden">
+                        <div key={i} className="overflow-hidden relative">
                             <motion.div
-                                initial={{ y: "100%" }}
-                                whileInView={{ y: 0 }}
-                                viewport={{ once: true, margin: "-100px" }}
-                                transition={{ duration: 0.8, delay: i * 0.1, ease: BEZIER }}
+                                variants={{
+                                    hidden: { y: "110%" },
+                                    visible: { y: 0 }
+                                }}
+                                transition={{ duration: 0.7, delay: i * 0.1, ease: BEZIER }}
                             >
                                 {line}
                             </motion.div>
                         </div>
                     ))}
-                </h2>
+                </motion.h2>
                 
                 <motion.div 
                     initial={{ opacity: 0, x: 20 }}
@@ -104,8 +133,8 @@ const TechnicalServices = () => {
             <motion.div 
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ staggerChildren: 0.15 }}
+                viewport={{ once: false, amount: 0.1 }}
+                transition={{ staggerChildren: 0.1 }}
                 className="flex flex-col md:flex-row w-full"
             >
                 {/* ---------- CARD 01 ---------- */}
@@ -162,9 +191,10 @@ const TechnicalServices = () => {
                 <motion.div variants={cardVariants} className="flex-1 border-b md:border-b-0 md:border-r border-border p-6 md:p-10 relative group bg-foreground text-background">
                     {/* Highlighter Line */}
                     <motion.div 
-                        initial={{ scaleX: 0 }}
-                        whileInView={{ scaleX: 1 }}
-                        viewport={{ once: true }}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                        variants={lineVariants}
                         className="absolute top-0 left-0 w-full md:w-[2px] h-[2px] md:h-full bg-primary z-10 origin-left"
                     ></motion.div>
                     
@@ -204,8 +234,8 @@ const TechnicalServices = () => {
                                 <motion.div 
                                     initial={{ width: 0 }}
                                     whileInView={{ width: "70%" }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, delay: 0.6, ease: BEZIER }}
+                                    viewport={{ once: false, amount: 0.2 }}
+                                    transition={{ duration: 1, delay: 0.2, ease: BEZIER }}
                                     className="absolute top-0 left-0 h-full bg-primary"
                                 ></motion.div>
                                 {/* Technical indicators on gauge */}
@@ -271,22 +301,31 @@ const TechnicalServices = () => {
             </motion.div>
             
             {/* Footer Diagram Elements */}
-            <div className="h-4 border-t border-border flex">
+            <div className="h-4 border-t border-border flex relative">
+                {/* Self-tracing top border */}
+                <motion.div 
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={lineVariants}
+                    className="absolute top-0 left-0 w-full h-[1px] bg-border origin-left"
+                ></motion.div>
+
                 <div className="w-1/3 border-r border-border h-full flex items-center px-2">
                    <motion.div 
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, ease: BEZIER }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={lineVariants}
                     className="w-full h-[1px] bg-muted-foreground/30 origin-left"
                    ></motion.div>
                 </div>
                 <div className="w-1/3 border-r border-border h-full flex items-center justify-center">
                     <motion.span 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: 0.5 }}
+                        initial="initial"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.2 }}
+                        variants={flickerVariants}
                         className="font-mono text-[8px] text-muted-foreground uppercase tracking-widest"
                     >
                         SYSTEM_READY
@@ -294,10 +333,11 @@ const TechnicalServices = () => {
                 </div>
                 <div className="w-1/3 h-full flex items-center px-2">
                    <motion.div 
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1, ease: BEZIER }}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: false, amount: 0.2 }}
+                    variants={lineVariants}
+                    transition={{ delay: 0.2 }}
                     className="w-full h-[1px] bg-muted-foreground/30 origin-right"
                    ></motion.div>
                 </div>

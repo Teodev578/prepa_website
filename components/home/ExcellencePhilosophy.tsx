@@ -22,8 +22,28 @@ const ExcellencePhilosophy = () => {
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
+        hidden: { opacity: 0, y: 15 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: BEZIER } }
+    };
+
+    const flickerVariants = {
+        initial: { opacity: 0 },
+        visible: {
+            opacity: [0, 1, 0.3, 1, 0.8],
+            transition: {
+                duration: 0.5,
+                times: [0, 0.2, 0.4, 0.6, 1],
+                ease: "linear" as const,
+            }
+        }
+    };
+
+    const lineVariants = {
+        hidden: { scaleX: 0 },
+        visible: { 
+            scaleX: 1, 
+            transition: { duration: 0.8, ease: BEZIER } 
+        }
     };
 
     return (
@@ -42,7 +62,7 @@ const ExcellencePhilosophy = () => {
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true }}
+                    viewport={{ once: false, amount: 0.2 }}
                     className="flex-1 grid grid-cols-2 md:grid-cols-4 w-full"
                 >
                     {metrics.map((metric, idx) => (
@@ -66,10 +86,10 @@ const ExcellencePhilosophy = () => {
                 
                 {/* Background immense watermark */}
                 <motion.div 
-                    initial={{ opacity: 0, scale: 1.1 }}
+                    initial={{ opacity: 0, scale: 1.05 }}
                     whileInView={{ opacity: 0.03, scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 1.5, ease: BEZIER }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 1.2, ease: BEZIER }}
                     className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full text-center"
                 >
                     <span className="font-sans font-black text-[30vw] leading-none uppercase">APEX</span>
@@ -87,21 +107,27 @@ const ExcellencePhilosophy = () => {
                         >
                             <div className="font-mono text-xs text-primary border border-primary px-2 py-1">PH-01</div>
                             <motion.div 
-                                initial={{ width: 0 }}
-                                whileInView={{ width: 48 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.6, delay: 0.4, ease: BEZIER }}
-                                className="h-[1px] bg-foreground"
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: false, amount: 0.2 }}
+                                variants={lineVariants}
+                                className="h-[1px] bg-foreground origin-left"
                             ></motion.div>
                         </motion.div>
-                        <h2 className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] uppercase tracking-tighter mb-8 leading-[0.8] text-foreground">
+                        <motion.h2 
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] uppercase tracking-tighter mb-8 leading-[0.8] text-foreground relative"
+                        >
                             {["LA PHILOSOPHIE", "DE L'EXCELLENCE."].map((line, i) => (
-                                <div key={i} className="overflow-hidden">
+                                <div key={i} className="overflow-hidden relative">
                                     <motion.span
-                                        initial={{ y: "100%" }}
-                                        whileInView={{ y: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ duration: 0.8, delay: 0.3 + (i * 0.1), ease: BEZIER }}
+                                        variants={{
+                                            hidden: { y: "110%" },
+                                            visible: { y: 0 }
+                                        }}
+                                        transition={{ duration: 0.7, delay: i * 0.1, ease: BEZIER }}
                                         className="block"
                                     >
                                         {line.includes("EXCELLENCE") ? (
@@ -110,7 +136,7 @@ const ExcellencePhilosophy = () => {
                                     </motion.span>
                                 </div>
                             ))}
-                        </h2>
+                        </motion.h2>
                     </div>
 
                     {/* Right: The Technical Description */}
@@ -140,10 +166,10 @@ const ExcellencePhilosophy = () => {
                             </p>
                         </motion.div>
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            initial={{ opacity: 0, y: 15 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6, delay: 0.6, ease: BEZIER }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{ duration: 0.5, delay: 0.2, ease: BEZIER }}
                         >
                             <p className="mb-8 opacity-80">
                                 Les processus de correction des vernis et de pose des protections nanotechnologiques sont exécutés sous un éclairage professionnel calibré, utilisant des instruments garantissant des tolérances microscopiques.
