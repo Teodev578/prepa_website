@@ -2,7 +2,7 @@
 
 :root {
   /* Fond ultra-propre, blanc "galerie" */
-  --background: #f7f5f6;
+  --background: #FFFFFF;
   --foreground: #201c1d;
 
   /* Cartes et sections : on oublie le beige, on reste sur du neutre */
@@ -10,7 +10,7 @@
   --card-foreground: #201c1d;
 
   /* L'ACCENT FORT : Ton bordeaux technique */
-  --primary: #fe3333;
+  --primary: #9B2C2C;
   --primary-foreground: #ffffff;
 
   /* Muted & Borders : gris froids et fins pour le côté diagramme */
