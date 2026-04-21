@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -46,11 +46,37 @@ const TESTIMONIALS = [
 
 export default function Testimonials() {
   const targetRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollRange, setScrollRange] = useState(0);
+
+  useEffect(() => {
+    const updateRange = () => {
+      if (scrollRef.current) {
+        // We want to translate such that the last element's right edge aligns with the viewport right edge
+        // scrollWidth is the total width of content
+        // offsetWidth is the visible width of the container
+        // However, the container starts with a left padding (pl-6, etc.)
+        // So we need to translate by scrollWidth - windowWidth
+        setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
+      }
+    };
+
+    updateRange();
+    // Add a small delay to ensure styles are applied
+    const timer = setTimeout(updateRange, 100);
+    
+    window.addEventListener("resize", updateRange);
+    return () => {
+      window.removeEventListener("resize", updateRange);
+      clearTimeout(timer);
+    };
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
   const smoothX = useSpring(x, { stiffness: 400, damping: 90 });
 
   const flickerVariants = {
@@ -127,7 +153,11 @@ export default function Testimonials() {
             </div>
           </div>
 
-          <motion.div style={{ x: smoothX }} className="flex gap-6 pl-6 md:pl-12 lg:pl-24">
+          <motion.div 
+            ref={scrollRef}
+            style={{ x: smoothX }} 
+            className="flex gap-6 pl-6 md:pl-12 lg:pl-24 pr-6 md:pr-12 lg:pr-24"
+          >
             {TESTIMONIALS.map((testimonial, index) => (
               <motion.div
                 key={index}

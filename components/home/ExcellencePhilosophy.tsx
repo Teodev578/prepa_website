@@ -118,7 +118,7 @@ const ExcellencePhilosophy = () => {
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true, amount: 0.1 }}
-                            className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[6rem] uppercase tracking-tighter mb-8 leading-[0.8] text-foreground relative"
+                            className="font-sans font-black text-[clamp(2.5rem,10vw,6rem)] sm:text-[clamp(3.5rem,10vw,6.5rem)] md:text-[8vw] lg:text-[6rem] uppercase tracking-tighter mb-8 leading-[0.8] text-foreground relative"
                         >
                             {["LA PHILOSOPHIE", "DE L'EXCELLENCE."].map((line, i) => (
                                 <div key={i} className="overflow-hidden relative">
