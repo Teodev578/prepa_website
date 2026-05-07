@@ -86,16 +86,17 @@ const TechnicalServices = () => {
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.1 }}
-                    className="font-sans font-black text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[7vw] leading-[0.8] tracking-tighter uppercase max-w-full break-words relative z-10"
+                    className="font-sans font-black text-[clamp(2.5rem,10vw,6rem)] leading-[0.9] tracking-tighter uppercase max-w-full break-words relative z-10"
                 >
                     {titleLines.map((line, i) => (
-                        <div key={i} className="overflow-hidden relative">
+                        <div key={i} className="overflow-hidden relative py-2">
                             <motion.div
                                 variants={{
                                     hidden: { y: "110%" },
                                     visible: { y: 0 }
                                 }}
                                 transition={{ duration: 0.7, delay: i * 0.1, ease: BEZIER }}
+                                className="block"
                             >
                                 {line}
                             </motion.div>

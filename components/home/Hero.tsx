@@ -93,7 +93,7 @@ export default function Hero() {
 
   const titleLines = [
     "LE CHOIX",
-    "NUMERO #1",
+    "NUMÉRO #1", // Exemple avec accent pour tester
   ];
 
   return (
@@ -109,10 +109,10 @@ export default function Hero() {
         className="flex flex-col md:flex-row w-full h-full flex-grow origin-bottom"
       >
 
-        {/* Left Column : Image (Mobile: Top, Desktop: Left) */}
+        {/* Left Column : Image */}
         <div className="w-full h-[45%] md:h-full md:w-1/2 relative flex items-stretch border-b md:border-b-0 md:border-r border-technical box-border p-4 md:p-0 shrink-0 md:shrink overflow-hidden">
-
-          {/* Edge Menu/Annotations (Desktop left border) */}
+          {/* ... (contenu de la colonne image inchangé) ... */}
+           {/* Edge Menu/Annotations (Desktop left border) */}
           <div className="hidden md:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-technical bg-background relative z-10">
             <motion.div
               variants={flickerVariants}
@@ -195,7 +195,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        {/* Right Column : Typography (Mobile: Bottom, Desktop: Right) */}
+        {/* Right Column : Typography */}
         <div className="flex-1 w-full md:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-16 lg:px-24 py-4 md:py-0 border-technical box-border">
           <motion.div 
             variants={flickerVariants}
@@ -204,7 +204,7 @@ export default function Hero() {
             className="absolute top-0 left-0 tech-corner hidden md:block"
           ></motion.div>
 
-          {/* Massive Cutoff Number (Aligned with Content) */}
+          {/* Massive Cutoff Number */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 0.1, x: 0 }}
@@ -225,7 +225,8 @@ export default function Hero() {
 
             <h1 className="font-sans font-black text-[clamp(2.5rem,10vw,6rem)] md:text-[clamp(4.5rem,7vw,7.5rem)] tracking-tighter uppercase text-foreground leading-[0.8] mb-6 md:mb-10 relative">
               {titleLines.map((line, i) => (
-                <div key={i} className="overflow-hidden">
+                //  ===== CORRECTION APPLIQUÉE ICI =====
+                <div key={i} className="overflow-hidden relative py-2">
                   <motion.div
                     initial={{ y: "110%" }}
                     animate={{ y: 0 }}
@@ -247,9 +248,9 @@ export default function Hero() {
             >
               La perfection n'est pas une option. Notre protocole de restauration et de protection vise un seul objectif : le standard d'usine, ou mieux.
             </motion.p>
-
-            {/* Buttons Technical Pattern */}
-            <motion.div
+            
+            {/* ... (contenu des boutons et autres annotations inchangé) ... */}
+             <motion.div
               variants={itemVariants}
               className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold w-full"
             >
@@ -289,8 +290,7 @@ export default function Hero() {
               </motion.button>
             </motion.div>
           </div>
-
-          {/* EST. 2026 annotation */}
+          
           <motion.div
             variants={flickerVariants}
             initial="initial"
@@ -313,4 +313,3 @@ export default function Hero() {
     </section>
   );
 }
-
