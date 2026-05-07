@@ -150,7 +150,6 @@ const TechnicalServices = () => {
                         <div>
                             <div className="flex justify-between items-end border-b border-border pb-2 mb-3">
                                 <span className="uppercase text-muted-foreground tracking-widest font-bold">Spécifications</span>
-                                <span className="text-primary font-bold bg-primary/10 px-2 py-1">149 EUR</span>
                             </div>
                             <ul className="space-y-2">
                                 <li className="flex gap-3"><span className="text-primary">■</span> Lavage extérieur à la main (PH neutre)</li>
@@ -208,7 +207,6 @@ const TechnicalServices = () => {
                         <div>
                             <div className="flex justify-between items-end border-b border-background/20 pb-2 mb-3">
                                 <span className="uppercase text-background/50 tracking-widest font-bold">Spécifications</span>
-                                <span className="text-primary font-bold bg-primary/20 px-2 py-1">399 EUR</span>
                             </div>
                             <ul className="space-y-2">
                                 <li className="flex gap-3"><span className="text-primary">■</span> Décontamination carrosserie complète</li>
@@ -259,7 +257,6 @@ const TechnicalServices = () => {
                         <div>
                             <div className="flex justify-between items-end border-b border-border pb-2 mb-3">
                                 <span className="uppercase text-muted-foreground tracking-widest font-bold">Spécifications</span>
-                                <span className="text-primary font-bold bg-primary/10 px-2 py-1">899 EUR</span>
                             </div>
                             <ul className="space-y-2">
                                 <li className="flex gap-3"><span className="text-primary">■</span> Correction peinture multi-étapes (95%+)</li>

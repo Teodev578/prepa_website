@@ -62,13 +62,17 @@ export default function Testimonials() {
     };
 
     updateRange();
-    // Add a small delay to ensure styles are applied
-    const timer = setTimeout(updateRange, 100);
+    
+    // Écoute précisément les changements de taille du composant (plus robuste que le window resize)
+    const observer = new ResizeObserver(() => updateRange());
+    if (scrollRef.current) {
+      observer.observe(scrollRef.current);
+    }
     
     window.addEventListener("resize", updateRange);
     return () => {
+      observer.disconnect();
       window.removeEventListener("resize", updateRange);
-      clearTimeout(timer);
     };
   }, []);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Image from "next/image";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 
 const images = [
@@ -30,10 +31,32 @@ export default function Hero() {
   const smoothHeroOpacity = useSpring(heroOpacity, { stiffness: 400, damping: 90 });
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
-    return () => clearInterval(timer);
+    let timer: NodeJS.Timeout;
+    
+    const startTimer = () => {
+      timer = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % images.length);
+      }, 5000);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        clearInterval(timer);
+      } else {
+        startTimer();
+      }
+    };
+
+    // Démarrage initial
+    startTimer();
+
+    // Écouteur d'événement
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      clearInterval(timer);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   const containerVariants = {
@@ -108,7 +131,7 @@ export default function Hero() {
             <motion.div
               variants={itemVariants}
               whileHover={{ opacity: 0.7 }}
-              className="flex flex-col gap-1.5 cursor-pointer transition-opacity"
+              className="flex flex-col gap-1.5 transition-opacity"
             >
               <div className="w-6 h-[1.5px] bg-foreground"></div>
               <div className="w-4 h-[1.5px] bg-foreground"></div>
@@ -139,16 +162,22 @@ export default function Hero() {
             className="flex-grow relative overflow-hidden bg-background h-full w-full"
           >
             <AnimatePresence mode="wait">
-              <motion.img
+              <motion.div
                 key={currentIndex}
-                src={images[currentIndex]}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
-                className="w-full h-full object-cover scale-110" // scale-110 to allow parallax headroom
-                alt={`Precision Auto Technical - ${currentIndex + 1}`}
-              />
+                className="w-full h-full absolute inset-0"
+              >
+                <Image
+                  src={images[currentIndex]}
+                  fill
+                  className="object-cover scale-110"
+                  alt={`Precision Auto Technical - ${currentIndex + 1}`}
+                  priority={currentIndex === 0}
+                />
+              </motion.div>
             </AnimatePresence>
 
             {/* Technical Overlay - Minimal Indicators */}
