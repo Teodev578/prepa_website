@@ -93,7 +93,7 @@ export default function Hero() {
 
   const titleLines = [
     "LE CHOIX",
-    "NUMÉRO #1", // Exemple avec accent pour tester
+    "NUMERO #1", // Exemple avec accent pour tester
   ];
 
   return (
