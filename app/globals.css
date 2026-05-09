@@ -33,8 +33,9 @@
   --card-foreground: #f2f2f2;
   --primary: #fe3333;
   /* Un rouge un peu plus vif en dark mode */
-  --border: #262626;
+  --border: #404040;
   --muted: #1a1a1a;
+  --muted-foreground: #C2C2C2;
 }
 
 @theme inline {
