@@ -67,7 +67,7 @@
   h1,
   h2,
   h3 {
-    @apply font-black uppercase leading-[0.9] tracking-tighter;
+    @apply font-black uppercase leading-[1.1] tracking-tighter;
   }
 }
 
@@ -104,7 +104,7 @@
   h4,
   h5,
   h6 {
-    @apply font-black uppercase leading-[0.9] tracking-tighter;
+    @apply font-black uppercase leading-[1.1] tracking-tighter;
   }
 
   /* Style pour les paragraphes de description standard */
@@ -149,6 +149,7 @@
   .btn-primary {
     @apply w-full py-5 border font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-300 rounded-[var(--radius)];
     @apply hover:bg-primary hover:text-primary-foreground;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
   .btn-primary>span {

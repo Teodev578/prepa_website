@@ -80,25 +80,27 @@ const Services = () => {
     ];
 
     return (
-        <div className="bg-background text-foreground min-h-screen pt-32 pb-24">
+        <div className="bg-background text-foreground min-h-screen pt-20 md:pt-32 pb-16 md:pb-24">
 
             {/* Header Section */}
-            <section className="px-6 md:px-12 mb-20 overflow-hidden">
+            <section className="px-6 md:px-12 mb-12 md:mb-20 overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-4 flex items-center gap-4">
                         {/* Ligne animée (se dessine de gauche à droite) */}
                         <motion.div
                             initial={{ scaleX: 0 }}
                             whileInView={{ scaleX: 1 }}
-                            viewport={{ once: false }}
+                            viewport={{ once: true }}
                             transition={{ duration: 1, ease: customEase }}
+                            style={{ willChange: "transform" }}
                             className="w-12 h-[1px] bg-primary origin-left"
                         />
                         <motion.span
                             initial={{ opacity: 0, x: -10 }}
                             whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: false }}
+                            viewport={{ once: true }}
                             transition={{ duration: 0.8, delay: 0.2, ease: customEase }}
+                            style={{ willChange: "transform, opacity" }}
                             className="text-label text-primary"
                         >
                             FLEXIBILITÉ_RÉACTIVITÉ_RENTABILITÉ
@@ -110,7 +112,8 @@ const Services = () => {
                             variants={textRevealVariants}
                             initial="hidden"
                             whileInView="show"
-                            viewport={{ once: false }}
+                            viewport={{ once: true }}
+                            style={{ willChange: "transform, opacity" }}
                             className="text-display text-primary"
                         >
                             NOS SERVICES
@@ -125,8 +128,8 @@ const Services = () => {
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="show"
-                    viewport={{ once: false, margin: "-100px" }}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-0 border-t border-l"
+                    viewport={{ once: false, margin: "-50px" }}
+                    className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-l"
                 >
                     {services.map((service) => (
                         <motion.article
@@ -166,7 +169,7 @@ const Services = () => {
             </section>
 
             {/* Services Stratégiques */}
-            <section className="px-6 md:px-12 mt-40 max-w-7xl mx-auto">
+            <section className="px-6 md:px-12 mt-24 md:mt-40 max-w-7xl mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -198,7 +201,7 @@ const Services = () => {
                     variants={containerVariants}
                     initial="hidden"
                     whileInView="show"
-                    viewport={{ once: false, margin: "-100px" }}
+                    viewport={{ once: false, margin: "-50px" }}
                     className="grid grid-cols-1 md:grid-cols-2 gap-12"
                 >
                     {/* Logistique & Convoyage */}
@@ -242,7 +245,7 @@ const Services = () => {
             </section>
 
             {/* Notre Engagement Partenaire */}
-            <section className="px-6 md:px-12 mt-40 max-w-7xl mx-auto overflow-hidden">
+            <section className="px-6 md:px-12 mt-24 md:mt-40 max-w-7xl mx-auto overflow-hidden">
                 <div className="border-t pt-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
                     <div>
                         <div className="overflow-hidden mb-8">

@@ -29,7 +29,7 @@ const Footer = () => {
         hidden: { opacity: 0 },
         visible: {
             opacity: 1,
-            transition: { 
+            transition: {
                 staggerChildren: 0.1,
                 delayChildren: 0.2
             }
@@ -38,25 +38,25 @@ const Footer = () => {
 
     const itemVariants = {
         hidden: { opacity: 0, y: 10 },
-        visible: { 
-            opacity: 1, 
-            y: 0, 
-            transition: { duration: 0.5, ease: BEZIER } 
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.5, ease: BEZIER }
         }
     };
 
     const lineVariants = {
         hidden: { scaleX: 0 },
-        visible: { 
-            scaleX: 1, 
-            transition: { duration: 1, ease: BEZIER } 
+        visible: {
+            scaleX: 1,
+            transition: { duration: 1, ease: BEZIER }
         }
     };
 
     return (
         <footer className="relative w-full bg-background border-t border-border overflow-hidden">
             {/* Background Watermark */}
-            <motion.div 
+            <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 0.05, x: 0 }}
                 viewport={{ once: true }}
@@ -71,10 +71,10 @@ const Footer = () => {
             {/* Main Content Grid */}
             <div className="relative z-10 max-w-[1440px] mx-auto">
                 <div className="flex flex-col lg:flex-row">
-                    
+
                     {/* Left Block: Identity & Massive Text */}
                     <div className="lg:w-2/3 p-6 md:p-12 lg:p-20 border-b lg:border-b-0 lg:border-r border-border">
-                        <motion.div 
+                        <motion.div
                             variants={containerVariants}
                             initial="hidden"
                             whileInView="visible"
@@ -82,7 +82,7 @@ const Footer = () => {
                         >
                             <motion.div variants={itemVariants} className="flex items-center gap-4 mb-12">
                                 <Logo />
-                                <motion.div 
+                                <motion.div
                                     variants={lineVariants}
                                     className="h-px bg-border flex-1 origin-left"
                                 ></motion.div>
@@ -102,10 +102,10 @@ const Footer = () => {
 
                     {/* Right Block: Navigation & Technical Info */}
                     <div className="lg:w-1/3 flex flex-col">
-                        
+
                         {/* Navigation Section */}
                         <div className="p-6 md:p-12 border-b border-border flex-1">
-                            <motion.div 
+                            <motion.div
                                 variants={containerVariants}
                                 initial="hidden"
                                 whileInView="visible"
@@ -117,7 +117,7 @@ const Footer = () => {
                                     <ul className="flex flex-col gap-4">
                                         {navLinks.map((link) => (
                                             <motion.li key={link.label} variants={itemVariants}>
-                                                <Link 
+                                                <Link
                                                     href={link.href}
                                                     className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors inline-flex items-center group"
                                                 >
@@ -133,7 +133,7 @@ const Footer = () => {
                                     <ul className="flex flex-col gap-4">
                                         {socialLinks.map((link) => (
                                             <motion.li key={link.label} variants={itemVariants}>
-                                                <a 
+                                                <a
                                                     href={link.href}
                                                     target="_blank"
                                                     rel="noopener noreferrer"
@@ -151,7 +151,7 @@ const Footer = () => {
 
                         {/* Technical Metadata Section */}
                         <div className="p-6 md:p-12 bg-muted/30">
-                            <motion.div 
+                            <motion.div
                                 variants={containerVariants}
                                 initial="hidden"
                                 whileInView="visible"
@@ -164,7 +164,7 @@ const Footer = () => {
                                         <span className="font-mono text-[10px] font-bold uppercase transition-colors group-hover:text-primary">{data.value}</span>
                                     </motion.div>
                                 ))}
-                                
+
                                 {/* Technical Corner Decoration */}
                                 <div className="flex justify-between items-center mt-4">
                                     <div className="font-mono text-[10px] text-primary">+</div>
