@@ -19,46 +19,46 @@ const maskReveal = {
 };
 
 const Services = () => {
-    // Le contenu B2B reste le même
+    // === CONTENU MODIFIÉ AVEC LE NOUVEAU TON ===
     const services = [
         {
             id: 'RO-01',
-            title: 'RENFORT OPÉRATIONNEL',
-            subtitle: 'VOTRE EXPERT SUR SITE',
+            title: 'VOTRE PRÉPARATEUR EN RENFORT',
+            subtitle: 'VOTRE EXPERT DIRECTEMENT SUR SITE',
             price: 'SUR DEVIS',
             details: [
-                'Remplacement au pied levé d\'un préparateur absent',
-                'Gestion des pics d\'activité (livraisons, événements)',
-                'Aucun processus de recrutement à gérer',
-                'Continuité de service 100% garantie'
+                ' Vous avez besoin d\'un préparateur expert ?',
+                'Nous intervenons pour gérer vos pics d\'activité, livraisons ou événements.',
+                'Aucune contrainte de recrutement, une flexibilité totale.',
+                'Votre activité ne s\'arrête jamais, la nôtre non plus.'
             ],
-            cta: 'PLANIFIER UN RENFORT'
+            cta: 'NOUS SOMMES LÀ POUR VOUS'
         },
         {
             id: 'GF-02',
-            title: 'GESTION DE FLOTTE',
-            subtitle: 'OPTIMISATION LOGISTIQUE',
-            price: 'ABONNEMENT',
+            title: 'ACCÉLÉREZ VOS VENTES',
+            subtitle: 'DÉSENGORGEZ VOTRE PARC AUTOMOBILE',
+            price: 'SUR DEVIS',
             details: [
-                'Audit complet de vos flux de préparation',
-                'Mise en place de process standardisés',
-                'Pilotage de la performance (KPIs)',
-                'Optimisation des coûts de produits'
+                'Votre parc de véhicules d\'occasion est saturé ?',
+                'Nous prenons en charge la préparation de vos lots de véhicules en un temps record.',
+                'Accélérez vos mises en vente et libérez de la trésorerie.',
+                'Nous appliquons un standard de qualité unique pour valoriser chaque véhicule.'
             ],
-            cta: 'DEMANDER UN AUDIT'
+            cta: 'OPTIMISER MON FLUX DE VÉHICULES'
         },
         {
             id: 'EC-03',
-            title: 'EXTERNALISATION COMPLÈTE',
-            subtitle: 'SÉRÉNITÉ TOTALE',
-            price: 'SUR MESURE',
+            title: 'DÉLÉGUEZ EN TOUTE CONFIANCE',
+            subtitle: 'VOTRE PÔLE PRÉPARATION PARTENAIRE',
+            price: 'SUR DEVIS',
             details: [
-                'Prise en charge intégrale de votre atelier',
-                'Management des équipes dédié',
-                'Garantie de résultat et de délai',
-                'Maintenance préventive du matériel'
+                'Et si vous nous confiez l\'intégralité de votre pôle préparation ?',
+                'Transformez vos charges fixes en un coût 100% variable et maîtrisé.',
+                'Gagnez en visibilité grâce à un suivi clair et transparent de nos actions.',
+                'Libérez vos équipes pour qu\'elles se concentrent sur leur cœur de métier : la vente.'
             ],
-            cta: 'ÉTUDIER VOTRE PROJET'
+            cta: 'DEVENIR PARTENAIRE'
         }
     ];
 
@@ -139,54 +139,54 @@ const Services = () => {
             {/* Services Stratégiques */}
             <section className="px-6 md:px-12 mt-40 max-w-7xl mx-auto">
                 <motion.div {...fadeInUp} className="mb-16">
-                    {/* CHANGÉ : Utilisation de H3 et de la classe .text-section-title */}
-                    <h3 className="text-section-title">NOS SERVICES <br /><span className="text-primary">STRATÉGIQUES</span></h3>
+                    <h3 className="text-5xl">NOS SERVICES <br /><span className="text-primary">STRATÉGIQUES</span></h3>
                     <div className="w-24 h-1 bg-primary mt-4" />
                 </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    {/* Carte Logistique & Convoyage */}
+                    {/* === CARTE MODIFIÉE : Logistique & Convoyage === */}
                     <motion.div
                         {...fadeInUp}
-                        // La classe .border-technical vient déjà de votre CSS, c'est parfait
                         className="border-technical p-12 bg-card flex flex-col gap-8 relative overflow-hidden"
                     >
-                        {/* ... (contenu de la carte) */}
+                        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground vertical-text uppercase">SERVICE_REF: LC_CONVOYAGE_01</div>
                         <div className="flex items-center gap-6">
                             <div className="w-16 h-16 border flex items-center justify-center font-mono text-xl text-primary font-bold">01</div>
                             <div>
-                                {/* CHANGÉ : Utilisation de H4. Le style vient du @layer base */}
-                                <h4>LOGISTIQUE & CONVOYAGE</h4>
-                                <p className="font-mono text-[10px] text-muted-foreground uppercase py-1 border-b w-fit">FLUX_SÉCURISÉ_ET_MAÎTRISÉ</p>
+                                <h4 className="text-2xl">LOGISTIQUE & CONVOYAGE</h4>
+                                <p className="font-mono text-[10px] text-muted-foreground uppercase py-1 border-b w-fit">VOS VÉHICULES, NOTRE RESPONSABILITÉ</p>
                             </div>
                         </div>
-                        {/* CHANGÉ : La balise <p> hérite du style de base */}
-                        <p className="text-muted-foreground">
-                            Prise en charge de vos véhicules entre parcs, concessions et ateliers. Notre assurance spécifique couvre chaque déplacement pour une tranquillité d'esprit totale.
+                        <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                            Le déplacement de vos véhicules est un casse-tête logistique qui mobilise vos équipes de vente ? Déléguez-nous le convoyage entre vos différents sites. Nous garantissons une prise en charge complète et sécurisée, le tout couvert par notre assurance professionnelle spécifique.
                         </p>
-                        {/* ... (footer de la carte) */}
+                        <div className="mt-auto pt-6 border-t flex justify-between items-center font-mono text-[10px]">
+                            <span className="text-primary">PÉRIMÈTRE D'ACTION: ÎLE-DE-FRANCE</span>
+                            <span className="text-muted-foreground">TRANQUILLITÉ D'ESPRIT: ASSURANCE SPÉCIFIQUE</span>
+                        </div>
                     </motion.div>
 
-                    {/* Carte Formation du Personnel */}
+                    {/* === CARTE MODIFIÉE : Formation du Personnel === */}
                     <motion.div
                         {...fadeInUp}
                         transition={{ delay: 0.2 }}
                         className="border-technical p-12 bg-card flex flex-col gap-8 relative overflow-hidden"
                     >
-                        {/* ... (contenu de la carte) */}
+                        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground vertical-text uppercase">SERVICE_REF: LC_FORMATION_02</div>
                         <div className="flex items-center gap-6">
                             <div className="w-16 h-16 border flex items-center justify-center font-mono text-xl text-primary font-bold">02</div>
                             <div>
-                                {/* CHANGÉ : Utilisation de H4 */}
-                                <h4>FORMATION DU PERSONNEL</h4>
-                                <p className="font-mono text-[10px] text-muted-foreground uppercase py-1 border-b w-fit">MONTÉE_EN_COMPÉTENCE_INTERNE</p>
+                                <h4 className="text-2xl">FORMATION DU PERSONNEL</h4>
+                                <p className="font-mono text-[10px] text-muted-foreground uppercase py-1 border-b w-fit">TRANSFORMEZ VOS ÉQUIPES EN EXPERTS</p>
                             </div>
                         </div>
-                        {/* CHANGÉ : La balise <p> hérite du style de base */}
-                        <p className="text-muted-foreground">
-                            Nous transmettons nos méthodes et notre rigueur à vos équipes pour standardiser la qualité de votre préparation en interne et valoriser votre capital humain.
+                        <p className="font-sans text-sm text-muted-foreground leading-relaxed">
+                            La qualité de votre préparation en interne est inégale et dépend de la personne en poste ? Nous formons vos collaborateurs à nos méthodes rigoureuses pour standardiser vos processus, garantir un résultat impeccable à chaque fois et valoriser durablement votre personnel.
                         </p>
-                        {/* ... (footer de la carte) */}
+                        <div className="mt-auto pt-6 border-t flex justify-between items-center font-mono text-[10px]">
+                            <span className="text-primary">NOTRE MÉTHODE: SAVOIR-FAIRE D'EXPERT</span>
+                            <span className="text-muted-foreground">VOTRE RÉSULTAT: ÉQUIPE 100% AUTONOME</span>
+                        </div>
                     </motion.div>
                 </div>
             </section>
@@ -195,14 +195,28 @@ const Services = () => {
             <section className="px-6 md:px-12 mt-40 max-w-7xl mx-auto">
                 <div className="border-t pt-16 grid grid-cols-1 md:grid-cols-2 gap-16 items-end">
                     <motion.div {...fadeInUp}>
-                        {/* CHANGÉ : Utilisation de H3 et .text-section-title */}
-                        <h3 className="text-section-title mb-8">NOTRE ENGAGEMENT <br /> <span className="text-primary">PARTENAIRE</span></h3>
-                        {/* CHANGÉ : La balise <p> hérite du style de base */}
-                        <p className="text-muted-foreground max-w-lg">
-                            Chaque collaboration est encadrée par des méthodes de gestion rigoureuses. Nous fournissons des reportings clairs qui vous permettent de suivre nos interventions et de mesurer précisément le retour sur investissement de notre partenariat.
+                        {/* === TITRE MODIFIÉ === */}
+                        <h3 className="text-5xl mb-8">UN PARTENARIAT BASÉ SUR <br /> <span className="text-primary">LA CONFIANCE</span></h3>
+                        {/* === DESCRIPTION MODIFIÉE === */}
+                        <p className="font-sans text-muted-foreground text-sm max-w-lg leading-relaxed">
+                            Pour nous, un partenariat réussi repose sur une confiance totale. C'est pourquoi la transparence est au cœur de notre méthode. Fini le flou sur les prestations : grâce à nos reportings clairs, vous suivez chaque intervention, maîtrisez vos coûts et mesurez concrètement le retour sur investissement.
                         </p>
                     </motion.div>
-                    {/* ... (le reste est déjà bien structuré) */}
+                    {/* === TAGS MODIFIÉS === */}
+                    <motion.div {...fadeInUp} className="flex flex-col md:items-end gap-6 font-mono text-[9px] text-muted-foreground uppercase tracking-[0.2em]">
+                        <div className="flex items-center gap-4">
+                            <span className="text-primary">PRINCIPE N°1:</span>
+                            <span className="bg-muted px-2 py-1 border rounded-[var(--radius)]">QUALITÉ CONSTANTE</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <span className="text-primary">TRANSPARENCE:</span>
+                            <span className="bg-muted px-2 py-1 border rounded-[var(--radius)]">REPORTING DÉTAILLÉ</span>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <span className="text-primary">SÉCURITÉ:</span>
+                            <span className="bg-muted px-2 py-1 border rounded-[var(--radius)]">CONTRAT PARTENAIRE</span>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
         </div>
