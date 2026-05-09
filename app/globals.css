@@ -90,3 +90,67 @@
     text-orientation: mixed;
   }
 }
+
+/* AJOUTEZ CECI À VOTRE FICHIER global.css */
+
+@layer base {
+  /* ... (vos styles h1, h2, h3 existants) */
+
+  /* On étend la règle aux h4 pour les titres de cartes */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-black uppercase leading-[0.9] tracking-tighter;
+  }
+
+  /* Style pour les paragraphes de description standard */
+  p {
+    @apply text-sm leading-relaxed;
+  }
+}
+
+@layer utilities {
+  /* ... (vos utilitaires existants) */
+
+  /* TYPOGRAPHIE SÉMANTIQUE */
+
+  /* Pour les grands titres de page comme "NOS SOLUTIONS" */
+  .text-display {
+    @apply text-6xl md:text-9xl;
+  }
+
+  /* Pour les titres de section comme "NOS SERVICES STRATÉGIQUES" */
+  .text-section-title {
+    @apply text-5xl;
+  }
+
+  /* Pour les titres dans les cartes */
+  .text-card-title {
+    @apply text-4xl;
+  }
+
+  /* Pour les sous-titres/labels comme "VOTRE EXPERT SUR SITE" */
+  .text-label {
+    @apply font-mono text-[9px] uppercase tracking-[0.2em];
+  }
+
+  /* Pour les listes de détails dans les cartes */
+  .text-detail {
+    @apply font-mono text-[11px] uppercase leading-tight tracking-normal;
+  }
+
+  /* COMPOSANTS */
+
+  /* Style de base pour les boutons d'action */
+  .btn-primary {
+    @apply w-full py-5 border font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-300 rounded-[var(--radius)];
+    @apply hover:bg-primary hover:text-primary-foreground;
+  }
+
+  .btn-primary>span {
+    @apply font-black;
+  }
+}
