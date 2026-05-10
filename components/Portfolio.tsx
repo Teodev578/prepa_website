@@ -2,25 +2,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// On garde l'import de ton slider
+import BeforeAfterSlider from '../components/BeforeAfterSlider';
+
 const cubicBezier = [0.22, 1, 0.36, 1] as any;
 
 const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.8, ease: cubicBezier }
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true },
+    transition: { duration: 0.8, ease: cubicBezier }
 };
 
 const maskReveal = {
-  initial: { clipPath: 'inset(100% 0 0 0)' },
-  whileInView: { clipPath: 'inset(0 0 0 0)' },
-  viewport: { once: true },
-  transition: { duration: 1.2, ease: cubicBezier }
+    initial: { clipPath: 'inset(100% 0 0 0)' },
+    whileInView: { clipPath: 'inset(0 0 0 0)' },
+    viewport: { once: true },
+    transition: { duration: 1.2, ease: cubicBezier }
 };
 
-import BeforeAfterSlider from '../components/BeforeAfterSlider';
-
 const Portfolio = () => {
+    // Les données restent inchangées
     const projects = [
         {
             id: 'PROJ_001',
@@ -29,7 +31,7 @@ const Portfolio = () => {
             date: '2026.03.14',
             model: '992_GT3_RS',
             imgBefore: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBN3_gMl0NK-wbDiKmokNA6eNw6BPbwtIP92jmUrCcNDf0pRCCPu15-AEBUVpavISesh0YKYP6tPNDqd-pxexWqiKR-fVHiI2TKWr-6ntw-V-0L9eLf-7xHIvLgMPIntJtaqcyMypmCblB7FS9KoApPbjvpb8SJPRcsrge9HnWTvLXA2_el4ONsKX5NOjU7B6sAziVlVAxgmEpdB2-GxaEzU8-8zpsIzHClJTMlMUzZyhd1MN4I_ZetIDRjQSr4WaRRYmD2qWp3E2w',
-            imgAfter: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBN3_gMl0NK-wbDiKmokNA6eNw6BPbwtIP92jmUrCcNDf0pRCCPu15-AEBUVpavISesh0YKYP6tPNDqd-pxexWqiKR-fVHiI2TKWr-6ntw-V-0L9eLf-7xHIvLgMPIntJtaqcyMypmCblB7FS9KoApPbjvpb8SJPRcsrge9HnWTvLXA2_el4ONsKX5NOjU7B6sAziVlVAxgmEpdB2-GxaEzU8-8zpsIzHClJTMlMUzZyhd1MN4I_ZetIDRjQSr4WaRRYmD2qWp3E2w', // Same image for demo
+            imgAfter: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBN3_gMl0NK-wbDiKmokNA6eNw6BPbwtIP92jmUrCcNDf0pRCCPu15-AEBUVpavISesh0YKYP6tPNDqd-pxexWqiKR-fVHiI2TKWr-6ntw-V-0L9eLf-7xHIvLgMPIntJtaqcyMypmCblB7FS9KoApPbjvpb8SJPRcsrge9HnWTvLXA2_el4ONsKX5NOjU7B6sAziVlVAxgmEpdB2-GxaEzU8-8zpsIzHClJTMlMUzZyhd1MN4I_ZetIDRjQSr4WaRRYmD2qWp3E2w',
             techData: {
                 time: '48H',
                 products: 'KAMIKAZE_COLLECTION',
@@ -86,25 +88,29 @@ const Portfolio = () => {
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="mb-24 relative">
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8, ease: cubicBezier }}
                         className="mb-4 flex items-center gap-4"
                     >
-                        <div className="w-12 h-[1px] bg-[#9B2C2C]" />
-                        <span className="font-mono text-[#9B2C2C] uppercase tracking-[0.3em] text-[10px]">LOGISTIQUE_RÉALISATIONS_V4</span>
+                        {/* Utilisation de bg-primary au lieu de #9B2C2C */}
+                        <div className="w-12 h-[1px] bg-primary" />
+                        {/* Utilisation de text-primary et de la classe utilitaire text-label */}
+                        <span className="text-primary text-label">LOGISTIQUE_RÉALISATIONS_V4</span>
                     </motion.div>
-                    <motion.h1 
+
+                    <motion.h1
                         {...maskReveal}
-                        className="font-black text-6xl md:text-9xl text-[#9B2C2C] uppercase leading-[0.85] tracking-tighter"
+                        /* Utilisation de text-display et text-primary. Les styles de base h1 gèrent déjà font-black et uppercase */
+                        className="text-display text-primary leading-[0.85]"
                     >
                         ARCHIVES <br /> TECHNIQUES
                     </motion.h1>
-                    
+
                     {/* Decorative Technical Coordinates */}
-                    <div className="absolute top-0 right-0 font-mono text-[8px] text-muted-foreground uppercase opacity-40 hidden md:block">
+                    <div className="absolute top-0 right-0 text-label text-muted-foreground opacity-40 hidden md:block">
                         LAT: 48.8566° N<br />
                         LON: 2.3522° E<br />
                         ALT: 35.0 M
@@ -114,68 +120,76 @@ const Portfolio = () => {
                 {/* Portfolio Grid - Asymmetric */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-20">
                     {projects.map((project, index) => (
-                        <motion.div 
+                        <motion.div
                             key={project.id}
                             {...fadeInUp}
                             transition={{ ...fadeInUp.transition, delay: index * 0.1 }}
-                            className={`relative group ${
-                                project.size === 'large' ? 'md:col-span-12' : 
-                                project.size === 'medium' ? 'md:col-span-12' : 'md:col-span-6'
-                            }`}
+                            className={`relative group ${project.size === 'large' ? 'md:col-span-12' :
+                                    project.size === 'medium' ? 'md:col-span-12' : 'md:col-span-6'
+                                }`}
                         >
                             {/* Visual Component */}
                             {project.size === 'large' && project.imgBefore ? (
-                                <BeforeAfterSlider 
-                                    beforeImg={project.imgBefore} 
-                                    afterImg={project.imgAfter!} 
-                                />
+                                <div className="border-technical p-1 bg-card">
+                                    {/* J'ai encapsulé ton slider dans un conteneur technique pour la cohérence */}
+                                    <BeforeAfterSlider
+                                        beforeImg={project.imgBefore}
+                                        afterImg={project.imgAfter!}
+                                    />
+                                </div>
                             ) : (
-                                <div className="relative border-[0.5px] border-border overflow-hidden bg-white p-1">
-                                    <img 
-                                        src={project.img} 
+                                /* Utilisation de border-technical au lieu des classes manuelles */
+                                <div className="relative border-technical overflow-hidden bg-card p-1">
+                                    <img
+                                        src={project.img}
                                         alt={project.title}
                                         className="w-full grayscale group-hover:grayscale-0 transition-all duration-1000 object-cover aspect-video md:aspect-auto md:h-[600px]"
                                     />
-                                    
+
                                     {/* Technical Markers Layer */}
                                     <div className="absolute inset-0 pointer-events-none">
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border-[0.5px] border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                                        <div className="absolute top-10 left-10 text-[#9B2C2C] font-mono text-[10px] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">+ PT_04</div>
-                                        <div className="absolute bottom-10 right-10 text-[#9B2C2C] font-mono text-[10px] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">+ PT_09</div>
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                                        <div className="absolute top-10 left-10 text-primary text-detail opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">+ PT_04</div>
+                                        <div className="absolute bottom-10 right-10 text-primary text-detail opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">+ PT_09</div>
                                     </div>
 
                                     {/* Technical Annotations - Border Labels */}
-                                    <div className="absolute top-4 left-4 font-mono text-[9px] text-[#9B2C2C] bg-white/90 px-2 py-1 uppercase tracking-widest border-[0.5px] border-border">
+                                    <div className="absolute top-4 left-4 text-label text-primary bg-background/90 px-2 py-1 border border-border">
                                         ID: {project.id}
                                     </div>
-                                    <div className="absolute bottom-4 right-4 font-mono text-[9px] text-white bg-[#9B2C2C] px-2 py-1 uppercase tracking-widest">
+                                    <div className="absolute bottom-4 right-4 text-label text-primary-foreground bg-primary px-2 py-1">
                                         {project.date}
                                     </div>
                                 </div>
                             )}
 
                             {/* Project Info & Technical Data */}
-                            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 border-b-[0.5px] border-border pb-8">
-                                <div>
-                                    <h2 className="font-black text-3xl uppercase leading-none mb-3">{project.title}</h2>
+                            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 border-b border-border pb-8 relative">
+
+                                {/* Ajout de ton utilitaire tech-corner sur la data */}
+                                <div className="tech-corner pl-4">
+                                    {/* Utilisation de text-card-title (h3 car sémantiquement c'est un titre de carte) */}
+                                    <h3 className="text-card-title mb-3">{project.title}</h3>
+
                                     <div className="flex items-center gap-4">
-                                        <span className="font-mono text-[10px] text-muted-foreground uppercase">MODÈLE: {project.model}</span>
-                                        <div className="w-1 h-1 bg-[#9B2C2C]" />
-                                        <span className="font-mono text-[10px] text-[#9B2C2C] uppercase tracking-widest font-bold">{project.treatment}</span>
+                                        <span className="text-detail text-muted-foreground">MODÈLE: {project.model}</span>
+                                        <div className="w-1 h-1 bg-primary" />
+                                        <span className="text-label text-primary font-bold">{project.treatment}</span>
                                     </div>
                                 </div>
+
                                 <div className="grid grid-cols-3 gap-4 md:text-right">
                                     <div className="flex flex-col">
-                                        <span className="font-mono text-[8px] text-muted-foreground uppercase mb-1">TEMPS_PASSÉ</span>
-                                        <span className="font-mono text-[10px] uppercase font-black">{project.techData.time}</span>
+                                        <span className="text-label text-muted-foreground mb-1">TEMPS_PASSÉ</span>
+                                        <span className="text-detail font-black">{project.techData.time}</span>
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="font-mono text-[8px] text-muted-foreground uppercase mb-1">PRODUITS_USÉS</span>
-                                        <span className="font-mono text-[10px] uppercase font-black">{project.techData.products.split('_')[0]}</span>
+                                        <span className="text-label text-muted-foreground mb-1">PRODUITS_USÉS</span>
+                                        <span className="text-detail font-black">{project.techData.products.split('_')[0]}</span>
                                     </div>
                                     <div className="flex flex-col">
-                                        <span className="font-mono text-[8px] text-muted-foreground uppercase mb-1">DÉFAUT_TYPE</span>
-                                        <span className="font-mono text-[10px] uppercase font-black text-[#9B2C2C]">{project.techData.defect.split('_')[0]}</span>
+                                        <span className="text-label text-muted-foreground mb-1">DÉFAUT_TYPE</span>
+                                        <span className="text-detail font-black text-primary">{project.techData.defect.split('_')[0]}</span>
                                     </div>
                                 </div>
                             </div>
@@ -184,22 +198,22 @@ const Portfolio = () => {
                 </div>
 
                 {/* Grid Footer Annotations */}
-                <div className="mt-40 border-t-[0.5px] border-border pt-12">
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
+                <div className="mt-40 border-t border-border pt-12">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-12 text-label text-muted-foreground">
                         <div className="flex flex-col gap-2">
-                            <span className="text-[#9B2C2C] font-bold">TOTAL_ARCHIVE:</span>
+                            <span className="text-primary font-bold">TOTAL_ARCHIVE:</span>
                             <span className="text-foreground">1,420 UNITS_LOGGED</span>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <span className="text-[#9B2C2C] font-bold">PRECISION_RATE:</span>
+                            <span className="text-primary font-bold">PRECISION_RATE:</span>
                             <span className="text-foreground">99.98% CONFORMITY</span>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <span className="text-[#9B2C2C] font-bold">CERT_STATUS:</span>
+                            <span className="text-primary font-bold">CERT_STATUS:</span>
                             <span className="text-foreground">VERIFIED_DETailing_LABS</span>
                         </div>
                         <div className="flex flex-col gap-2 md:text-right">
-                            <span className="text-[#9B2C2C] font-bold">LAST_UPDATE:</span>
+                            <span className="text-primary font-bold">LAST_UPDATE:</span>
                             <span className="text-foreground">2026.04.21_12:06</span>
                         </div>
                     </div>
