@@ -11,8 +11,8 @@ export async function middleware(req: NextRequest) {
   // Check for auth token in cookies
   const authToken = req.cookies.get('sb-auth-token')?.value;
   
-  // Si l'utilisateur n'est pas connecté et essaie d'accéder à /admin
-  if (!authToken && req.nextUrl.pathname.startsWith('/admin')) {
+  // Si l'utilisateur n'est pas connecté et essaie d'accéder à /terminal-hq-77
+  if (!authToken && req.nextUrl.pathname.startsWith('/terminal-hq-77')) {
     // On le redirige vers la page de login
     const redirectUrl = req.nextUrl.clone();
     redirectUrl.pathname = '/login';
@@ -24,5 +24,5 @@ export async function middleware(req: NextRequest) {
 
 // Configuration pour spécifier quelles routes sont protégées
 export const config = {
-  matcher: ['/admin/:path*'],
+  matcher: ['/terminal-hq-77/:path*'],
 };

@@ -1,16 +1,31 @@
 "use client";
-import React, { useState } from 'react';
-import { supabase } from '@/lib/supabaseClient'; // Ajuste le chemin selon ton projet
+import React, { useState, useEffect } from 'react';
+import { supabase } from '@/lib/supabaseClient';
+import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
+    const router = useRouter();
     const [uploading, setUploading] = useState(false);
     const [status, setStatus] = useState('');
+    const [loading, setLoading] = useState(true);
 
     const [formData, setFormData] = useState({
         ref_id: 'REA_005', title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
         time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
         size: 'small', img_single: '', img_before: '', img_after: ''
     });
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (!session) {
+                router.push('/login');
+            } else {
+                setLoading(false);
+            }
+        };
+        checkSession();
+    }, [router]);
 
     const handleTextChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,6 +80,14 @@ export default function AdminPage() {
         if (error) setStatus('ERREUR BDD: ' + error.message);
         else setStatus('RÉALISATION PUBLIÉE AVEC SUCCÈS !');
     };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-background text-foreground flex items-center justify-center">
+                <p className="text-primary font-mono animate-pulse">INITIALISATION_SESSION...</p>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-background text-foreground p-6 md:p-12">
