@@ -1,10 +1,13 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/lib/supabase/client'; 
 import { useRouter } from 'next/navigation';
 
 export default function AdminPage() {
+    // ✅ 1. LE CLIENT DOIT ÊTRE INITIALISÉ DANS LE COMPOSANT DANS NEXT.JS
+    const supabase = createClient();
     const router = useRouter();
+    
     const [uploading, setUploading] = useState(false);
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(true);
@@ -17,15 +20,25 @@ export default function AdminPage() {
 
     useEffect(() => {
         const checkSession = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
+            try {
+                // On ajoute la gestion d'erreur au cas où Supabase ne répondrait pas
+                const { data: { user }, error } = await supabase.auth.getUser();
+                
+                if (error || !user) {
+                    console.warn("Utilisateur non détecté, redirection vers /login...");
+                    router.push('/login');
+                } else {
+                    // Si on a un utilisateur, on arrête le chargement
+                    setLoading(false);
+                }
+            } catch (err) {
+                console.error("Erreur fatale lors de la vérification :", err);
                 router.push('/login');
-            } else {
-                setLoading(false);
             }
         };
+        
         checkSession();
-    }, [router]);
+    }, [router, supabase]); 
 
     const handleTextChange = (e: any) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

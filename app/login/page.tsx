@@ -17,10 +17,10 @@ export default function LoginPage() {
         setLoading(true);
         setError(null);
         
-        // On initialise le client ici pour être sûr de lire les variables .env
-        const supabase = createClient();
-
         try {
+            // On initialise le client ici pour être sûr de lire les variables .env
+            const supabase = createClient();
+            
             const { error: authError } = await supabase.auth.signInWithPassword({
                 email,
                 password,
@@ -30,11 +30,13 @@ export default function LoginPage() {
                 setError(authError.message);
                 setLoading(false);
             } else {
+                // Succès - la redirection va changer de page
                 router.refresh();
                 router.push('/terminal-hq-77');
             }
-        } catch (err) {
-            setError("Une erreur inattendue est survenue.");
+        } catch (err: any) {
+            console.error("Login Error:", err);
+            setError(err.message || "Une erreur inattendue est survenue lors de l'initialisation.");
             setLoading(false);
         }
     };
