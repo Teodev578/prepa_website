@@ -6,6 +6,7 @@ import { AdminView } from './types';
 
 import Sidebar from './_components/Sidebar';
 import PortfolioAdd from './_components/PortfolioAdd';
+import PortfolioList from './_components/PortfolioList';
 import FormsConfig from './_components/FormsConfig';
 
 export default function AdminPage() {
@@ -40,9 +41,11 @@ export default function AdminPage() {
 
             <main className="flex-1 overflow-y-auto p-4 md:p-12 relative bg-grid-pattern">
                 {currentView === 'PORTFOLIO_ADD' && <PortfolioAdd />}
+                {currentView === 'PORTFOLIO_LIST' && <PortfolioList />} {/* <-- NOUVELLE LIGNE */}
                 {currentView === 'FORMS_CONFIG' && <FormsConfig />}
 
-                {!['PORTFOLIO_ADD', 'FORMS_CONFIG'].includes(currentView) && (
+                {/* Mettez à jour la liste des vues exclues du mode "En développement" */}
+                {!['PORTFOLIO_ADD', 'PORTFOLIO_LIST', 'FORMS_CONFIG'].includes(currentView) && (
                     <div className="h-full flex flex-col items-center justify-center text-center opacity-50 pt-20 md:pt-0">
                         <div className="text-primary text-6xl mb-4">🚧</div>
                         <h2 className="text-xl font-mono text-primary mb-2">MODULE EN DÉVELOPPEMENT</h2>
