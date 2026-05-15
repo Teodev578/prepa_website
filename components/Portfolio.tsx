@@ -128,19 +128,24 @@ const Portfolio = () => {
                 </div>
 
                 {/* Portfolio Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-12 grid-flow-row-dense">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense">
                     {projects.map((project, index) => {
                         const isOpen = expandedId === project.id;
                         
-                        // 1. GESTION DES TAILLES
+                        // 1. GESTION DES TAILLES (La vraie différence se fait ici sur le col-span)
                         const isSmall = project.size === 'small';
                         const isMedium = project.size === 'medium';
                         const isLarge = project.size === 'large';
 
-                        // Définition de la hauteur
-                        let imgHeightClass = 'h-[300px] md:h-[450px]'; 
-                        if (isMedium) imgHeightClass = 'h-[400px] md:h-[550px]';
-                        if (isLarge) imgHeightClass = 'h-[500px] md:h-[700px]';
+                        // Attribution des largeurs (Responsive)
+                        let colSpanClass = 'col-span-1 md:col-span-6'; // Small par défaut (1/2 écran)
+                        if (isMedium) colSpanClass = 'col-span-1 md:col-span-8'; // Medium (2/3 d'écran)
+                        if (isLarge) colSpanClass = 'col-span-1 md:col-span-12'; // Large (100% écran)
+
+                        // Attribution des hauteurs 
+                        let imgHeightClass = 'h-[300px] md:h-[400px]'; // Small
+                        if (isMedium) imgHeightClass = 'h-[350px] md:h-[500px]'; // Medium
+                        if (isLarge) imgHeightClass = 'h-[400px] md:h-[650px]'; // Large
 
                         // 2. CORRECTION DU BUG D'IMAGE (Fallback)
                         const displayImage = project.img || project.imgAfter || project.imgBefore;
@@ -150,9 +155,7 @@ const Portfolio = () => {
                                 key={project.id}
                                 {...fadeInUp}
                                 transition={{ ...fadeInUp.transition, delay: (index % 4) * 0.1 }}
-                                className={`relative group flex flex-col ${
-                                    isSmall ? 'md:col-span-6' : 'md:col-span-12'
-                                }`}
+                                className={`relative group flex flex-col ${colSpanClass}`}
                             >
                                 {/* --- COMPOSANT VISUEL --- */}
                                 {project.imgBefore && project.imgAfter ? (
@@ -192,10 +195,9 @@ const Portfolio = () => {
                                 )}
 
                                 {/* --- INFORMATIONS DU PROJET --- */}
-                                <div className="mt-8 border-b border-border pb-8 relative flex-1">
-                                    <div className={`grid gap-8 mb-4 ${isSmall ? 'grid-cols-1' : 'grid-cols-1 lg:grid-cols-2'}`}>
+                                <div className="mt-8 border-b border-border pb-8 relative flex-1 flex flex-col justify-between">
+                                    <div className={`grid gap-8 mb-4 ${isLarge ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
                                         
-                                        {/* Utilisation de .tech-corner ici */}
                                         <div className="tech-corner pl-4 border-l border-primary/30">
                                             <h3 className="text-card-title mb-2">{project.title}</h3>
                                             <div className="flex items-center gap-4 mb-6">
@@ -213,7 +215,8 @@ const Portfolio = () => {
                                             </button>
                                         </div>
 
-                                        <div className={`grid gap-4 ${isSmall ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-3 lg:text-right'} items-end`}>
+                                        {/* Données techniques : si c'est Small, on les empile un peu plus pour éviter qu'elles ne soient écrasées */}
+                                        <div className={`grid gap-4 ${isSmall ? 'grid-cols-2 mt-4' : 'grid-cols-3 lg:text-right'} items-end`}>
                                             <div className="flex flex-col">
                                                 <span className="text-label text-muted-foreground mb-1">RÉACTIVITÉ</span>
                                                 <span className="text-detail font-black">{project.techData.time}</span>
@@ -222,7 +225,7 @@ const Portfolio = () => {
                                                 <span className="text-label text-muted-foreground mb-1">NOTRE_SOLUTION</span>
                                                 <span className="text-detail font-black">{project.techData.products.split('_')[0]}</span>
                                             </div>
-                                            <div className="flex flex-col">
+                                            <div className={`flex flex-col ${isSmall ? 'col-span-2' : ''}`}>
                                                 <span className="text-label text-muted-foreground mb-1">IMPACT_CLIENT</span>
                                                 <span className="text-detail font-black text-primary">{project.techData.defect.split('_')[0]}</span>
                                             </div>
@@ -239,7 +242,7 @@ const Portfolio = () => {
                                                 transition={{ duration: 0.4, ease: cubicBezier }}
                                                 className="overflow-hidden"
                                             >
-                                                <div className={`pt-8 pb-4 grid gap-8 mt-6 border-t border-dashed border-border/50 ${isSmall ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
+                                                <div className={`pt-8 pb-4 grid gap-8 mt-6 border-t border-dashed border-border/50 ${isLarge ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
                                                     
                                                     <div className="border-l-2 border-primary/20 pl-4">
                                                         <h4 className="text-label text-muted-foreground mb-3">01. CONTEXTE CLIENT</h4>
@@ -258,7 +261,7 @@ const Portfolio = () => {
                                                         </ul>
                                                     </div>
 
-                                                    <div className={`border-l-2 border-primary/20 pl-4 ${isSmall ? 'sm:col-span-2' : ''}`}>
+                                                    <div className="border-l-2 border-primary/20 pl-4">
                                                         <h4 className="text-label text-muted-foreground mb-3">03. RÉSULTAT B2B</h4>
                                                         <p className="text-sm text-primary font-bold leading-relaxed">{project.details.result}</p>
                                                     </div>
