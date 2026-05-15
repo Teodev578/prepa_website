@@ -1,208 +1,309 @@
 "use client";
-import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect } from 'react';
+import { createClient } from '@/lib/supabase/client';
+import { useRouter } from 'next/navigation';
 
-const cubicBezier = [0.22, 1, 0.36, 1] as any;
+type AdminView = 'PORTFOLIO_ADD' | 'PORTFOLIO_LIST' | 'QUOTES_INBOX' | 'FORMS_CONFIG' | 'SERVICES_CATALOG';
 
-const maskReveal = {
-  initial: { clipPath: 'inset(100% 0 0 0)' },
-  whileInView: { clipPath: 'inset(0 0 0 0)' },
-  viewport: { once: true },
-  transition: { duration: 1.2, ease: cubicBezier }
-};
+export default function AdminPage() {
+    const supabase = createClient();
+    const router = useRouter();
 
-const Contact = () => {
-    const [profile, setProfile] = React.useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
-    const profiles = ['PARTICULIER', 'ENTREPRISE'] as const;
+    // --- ÉTATS GLOBAUX ---
+    const [loading, setLoading] = useState(true);
+    const [currentView, setCurrentView] = useState<AdminView>('PORTFOLIO_ADD');
+
+    // ==========================================
+    // 📁 MODULE 1 : PORTFOLIO (Existant)
+    // ==========================================
+    const [uploading, setUploading] = useState(false);
+    const [status, setStatus] = useState('');
+    const [formData, setFormData] = useState({
+        ref_id: 'REA_005', title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
+        time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
+        size: 'small', img_single: '', img_before: '', img_after: ''
+    });
+
+    const handleTextChange = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    const handleFileUpload = async (e: any, fieldName: string) => {
+        // ... (Votre code existant d'upload reste inchangé ici) ...
+        const file = e.target.files[0];
+        if (!file) return;
+        setUploading(true);
+        setStatus(`UPLOAD EN COURS... (${fieldName})`);
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const { error } = await supabase.storage.from('portfolio-images').upload(fileName, file);
+        if (error) { setStatus('ERREUR: ' + error.message); setUploading(false); return; }
+        const { data } = supabase.storage.from('portfolio-images').getPublicUrl(fileName);
+        setFormData(prev => ({ ...prev, [fieldName]: data.publicUrl }));
+        setStatus(`UPLOAD TERMINÉ (${fieldName})`);
+        setUploading(false);
+    };
+
+    const handleSubmitPortfolio = async () => {
+        setStatus('SAUVEGARDE...');
+        const workArray = formData.work_done.split(',').map(item => item.trim());
+        const { error } = await supabase.from('portfolio_projects').insert([{
+            ...formData, work_done: workArray, title: formData.title.toUpperCase(), treatment: formData.treatment.toUpperCase()
+        }]);
+        if (error) setStatus('ERREUR BDD: ' + error.message);
+        else setStatus('RÉALISATION PUBLIÉE AVEC SUCCÈS !');
+    };
+
+    // ==========================================
+    // ⚙️ MODULE 2 : CONFIG FORMULAIRES
+    // ==========================================
+    const [activeProfile, setActiveProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
+    const [currentFormId, setCurrentFormId] = useState<string | null>(null);
+    const [formFields, setFormFields] = useState<any[]>([]);
+    const [newField, setNewField] = useState({
+        field_label: '', field_type: 'text', options: '', is_required: true
+    });
+
+    // Charger les champs quand on change d'onglet ou qu'on ouvre la vue
+    useEffect(() => {
+        if (currentView === 'FORMS_CONFIG') {
+            loadFormConfig();
+        }
+    }, [currentView, activeProfile]);
+
+    const loadFormConfig = async () => {
+        // 1. Chercher le formulaire correspondant au profil
+        let { data: form } = await supabase.from('forms').select('id').eq('profile_type', activeProfile).single();
+
+        // Sécurité : Si le formulaire n'existe pas en DB, on le crée (Auto-initialisation)
+        if (!form) {
+            const { data: newForm } = await supabase.from('forms').insert([
+                { profile_type: activeProfile, title: `Formulaire ${activeProfile}`, is_active: true }
+            ]).select('id').single();
+            form = newForm;
+        }
+
+        setCurrentFormId(form!.id);
+
+        // 2. Charger les champs associés
+        const { data: fields } = await supabase.from('form_fields')
+            .select('*').eq('form_id', form!.id).order('display_order', { ascending: true });
+
+        setFormFields(fields || []);
+    };
+
+    const handleAddField = async () => {
+        if (!newField.field_label) return;
+
+        // Générer un nom technique propre (ex: "Société Name" -> "societe_name")
+        const fieldName = newField.field_label.toLowerCase().replace(/[^a-z0-9]/g, '_');
+
+        // Gérer les options pour le type "select" (JSONB)
+        const optionsJson = newField.field_type === 'select'
+            ? newField.options.split(',').map(o => o.trim()).filter(o => o)
+            : null;
+
+        const { error } = await supabase.from('form_fields').insert([{
+            form_id: currentFormId,
+            field_name: fieldName,
+            field_label: newField.field_label.toUpperCase(),
+            field_type: newField.field_type,
+            options: optionsJson,
+            is_required: newField.is_required,
+            display_order: formFields.length + 1
+        }]);
+
+        if (!error) {
+            setNewField({ field_label: '', field_type: 'text', options: '', is_required: true });
+            loadFormConfig(); // Recharger la liste
+        } else {
+            alert("Erreur lors de l'ajout : " + error.message);
+        }
+    };
+
+    const handleDeleteField = async (id: string) => {
+        if (!window.confirm("Supprimer cette variable ?")) return;
+        await supabase.from('form_fields').delete().eq('id', id);
+        loadFormConfig();
+    };
+
+    // ==========================================
+    // 🔒 AUTHENTIFICATION
+    // ==========================================
+    useEffect(() => {
+        const checkSession = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (!user) router.push('/login');
+            else setLoading(false);
+        };
+        checkSession();
+    }, [router, supabase]);
+
+    const handleLogout = async () => {
+        await supabase.auth.signOut();
+        router.push('/login');
+    };
+
+    if (loading) return <div className="min-h-screen bg-background flex items-center justify-center"><p className="text-primary font-mono animate-pulse text-xl">SYS.INIT_SESSION...</p></div>;
 
     return (
-        // MODIFIÉ: Ajout de padding responsive pour les côtés
-        <section className="bg-background text-foreground min-h-screen pt-24 md:pt-32 pb-24 px-4 sm:px-6 md:px-12 overflow-hidden">
-            <div className="max-w-4xl mx-auto">
-                {/* Header */}
-                <div className="mb-16 md:mb-24 relative">
-                    <motion.div 
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: cubicBezier }}
-                        className="mb-4 flex items-center gap-4"
-                    >
-                        <div className="w-12 h-[1px] bg-primary" />
-                        <span className="font-mono text-primary uppercase tracking-widest md:tracking-[0.3em] text-[10px]">DOC_REF: ORD_2026_PREPA_V2</span>
-                    </motion.div>
-                    <motion.h1 
-                        {...maskReveal}
-                        // MODIFIÉ: Taille de police et hauteur de ligne adaptatives
-                        className="text-5xl sm:text-6xl md:text-8xl text-primary leading-tight md:leading-[0.85]"
-                    >
-                        BON DE <br /> COMMANDE
-                    </motion.h1>
-                </div>
+        <div className="flex h-screen bg-background text-foreground overflow-hidden">
 
-                {/* Profile Selector */}
-                {/* MODIFIÉ: Padding responsive pour être moins large sur mobile */}
-                <div className="flex relative gap-0 border bg-muted mb-16 md:mb-20 p-1 w-fit rounded-[var(--radius)]">
-                    {profiles.map((p) => (
-                        <button
-                            key={p}
-                            onClick={() => setProfile(p)}
-                            // MODIFIÉ: Padding responsive, taille de police légèrement augmentée sur mobile
-                            className="px-4 py-2 md:px-8 md:py-3 font-mono text-[11px] md:text-[10px] uppercase tracking-wider transition-colors duration-300 relative z-10"
-                        >
-                            <span className={profile === p ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}>
-                                {p}
-                            </span>
-                            {profile === p && (
-                                <motion.div
-                                    layoutId="profileSelector"
-                                    className="absolute inset-0 bg-primary rounded-[calc(var(--radius)-0.25rem)]"
-                                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                                />
-                            )}
+            {/* 🖥️ NAVIGATION DRAWER (SIDEBAR) */}
+            <aside className="w-64 border-r border-primary/20 bg-card/30 flex flex-col justify-between hidden md:flex relative">
+                <div className="tech-corner absolute top-0 right-0" />
+                <div className="p-6">
+                    <h2 className="text-primary font-mono text-xl mb-8 tracking-widest border-b border-primary/20 pb-4">SYS.ADMIN_HQ</h2>
+                    <nav className="space-y-2 font-mono text-sm">
+                        <p className="text-muted-foreground text-xs mb-2 mt-6">/// GESTION VISUELLE</p>
+                        <button onClick={() => setCurrentView('PORTFOLIO_ADD')} className={`w-full text-left px-3 py-2 transition-all ${currentView === 'PORTFOLIO_ADD' ? 'bg-primary text-background font-bold' : 'text-primary hover:bg-primary/10'}`}>[+] AJOUT PORTFOLIO</button>
+                        <button onClick={() => setCurrentView('PORTFOLIO_LIST')} className={`w-full text-left px-3 py-2 transition-all ${currentView === 'PORTFOLIO_LIST' ? 'bg-primary text-background font-bold' : 'text-primary hover:bg-primary/10'}`}>[=] LISTE ARCHIVES</button>
+
+                        <p className="text-muted-foreground text-xs mb-2 mt-8">/// GESTION COMMERCIALE</p>
+                        <button onClick={() => setCurrentView('QUOTES_INBOX')} className={`w-full text-left px-3 py-2 transition-all flex justify-between ${currentView === 'QUOTES_INBOX' ? 'bg-primary text-background font-bold' : 'text-primary hover:bg-primary/10'}`}>
+                            <span>[{'>'}] INBOX DEVIS</span><span className="bg-destructive text-destructive-foreground px-1.5 text-[10px] flex items-center justify-center rounded-none animate-pulse">NEW</span>
                         </button>
-                    ))}
+                        <button onClick={() => setCurrentView('SERVICES_CATALOG')} className={`w-full text-left px-3 py-2 transition-all ${currentView === 'SERVICES_CATALOG' ? 'bg-primary text-background font-bold' : 'text-primary hover:bg-primary/10'}`}>[*] PROTOCOLES & PRIX</button>
+
+                        <p className="text-muted-foreground text-xs mb-2 mt-8">/// SYSTÈME</p>
+                        <button onClick={() => setCurrentView('FORMS_CONFIG')} className={`w-full text-left px-3 py-2 transition-all ${currentView === 'FORMS_CONFIG' ? 'bg-primary text-background font-bold' : 'text-primary hover:bg-primary/10'}`}>[⚙] CONFIG FORMULAIRES</button>
+                    </nav>
                 </div>
+                <div className="p-6 border-t border-primary/20">
+                    <button onClick={handleLogout} className="w-full text-left px-3 py-2 text-muted-foreground hover:text-destructive transition-colors font-mono text-sm">[X] DÉCONNEXION</button>
+                </div>
+            </aside>
 
-                {/* Technical Form */}
-                {/* MODIFIÉ: Espacement entre sections réduit sur mobile */}
-                <form className="space-y-16 md:space-y-20">
-                    {/* Section 01: Identification */}
-                    <div className="space-y-8 md:space-y-12">
-                        <div className="flex items-center gap-4 md:gap-6">
-                            <span className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 font-black">01</span>
-                            {/* MODIFIÉ: Taille de police responsive */}
-                            <h2 className="text-xl md:text-2xl relative">
-                                IDENTIFICATION_CLIENT
-                                <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-border" />
-                            </h2>
-                        </div>
-                        
-                        {/* MODIFIÉ: Espacement de la grille (gap) rendu responsive */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12">
-                            <AnimatePresence mode="popLayout">
-                                {profile === 'ENTREPRISE' && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.5, ease: cubicBezier }}
-                                        className="col-span-full grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12 overflow-hidden"
-                                    >
-                                        <div className="flex flex-col gap-3">
-                                            {/* MODIFIÉ: Taille de label responsive pour meilleure lisibilité mobile */}
-                                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">SOCIÉTÉ_NAME</label>
-                                            <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" placeholder="RAISON SOCIALE" />
-                                        </div>
-                                        <div className="flex flex-col gap-3">
-                                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">SIRET_ID</label>
-                                            <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans text-sm placeholder:text-muted-foreground/60" placeholder="14 CHIFFRES" />
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
+            {/* 🖥️ MAIN CONTENT AREA */}
+            <main className="flex-1 overflow-y-auto p-6 md:p-12 relative bg-grid-pattern">
 
-                            <div className="flex flex-col gap-3">
-                                <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">REP_NOM</label>
-                                <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" placeholder="NOM COMPLET" />
-                            </div>
-                            <div className="flex flex-col gap-3">
-                                <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">CANAL_COMM</label>
-                                <input type="email" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans text-sm placeholder:text-muted-foreground/60" placeholder="EMAIL@WORK.FR" />
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Section 02: Spécifications Unité (avec les mêmes modifications) */}
-                    <div className="space-y-8 md:space-y-12">
-                        <div className="flex items-center gap-4 md:gap-6">
-                            <span className="font-mono text-xs bg-foreground text-background px-3 py-1 font-black">02</span>
-                            <h2 className="text-xl md:text-2xl relative">
-                                UNIT_SPECIFICATIONS
-                                <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-border" />
-                            </h2>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12">
-                            <div className="flex flex-col gap-3">
-                                <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">MARQUE_MODÈLE</label>
-                                <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" placeholder="EX: PORSCHE 911" />
-                            </div>
-
-                        <div className="flex flex-col gap-3">
-                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">ÉTAT_INITIAL</label>
-                            <select className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm">
-                                {/* On ajoute des classes pour que les options suivent le thème */}
-                                <option className="bg-card text-foreground">NEUF_FACTORY</option>
-                                <option className="bg-card text-foreground">USAGE_MODÉRE</option>
-                                <option className="bg-card text-foreground">RESTAURATION_REQUISE</option>
-                            </select>
-                        </div>
-                        </div>
-                    </div>
-
-                    {/* Section 03: Sélection Protocole */}
-                    <div className="space-y-8 md:space-y-12">
-                        <div className="flex items-center gap-4 md:gap-6">
-                            <span className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 font-black">03</span>
-                            <h2 className="text-xl md:text-2xl relative">
-                                CONFIG_PROTOCOLE
-                                <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-border" />
-                            </h2>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                            {[
-                                { id: 'CER_9H', label: 'CERAMIC_COATING_9H' },
-                                { id: 'COR_ST3', label: 'PAINT_CORRECTION_ST3' },
-                                { id: 'PPF_FULL', label: 'PPF_FULL_BODY_SHIELD' },
-                                { id: 'INT_PRO', label: 'INTERIOR_REMASTER_PRO' }
-                            ].map((service) => (
-                                // MODIFIÉ: Padding responsive et taille de police augmentée
-                                <label key={service.id} className="flex items-center justify-between p-4 md:p-5 border hover:bg-muted cursor-pointer transition-colors group rounded-[var(--radius)]">
-                                    <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground group-hover:text-foreground">{service.label}</span>
-                                    <input type="checkbox" className="w-5 h-5 rounded-none border accent-primary focus:ring-0 focus:ring-offset-0 bg-transparent shrink-0" />
-                                </label>
+                {/* --- VUE 1 : AJOUT DE PORTFOLIO --- */}
+                {currentView === 'PORTFOLIO_ADD' && (
+                    <div className="max-w-4xl mx-auto border-technical p-8 bg-card relative shadow-2xl">
+                        {/* Votre code d'ajout de portfolio reste ici, exactement identique */}
+                        <div className="tech-corner absolute top-0 left-0" />
+                        <h1 className="text-card-title text-primary mb-2">TERMINAL D'ARCHIVAGE</h1>
+                        <p className="text-detail text-muted-foreground mb-8">AJOUT DE NOUVELLES RÉALISATIONS (DRAG & DROP)</p>
+                        {/* ... (Reste du formulaire portfolio) ... */}
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            {['img_single', 'img_before', 'img_after'].map((field) => (
+                                <div key={field} className="relative border border-dashed border-primary/50 bg-background/50 p-6 text-center hover:bg-primary/10 transition-colors cursor-pointer group">
+                                    <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, field)} disabled={uploading} />
+                                    <div className="pointer-events-none flex flex-col items-center gap-2">
+                                        <span className="text-primary text-[24px]">⇪</span>
+                                        <span className="text-label text-primary group-hover:text-foreground">{(formData as any)[field] ? 'IMAGE CHARGÉE' : `GLISSER ${field.toUpperCase()}`}</span>
+                                    </div>
+                                </div>
                             ))}
                         </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                            <input className="border border-border p-3 text-sm bg-background/50 w-full" name="title" placeholder="Titre" onChange={handleTextChange} />
+                            <input className="border border-border p-3 text-sm bg-background/50 w-full" name="treatment" placeholder="Traitement" onChange={handleTextChange} />
+                        </div>
+                        {status && <div className="mb-4 text-label text-primary">{status}</div>}
+                        <button onClick={handleSubmitPortfolio} disabled={uploading} className="btn-primary w-full md:w-auto"><span>ENREGISTRER LA RÉALISATION</span></button>
                     </div>
+                )}
 
-                    {/* Submit Button */}
-                    <div className="pt-16 md:pt-20">
-                        {/* MODIFIÉ: Padding, tailles de police et tracking responsives */}
-                        <button type="submit" className="w-full relative group overflow-hidden border border-primary p-6 md:p-8 flex flex-col items-center justify-center gap-2 transition-colors duration-300 hover:bg-primary rounded-[var(--radius)]">
-                            <span className="relative z-10 text-xl md:text-2xl text-primary group-hover:text-primary-foreground transition-colors duration-300">
-                                VALIDER LE PROTOCOLE
-                            </span>
-                            <span className="relative z-10 font-mono text-[10px] uppercase tracking-[0.2em] md:tracking-[0.4em] text-muted-foreground group-hover:text-primary-foreground/70 transition-colors duration-300">
-                                TRANSMIT_DATA_TO_WORKSHOP
-                            </span>
-                        </button>
-                    </div>
-                </form>
+                {/* --- VUE 2 : CONFIGURATION DES FORMULAIRES --- */}
+                {currentView === 'FORMS_CONFIG' && (
+                    <div className="max-w-5xl mx-auto border-technical p-8 bg-card relative shadow-2xl">
+                        <div className="tech-corner absolute top-0 left-0" />
+                        <h1 className="text-card-title text-primary mb-2">CONFIG_FORMULAIRES</h1>
+                        <p className="text-detail text-muted-foreground mb-8">MODIFICATION DYNAMIQUE DES VARIABLES CLIENTS (PAGE DEVIS)</p>
 
-                {/* Footer Technical Metadata */}
-                <div className="mt-24 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 py-16 border-t font-mono text-[10px] text-muted-foreground uppercase tracking-widest relative">
-                    <div className="absolute -top-[1px] left-0 w-12 h-[1px] bg-primary" />
-                    <div className="space-y-3">
-                        <span className="text-primary font-black">STATION_DE_TRAVAIL</span><br />
-                        75 AVENUE DES CHAMPS-ÉLYSÉES<br />
-                        PARIS_UNIT.01 / FR
+                        {/* Toggle Profile (Particulier / Entreprise) */}
+                        <div className="flex border bg-muted w-fit rounded-none mb-8 p-1">
+                            {['PARTICULIER', 'ENTREPRISE'].map((p) => (
+                                <button
+                                    key={p}
+                                    onClick={() => setActiveProfile(p as any)}
+                                    className={`px-6 py-2 font-mono text-xs uppercase tracking-wider transition-colors ${activeProfile === p ? 'bg-primary text-background font-bold' : 'text-muted-foreground hover:text-foreground'}`}
+                                >
+                                    {p}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Liste des champs existants */}
+                        <div className="mb-12">
+                            <h2 className="font-mono text-sm text-primary mb-4 border-b border-primary/20 pb-2">VARIABLES ACTUELLES [{activeProfile}]</h2>
+
+                            {formFields.length === 0 ? (
+                                <p className="text-muted-foreground font-mono text-xs italic">AUCUNE VARIABLE ENREGISTRÉE POUR CE PROFIL.</p>
+                            ) : (
+                                <div className="space-y-3">
+                                    {formFields.map((field, index) => (
+                                        <div key={field.id} className="flex items-center justify-between border border-border bg-background/50 p-4 hover:border-primary/50 transition-colors">
+                                            <div className="flex items-center gap-6">
+                                                <span className="text-muted-foreground font-mono text-xs opacity-50">0{index + 1}</span>
+                                                <div>
+                                                    <p className="font-mono text-sm text-foreground font-bold tracking-widest">{field.field_label} <span className="text-primary text-[10px] ml-2">[{field.field_type.toUpperCase()}]</span></p>
+                                                    <p className="font-mono text-[10px] text-muted-foreground mt-1">SYS_NAME: {field.field_name} | REQUIS: {field.is_required ? 'OUI' : 'NON'}</p>
+                                                    {field.field_type === 'select' && field.options && (
+                                                        <p className="font-mono text-[9px] text-muted-foreground mt-1 bg-muted px-2 py-1 inline-block">OPT: {field.options.join(' / ')}</p>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <button onClick={() => handleDeleteField(field.id)} className="text-destructive hover:bg-destructive/10 px-3 py-2 font-mono text-xs transition-colors">
+                                                [ SUPPRIMER ]
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Formulaire pour ajouter un nouveau champ */}
+                        <div className="border border-primary/20 bg-primary/5 p-6 relative">
+                            <h2 className="font-mono text-sm text-primary mb-6">AJOUTER UNE NOUVELLE VARIABLE</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                                <div className="col-span-2">
+                                    <label className="font-mono text-[10px] text-primary uppercase tracking-[0.2em] block mb-2">LABEL AFFICHÉ (ex: SIRET_ID)</label>
+                                    <input type="text" value={newField.field_label} onChange={e => setNewField({ ...newField, field_label: e.target.value })} className="border border-border p-3 text-sm bg-background w-full outline-none focus:border-primary font-mono uppercase" placeholder="NOM DU CHAMP" />
+                                </div>
+
+                                <div>
+                                    <label className="font-mono text-[10px] text-primary uppercase tracking-[0.2em] block mb-2">TYPE DE DONNÉE</label>
+                                    <select value={newField.field_type} onChange={e => setNewField({ ...newField, field_type: e.target.value })} className="border border-border p-3 text-sm bg-background w-full outline-none focus:border-primary font-mono cursor-pointer">
+                                        <option value="text">TEXTE LIBRE</option>
+                                        <option value="email">ADRESSE EMAIL</option>
+                                        <option value="select">SÉLECTEUR (CHOIX)</option>
+                                    </select>
+                                </div>
+
+                                <div className="flex items-end pb-3">
+                                    <label className="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" checked={newField.is_required} onChange={e => setNewField({ ...newField, is_required: e.target.checked })} className="w-5 h-5 accent-primary border-border bg-background" />
+                                        <span className="font-mono text-[10px] text-primary uppercase tracking-[0.2em]">CHAMP REQUIS</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Options affichées uniquement si le type est 'select' */}
+                            {newField.field_type === 'select' && (
+                                <div className="mb-6">
+                                    <label className="font-mono text-[10px] text-primary uppercase tracking-[0.2em] block mb-2">OPTIONS POSSIBLES (Séparées par des virgules)</label>
+                                    <input type="text" value={newField.options} onChange={e => setNewField({ ...newField, options: e.target.value })} className="border border-border p-3 text-sm bg-background w-full outline-none focus:border-primary font-mono uppercase" placeholder="NEUF_FACTORY, USAGE_MODERE, RESTAURATION" />
+                                </div>
+                            )}
+
+                            <button onClick={handleAddField} className="btn-primary w-full md:w-auto mt-4">
+                                <span>[+] INTÉGRER AU FORMULAIRE</span>
+                            </button>
+                        </div>
+
                     </div>
-                    <div className="space-y-3">
-                        <span className="text-primary font-black">PROTOCOLE_SÉCURISÉ</span><br />
-                        ENCRYPTION: AES_256_ACTIVE<br />
-                        DATA_STATION: P2P_SYNC
+                )}
+
+                {/* --- VUES FUTURES --- */}
+                {currentView !== 'PORTFOLIO_ADD' && currentView !== 'FORMS_CONFIG' && (
+                    <div className="h-full flex flex-col items-center justify-center text-center opacity-50">
+                        <div className="text-primary text-6xl mb-4">🚧</div>
+                        <h2 className="text-xl font-mono text-primary mb-2">MODULE EN DÉVELOPPEMENT</h2>
+                        <p className="text-muted-foreground font-mono text-sm max-w-md">La section <span className="text-foreground font-bold">[{currentView}]</span> n'est pas encore connectée à la base de données.</p>
                     </div>
-                    <div className="space-y-3 text-left md:text-right">
-                        <span className="text-primary font-black">LOG_AUTH_CERT</span><br />
-                        CERT_ID: #4582-PC-2026<br />
-                        STATUS: READY_FOR_UPLINK
-                    </div>
-                </div>
-            </div>
-        </section>
+                )}
+
+            </main>
+        </div>
     );
-};
-
-export default Contact;
+}
