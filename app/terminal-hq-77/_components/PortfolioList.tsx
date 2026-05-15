@@ -101,16 +101,16 @@ export default function PortfolioList() {
             : editFormData.work_done;
 
         const updatedData = {
-            title: editFormData.title.toUpperCase(),
-            treatment: editFormData.treatment.toUpperCase(),
-            model: editFormData.model,
-            time_spent: editFormData.time_spent,
-            solution: editFormData.solution,
-            impact: editFormData.impact,
-            context: editFormData.context,
+            title: editFormData.title?.toUpperCase() || '',
+            treatment: editFormData.treatment?.toUpperCase() || '',
+            model: editFormData.model || '',
+            time_spent: editFormData.time_spent || '',
+            solution: editFormData.solution || '',
+            impact: editFormData.impact || '',
+            context: editFormData.context || '',
             work_done: workArray,
-            result: editFormData.result,
-            size: editFormData.size,
+            result: editFormData.result || '',
+            size: editFormData.size || 'small',
         };
 
         const { error } = await supabase
@@ -225,35 +225,69 @@ export default function PortfolioList() {
                         </div>
 
                         {/* Corps Modale (Scrollable) */}
-                        <div className="p-6 overflow-y-auto space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-xs font-semibold text-muted-foreground uppercase">Nom du projet</label>
-                                    <input className="border border-border p-3 rounded bg-background" name="title" value={editFormData.title} onChange={handleEditChange} />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-xs font-semibold text-muted-foreground uppercase">Service réalisé</label>
-                                    <input className="border border-border p-3 rounded bg-background" name="treatment" value={editFormData.treatment} onChange={handleEditChange} />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-xs font-semibold text-muted-foreground uppercase">Modèle</label>
-                                    <input className="border border-border p-3 rounded bg-background" name="model" value={editFormData.model} onChange={handleEditChange} />
-                                </div>
-                                <div className="flex flex-col gap-1">
-                                    <label className="text-xs font-semibold text-muted-foreground uppercase">Temps passé</label>
-                                    <input className="border border-border p-3 rounded bg-background" name="time_spent" value={editFormData.time_spent || ''} onChange={handleEditChange} />
+                        <div className="p-6 overflow-y-auto space-y-6">
+                            
+                            {/* BLOC 1 : INFORMATIONS PRINCIPALES */}
+                            <div>
+                                <h3 className="text-sm font-bold text-foreground mb-3 border-b border-border pb-1">1. Informations principales</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Nom du projet</label>
+                                        <input className="border border-border p-3 rounded bg-background" name="title" value={editFormData.title || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Service réalisé</label>
+                                        <input className="border border-border p-3 rounded bg-background" name="treatment" value={editFormData.treatment || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Modèle</label>
+                                        <input className="border border-border p-3 rounded bg-background" name="model" value={editFormData.model || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Taille d'affichage</label>
+                                        <select className="border border-border p-3 rounded bg-background" name="size" value={editFormData.size || 'small'} onChange={handleEditChange}>
+                                            <option value="small">Taille normale</option>
+                                            <option value="medium">Taille moyenne</option>
+                                            <option value="large">Grande taille</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="flex flex-col gap-1">
-                                <label className="text-xs font-semibold text-muted-foreground uppercase">Travaux effectués (séparés par des virgules)</label>
-                                <textarea className="border border-border p-3 rounded bg-background h-20" name="work_done" value={editFormData.work_done} onChange={handleEditChange} />
+                            {/* BLOC 2 : DÉTAILS DE L'INTERVENTION */}
+                            <div>
+                                <h3 className="text-sm font-bold text-foreground mb-3 border-b border-border pb-1">2. Détails de l'intervention</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Temps passé</label>
+                                        <input className="border border-border p-3 rounded bg-background" name="time_spent" value={editFormData.time_spent || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Action phare</label>
+                                        <input className="border border-border p-3 rounded bg-background" name="solution" value={editFormData.solution || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Bénéfice</label>
+                                        <input className="border border-border p-3 rounded bg-background" name="impact" value={editFormData.impact || ''} onChange={handleEditChange} />
+                                    </div>
+                                </div>
+
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Contexte (Problème de départ)</label>
+                                        <textarea className="border border-border p-3 rounded bg-background h-20" name="context" value={editFormData.context || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Travaux effectués (séparés par des virgules)</label>
+                                        <textarea className="border border-border p-3 rounded bg-background h-20" name="work_done" value={editFormData.work_done || ''} onChange={handleEditChange} />
+                                    </div>
+                                    <div className="flex flex-col gap-1">
+                                        <label className="text-xs font-semibold text-muted-foreground uppercase">Résultat final</label>
+                                        <textarea className="border border-border p-3 rounded bg-background h-20" name="result" value={editFormData.result || ''} onChange={handleEditChange} />
+                                    </div>
+                                </div>
                             </div>
 
-                            <div className="flex flex-col gap-1">
-                                <label className="text-xs font-semibold text-muted-foreground uppercase">Résultat final</label>
-                                <textarea className="border border-border p-3 rounded bg-background h-20" name="result" value={editFormData.result || ''} onChange={handleEditChange} />
-                            </div>
                         </div>
 
                         {/* Footer Modale */}
