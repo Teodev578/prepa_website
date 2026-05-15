@@ -2,21 +2,22 @@
 import React, { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
+// On utilise une fonction pour avoir un ID unique (Date.now()) à CHAQUE réinitialisation
+const getInitialState = () => ({
+    ref_id: `REA_${Date.now()}`,
+    title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
+    time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
+    size: 'small', img_single: '', img_before: '', img_after: ''
+});
+
 export default function PortfolioAdd() {
     const supabase = createClient();
     
-    // Valeurs par défaut pour la réinitialisation
-    const initialFormState = {
-        ref_id: `REA_${Math.floor(Math.random() * 1000)}`, // Génère un ID un peu plus unique par défaut
-        title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
-        time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
-        size: 'small', img_single: '', img_before: '', img_after: ''
-    };
-
     const [uploading, setUploading] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false); // 🛡️ Nouvel état pour bloquer le double-clic
     const [imageStatus, setImageStatus] = useState('');
     const [submitStatus, setSubmitStatus] = useState('');
-    const [formData, setFormData] = useState(initialFormState);
+    const [formData, setFormData] = useState(getInitialState());
 
     const handleTextChange = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
@@ -24,12 +25,22 @@ export default function PortfolioAdd() {
         const file = e.target.files[0];
         if (!file) return;
         
+        // ⚠️ VALIDATION CÔTÉ CLIENT : Type et Poids
+        if (!file.type.startsWith('image/')) {
+            setImageStatus("❌ Veuillez sélectionner une image valide (JPG, PNG...).");
+            return;
+        }
+        if (file.size > 5 * 1024 * 1024) { // 5 Mo
+            setImageStatus("❌ L'image est trop lourde (5 Mo maximum).");
+            return;
+        }
+        
         setUploading(true);
         setImageStatus('Chargement de la photo en cours... ⏳');
         setSubmitStatus('');
 
         const fileExt = file.name.split('.').pop();
-        const fileName = `${Math.random()}.${fileExt}`;
+        const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
         const { error } = await supabase.storage.from('portfolio-images').upload(fileName, file);
 
         if (error) {
@@ -44,13 +55,33 @@ export default function PortfolioAdd() {
         setUploading(false);
     };
 
-    const handleRemoveImage = (fieldName: string) => {
+    const handleRemoveImage = async (fieldName: string) => {
+        // 🚨 SUPPRESSION PHYSIQUE SUR SUPABASE
+        const imageUrl = (formData as any)[fieldName];
+        if (imageUrl) {
+            const fileName = imageUrl.split('/').pop(); // Récupère le nom du fichier à la fin de l'URL
+            if (fileName) {
+                await supabase.storage.from('portfolio-images').remove([fileName]);
+            }
+        }
+
+        // Met à jour l'interface
         setFormData(prev => ({ ...prev, [fieldName]: '' }));
         setImageStatus('');
     };
 
-    // === ENREGISTREMENT ET RÉINITIALISATION ===
     const handleSubmitPortfolio = async () => {
+        // 🛑 VALIDATION DU FORMULAIRE OBLIGATOIRE
+        if (!formData.title) {
+            setSubmitStatus("❌ Veuillez au moins donner un nom au projet.");
+            return;
+        }
+        if (!formData.img_single && !formData.img_before) {
+            setSubmitStatus("❌ Veuillez ajouter au moins une photo pour ce projet.");
+            return;
+        }
+
+        setIsSubmitting(true);
         setSubmitStatus('Enregistrement de votre projet en cours... ⏳');
         
         const workArray = formData.work_done.split(',').map(item => item.trim()).filter(Boolean);
@@ -64,13 +95,11 @@ export default function PortfolioAdd() {
 
         if (error) {
             setSubmitStatus("❌ Erreur : " + error.message);
+            setIsSubmitting(false);
         } else {
             setSubmitStatus('✅ Super ! Votre projet a bien été publié sur le site.');
-            
-            // --- C'EST ICI QUE LE FORMULAIRE SE VIDE ---
-            setFormData(initialFormState); 
-            
-            // Optionnel : Effacer le message de succès après 5 secondes
+            setFormData(getInitialState()); 
+            setIsSubmitting(false);
             setTimeout(() => setSubmitStatus(''), 5000);
         }
     };
@@ -101,13 +130,13 @@ export default function PortfolioAdd() {
                         <label className="text-sm font-bold">Photo Unique</label>
                         {!formData.img_single ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_single')} disabled={uploading || hasBeforeAfter} />
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_single')} disabled={uploading || hasBeforeAfter || isSubmitting} />
                                 <span className="text-primary text-sm font-medium">➕ Ajouter une photo</span>
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_single} alt="Aperçu" className="w-full h-full object-cover" />
-                                <button onClick={() => handleRemoveImage('img_single')} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <button onClick={() => handleRemoveImage('img_single')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -116,13 +145,13 @@ export default function PortfolioAdd() {
                         <label className="text-sm font-bold">Photo "Avant"</label>
                         {!formData.img_before ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_before')} disabled={uploading || hasSingleImage} />
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_before')} disabled={uploading || hasSingleImage || isSubmitting} />
                                 <span className="text-primary text-sm font-medium">➕ Photo Avant</span>
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_before} alt="Aperçu Avant" className="w-full h-full object-cover" />
-                                <button onClick={() => handleRemoveImage('img_before')} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <button onClick={() => handleRemoveImage('img_before')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -131,13 +160,13 @@ export default function PortfolioAdd() {
                         <label className="text-sm font-bold">Photo "Après"</label>
                         {!formData.img_after ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_after')} disabled={uploading || hasSingleImage} />
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_after')} disabled={uploading || hasSingleImage || isSubmitting} />
                                 <span className="text-primary text-sm font-medium">➕ Photo Après</span>
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_after} alt="Aperçu Après" className="w-full h-full object-cover" />
-                                <button onClick={() => handleRemoveImage('img_after')} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <button onClick={() => handleRemoveImage('img_after')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -149,20 +178,20 @@ export default function PortfolioAdd() {
                 <h2 className="text-lg font-semibold mb-4">2. Informations principales</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Nom du projet</label>
-                        <input className="border border-border p-3 rounded bg-background" name="title" value={formData.title} placeholder="Ex: Rénovation Peugeot 208" onChange={handleTextChange} />
+                        <label className="text-xs font-semibold text-muted-foreground uppercase">Nom du projet *</label>
+                        <input className="border border-border p-3 rounded bg-background" name="title" value={formData.title} placeholder="Ex: Rénovation Peugeot 208" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-muted-foreground uppercase">Service réalisé</label>
-                        <input className="border border-border p-3 rounded bg-background" name="treatment" value={formData.treatment} placeholder="Ex: Polissage" onChange={handleTextChange} />
+                        <input className="border border-border p-3 rounded bg-background" name="treatment" value={formData.treatment} placeholder="Ex: Polissage" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-muted-foreground uppercase">Modèle ou Objet</label>
-                        <input className="border border-border p-3 rounded bg-background" name="model" value={formData.model} placeholder="Ex: Berline noire" onChange={handleTextChange} />
+                        <input className="border border-border p-3 rounded bg-background" name="model" value={formData.model} placeholder="Ex: Berline noire" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-muted-foreground uppercase">Taille d'affichage</label>
-                        <select className="border border-border p-3 rounded bg-background" name="size" value={formData.size} onChange={handleTextChange}>
+                        <select className="border border-border p-3 rounded bg-background" name="size" value={formData.size} onChange={handleTextChange} disabled={isSubmitting}>
                             <option value="small">Taille normale</option>
                             <option value="medium">Taille moyenne</option>
                             <option value="large">Grande taille</option>
@@ -177,22 +206,22 @@ export default function PortfolioAdd() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-muted-foreground uppercase">Temps passé</label>
-                        <input className="border border-border p-3 rounded bg-background" name="time_spent" value={formData.time_spent} placeholder="Ex: 4 heures" onChange={handleTextChange} />
+                        <input className="border border-border p-3 rounded bg-background" name="time_spent" value={formData.time_spent} placeholder="Ex: 4 heures" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-muted-foreground uppercase">Action phare</label>
-                        <input className="border border-border p-3 rounded bg-background" name="solution" value={formData.solution} placeholder="Ex: Nettoyage vapeur" onChange={handleTextChange} />
+                        <input className="border border-border p-3 rounded bg-background" name="solution" value={formData.solution} placeholder="Ex: Nettoyage vapeur" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
                         <label className="text-xs font-semibold text-muted-foreground uppercase">Bénéfice</label>
-                        <input className="border border-border p-3 rounded bg-background" name="impact" value={formData.impact} placeholder="Ex: Aspect neuf" onChange={handleTextChange} />
+                        <input className="border border-border p-3 rounded bg-background" name="impact" value={formData.impact} placeholder="Ex: Aspect neuf" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <textarea className="border border-border p-3 rounded bg-background h-24" name="context" value={formData.context} placeholder="Problème de départ ?" onChange={handleTextChange} />
-                    <textarea className="border border-border p-3 rounded bg-background h-24" name="work_done" value={formData.work_done} placeholder="Travaux (virgule entre chaque étape)" onChange={handleTextChange} />
-                    <textarea className="border border-border p-3 rounded bg-background h-24" name="result" value={formData.result} placeholder="Résultat final ?" onChange={handleTextChange} />
+                    <textarea className="border border-border p-3 rounded bg-background h-24" name="context" value={formData.context} placeholder="Problème de départ ?" onChange={handleTextChange} disabled={isSubmitting} />
+                    <textarea className="border border-border p-3 rounded bg-background h-24" name="work_done" value={formData.work_done} placeholder="Travaux (virgule entre chaque étape)" onChange={handleTextChange} disabled={isSubmitting} />
+                    <textarea className="border border-border p-3 rounded bg-background h-24" name="result" value={formData.result} placeholder="Résultat final ?" onChange={handleTextChange} disabled={isSubmitting} />
                 </div>
             </div>
 
@@ -204,10 +233,10 @@ export default function PortfolioAdd() {
             
             <button 
                 onClick={handleSubmitPortfolio} 
-                disabled={uploading} 
+                disabled={uploading || isSubmitting} 
                 className="w-full md:w-auto bg-primary text-primary-foreground font-bold py-3 px-8 rounded hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
-                {uploading ? 'Photo en cours...' : 'Publier ce projet'}
+                {uploading ? 'Photo en cours...' : isSubmitting ? 'Publication en cours...' : 'Publier ce projet'}
             </button>
         </div>
     );
