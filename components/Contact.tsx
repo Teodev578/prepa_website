@@ -1,6 +1,7 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from '@/lib/supabaseClient';
 
 const cubicBezier = [0.22, 1, 0.36, 1] as any;
 
@@ -11,12 +12,156 @@ const maskReveal = {
   transition: { duration: 1.2, ease: cubicBezier }
 };
 
+// Types basés sur ta base de données
+interface FormField {
+    id: string;
+    field_name: string;
+    field_label: string;
+    field_type: string;
+    options: string[] | null;
+    is_required: boolean;
+}
+
+interface Service {
+    id: string;
+    label: string;
+}
+
 const Contact = () => {
-    const [profile, setProfile] = React.useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
+    const [profile, setProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
     const profiles = ['PARTICULIER', 'ENTREPRISE'] as const;
 
+    // États de données BDD
+    const [formId, setFormId] = useState<string | null>(null);
+    const [fields, setFields] = useState<FormField[]>([]);
+    const [services, setServices] = useState<Service[]>([]);
+    
+    // États du formulaire utilisateur
+    const [formData, setFormData] = useState<Record<string, string>>({});
+    const [selectedServices, setSelectedServices] = useState<string[]>([]);
+    
+    // États de l'interface
+    const [isLoadingData, setIsLoadingData] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [statusMessage, setStatusMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null);
+
+    // 1. CHARGEMENT DES SERVICES ET DU FORMULAIRE AU MONTAGE / CHANGEMENT DE PROFIL
+    useEffect(() => {
+        const fetchConfig = async () => {
+            setIsLoadingData(true);
+            
+            // Récupérer les services actifs (une seule fois ou à chaque changement, peu importe)
+            const { data: servicesData } = await supabase
+                .from('services')
+                .select('id, label')
+                .eq('is_active', true);
+            if (servicesData) setServices(servicesData);
+
+            // Récupérer le formulaire lié au profil
+            const { data: form } = await supabase
+                .from('forms')
+                .select('id')
+                .eq('profile_type', profile)
+                .single();
+
+            if (form) {
+                setFormId(form.id);
+                // Récupérer les variables/champs de ce formulaire
+                const { data: formFields } = await supabase
+                    .from('form_fields')
+                    .select('*')
+                    .eq('form_id', form.id)
+                    .order('display_order', { ascending: true });
+                
+                setFields(formFields || []);
+            }
+            
+            // On nettoie les anciennes données saisies quand on change de profil
+            setFormData({});
+            setIsLoadingData(false);
+        };
+
+        fetchConfig();
+    }, [profile]);
+
+    // 2. GESTION DES SAISIES
+    const handleInputChange = (fieldName: string, value: string) => {
+        setFormData(prev => ({ ...prev, [fieldName]: value }));
+    };
+
+    const toggleService = (serviceId: string) => {
+        setSelectedServices(prev => 
+            prev.includes(serviceId) 
+                ? prev.filter(id => id !== serviceId) 
+                : [...prev, serviceId]
+        );
+    };
+
+    // 3. SOUMISSION DU DEVIS
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatusMessage(null);
+
+        // Validation basique
+        if (selectedServices.length === 0) {
+            setStatusMessage({ type: 'error', text: "ERREUR: VEUILLEZ SÉLECTIONNER AU MOINS UN PROTOCOLE." });
+            return;
+        }
+
+        // Vérification des champs requis
+        for (const field of fields) {
+            if (field.is_required && !formData[field.field_name]) {
+                setStatusMessage({ type: 'error', text: `ERREUR: LA VARIABLE [${field.field_label}] EST REQUISE.` });
+                return;
+            }
+        }
+
+        setIsSubmitting(true);
+
+        // Essayer de trouver une adresse email dans le JSON (utile pour le contact rapide dans ta BDD)
+        // On cherche une clé qui s'appelle 'email', 'mail', ou 'canal_comm'
+        const clientEmail = Object.entries(formData).find(([key]) => key.toLowerCase().includes('email') || key.toLowerCase().includes('mail') || key === 'canal_comm')?.[1] || 'Non renseigné';
+
+        // Étape 1 : Créer la requête de devis
+        const { data: quote, error: quoteError } = await supabase
+            .from('quote_requests')
+            .insert([{
+                form_id: formId,
+                client_email: clientEmail,
+                form_data: formData,
+                status: 'NOUVEAU'
+            }])
+            .select('id')
+            .single();
+
+        if (quoteError || !quote) {
+            setStatusMessage({ type: 'error', text: "ERREUR BDD: ÉCHEC DE LA TRANSMISSION." });
+            setIsSubmitting(false);
+            return;
+        }
+
+        // Étape 2 : Lier les protocoles sélectionnés au devis
+        const quoteServicesData = selectedServices.map(serviceId => ({
+            quote_id: quote.id,
+            service_id: serviceId
+        }));
+
+        const { error: linkError } = await supabase
+            .from('quote_services')
+            .insert(quoteServicesData);
+
+        if (linkError) {
+            setStatusMessage({ type: 'error', text: "ERREUR DE LIAISON PROTOCOLE. CONTACTEZ L'ADMINISTRATEUR." });
+        } else {
+            setStatusMessage({ type: 'success', text: "UPLINK TERMINÉ. NOUS ANALYSONS VOS DONNÉES." });
+            setFormData({}); // Vider le formulaire
+            setSelectedServices([]);
+        }
+
+        setIsSubmitting(false);
+    };
+
     return (
-        // MODIFIÉ: Ajout de padding responsive pour les côtés
         <section className="bg-background text-foreground min-h-screen pt-24 md:pt-32 pb-24 px-4 sm:px-6 md:px-12 overflow-hidden">
             <div className="max-w-4xl mx-auto">
                 {/* Header */}
@@ -33,7 +178,6 @@ const Contact = () => {
                     </motion.div>
                     <motion.h1 
                         {...maskReveal}
-                        // MODIFIÉ: Taille de police et hauteur de ligne adaptatives
                         className="text-5xl sm:text-6xl md:text-8xl text-primary leading-tight md:leading-[0.85]"
                     >
                         BON DE <br /> COMMANDE
@@ -41,13 +185,11 @@ const Contact = () => {
                 </div>
 
                 {/* Profile Selector */}
-                {/* MODIFIÉ: Padding responsive pour être moins large sur mobile */}
                 <div className="flex relative gap-0 border bg-muted mb-16 md:mb-20 p-1 w-fit rounded-[var(--radius)]">
                     {profiles.map((p) => (
                         <button
                             key={p}
                             onClick={() => setProfile(p)}
-                            // MODIFIÉ: Padding responsive, taille de police légèrement augmentée sur mobile
                             className="px-4 py-2 md:px-8 md:py-3 font-mono text-[11px] md:text-[10px] uppercase tracking-wider transition-colors duration-300 relative z-10"
                         >
                             <span className={profile === p ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}>
@@ -65,86 +207,74 @@ const Contact = () => {
                 </div>
 
                 {/* Technical Form */}
-                {/* MODIFIÉ: Espacement entre sections réduit sur mobile */}
-                <form className="space-y-16 md:space-y-20">
-                    {/* Section 01: Identification */}
+                <form onSubmit={handleSubmit} className="space-y-16 md:space-y-20">
+                    
+                    {/* Section 01: Champs dynamiques (Fusion ID + Specs) */}
                     <div className="space-y-8 md:space-y-12">
                         <div className="flex items-center gap-4 md:gap-6">
                             <span className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 font-black">01</span>
-                            {/* MODIFIÉ: Taille de police responsive */}
                             <h2 className="text-xl md:text-2xl relative">
-                                IDENTIFICATION_CLIENT
+                                DATA_&_SPÉCIFICATIONS
                                 <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-border" />
                             </h2>
                         </div>
                         
-                        {/* MODIFIÉ: Espacement de la grille (gap) rendu responsive */}
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12">
-                            <AnimatePresence mode="popLayout">
-                                {profile === 'ENTREPRISE' && (
-                                    <motion.div 
-                                        initial={{ opacity: 0, height: 0 }}
-                                        animate={{ opacity: 1, height: 'auto' }}
-                                        exit={{ opacity: 0, height: 0 }}
-                                        transition={{ duration: 0.5, ease: cubicBezier }}
-                                        className="col-span-full grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12 overflow-hidden"
-                                    >
-                                        <div className="flex flex-col gap-3">
-                                            {/* MODIFIÉ: Taille de label responsive pour meilleure lisibilité mobile */}
-                                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">SOCIÉTÉ_NAME</label>
-                                            <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" placeholder="RAISON SOCIALE" />
-                                        </div>
-                                        <div className="flex flex-col gap-3">
-                                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">SIRET_ID</label>
-                                            <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans text-sm placeholder:text-muted-foreground/60" placeholder="14 CHIFFRES" />
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-
-                            <div className="flex flex-col gap-3">
-                                <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">REP_NOM</label>
-                                <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" placeholder="NOM COMPLET" />
-                            </div>
-                            <div className="flex flex-col gap-3">
-                                <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">CANAL_COMM</label>
-                                <input type="email" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans text-sm placeholder:text-muted-foreground/60" placeholder="EMAIL@WORK.FR" />
-                            </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12 relative min-h-[200px]">
+                            {isLoadingData ? (
+                                <div className="absolute inset-0 flex items-center justify-center font-mono text-xs text-muted-foreground animate-pulse">
+                                    SYS.FETCHING_PROFILE_DATA...
+                                </div>
+                            ) : fields.length === 0 ? (
+                                <div className="col-span-full font-mono text-xs text-muted-foreground">
+                                    AUCUNE VARIABLE SYSTÈME CONFIGURÉE POUR CE PROFIL.
+                                </div>
+                            ) : (
+                                <AnimatePresence mode="popLayout">
+                                    {fields.map((field) => (
+                                        <motion.div 
+                                            key={field.id}
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, scale: 0.95 }}
+                                            className="flex flex-col gap-3"
+                                        >
+                                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">
+                                                {field.field_label} {field.is_required && '*'}
+                                            </label>
+                                            
+                                            {field.field_type === 'select' && field.options ? (
+                                                <select 
+                                                    className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm"
+                                                    value={formData[field.field_name] || ''}
+                                                    onChange={(e) => handleInputChange(field.field_name, e.target.value)}
+                                                    required={field.is_required}
+                                                >
+                                                    <option value="" disabled className="bg-card text-muted-foreground">SÉLECTIONNER...</option>
+                                                    {field.options.map(opt => (
+                                                        <option key={opt} value={opt} className="bg-card text-foreground">{opt}</option>
+                                                    ))}
+                                                </select>
+                                            ) : (
+                                                <input 
+                                                    type={field.field_type === 'email' ? 'email' : 'text'} 
+                                                    className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" 
+                                                    placeholder="SAISIE REQUISE"
+                                                    value={formData[field.field_name] || ''}
+                                                    onChange={(e) => handleInputChange(field.field_name, e.target.value)}
+                                                    required={field.is_required}
+                                                />
+                                            )}
+                                        </motion.div>
+                                    ))}
+                                </AnimatePresence>
+                            )}
                         </div>
                     </div>
 
-                    {/* Section 02: Spécifications Unité (avec les mêmes modifications) */}
+                    {/* Section 02: Sélection Protocole (Dynamique) */}
                     <div className="space-y-8 md:space-y-12">
                         <div className="flex items-center gap-4 md:gap-6">
                             <span className="font-mono text-xs bg-foreground text-background px-3 py-1 font-black">02</span>
-                            <h2 className="text-xl md:text-2xl relative">
-                                UNIT_SPECIFICATIONS
-                                <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-border" />
-                            </h2>
-                        </div>
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-12">
-                            <div className="flex flex-col gap-3">
-                                <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">MARQUE_MODÈLE</label>
-                                <input type="text" className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm placeholder:text-muted-foreground/60" placeholder="EX: PORSCHE 911" />
-                            </div>
-
-                        <div className="flex flex-col gap-3">
-                            <label className="font-mono text-[10px] md:text-[9px] text-primary uppercase tracking-[0.2em] font-bold">ÉTAT_INITIAL</label>
-                            <select className="bg-transparent border-0 border-b border-border py-3 focus:ring-0 focus:border-primary transition-colors font-sans uppercase text-sm">
-                                {/* On ajoute des classes pour que les options suivent le thème */}
-                                <option className="bg-card text-foreground">NEUF_FACTORY</option>
-                                <option className="bg-card text-foreground">USAGE_MODÉRE</option>
-                                <option className="bg-card text-foreground">RESTAURATION_REQUISE</option>
-                            </select>
-                        </div>
-                        </div>
-                    </div>
-
-                    {/* Section 03: Sélection Protocole */}
-                    <div className="space-y-8 md:space-y-12">
-                        <div className="flex items-center gap-4 md:gap-6">
-                            <span className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 font-black">03</span>
                             <h2 className="text-xl md:text-2xl relative">
                                 CONFIG_PROTOCOLE
                                 <div className="absolute -bottom-2 left-0 w-full h-[1px] bg-border" />
@@ -152,27 +282,45 @@ const Contact = () => {
                         </div>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-                            {[
-                                { id: 'CER_9H', label: 'CERAMIC_COATING_9H' },
-                                { id: 'COR_ST3', label: 'PAINT_CORRECTION_ST3' },
-                                { id: 'PPF_FULL', label: 'PPF_FULL_BODY_SHIELD' },
-                                { id: 'INT_PRO', label: 'INTERIOR_REMASTER_PRO' }
-                            ].map((service) => (
-                                // MODIFIÉ: Padding responsive et taille de police augmentée
-                                <label key={service.id} className="flex items-center justify-between p-4 md:p-5 border hover:bg-muted cursor-pointer transition-colors group rounded-[var(--radius)]">
-                                    <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground group-hover:text-foreground">{service.label}</span>
-                                    <input type="checkbox" className="w-5 h-5 rounded-none border accent-primary focus:ring-0 focus:ring-offset-0 bg-transparent shrink-0" />
-                                </label>
-                            ))}
+                            {services.length === 0 && !isLoadingData ? (
+                                <div className="col-span-full font-mono text-xs text-muted-foreground">
+                                    AUCUN PROTOCOLE ACTIF EN BASE DE DONNÉES.
+                                </div>
+                            ) : (
+                                services.map((service) => (
+                                    <label key={service.id} className="flex items-center justify-between p-4 md:p-5 border hover:bg-muted cursor-pointer transition-colors group rounded-[var(--radius)]">
+                                        <span className="font-mono text-xs uppercase tracking-wider text-muted-foreground group-hover:text-foreground">{service.label}</span>
+                                        <input 
+                                            type="checkbox" 
+                                            checked={selectedServices.includes(service.id)}
+                                            onChange={() => toggleService(service.id)}
+                                            className="w-5 h-5 rounded-none border accent-primary focus:ring-0 focus:ring-offset-0 bg-transparent shrink-0" 
+                                        />
+                                    </label>
+                                ))
+                            )}
                         </div>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button & Status */}
                     <div className="pt-16 md:pt-20">
-                        {/* MODIFIÉ: Padding, tailles de police et tracking responsives */}
-                        <button type="submit" className="w-full relative group overflow-hidden border border-primary p-6 md:p-8 flex flex-col items-center justify-center gap-2 transition-colors duration-300 hover:bg-primary rounded-[var(--radius)]">
+                        {statusMessage && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -10 }} 
+                                animate={{ opacity: 1, y: 0 }} 
+                                className={`mb-6 p-4 border font-mono text-xs uppercase tracking-widest text-center ${statusMessage.type === 'error' ? 'bg-destructive/10 text-destructive border-destructive/20' : 'bg-green-500/10 text-green-600 border-green-500/20'}`}
+                            >
+                                {statusMessage.text}
+                            </motion.div>
+                        )}
+
+                        <button 
+                            type="submit" 
+                            disabled={isSubmitting || isLoadingData}
+                            className="w-full relative group overflow-hidden border border-primary p-6 md:p-8 flex flex-col items-center justify-center gap-2 transition-colors duration-300 hover:bg-primary rounded-[var(--radius)] disabled:opacity-50 disabled:hover:bg-transparent"
+                        >
                             <span className="relative z-10 text-xl md:text-2xl text-primary group-hover:text-primary-foreground transition-colors duration-300">
-                                VALIDER LE PROTOCOLE
+                                {isSubmitting ? 'TRANSMISSION EN COURS...' : 'VALIDER LE PROTOCOLE'}
                             </span>
                             <span className="relative z-10 font-mono text-[10px] uppercase tracking-[0.2em] md:tracking-[0.4em] text-muted-foreground group-hover:text-primary-foreground/70 transition-colors duration-300">
                                 TRANSMIT_DATA_TO_WORKSHOP
