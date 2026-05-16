@@ -7,7 +7,9 @@ import { AdminView } from './types';
 import Sidebar from './_components/Sidebar';
 import PortfolioAdd from './_components/PortfolioAdd';
 import PortfolioList from './_components/PortfolioList';
+import QuotesInbox from './_components/QuotesInbox';
 import FormsConfig from './_components/FormsConfig';
+import ServicesCatalog from './_components/ServicesCatalog';
 
 export default function AdminPage() {
     const supabase = createClient();
@@ -42,18 +44,12 @@ export default function AdminPage() {
             <main className="flex-1 overflow-y-auto p-4 md:p-12 relative bg-grid-pattern">
                 {currentView === 'PORTFOLIO_ADD' && <PortfolioAdd />}
                 {currentView === 'PORTFOLIO_LIST' && <PortfolioList />} {/* <-- NOUVELLE LIGNE */}
+                {currentView === 'QUOTES_INBOX' && <QuotesInbox />} {/* <-- AJOUTÉE */}
+                {currentView === 'SERVICES_CATALOG' && <ServicesCatalog />} {/* <-- AJOUTE CETTE LIGNE */}
                 {currentView === 'FORMS_CONFIG' && <FormsConfig />}
 
                 {/* Mettez à jour la liste des vues exclues du mode "En développement" */}
-                {!['PORTFOLIO_ADD', 'PORTFOLIO_LIST', 'FORMS_CONFIG'].includes(currentView) && (
-                    <div className="h-full flex flex-col items-center justify-center text-center opacity-50 pt-20 md:pt-0">
-                        <div className="text-primary text-6xl mb-4">🚧</div>
-                        <h2 className="text-xl font-mono text-primary mb-2">MODULE EN DÉVELOPPEMENT</h2>
-                        <p className="text-muted-foreground font-mono text-sm max-w-md">
-                            La section <span className="text-foreground font-bold">[{currentView}]</span> n'est pas encore connectée.
-                        </p>
-                    </div>
-                )}
+                
             </main>
         </div>
     );

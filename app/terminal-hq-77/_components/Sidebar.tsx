@@ -117,7 +117,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                     <span>Demandes de devis</span>
                                 </div>
-                                <span className="bg-destructive text-destructive-foreground px-2 py-0.5 text-[9px] font-bold tracking-wider rounded-full animate-pulse">NEW</span>
+                                {/*<span className="bg-destructive text-destructive-foreground px-2 py-0.5 text-[9px] font-bold tracking-wider rounded-full animate-pulse">NEW</span>*/}
                             </button>
                             
                             <button onClick={() => handleViewChange('SERVICES_CATALOG')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'SERVICES_CATALOG' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
