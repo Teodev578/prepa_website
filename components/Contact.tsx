@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/lib/client';
 
 const cubicBezier = [0.22, 1, 0.36, 1] as any;
 
@@ -47,6 +47,7 @@ const Contact = () => {
 
     // 1. CHARGEMENT DES SERVICES ET DU FORMULAIRE AU MONTAGE / CHANGEMENT DE PROFIL
     useEffect(() => {
+        const supabase = createClient();
         const fetchConfig = async () => {
             setIsLoadingData(true);
             
@@ -99,6 +100,7 @@ const Contact = () => {
 
     // 3. SOUMISSION DU DEVIS
     const handleSubmit = async (e: React.FormEvent) => {
+        const supabase = createClient();
         e.preventDefault();
         setStatusMessage(null);
 

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/lib/client';
 
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 
@@ -49,6 +49,7 @@ const Portfolio = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const supabase = createClient();
         const fetchProjects = async () => {
             const { data, error } = await supabase
                 .from('portfolio_projects')
