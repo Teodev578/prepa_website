@@ -7,12 +7,14 @@ import { useRouter } from 'next/navigation';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [mfaCode, setMfaCode] = useState(''); // Code à 6 chiffres
+    const [mfaCode, setMfaCode] = useState(''); // Code à 6 chiffres envoyé par l'application d'authentification ou par mail selon le facteur
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     
-    // Gestion des étapes : 'credentials' (email/pass) ou 'mfa' (code de sécurité)
+    // Gestion des étapes :
+    // - 'credentials' : saisie email + mot de passe
+    // - 'mfa' : saisie du code de vérification (double authentification)
     const [step, setStep] = useState<'credentials' | 'mfa'>('credentials');
     const [mfaInfo, setMfaInfo] = useState<{ factorId: string; challengeId: string } | null>(null);
 
@@ -20,6 +22,8 @@ export default function LoginPage() {
     const supabase = createClient();
 
     // ÉTAPE 1 : Connexion standard
+    // Ce gestionnaire lance l'authentification email/mot de passe,
+    // puis déclenche le flux MFA si le compte le demande.
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -33,13 +37,15 @@ export default function LoginPage() {
             });
 
             if (authError) {
-                // ... gestion erreur
+                // En cas d'erreur d'identifiants, on ajoute un délai pour
+                // limiter les tentatives de force brute.
                 await applyAntiBruteForceDelay(startTime);
                 setError(authError.message);
                 setLoading(false);
                 return;
             } else {
-                // FORCE L'ÉTAPE 2 POUR LE TEST VISUEL
+                // Pour les tests visuels, on passe à l'étape MFA.
+                // En production, cela dépendra si MFA est réellement activée.
                 setStep('mfa');
                 setLoading(false);
             }
@@ -55,7 +61,7 @@ export default function LoginPage() {
 
             // Si 'nextLevel' est aal2, le compte possède une MFA activée
             if (assurance.nextLevel === 'aal2' && assurance.currentLevel === 'aal1') {
-                // On récupère le facteur d'authentification (TOTP)
+                // Récupération des facteurs MFA associés au compte
                 const { data: factors, error: factorsError } = await supabase.auth.mfa.listFactors();
                 
                 if (factorsError || !factors.all || factors.all.length === 0) {
@@ -71,7 +77,8 @@ export default function LoginPage() {
                     return;
                 }
 
-                // On lance le "Challenge" (génération du défi de vérification)
+                // On lance le "Challenge" : Supabase va générer une session MFA
+                // et éventuellement envoyer un code par email/SMS ou demander un TOTP.
                 const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
                     factorId: verifiedFactor.id
                 });
@@ -82,12 +89,12 @@ export default function LoginPage() {
                     return;
                 }
 
-                // Passage à l'étape MFA
+                // On stocke le factorId et challengeId pour la validation finale.
                 setMfaInfo({ factorId: verifiedFactor.id, challengeId: challenge.id });
                 setStep('mfa');
                 setLoading(false);
             } else {
-                // Pas de MFA activée sur ce compte, accès direct au QG
+                // Pas de MFA activée : on redirige vers la page protégée.
                 router.refresh();
                 router.push('/terminal-hq-77');
             }
@@ -98,7 +105,8 @@ export default function LoginPage() {
         }
     };
 
-    // ÉTAPE 2 : Vérification du code TOTP
+    // ÉTAPE 2 : Vérification du code TOTP ou du code envoyé par mail
+    // Ce gestionnaire va envoyer le code saisi à Supabase pour validation.
     const handleMfaVerify = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!mfaInfo) return;
@@ -115,13 +123,14 @@ export default function LoginPage() {
             });
 
             if (verifyError) {
+                // Si le code MFA est incorrect ou expiré, on informe l'utilisateur.
                 await applyAntiBruteForceDelay(startTime);
                 setError("CODE D'ACCÈS INVALIDE OU EXPIRÉ.");
                 setLoading(false);
                 return;
             }
 
-            // Succès absolu (AAL2 validé)
+            // Succès : l'utilisateur est maintenant authentifié avec MFA.
             router.refresh();
             router.push('/terminal-hq-77');
         } catch (err) {
