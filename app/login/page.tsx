@@ -17,8 +17,9 @@ export default function LoginPage() {
         setLoading(true);
         setError(null);
         
+        const startTime = Date.now();
+        
         try {
-            // On initialise le client ici pour être sûr de lire les variables .env
             const supabase = createClient();
             
             const { error: authError } = await supabase.auth.signInWithPassword({
@@ -27,16 +28,22 @@ export default function LoginPage() {
             });
 
             if (authError) {
+                // SÉCURITÉ : Anti brute-force. On impose un délai minimum de 1.5s en cas d'erreur
+                const elapsed = Date.now() - startTime;
+                const minDelay = 1500;
+                if (elapsed < minDelay) {
+                    await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
+                }
+                
                 setError(authError.message);
                 setLoading(false);
             } else {
-                // Succès - la redirection va changer de page
                 router.refresh();
                 router.push('/terminal-hq-77');
             }
         } catch (err: any) {
             console.error("Login Error:", err);
-            setError(err.message || "Une erreur inattendue est survenue lors de l'initialisation.");
+            setError("Une erreur inattendue est survenue.");
             setLoading(false);
         }
     };

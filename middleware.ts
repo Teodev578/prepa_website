@@ -57,8 +57,11 @@ export async function middleware(request: NextRequest) {
 
   const { data: { session } } = await supabase.auth.getSession();
 
-  // Si l'utilisateur n'est pas connecté et essaie d'accéder à /terminal-hq-77
-  if (!session && request.nextUrl.pathname.startsWith('/terminal-hq-77')) {
+  const isLoginPage = request.nextUrl.pathname === '/login';
+  const isAuthApi = request.nextUrl.pathname.startsWith('/api/auth');
+
+  // Si l'utilisateur n'est pas connecté et n'est pas sur la page login
+  if (!session && !isLoginPage && !isAuthApi) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
@@ -68,5 +71,15 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/terminal-hq-77/:path*'],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public files (images, etc)
+     */
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.svg$).*)',
+  ],
 };
