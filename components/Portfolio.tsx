@@ -1,8 +1,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image'; // 🚀 Changement clé pour les performances
-import { createClient } from '../lib/supabase/client';
+import { createClient } from '@/lib/client';
 
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 
@@ -48,53 +47,40 @@ const Portfolio = () => {
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
-    const [dbError, setDbError] = useState<string | null>(null); // 🛠️ Sécurité d'erreur
 
     useEffect(() => {
+        const supabase = createClient();
         const fetchProjects = async () => {
-            try {
-                setLoading(true);
-                setDbError(null);
+            const { data, error } = await supabase
+                .from('portfolio_projects')
+                .select('*')
+                .order('created_at', { ascending: false });
 
-                const supabase = createClient();
-                const { data, error } = await supabase
-                    .from('portfolio_projects')
-                    .select('*')
-                    .order('created_at', { ascending: false });
-
-                // 🛠️ Gestion explicite des pannes BDD
-                if (error) throw error;
-
-                if (data) {
-                    const formattedProjects: Project[] = data.map((p: any) => ({
-                        id: p.ref_id,
-                        title: p.title,
-                        treatment: p.treatment,
-                        date: p.date_tag,
-                        model: p.model,
-                        img: p.img_single,
-                        imgBefore: p.img_before,
-                        imgAfter: p.img_after,
-                        techData: { 
-                            time: p.time_spent || '-', 
-                            products: p.solution || '-', 
-                            defect: p.impact || '-' 
-                        },
-                        size: p.size || 'small',
-                        details: {
-                            context: p.context || '',
-                            workDone: p.work_done || [],
-                            result: p.result || ''
-                        }
-                    }));
-                    setProjects(formattedProjects);
-                }
-            } catch (err: any) {
-                console.error("Erreur d'acquisition du portfolio :", err);
-                setDbError("SYS.ERR_0x54 : IMPOSSIBLE_D_ACCÉDER_AUX_ARCHIVES.");
-            } finally {
-                setLoading(false);
+            if (data) {
+                const formattedProjects: Project[] = data.map((p: any) => ({
+                    id: p.ref_id,
+                    title: p.title,
+                    treatment: p.treatment,
+                    date: p.date_tag,
+                    model: p.model,
+                    img: p.img_single,
+                    imgBefore: p.img_before,
+                    imgAfter: p.img_after,
+                    techData: { 
+                        time: p.time_spent || '-', 
+                        products: p.solution || '-', 
+                        defect: p.impact || '-' 
+                    },
+                    size: p.size || 'small',
+                    details: {
+                        context: p.context || '',
+                        workDone: p.work_done || [],
+                        result: p.result || ''
+                    }
+                }));
+                setProjects(formattedProjects);
             }
+            setLoading(false);
         };
 
         fetchProjects();
@@ -104,22 +90,10 @@ const Portfolio = () => {
         setExpandedId(expandedId === id ? null : id);
     };
 
-    // Affichage d'un loader propre
     if (loading) {
         return (
-            <div className="min-h-screen bg-background flex items-center justify-center text-primary text-label animate-pulse font-mono">
+            <div className="min-h-screen bg-background flex items-center justify-center text-primary text-label animate-pulse">
                 SYS.CHARGEMENT_DES_ARCHIVES...
-            </div>
-        );
-    }
-
-    // 🛠️ Écran de secours si la base de données crash
-    if (dbError) {
-        return (
-            <div className="min-h-screen bg-background flex flex-col items-center justify-center text-destructive p-6 font-mono text-center">
-                <span className="text-4xl mb-4">⚠️</span>
-                <p className="text-label font-bold">{dbError}</p>
-                <p className="text-xs text-muted-foreground mt-2 uppercase tracking-wider">La liaison avec le serveur a été interrompue.</p>
             </div>
         );
     }
@@ -140,7 +114,10 @@ const Portfolio = () => {
                         <span className="text-primary text-label">CAS_CONCRETS_&_PERFORMANCES</span>
                     </motion.div>
 
-                    <motion.h1 {...maskReveal} className="text-display text-primary leading-[0.85]">
+                    <motion.h1
+                        {...maskReveal}
+                        className="text-display text-primary leading-[0.85]"
+                    >
                         NOS <br /> RÉALISATIONS
                     </motion.h1>
 
@@ -156,18 +133,22 @@ const Portfolio = () => {
                     {projects.map((project, index) => {
                         const isOpen = expandedId === project.id;
                         
+                        // 1. GESTION DES TAILLES (La vraie différence se fait ici sur le col-span)
                         const isSmall = project.size === 'small';
                         const isMedium = project.size === 'medium';
                         const isLarge = project.size === 'large';
 
-                        let colSpanClass = 'col-span-1 md:col-span-6'; 
-                        if (isMedium) colSpanClass = 'col-span-1 md:col-span-8'; 
-                        if (isLarge) colSpanClass = 'col-span-1 md:col-span-12'; 
+                        // Attribution des largeurs (Responsive)
+                        let colSpanClass = 'col-span-1 md:col-span-6'; // Small par défaut (1/2 écran)
+                        if (isMedium) colSpanClass = 'col-span-1 md:col-span-8'; // Medium (2/3 d'écran)
+                        if (isLarge) colSpanClass = 'col-span-1 md:col-span-12'; // Large (100% écran)
 
-                        let imgHeightClass = 'h-[300px] md:h-[400px]'; 
-                        if (isMedium) imgHeightClass = 'h-[350px] md:h-[500px]'; 
-                        if (isLarge) imgHeightClass = 'h-[400px] md:h-[650px]'; 
+                        // Attribution des hauteurs 
+                        let imgHeightClass = 'h-[300px] md:h-[400px]'; // Small
+                        if (isMedium) imgHeightClass = 'h-[350px] md:h-[500px]'; // Medium
+                        if (isLarge) imgHeightClass = 'h-[400px] md:h-[650px]'; // Large
 
+                        // 2. CORRECTION DU BUG D'IMAGE (Fallback)
                         const displayImage = project.img || project.imgAfter || project.imgBefore;
 
                         return (
@@ -186,35 +167,29 @@ const Portfolio = () => {
                                         />
                                     </div>
                                 ) : (
-                                    <div className="border-technical overflow-hidden bg-card p-1 relative">
+                                    <div className="border-technical overflow-hidden bg-card p-1">
                                         {displayImage ? (
-                                            // 🚀 Intégration de Next.js Image avec conteneur parent responsive
-                                            <div className={`w-full relative ${imgHeightClass}`}>
-                                                <Image
-                                                    src={displayImage}
-                                                    alt={project.title}
-                                                    fill
-                                                    sizes="(max-w-768px) 100vw, (max-w-1200px) 50vw, 33vw"
-                                                    className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
-                                                    priority={index < 2} // Charge immédiatement les 2 premières images
-                                                />
-                                            </div>
+                                            <img
+                                                src={displayImage}
+                                                alt={project.title}
+                                                className={`w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ${imgHeightClass}`}
+                                            />
                                         ) : (
                                             <div className={`w-full bg-muted flex items-center justify-center text-muted-foreground text-label ${imgHeightClass}`}>
                                                 [ AUCUNE_IMAGE_SOURCE ]
                                             </div>
                                         )}
 
-                                        <div className="absolute inset-0 pointer-events-none z-10">
+                                        <div className="absolute inset-0 pointer-events-none">
                                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] h-[calc(100%-2rem)] border border-border/50 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                                             <div className="absolute top-8 left-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">+ RENTABILITÉ</div>
                                             <div className="absolute bottom-8 right-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">+ QUALITÉ</div>
                                         </div>
 
-                                        <div className="absolute top-4 left-4 text-label text-primary bg-background/90 px-2 py-1 border border-border backdrop-blur-sm z-10">
+                                        <div className="absolute top-4 left-4 text-label text-primary bg-background/90 px-2 py-1 border border-border backdrop-blur-sm">
                                             REF: {project.id}
                                         </div>
-                                        <div className="absolute bottom-4 right-4 text-label text-primary-foreground bg-primary px-2 py-1 z-10">
+                                        <div className="absolute bottom-4 right-4 text-label text-primary-foreground bg-primary px-2 py-1">
                                             {project.date}
                                         </div>
                                     </div>
@@ -223,6 +198,7 @@ const Portfolio = () => {
                                 {/* --- INFORMATIONS DU PROJET --- */}
                                 <div className="mt-8 border-b border-border pb-8 relative flex-1 flex flex-col justify-between">
                                     <div className={`grid gap-8 mb-4 ${isLarge ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
+                                        
                                         <div className="tech-corner pl-4 border-l border-primary/30">
                                             <h3 className="text-card-title mb-2">{project.title}</h3>
                                             <div className="flex items-center gap-4 mb-6">
@@ -240,6 +216,7 @@ const Portfolio = () => {
                                             </button>
                                         </div>
 
+                                        {/* Données techniques : si c'est Small, on les empile un peu plus pour éviter qu'elles ne soient écrasées */}
                                         <div className={`grid gap-4 ${isSmall ? 'grid-cols-2 mt-4' : 'grid-cols-3 lg:text-right'} items-end`}>
                                             <div className="flex flex-col">
                                                 <span className="text-label text-muted-foreground mb-1">RÉACTIVITÉ</span>
@@ -267,6 +244,7 @@ const Portfolio = () => {
                                                 className="overflow-hidden"
                                             >
                                                 <div className={`pt-8 pb-4 grid gap-8 mt-6 border-t border-dashed border-border/50 ${isLarge ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
+                                                    
                                                     <div className="border-l-2 border-primary/20 pl-4">
                                                         <h4 className="text-label text-muted-foreground mb-3">01. CONTEXTE CLIENT</h4>
                                                         <p className="text-sm text-foreground/90 leading-relaxed">{project.details.context}</p>
