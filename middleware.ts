@@ -4,9 +4,7 @@ import type { NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
+    request: { headers: request.headers },
   });
 
   const supabase = createServerClient(
@@ -14,53 +12,43 @@ export async function middleware(request: NextRequest) {
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        get(name: string) {
-          return request.cookies.get(name)?.value;
-        },
+        get(name: string) { return request.cookies.get(name)?.value; },
         set(name: string, value: string, options: CookieOptions) {
           request.cookies.set({ name, value, ...options });
-          response = NextResponse.next({
-            request: { headers: request.headers },
-          });
+          response = NextResponse.next({ request: { headers: request.headers } });
           response.cookies.set({ name, value, ...options });
         },
         remove(name: string, options: CookieOptions) {
           request.cookies.set({ name, value: '', ...options });
-          response = NextResponse.next({
-            request: { headers: request.headers },
-          });
+          response = NextResponse.next({ request: { headers: request.headers } });
           response.cookies.set({ name, value: '', ...options });
         },
       },
     }
   );
 
-  // ✅ SÉCURITÉ : On récupère l'utilisateur complet (plus sécurisé que getSession)
-  const { data: { user } } = await supabase.auth.getUser();
+  const pathname = request.nextUrl.pathname;
 
-  const isLoginPage = request.nextUrl.pathname === '/login';
-  const isAuthApi = request.nextUrl.pathname.startsWith('/api/auth');
+  // 🚀 OPTIMISATION : On applique la protection UNIQUEMENT sur les routes privées (ex: /terminal-hq-77 ou /admin)
+  const isAdminRoute = pathname.startsWith('/terminal-hq-77') || pathname.startsWith('/admin');
 
-  // Si on cible une page protégée (ex: /terminal-hq-77)
-  if (!isLoginPage && !isAuthApi) {
-    
-    // 1. L'utilisateur n'est pas connecté du tout
+  if (isAdminRoute) {
+    // On ne vérifie l'utilisateur que s'il tente d'accéder au QG
+    const { data: { user } } = await supabase.auth.getUser();
+
+    // 1. L'utilisateur n'est pas connecté
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
       return NextResponse.redirect(url);
     }
 
-    // 2. L'utilisateur est connecté MAIS son email n'est pas confirmé
+    // 2. L'utilisateur est connecté mais son email n'est pas validé
     if (!user.email_confirmed_at) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
-      // On passe un paramètre dans l'URL pour afficher un message personnalisé sur la page login
       url.searchParams.set('error', 'email_unverified');
-      
-      // Optionnel : On force la déconnexion côté serveur pour nettoyer ses cookies
       await supabase.auth.signOut();
-      
       return NextResponse.redirect(url);
     }
   }
