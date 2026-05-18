@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { createClient } from '@/lib/client';
-
 import BeforeAfterSlider from '../components/BeforeAfterSlider';
 
-const cubicBezier = [0.22, 1, 0.36, 1] as any;
+// Typage strict de la transition sans 'any'
+const cubicBezier = [0.22, 1, 0.36, 1] as const;
 
 const fadeInUp = {
     initial: { opacity: 0, y: 30 },
@@ -35,13 +35,20 @@ interface Project {
         products: string;
         defect: string;
     };
-    size: string;
+    size: 'small' | 'medium' | 'large';
     details: {
         context: string;
         workDone: string[];
         result: string;
     };
 }
+
+// Configuration clean des classes responsive selon la taille
+const sizeConfig = {
+    small: { colSpan: 'col-span-1 md:col-span-6', height: 'h-[300px] md:h-[400px]' },
+    medium: { colSpan: 'col-span-1 md:col-span-8', height: 'h-[350px] md:h-[500px]' },
+    large: { colSpan: 'col-span-1 md:col-span-12', height: 'h-[400px] md:h-[650px]' }
+};
 
 const Portfolio = () => {
     const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -56,7 +63,9 @@ const Portfolio = () => {
                 .select('*')
                 .order('created_at', { ascending: false });
 
-            if (data) {
+            if (error) {
+                console.error("Erreur lors de la récupération du portfolio:", error);
+            } else if (data) {
                 const formattedProjects: Project[] = data.map((p: any) => ({
                     id: p.ref_id,
                     title: p.title,
@@ -71,7 +80,7 @@ const Portfolio = () => {
                         products: p.solution || '-', 
                         defect: p.impact || '-' 
                     },
-                    size: p.size || 'small',
+                    size: (p.size as 'small' | 'medium' | 'large') || 'small',
                     details: {
                         context: p.context || '',
                         workDone: p.work_done || [],
@@ -101,6 +110,7 @@ const Portfolio = () => {
     return (
         <section className="bg-background text-foreground min-h-screen pt-32 pb-24 px-6 md:px-12 overflow-hidden">
             <div className="max-w-7xl mx-auto">
+                
                 {/* Header */}
                 <div className="mb-24 relative">
                     <motion.div
@@ -132,23 +142,7 @@ const Portfolio = () => {
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense">
                     {projects.map((project, index) => {
                         const isOpen = expandedId === project.id;
-                        
-                        // 1. GESTION DES TAILLES (La vraie différence se fait ici sur le col-span)
-                        const isSmall = project.size === 'small';
-                        const isMedium = project.size === 'medium';
-                        const isLarge = project.size === 'large';
-
-                        // Attribution des largeurs (Responsive)
-                        let colSpanClass = 'col-span-1 md:col-span-6'; // Small par défaut (1/2 écran)
-                        if (isMedium) colSpanClass = 'col-span-1 md:col-span-8'; // Medium (2/3 d'écran)
-                        if (isLarge) colSpanClass = 'col-span-1 md:col-span-12'; // Large (100% écran)
-
-                        // Attribution des hauteurs 
-                        let imgHeightClass = 'h-[300px] md:h-[400px]'; // Small
-                        if (isMedium) imgHeightClass = 'h-[350px] md:h-[500px]'; // Medium
-                        if (isLarge) imgHeightClass = 'h-[400px] md:h-[650px]'; // Large
-
-                        // 2. CORRECTION DU BUG D'IMAGE (Fallback)
+                        const config = sizeConfig[project.size] || sizeConfig.small;
                         const displayImage = project.img || project.imgAfter || project.imgBefore;
 
                         return (
@@ -156,48 +150,45 @@ const Portfolio = () => {
                                 key={project.id}
                                 {...fadeInUp}
                                 transition={{ ...fadeInUp.transition, delay: (index % 4) * 0.1 }}
-                                className={`relative group flex flex-col ${colSpanClass}`}
+                                className={`relative group flex flex-col ${config.colSpan}`}
                             >
-                                {/* --- COMPOSANT VISUEL --- */}
-                                {project.imgBefore && project.imgAfter ? (
-                                    <div className={`border-technical p-1 bg-card w-full ${imgHeightClass}`}>
+                                {/* --- COMPOSANT VISUEL ENCAPSULÉ (Correction relative + hauteurs) --- */}
+                                <div className={`border-technical overflow-hidden bg-card p-1 relative w-full ${config.height}`}>
+                                    {project.imgBefore && project.imgAfter ? (
                                         <BeforeAfterSlider
                                             beforeImg={project.imgBefore}
                                             afterImg={project.imgAfter}
                                         />
-                                    </div>
-                                ) : (
-                                    <div className="border-technical overflow-hidden bg-card p-1">
-                                        {displayImage ? (
-                                            <img
-                                                src={displayImage}
-                                                alt={project.title}
-                                                className={`w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ${imgHeightClass}`}
-                                            />
-                                        ) : (
-                                            <div className={`w-full bg-muted flex items-center justify-center text-muted-foreground text-label ${imgHeightClass}`}>
-                                                [ AUCUNE_IMAGE_SOURCE ]
-                                            </div>
-                                        )}
+                                    ) : displayImage ? (
+                                        <img
+                                            src={displayImage}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                                        />
+                                    ) : (
+                                        <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground text-label">
+                                            [ AUCUNE_IMAGE_SOURCE ]
+                                        </div>
+                                    )}
 
-                                        <div className="absolute inset-0 pointer-events-none">
-                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] h-[calc(100%-2rem)] border border-border/50 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                                            <div className="absolute top-8 left-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">+ RENTABILITÉ</div>
-                                            <div className="absolute bottom-8 right-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">+ QUALITÉ</div>
-                                        </div>
-
-                                        <div className="absolute top-4 left-4 text-label text-primary bg-background/90 px-2 py-1 border border-border backdrop-blur-sm">
-                                            REF: {project.id}
-                                        </div>
-                                        <div className="absolute bottom-4 right-4 text-label text-primary-foreground bg-primary px-2 py-1">
-                                            {project.date}
-                                        </div>
+                                    {/* Overlays UI & DATA (Valables pour Sliders et Images) */}
+                                    <div className="absolute inset-0 pointer-events-none z-10">
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] h-[calc(100%-2rem)] border border-border/50 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                                        <div className="absolute top-8 left-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">+ RENTABILITÉ</div>
+                                        <div className="absolute bottom-8 right-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-200">+ QUALITÉ</div>
                                     </div>
-                                )}
+
+                                    <div className="absolute top-4 left-4 text-label text-primary bg-background/90 px-2 py-1 border border-border backdrop-blur-sm z-10">
+                                        REF: {project.id}
+                                    </div>
+                                    <div className="absolute bottom-4 right-4 text-label text-primary-foreground bg-primary px-2 py-1 z-10">
+                                        {project.date}
+                                    </div>
+                                </div>
 
                                 {/* --- INFORMATIONS DU PROJET --- */}
                                 <div className="mt-8 border-b border-border pb-8 relative flex-1 flex flex-col justify-between">
-                                    <div className={`grid gap-8 mb-4 ${isLarge ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
+                                    <div className={`grid gap-8 mb-4 ${project.size === 'large' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
                                         
                                         <div className="tech-corner pl-4 border-l border-primary/30">
                                             <h3 className="text-card-title mb-2">{project.title}</h3>
@@ -216,8 +207,8 @@ const Portfolio = () => {
                                             </button>
                                         </div>
 
-                                        {/* Données techniques : si c'est Small, on les empile un peu plus pour éviter qu'elles ne soient écrasées */}
-                                        <div className={`grid gap-4 ${isSmall ? 'grid-cols-2 mt-4' : 'grid-cols-3 lg:text-right'} items-end`}>
+                                        {/* Données techniques adaptatives */}
+                                        <div className={`grid gap-4 ${project.size === 'small' ? 'grid-cols-2 mt-4' : 'grid-cols-3 lg:text-right'} items-end`}>
                                             <div className="flex flex-col">
                                                 <span className="text-label text-muted-foreground mb-1">RÉACTIVITÉ</span>
                                                 <span className="text-detail font-black">{project.techData.time}</span>
@@ -226,7 +217,7 @@ const Portfolio = () => {
                                                 <span className="text-label text-muted-foreground mb-1">NOTRE_SOLUTION</span>
                                                 <span className="text-detail font-black">{project.techData.products.split('_')[0]}</span>
                                             </div>
-                                            <div className={`flex flex-col ${isSmall ? 'col-span-2' : ''}`}>
+                                            <div className={`flex flex-col ${project.size === 'small' ? 'col-span-2' : ''}`}>
                                                 <span className="text-label text-muted-foreground mb-1">IMPACT_CLIENT</span>
                                                 <span className="text-detail font-black text-primary">{project.techData.defect.split('_')[0]}</span>
                                             </div>
@@ -243,7 +234,7 @@ const Portfolio = () => {
                                                 transition={{ duration: 0.4, ease: cubicBezier }}
                                                 className="overflow-hidden"
                                             >
-                                                <div className={`pt-8 pb-4 grid gap-8 mt-6 border-t border-dashed border-border/50 ${isLarge ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
+                                                <div className={`pt-8 pb-4 grid gap-8 mt-6 border-t border-dashed border-border/50 ${project.size === 'large' ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>
                                                     
                                                     <div className="border-l-2 border-primary/20 pl-4">
                                                         <h4 className="text-label text-muted-foreground mb-3">01. CONTEXTE CLIENT</h4>
