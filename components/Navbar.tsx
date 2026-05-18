@@ -16,6 +16,7 @@ export default function Navbar() {
         { label: "ACCUEIL", href: "/" },
         { label: "SERVICES", href: "/services" },
         { label: "PORTFOLIO", href: "/portfolio" },
+        { label: "CONTACT", href: "/contact" },
     ];
 
     return (
@@ -59,16 +60,6 @@ export default function Navbar() {
                     </nav>
 
                     <div className="flex items-center text-xs font-mono text-foreground font-bold uppercase tracking-widest">
-                        <Link href="/contact" className={`group flex items-center transition-none ${pathname === '/contact' ? 'text-primary' : 'text-foreground hover:text-primary'}`}>
-                            <span className={`text-primary font-bold mr-1 transition-none opacity-0 group-hover:opacity-100`}>
-                                {'>'}
-                            </span>
-                            CONTACT
-                        </Link>
-
-                        {/* Séparateur conservé proprement entre les deux actions restantes */}
-                        <span className="text-border px-4">|</span>
-
                         <button id="theme-toggle" className="min-w-[44px] min-h-[44px] justify-center hover:text-primary transition-none text-foreground flex items-center" onClick={toggleTheme} aria-label="Changer le mode de couleur">
                             {theme === 'dark' ? (
                                 <svg className="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
@@ -115,7 +106,7 @@ export default function Navbar() {
                 {/* 🚀 SEO : Ajout d'une sémantique nav pour le menu plein écran mobile */}
                 <nav className="flex-1 flex flex-col justify-center px-8 relative" aria-label="Navigation mobile">
                     <ul className="flex flex-col gap-6 text-3xl sm:text-5xl font-mono uppercase tracking-widest font-bold">
-                        {[...links, { label: "CONTACT", href: "/contact" }].map((link, index) => (
+                        {links.map((link, index) => (
                             <li key={link.label} className="overflow-hidden">
                                 <Link
                                     href={link.href}
