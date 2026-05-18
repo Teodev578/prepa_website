@@ -13,7 +13,7 @@ export default function Navbar() {
     const pathname = usePathname();
 
     const links = [
-        { label: "HOME", href: "/" },
+        { label: "Acceuil", href: "/" },
         { label: "SERVICES", href: "/services" },
         { label: "PORTFOLIO", href: "/portfolio" },
     ];

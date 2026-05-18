@@ -8,138 +8,149 @@ import BeforeAfterSlider from '../components/BeforeAfterSlider';
 const cubicBezier = [0.22, 1, 0.36, 1] as const;
 
 const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: cubicBezier }
+initial: { opacity: 0, y: 30 },
+whileInView: { opacity: 1, y: 0 },
+viewport: { once: true },
+transition: { duration: 0.8, ease: cubicBezier }
 };
 
 const maskReveal = {
-    initial: { clipPath: 'inset(100% 0 0 0)' },
-    whileInView: { clipPath: 'inset(0 0 0 0)' },
-    viewport: { once: true },
-    transition: { duration: 1.2, ease: cubicBezier }
+initial: { clipPath: 'inset(100% 0 0 0)' },
+whileInView: { clipPath: 'inset(0 0 0 0)' },
+viewport: { once: true },
+transition: { duration: 1.2, ease: cubicBezier }
 };
 
 interface Project {
-    id: string;
-    title: string;
-    treatment: string;
-    date: string;
-    model: string;
-    img?: string;
-    imgBefore?: string;
-    imgAfter?: string;
-    techData: {
-        time: string;
-        products: string;
-        defect: string;
-    };
-    size: 'small' | 'medium' | 'large';
-    details: {
-        context: string;
-        workDone: string[];
-        result: string;
-    };
+id: string;
+title: string;
+treatment: string;
+date: string;
+model: string;
+img?: string;
+imgBefore?: string;
+imgAfter?: string;
+techData: {
+time: string;
+products: string;
+defect: string;
+};
+size: 'small' | 'medium' | 'large';
+details: {
+context: string;
+workDone: string[];
+result: string;
+};
 }
 
 // Configuration clean des classes responsive selon la taille
 const sizeConfig = {
-    small: { colSpan: 'col-span-1 md:col-span-6', height: 'h-[300px] md:h-[400px]' },
-    medium: { colSpan: 'col-span-1 md:col-span-8', height: 'h-[350px] md:h-[500px]' },
-    large: { colSpan: 'col-span-1 md:col-span-12', height: 'h-[400px] md:h-[650px]' }
+small: { colSpan: 'col-span-1 md:col-span-6', height: 'h-[300px] md:h-[400px]' },
+medium: { colSpan: 'col-span-1 md:col-span-8', height: 'h-[350px] md:h-[500px]' },
+large: { colSpan: 'col-span-1 md:col-span-12', height: 'h-[400px] md:h-[650px]' }
 };
 
 const Portfolio = () => {
-    const [expandedId, setExpandedId] = useState<string | null>(null);
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
+const [expandedId, setExpandedId] = useState<string | null>(null);
+const [projects, setProjects] = useState<Project[]>([]);
+const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const supabase = createClient();
-        const fetchProjects = async () => {
-            const { data, error } = await supabase
-                .from('portfolio_projects')
-                .select('*')
-                .order('created_at', { ascending: false });
+useEffect(() => {
+    const supabase = createClient();
+    const fetchProjects = async () => {
+        const { data, error } = await supabase
+            .from('portfolio_projects')
+            .select('*')
+            .order('created_at', { ascending: false });
 
-            if (error) {
-                console.error("Erreur lors de la récupération du portfolio:", error);
-            } else if (data) {
-                const formattedProjects: Project[] = data.map((p: any) => ({
-                    id: p.ref_id,
-                    title: p.title,
-                    treatment: p.treatment,
-                    date: p.date_tag,
-                    model: p.model,
-                    img: p.img_single,
-                    imgBefore: p.img_before,
-                    imgAfter: p.img_after,
-                    techData: { 
-                        time: p.time_spent || '-', 
-                        products: p.solution || '-', 
-                        defect: p.impact || '-' 
-                    },
-                    size: (p.size as 'small' | 'medium' | 'large') || 'small',
-                    details: {
-                        context: p.context || '',
-                        workDone: p.work_done || [],
-                        result: p.result || ''
-                    }
-                }));
-                setProjects(formattedProjects);
-            }
-            setLoading(false);
-        };
-
-        fetchProjects();
-    }, []);
-
-    const toggleAccordion = (id: string) => {
-        setExpandedId(expandedId === id ? null : id);
+        if (error) {
+            console.error("Erreur lors de la récupération du portfolio:", error);
+        } else if (data) {
+            const formattedProjects: Project[] = data.map((p: any) => ({
+                id: p.ref_id,
+                title: p.title,
+                treatment: p.treatment,
+                date: p.date_tag,
+                model: p.model,
+                img: p.img_single,
+                imgBefore: p.img_before,
+                imgAfter: p.img_after,
+                techData: { 
+                    time: p.time_spent || '-', 
+                    products: p.solution || '-', 
+                    defect: p.impact || '-' 
+                },
+                size: (p.size as 'small' | 'medium' | 'large') || 'small',
+                details: {
+                    context: p.context || '',
+                    workDone: p.work_done || [],
+                    result: p.result || ''
+                }
+            }));
+            setProjects(formattedProjects);
+        }
+        setLoading(false);
     };
 
-    if (loading) {
-        return (
-            <div className="min-h-screen bg-background flex items-center justify-center text-primary text-label animate-pulse">
-                SYS.CHARGEMENT_DES_ARCHIVES...
-            </div>
-        );
-    }
+    fetchProjects();
+}, []);
 
-    return (
-        <section className="bg-background text-foreground min-h-screen pt-32 pb-24 px-6 md:px-12 overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-                
-                {/* Header */}
-                <div className="mb-24 relative">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, ease: cubicBezier }}
-                        className="mb-4 flex items-center gap-4"
-                    >
-                        <div className="w-12 h-[1px] bg-primary" />
-                        <span className="text-primary text-label">CAS_CONCRETS_&_PERFORMANCES</span>
-                    </motion.div>
+const toggleAccordion = (id: string) => {
+    setExpandedId(expandedId === id ? null : id);
+};
 
-                    <motion.h1
-                        {...maskReveal}
-                        className="text-display text-primary leading-[0.85]"
-                    >
-                        NOS <br /> RÉALISATIONS
-                    </motion.h1>
+return (
+    <section className="bg-background text-foreground min-h-screen pt-32 pb-24 px-6 md:px-12 overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+            
+            {/* Header (Toujours visible dès le premier chargement) */}
+            <div className="mb-24 relative">
+                <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: cubicBezier }}
+                    className="mb-4 flex items-center gap-4"
+                >
+                    <div className="w-12 h-[1px] bg-primary" />
+                    <span className="text-primary text-label">CAS_CONCRETS_&_PERFORMANCES</span>
+                </motion.div>
 
-                    <div className="absolute top-0 right-0 text-label text-muted-foreground opacity-40 hidden md:block text-right">
-                        LAT: 49.0974° N<br />
-                        LON: 2.5065° E<br />
-                        SECTEUR: IDF
-                    </div>
+                <motion.h1
+                    {...maskReveal}
+                    className="text-display text-primary leading-[0.85] mb-8"
+                >
+                    NOS <br /> RÉALISATIONS
+                </motion.h1>
+
+                {/* Nouveau texte d'introduction technique & immersif */}
+                <motion.p
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.8, delay: 0.3, ease: cubicBezier }}
+                    className="text-muted-foreground text-base md:text-lg max-w-2xl leading-relaxed border-l border-primary/30 pl-4 mt-6"
+                >
+                    [ACCÈS_PUBLIC] : Vous trouverez ici une sélection de nos interventions clés, classées par typologie de traitement, documentées par des métriques réelles de terrain et d'impact financier B2B.
+                </motion.p>
+
+                <div className="absolute top-0 right-0 text-label text-muted-foreground opacity-40 hidden md:block text-right">
+                    LAT: 49.0974° N<br />
+                    LON: 2.5065° E<br />
+                    SECTEUR: IDF
                 </div>
+            </div>
 
-                {/* Portfolio Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense">
+            {/* Condition de rendu du contenu (Seule la grille a un état de chargement) */}
+            {loading ? (
+                <div className="min-h-[400px] w-full flex flex-col items-center justify-center text-primary text-label border border-dashed border-border/60 bg-card/10 rounded-sm p-12">
+                    <div className="w-8 h-8 border-t-2 border-r-2 border-primary rounded-full animate-spin mb-4" />
+                    <span className="animate-pulse tracking-widest">SYS.RECUPERATION_DES_DONNEES_SERVEUR...</span>
+                    <span className="text-xs text-muted-foreground mt-2 opacity-50">FLUX_DB_SECURED_ACTIVE</span>
+                </div>
+            ) : (
+                /* Portfolio Grid */
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense animate-fadeIn">
                     {projects.map((project, index) => {
                         const isOpen = expandedId === project.id;
                         const config = sizeConfig[project.size] || sizeConfig.small;
@@ -152,7 +163,7 @@ const Portfolio = () => {
                                 transition={{ ...fadeInUp.transition, delay: (index % 4) * 0.1 }}
                                 className={`relative group flex flex-col ${config.colSpan}`}
                             >
-                                {/* --- COMPOSANT VISUEL ENCAPSULÉ (Correction relative + hauteurs) --- */}
+                                {/* --- COMPOSANT VISUEL ENCAPSULÉ --- */}
                                 <div className={`border-technical overflow-hidden bg-card p-1 relative w-full ${config.height}`}>
                                     {project.imgBefore && project.imgAfter ? (
                                         <BeforeAfterSlider
@@ -171,7 +182,7 @@ const Portfolio = () => {
                                         </div>
                                     )}
 
-                                    {/* Overlays UI & DATA (Valables pour Sliders et Images) */}
+                                    {/* Overlays UI & DATA */}
                                     <div className="absolute inset-0 pointer-events-none z-10">
                                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%-2rem)] h-[calc(100%-2rem)] border border-border/50 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                                         <div className="absolute top-8 left-8 text-primary text-label opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">+ RENTABILITÉ</div>
@@ -266,31 +277,34 @@ const Portfolio = () => {
                         );
                     })}
                 </div>
+            )}
 
-                {/* Footer Annotations */}
-                <div className="mt-40 border-t border-border pt-12">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-label">
-                        <div className="flex flex-col gap-2">
-                            <span className="text-primary font-bold">PERFORMANCE:</span>
-                            <span className="text-muted-foreground">JUSQU'À -7 JOURS DE STOCKAGE</span>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <span className="text-primary font-bold">MODÈLE_ÉCONOMIQUE:</span>
-                            <span className="text-muted-foreground">CHARGES 100% VARIABLES</span>
-                        </div>
-                        <div className="flex flex-col gap-2">
-                            <span className="text-primary font-bold">ZONE_D_INTERVENTION:</span>
-                            <span className="text-muted-foreground">RÉGION_ÎLE_DE_FRANCE</span>
-                        </div>
-                        <div className="flex flex-col gap-2 md:text-right">
-                            <span className="text-primary font-bold">CONTACT_TECHNIQUE:</span>
-                            <span className="text-foreground">LAWCLEANCENTER@OUTLOOK.COM</span>
-                        </div>
+            {/* Footer Annotations (Reste visible ou en bas de page pour asseoir le design) */}
+            <div className="mt-40 border-t border-border pt-12">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 text-label">
+                    <div className="flex flex-col gap-2">
+                        <span className="text-primary font-bold">PERFORMANCE:</span>
+                        <span className="text-muted-foreground">JUSQU'À -7 JOURS DE STOCKAGE</span>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <span className="text-primary font-bold">MODÈLE_ÉCONOMIQUE:</span>
+                        <span className="text-muted-foreground">CHARGES 100% VARIABLES</span>
+                    </div>
+                    <div className="flex flex-col gap-2">
+                        <span className="text-primary font-bold">ZONE_D_INTERVENTION:</span>
+                        <span className="text-muted-foreground">RÉGION_ÎLE_DE_FRANCE</span>
+                    </div>
+                    <div className="flex flex-col gap-2 md:text-right">
+                        <span className="text-primary font-bold">CONTACT_TECHNIQUE:</span>
+                        <span className="text-foreground">LAWCLEANCENTER@OUTLOOK.COM</span>
                     </div>
                 </div>
             </div>
-        </section>
-    );
+        </div>
+    </section>
+);
+
+
 };
 
 export default Portfolio;

@@ -1,18 +1,15 @@
 "use client";
 import React from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link'; // 🚀 Crucial pour le SEO : navigation sémantique
 
-// === COURBES BÉZIER HAUT DE GAMME ===
-// Ressemble à "power4.out" de GSAP : Départ rapide, fin très douce et élégante
 const customEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-// === VARIANTS FRAMER MOTION ===
-// Pour faire une cascade (stagger) sur les grilles
 const containerVariants = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        transition: { staggerChildren: 0.15 } // Délai entre chaque carte
+        transition: { staggerChildren: 0.15 }
     }
 };
 
@@ -25,7 +22,6 @@ const itemVariants = {
     }
 };
 
-// Pour l'effet de texte qui se dévoile derrière un masque
 const textRevealVariants = {
     hidden: { y: "100%", opacity: 0 },
     show: {
@@ -36,7 +32,6 @@ const textRevealVariants = {
 };
 
 const Services = () => {
-    // === DONNÉES ===
     const services = [
         {
             id: 'RO-01',
@@ -44,12 +39,12 @@ const Services = () => {
             subtitle: 'VOTRE EXPERT DIRECTEMENT SUR SITE',
             price: 'SUR DEVIS',
             details: [
-                'Vous avez besoin d\'un préparateur expert ?', // Espace en trop supprimé
+                'Vous avez besoin d\'un préparateur expert ?',
                 'Nous intervenons pour gérer vos pics d\'activité, livraisons ou événements.',
                 'Aucune contrainte de recrutement, une flexibilité totale.',
                 'Votre activité ne s\'arrête jamais, la nôtre non plus.'
             ],
-            cta: 'OBTENIR DU RENFORT' // CTA plus percutant
+            cta: 'OBTENIR DU RENFORT'
         },
         {
             id: 'GF-02',
@@ -86,34 +81,23 @@ const Services = () => {
             <section className="px-6 md:px-12 mb-12 md:mb-20 overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-4 flex items-center gap-4">
-                        {/* Ligne animée (se dessine de gauche à droite) */}
                         <motion.div
                             initial={{ scaleX: 0 }}
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: true }}
                             transition={{ duration: 1, ease: customEase }}
-                            style={{ willChange: "transform" }}
                             className="w-12 h-[1px] bg-primary origin-left"
                         />
-                        <motion.span
-                            initial={{ opacity: 0, x: -10 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2, ease: customEase }}
-                            style={{ willChange: "transform, opacity" }}
-                            className="text-label text-primary"
-                        >
+                        <span className="text-label text-primary">
                             FLEXIBILITÉ_RÉACTIVITÉ_RENTABILITÉ
-                        </motion.span>
+                        </span>
                     </div>
-                    {/* Conteneur avec overflow-hidden pour masquer le texte avant l'animation */}
                     <div className="overflow-hidden py-2">
                         <motion.h1
                             variants={textRevealVariants}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: true }}
-                            style={{ willChange: "transform, opacity" }}
                             className="text-display text-primary"
                         >
                             NOS SERVICES
@@ -122,7 +106,7 @@ const Services = () => {
                 </div>
             </section>
 
-            {/* Fiches Techniques Grid avec Staggering */}
+            {/* Fiches Techniques Grid */}
             <section className="px-6 md:px-12 max-w-7xl mx-auto">
                 <motion.div
                     variants={containerVariants}
@@ -160,9 +144,13 @@ const Services = () => {
                                 ))}
                             </ul>
 
-                            <button className="btn-primary">
+                            {/* 🚀 CHANGEMENT : Le bouton devient un vrai lien Link sémantique vers ton formulaire */}
+                            <Link 
+                                href="/contact" 
+                                className="btn-primary flex items-center justify-center text-center group"
+                            >
                                 <span className="relative z-10">{service.cta}</span>
-                            </button>
+                            </Link>
                         </motion.article>
                     ))}
                 </motion.div>
@@ -170,19 +158,12 @@ const Services = () => {
 
             {/* Services Stratégiques */}
             <section className="px-6 md:px-12 mt-24 md:mt-40 max-w-7xl mx-auto">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false }}
-                    transition={{ duration: 1, ease: customEase }}
-                    className="mb-16"
-                >
+                <div className="mb-16">
                     <div className="overflow-hidden">
                         <motion.h3
                             variants={textRevealVariants}
                             initial="hidden"
                             whileInView="show"
-                            viewport={{ once: false }}
                             className="text-section-title pb-2"
                         >
                             NOS SERVICES <br /><span className="text-primary">STRATÉGIQUES</span>
@@ -191,11 +172,10 @@ const Services = () => {
                     <motion.div
                         initial={{ scaleX: 0 }}
                         whileInView={{ scaleX: 1 }}
-                        viewport={{ once: false }}
                         transition={{ duration: 1, delay: 0.3, ease: customEase }}
                         className="w-24 h-1 bg-primary mt-4 origin-left"
                     />
-                </motion.div>
+                </div>
 
                 <motion.div
                     variants={containerVariants}
@@ -253,24 +233,16 @@ const Services = () => {
                                 variants={textRevealVariants}
                                 initial="hidden"
                                 whileInView="show"
-                                viewport={{ once: false }}
                                 className="text-section-title pb-2"
                             >
                                 UN PARTENARIAT BASÉ SUR <br /> <span className="text-primary">LA CONFIANCE</span>
                             </motion.h3>
                         </div>
-                        <motion.p
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: false }}
-                            transition={{ duration: 1, delay: 0.2, ease: customEase }}
-                            className="font-sans text-muted-foreground text-sm max-w-lg leading-relaxed"
-                        >
+                        <p className="font-sans text-muted-foreground text-sm max-w-lg leading-relaxed">
                             Pour nous, un partenariat réussi repose sur une confiance totale. C'est pourquoi la transparence est au cœur de notre méthode. Fini le flou sur les prestations : grâce à nos reportings clairs, vous suivez chaque intervention, maîtrisez vos coûts et mesurez concrètement le retour sur investissement.
-                        </motion.p>
+                        </p>
                     </div>
 
-                    {/* Les tags arrivent en cascade sur le côté */}
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
