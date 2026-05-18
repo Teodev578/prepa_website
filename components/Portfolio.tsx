@@ -100,11 +100,11 @@ const toggleAccordion = (id: string) => {
 };
 
 return (
-    <section className="bg-background text-foreground min-h-screen pt-32 pb-24 px-6 md:px-12 overflow-hidden">
+    <section className="bg-background text-foreground h-auto py-16 md:py-24 px-6 md:px-12 overflow-hidden">
         <div className="max-w-7xl mx-auto">
             
             {/* Header (Toujours visible dès le premier chargement) */}
-            <div className="mb-24 relative">
+            <div className="mb-16 relative">
                 <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}

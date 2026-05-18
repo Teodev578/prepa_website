@@ -7,13 +7,13 @@ import { useTheme } from '@/components/ThemeProvider';
 import Logo from '@/components/Logo';
 
 export default function Navbar() {
-    const [lang, setLang] = useState('fr');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { theme, toggleTheme } = useTheme();
     const pathname = usePathname();
 
+    // 🚀 SEO : Correction de l'orthographe "Accueil" et passage en majuscules pour la cohérence
     const links = [
-        { label: "Acceuil", href: "/" },
+        { label: "ACCUEIL", href: "/" },
         { label: "SERVICES", href: "/services" },
         { label: "PORTFOLIO", href: "/portfolio" },
     ];
@@ -30,7 +30,8 @@ export default function Navbar() {
                         </span>
                     </div>
                     <div className="flex-grow flex items-center pl-10 md:pl-16">
-                        <Link href="/" className="group" onClick={() => setIsMenuOpen(false)}>
+                        {/* 🚀 SEO : Ajout d'un aria-label explicite pour ancrer la marque LAW CLEAN CENTER */}
+                        <Link href="/" className="group" onClick={() => setIsMenuOpen(false)} aria-label="LAW CLEAN CENTER - Accueil">
                             <Logo />
                         </Link>
                     </div>
@@ -38,7 +39,8 @@ export default function Navbar() {
 
                 {/* Right Block */}
                 <div className="w-1/2 h-full flex items-center justify-between lg:px-24 bg-background">
-                    <nav className="h-full flex items-center">
+                    {/* 🚀 SEO : Label sémantique sur le container de navigation desktop */}
+                    <nav className="h-full flex items-center" aria-label="Navigation principale">
                         <ul className="flex gap-6 xl:gap-8 text-xs font-mono uppercase tracking-widest font-bold h-full">
                             {links.map((link) => (
                                 <li key={link.label} className="h-full flex items-center">
@@ -64,17 +66,10 @@ export default function Navbar() {
                             CONTACT
                         </Link>
 
+                        {/* Séparateur conservé proprement entre les deux actions restantes */}
                         <span className="text-border px-4">|</span>
 
-                        <div className="flex gap-1 items-center">
-                            <button className={`min-w-[44px] min-h-[44px] transition-none ${lang === 'fr' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
-                            <span className="text-border px-1">/</span>
-                            <button className={`min-w-[44px] min-h-[44px] transition-none ${lang === 'en' ? 'text-primary' : 'hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
-                        </div>
-
-                        <span className="text-border px-4">|</span>
-
-                        <button id="theme-toggle" className="min-w-[44px] min-h-[44px] justify-center hover:text-primary transition-none text-foreground flex items-center" onClick={toggleTheme} aria-label="Toggle Theme">
+                        <button id="theme-toggle" className="min-w-[44px] min-h-[44px] justify-center hover:text-primary transition-none text-foreground flex items-center" onClick={toggleTheme} aria-label="Changer le mode de couleur">
                             {theme === 'dark' ? (
                                 <svg className="moon-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                             ) : (
@@ -87,19 +82,14 @@ export default function Navbar() {
 
             {/* Mobile / Tablet Header */}
             <div className="lg:hidden flex items-center justify-between w-full h-full px-6 bg-background relative z-[102]">
-                <Link href="/" onClick={() => setIsMenuOpen(false)}>
+                <Link href="/" onClick={() => setIsMenuOpen(false)} aria-label="LAW CLEAN CENTER - Accueil">
                     <Logo className="scale-90 origin-left" />
                 </Link>
 
                 <div className="flex items-center gap-2">
-                    {/* Selector FR / EN Mobile */}
-                    <div className="flex gap-2 items-center font-mono text-[10px] font-bold px-2 border-r border-border/50">
-                        <button className={`transition-none ${lang === 'fr' ? 'text-primary' : 'text-foreground/50 hover:text-primary'}`} onClick={() => setLang('fr')}>FR</button>
-                        <span className="text-border/30">/</span>
-                        <button className={`transition-none ${lang === 'en' ? 'text-primary' : 'text-foreground/50 hover:text-primary'}`} onClick={() => setLang('en')}>EN</button>
-                    </div>
-
-                    <button id="theme-toggle-mobile" className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-primary transition-none text-foreground" onClick={toggleTheme} aria-label="Toggle Theme Mobile">
+                    {/* 🛠️ RETRAIT : Le bloc complet de sélection de langue mobile a été supprimé ici */}
+                    
+                    <button id="theme-toggle-mobile" className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-primary transition-none text-foreground" onClick={toggleTheme} aria-label="Changer le mode de couleur sur mobile">
                         {theme === 'dark' ? (
                             <svg className="moon-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                         ) : (
@@ -108,17 +98,22 @@ export default function Navbar() {
                     </button>
 
                     {/* Animated Burger Menu */}
-                    <div className="min-w-[44px] min-h-[44px] flex flex-col justify-center items-end gap-1.5 cursor-pointer" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+                    <button 
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        className="min-w-[44px] min-h-[44px] flex flex-col justify-center items-end gap-1.5 cursor-pointer focus:outline-none"
+                        aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+                    >
                         <div className={`h-[1.5px] bg-foreground transition-all duration-300 origin-center ${isMenuOpen ? 'w-[26px] translate-y-[7.5px] rotate-45' : 'w-8'}`}></div>
                         <div className={`h-[1.5px] bg-foreground transition-all duration-300 origin-center ${isMenuOpen ? 'w-0 opacity-0' : 'w-6'}`}></div>
                         <div className={`h-[1.5px] bg-foreground transition-all duration-300 origin-center ${isMenuOpen ? 'w-[26px] -translate-y-[7.5px] -rotate-45' : 'w-8'}`}></div>
-                    </div>
+                    </button>
                 </div>
             </div>
 
-            {/* Mobile Full-Screen Menu (Now stays perfectly below the main header) */}
+            {/* Mobile Full-Screen Menu */}
             <div className={`fixed left-0 top-20 md:top-24 w-full h-[calc(100dvh-5rem)] md:h-[calc(100dvh-6rem)] bg-background lg:hidden transition-all duration-500 overflow-hidden flex flex-col z-[101] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-                <div className="flex-1 flex flex-col justify-center px-8 relative">
+                {/* 🚀 SEO : Ajout d'une sémantique nav pour le menu plein écran mobile */}
+                <nav className="flex-1 flex flex-col justify-center px-8 relative" aria-label="Navigation mobile">
                     <ul className="flex flex-col gap-6 text-3xl sm:text-5xl font-mono uppercase tracking-widest font-bold">
                         {[...links, { label: "CONTACT", href: "/contact" }].map((link, index) => (
                             <li key={link.label} className="overflow-hidden">
@@ -136,11 +131,11 @@ export default function Navbar() {
                             </li>
                         ))}
                     </ul>
-                </div>
+                </nav>
 
                 <div className="px-8 pb-12 mt-auto flex flex-col gap-8 text-[10px] font-mono font-bold text-muted-foreground uppercase opacity-50 tracking-[0.2em]">
                     <div className="w-12 h-[1px] bg-border"></div>
-                    <div>SEC.AUTH_V3.0 // READY_FOR_DEPLOYMENT</div>
+                    <div>LAW CLEAN CENTER // READY_FOR_DEPLOYMENT</div>
                 </div>
             </div>
         </header>
