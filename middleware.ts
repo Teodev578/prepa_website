@@ -35,8 +35,7 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // ✅ SÉCURITÉ : On récupère l'utilisateur complet via les cookies de session.
-  // Cette méthode examine les cookies d'authentification envoyés par le navigateur.
+  // ✅ SÉCURITÉ : On récupère l'utilisateur complet (plus sécurisé que getSession)
   const { data: { user } } = await supabase.auth.getUser();
 
   const isLoginPage = request.nextUrl.pathname === '/login';
@@ -53,7 +52,6 @@ export async function middleware(request: NextRequest) {
     }
 
     // 2. L'utilisateur est connecté MAIS son email n'est pas confirmé
-    // Dans ce cas, on bloque l'accès aux pages protégées et on redirige vers /login.
     if (!user.email_confirmed_at) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
