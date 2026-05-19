@@ -72,7 +72,7 @@ export default function Hero() {
     }
   };
 
-  const titleLines = ["VOTRE.", "NOTRE FORCE."];
+  const titleLines = ["NUMERO.", "#1."];
 
   return (
     // 🚀 FIXED : Remplacement de md:pt-0 par md:pt-24 pour respecter la hauteur du header (Navbar)
