@@ -3,7 +3,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const TESTIMONIALS = [
   {
@@ -48,22 +48,19 @@ export default function Testimonials() {
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
+  const [isDesktop, setIsDesktop] = useState(false); // 🚀 Sécurité pour ne pas casser le SSR
 
   useEffect(() => {
     const updateRange = () => {
       if (scrollRef.current) {
-        // We want to translate such that the last element's right edge aligns with the viewport right edge
-        // scrollWidth is the total width of content
-        // offsetWidth is the visible width of the container
-        // However, the container starts with a left padding (pl-6, etc.)
-        // So we need to translate by scrollWidth - windowWidth
         setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
       }
+      // On n'active l'effet de scroll forcé que sur grand écran (> 1024px)
+      setIsDesktop(window.innerWidth >= 1024);
     };
 
     updateRange();
     
-    // Écoute précisément les changements de taille du composant (plus robuste que le window resize)
     const observer = new ResizeObserver(() => updateRange());
     if (scrollRef.current) {
       observer.observe(scrollRef.current);
@@ -77,122 +74,94 @@ export default function Testimonials() {
   }, []);
 
   const { scrollYProgress } = useScroll({
-    target: targetRef,
+    target: isDesktop ? targetRef : undefined, // Désactivé si mobile pour libérer le processeur
   });
 
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
-  const smoothX = useSpring(x, { stiffness: 400, damping: 90 });
+  const smoothX = useSpring(x, { stiffness: 300, damping: 60 });
 
   const flickerVariants = {
     initial: { opacity: 0 },
     visible: {
         opacity: [0, 1, 0.3, 1, 0.8],
-        transition: {
-            duration: 0.5,
-            times: [0, 0.2, 0.4, 0.6, 1],
-            ease: "linear" as const,
-        }
+        transition: { duration: 0.5, ease: "linear" as const }
     }
   };
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-background">
-      <div className="sticky top-0 h-[100dvh] flex items-center overflow-hidden">
-        {/* Background Decor */}
-        <motion.div 
-          initial={{ opacity: 0, scale: 1.05 }}
-          whileInView={{ opacity: 0.02, scale: 1 }}
-          viewport={{ once: false, amount: 0.2 }}
-          transition={{ duration: 1.2, ease: BEZIER }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full text-center z-0"
-        >
-          <span className="font-sans font-black text-[35vw] leading-none uppercase">LOGS</span>
-        </motion.div>
+    // 🚀 SEO : Utilisation de h-auto sur mobile (évite le vide noir de 300vh) et h-[300vh] uniquement sur desktop
+    <section 
+      ref={targetRef} 
+      className={`relative bg-background ${isDesktop ? 'h-[300vh]' : 'h-auto py-16 md:py-24'}`}
+    >
+      {/* On utilise une structure standard "sticky" uniquement sur PC */}
+      <div className={`${isDesktop ? 'sticky top-0 h-[100dvh] flex items-center overflow-hidden' : 'w-full'}`}>
+        
+        {/* Background Decor - Caché sur mobile pour la lisibilité */}
+        {isDesktop && (
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full text-center z-0 select-none opacity-[0.02]">
+            <span className="font-sans font-black text-[35vw] leading-none uppercase">LOGS</span>
+          </div>
+        )}
 
         <div className="flex flex-col w-full">
+          {/* Header */}
           <div className="px-6 md:px-12 lg:px-24 mb-12 relative z-10">
-             {/* Header - Poster Style */}
             <div className="relative">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.6, ease: BEZIER }}
-                className="flex items-center gap-4 mb-4"
-              >
+              <div className="flex items-center gap-4 mb-4">
                 <span className="font-mono text-xs text-primary uppercase tracking-widest bg-primary/10 px-2 py-1">
                   SYS.LOG.03
                 </span>
-                <motion.div 
-                  initial={{ width: 0 }}
-                  whileInView={{ width: 96 }}
-                  viewport={{ once: false, amount: 0.2 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: BEZIER }}
-                  className="h-[1px] bg-foreground opacity-20"
-                ></motion.div>
-              </motion.div>
+                <div className="w-24 h-[1px] bg-foreground opacity-20"></div>
+              </div>
               
-              <motion.h2 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
-                className="text-[13vw] sm:text-[10vw] md:text-[8vw] lg:text-[5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.85] mb-6 relative"
-              >
-                {["RAPPORTS", "CLIENTS."].map((line, i) => (
-                  <div key={i} className="overflow-hidden relative">
-                    <motion.div
-                      variants={{
-                        hidden: { y: "110%" },
-                        visible: { y: 0 }
-                      }}
-                      transition={{ duration: 0.7, delay: 0.1 + (i * 0.1), ease: BEZIER }}
-                    >
-                      {line.includes("CLIENTS") ? (
-                        <span className="text-primary">{line}</span>
-                      ) : line}
-                    </motion.div>
-                  </div>
-                ))}
-              </motion.h2>
+              {/* 🚀 SEO : Titre H2 sémantique clair pour les moteurs */}
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.9] mb-6">
+                AVIS & <span className="text-primary">RAPPORTS CLIENTS</span>
+              </h2>
             </div>
           </div>
 
+          {/* 🚀 RESPONSIVE & SEO GRID : 
+              Sur Desktop: Défilé horizontal propulsé par Framer Motion.
+              Sur Mobile: Véritable grille de lecture verticale native, 100% accessible et indexable. */}
           <motion.div 
             ref={scrollRef}
-            style={{ x: smoothX }} 
-            className="flex gap-6 pl-6 md:pl-12 lg:pl-24 pr-6 md:pr-12 lg:pr-24"
+            style={isDesktop ? { x: smoothX } : undefined} 
+            className={`flex ${
+              isDesktop 
+                ? 'gap-6 pl-24 pr-24 flex-row w-max' 
+                : 'grid grid-cols-1 md:grid-cols-2 gap-6 px-6 md:px-12'
+            }`}
           >
             {TESTIMONIALS.map((testimonial, index) => (
-              <motion.div
+              <article
                 key={index}
-                className="flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] bg-card border border-border group relative overflow-hidden flex flex-col"
+                className={`flex-shrink-0 bg-card border border-border group relative overflow-hidden flex flex-col rounded-[var(--radius)] ${
+                  isDesktop ? 'w-[35vw]' : 'w-full'
+                }`}
               >
                 {/* Top Accent line & ID */}
                 <div className="flex items-center justify-between px-6 py-2 border-b border-border bg-muted/50">
-                  <motion.span 
-                    initial="initial"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={flickerVariants}
-                    className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest"
-                  >
+                  <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
                     ID: {testimonial.initials}-{index.toString().padStart(4, '0')}
-                  </motion.span>
+                  </span>
                   <span className="font-mono text-[9px] text-primary uppercase tracking-widest leading-none">
-                    {"// VALIDATED"}
+                    {"// VERIFIED_LOG"}
                   </span>
                 </div>
                 
                 {/* Content */}
-                <div className="p-8 md:p-10 flex-1">
-                  <p className="mb-8 font-sans font-medium text-lg md:text-xl lg:text-2xl leading-tight text-foreground uppercase tracking-tight">
+                <div className="p-6 md:p-10 flex-1 flex flex-col justify-between">
+                  {/* blockquote est la balise HTML sémantique officielle pour les citations (surpuissant pour Google) */}
+                  <blockquote className="mb-8 font-sans font-medium text-lg md:text-xl lg:text-2xl leading-tight text-foreground uppercase tracking-tight">
                     <span className="text-primary font-black mr-2">"</span>
                     {testimonial.quote}
                     <span className="text-primary font-black ml-2">"</span>
-                  </p>
+                  </blockquote>
 
                   <div className="mt-auto pt-6 border-t border-border border-dashed font-mono uppercase">
-                    <div className="flex items-end justify-between">
+                    <div className="flex items-end justify-between gap-4">
                       <div>
                         <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">COMMANDITAIRE</span>
                         <span className="font-black text-xs md:text-sm text-foreground tracking-widest">
@@ -200,7 +169,7 @@ export default function Testimonials() {
                         </span>
                       </div>
                       <div className="text-right">
-                        <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">UNITÉ</span>
+                        <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">UNITÉ SPEC.</span>
                         <span className="font-bold text-[10px] text-primary tracking-wider">
                           {testimonial.title}
                         </span>
@@ -209,20 +178,15 @@ export default function Testimonials() {
                   </div>
                 </div>
                 
-                {/* Small status bar on hover */}
+                {/* Hover line indicators */}
                 <div className="w-full h-1 bg-border relative">
-                  <motion.div 
-                    className="absolute top-0 left-0 h-full bg-primary"
-                    initial={{ width: 0 }}
-                    whileInView={{ width: "100%" }}
-                    viewport={{ once: false, amount: 0.1 }}
-                    transition={{ duration: 1, delay: 0.3, ease: BEZIER }}
-                  ></motion.div>
+                  <div className="absolute top-0 left-0 h-full bg-primary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 </div>
-              </motion.div>
+              </article>
             ))}
           </motion.div>
         </div>
+
       </div>
     </section>
   );
