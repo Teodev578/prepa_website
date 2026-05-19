@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
+const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 const TechnicalServices = () => {
-    const titleLines = ["INGÉNIERIE", "DU DETAILING."];
+    const titleLines = ["NOS FORFAITS", "PARTENAIRES."];
 
     const cardVariants = {
         hidden: { opacity: 0, y: 15 },
@@ -17,328 +18,133 @@ const TechnicalServices = () => {
         }
     };
 
-    const flickerVariants = {
-        initial: { opacity: 0 },
-        visible: {
-            opacity: [0, 1, 0.3, 1, 0.8],
-            transition: {
-                duration: 0.5,
-                times: [0, 0.2, 0.4, 0.6, 1],
-                ease: "linear" as const,
-            }
-        }
-    };
-
-    const lineVariants = {
-        hidden: { scaleX: 0 },
-        visible: { 
-            scaleX: 1, 
-            transition: { duration: 0.8, ease: BEZIER } 
-        }
-    };
-
     return (
-        <section className="bg-background text-foreground relative border-y border-border mt-12 overflow-hidden w-full max-w-[100vw]">
-            {/* Huge Title Area */}
-            <div className="py-16 md:py-32 px-4 md:px-8 border-b border-border relative">
-                {/* Crosshairs + Decor */}
-                <motion.div 
-                    initial="initial"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={flickerVariants}
-                    className="absolute top-0 left-0 -translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
-                >
-                    +
-                </motion.div>
-                <motion.div 
-                    initial="initial"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={flickerVariants}
-                    transition={{ delay: 0.1 }}
-                    className="absolute top-0 right-0 translate-x-[0.5px] -translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
-                >
-                    +
-                </motion.div>
-                <motion.div 
-                    initial="initial"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={flickerVariants}
-                    transition={{ delay: 0.2 }}
-                    className="absolute bottom-0 left-0 -translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
-                >
-                    +
-                </motion.div>
-                <motion.div 
-                    initial="initial"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={flickerVariants}
-                    transition={{ delay: 0.3 }}
-                    className="absolute bottom-0 right-0 translate-x-[0.5px] translate-y-[0.5px] text-primary font-mono text-lg leading-none hidden md:block"
-                >
-                    +
-                </motion.div>
+        <section className="bg-background text-foreground relative border-y border-border mt-0 overflow-hidden w-full max-w-[100vw] h-auto">
+            {/* Zone du Grand Titre de la Section */}
+            <div className="py-16 md:py-24 px-6 md:px-12 lg:px-24 border-b border-border relative">
                 
-                <motion.h2 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.1 }}
-                    className="font-sans font-black text-[clamp(2.5rem,10vw,6rem)] leading-[0.9] tracking-tighter uppercase max-w-full break-words relative z-10"
-                >
+                {/* 🚀 FIXED : Animation simplifiée et blindée qui ignore les conflits d'héritage parent */}
+                <h2 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full break-words relative z-10 text-foreground">
                     {titleLines.map((line, i) => (
-                        <div key={i} className="overflow-hidden relative py-2">
-                            <motion.div
-                                variants={{
-                                    hidden: { y: "110%" },
-                                    visible: { y: 0 }
-                                }}
-                                transition={{ duration: 0.7, delay: i * 0.1, ease: BEZIER }}
+                        <span key={i} className="overflow-hidden relative py-1 block">
+                            <motion.span
+                                initial={{ y: "110%", opacity: 0 }}
+                                whileInView={{ y: 0, opacity: 1 }}
+                                viewport={{ once: true, amount: 0.1 }}
+                                transition={{ duration: 0.6, delay: i * 0.12, ease: BEZIER }}
                                 className="block"
                             >
                                 {line}
-                            </motion.div>
-                        </div>
+                            </motion.span>
+                        </span>
                     ))}
-                </motion.h2>
+                </h2>
                 
-                <motion.div 
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.4, ease: BEZIER }}
-                    className="absolute top-8 right-8 hidden md:flex flex-col items-end gap-1 font-mono text-[10px] text-muted-foreground uppercase tracking-widest"
-                >
-                    <span>SYS.01.ACTIVE // VERSION_3.0</span>
-                    <span>COORD: 45.NX // 09.TY</span>
-                    <div className="flex gap-px mt-4 items-end h-6">
-                        {/* Barcode UI */}
-                        {[1, 3, 1, 2, 1, 4, 1, 2, 1, 5].map((w, idx) => (
-                            <motion.div 
-                                key={idx}
-                                initial={{ height: 0 }}
-                                whileInView={{ height: idx % 3 === 0 ? "100%" : (idx % 2 === 0 ? "70%" : "50%") }}
-                                viewport={{ once: true }}
-                                transition={{ delay: 0.6 + idx * 0.03, duration: 0.4, ease: BEZIER }}
-                                className="bg-foreground" 
-                                style={{ width: `${w}px` }}
-                            ></motion.div>
-                        ))}
-                    </div>
-                </motion.div>
+                {/* Métadonnées épurées et professionnelles */}
+                <div className="absolute top-8 right-6 md:right-12 hidden md:flex flex-col items-end gap-1 font-mono text-[10px] text-muted-foreground uppercase tracking-widest select-none">
+                    <span className="text-primary font-bold">OFFRES EN FLUX TENDUS</span>
+                    <span>ZONE D'INTERVENTION : ÎLE-DE-FRANCE</span>
+                </div>
             </div>
 
-            {/* Services Grid (Affiche Style) */}
+            {/* Grille des Forfaits B2B */}
             <motion.div 
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: false, amount: 0.1 }}
+                viewport={{ once: true, amount: 0.05 }}
                 transition={{ staggerChildren: 0.1 }}
-                className="flex flex-col md:flex-row w-full"
+                className="flex flex-col lg:flex-row w-full items-stretch"
             >
-                {/* ---------- CARD 01 ---------- */}
-                <motion.div variants={cardVariants} className="flex-1 border-b md:border-b-0 md:border-r border-border p-6 md:p-10 relative group">
-                    <div className="absolute top-4 right-4 font-mono text-xs text-muted-foreground bg-muted px-2 py-1">SEC.01</div>
-                    <div className="mb-12">
-                        <span className="font-mono text-xs text-primary uppercase tracking-widest block mb-2">ENTRÉE // BASIC</span>
-                        <h3 className="font-sans font-black text-4xl lg:text-5xl uppercase tracking-tighter">ESSENTIEL.</h3>
-                    </div>
-                    
-                    <div className="space-y-8 font-mono text-xs md:text-sm">
-                        {/* Subtitle: Spécifications */}
-                        <div>
-                            <div className="flex justify-between items-end border-b border-border pb-2 mb-3">
-                                <span className="uppercase text-muted-foreground tracking-widest font-bold">Spécifications</span>
-                            </div>
-                            <ul className="space-y-2">
-                                <li className="flex gap-3"><span className="text-primary">■</span> Lavage extérieur à la main (PH neutre)</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Décontamination ferreuse des jantes</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Aspiration approfondie de l'habitacle</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Nettoyage des vitres intérieures</li>
+                {/* ---------- CARTE 01 : PONCTUEL / URGENCE ---------- */}
+                <motion.article variants={cardVariants} className="flex-1 border-b lg:border-b-0 lg:border-r border-border p-8 md:p-10 flex flex-col justify-between bg-card group">
+                    <div>
+                        <div className="mb-10">
+                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">// BESOIN IMMÉDIAT</span>
+                            <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-foreground">FORFAIT URGENCE</h3>
+                        </div>
+                        
+                        <div className="space-y-6 font-sans text-sm text-muted-foreground">
+                            <p className="text-foreground/90 font-medium leading-relaxed">
+                                Idéal pour pallier une absence imprévue dans vos équipes ou absorber un pic d'activité soudain.
+                            </p>
+                            <ul className="space-y-3 pt-4 border-t border-border/60">
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Renfort opérationnel au pied levé</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Remplacement immédiat sur site</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Préparation esthétique de vos lots urgents</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Tarification flexible sur devis selon volume</li>
                             </ul>
                         </div>
-                        
-                        {/* Subtitle: Matériaux */}
-                        <div>
-                            <div className="border-b border-border pb-2 mb-3">
-                                <span className="uppercase text-muted-foreground tracking-widest font-bold">Matériaux (Base)</span>
-                            </div>
-                            <p className="opacity-80">Shampoing polymère avancé, Cire express hydrophobe en spray.</p>
-                        </div>
-                        
-                        {/* Subtitle: Durabilité */}
-                        <div>
-                            <div className="flex justify-between items-end pb-2 mb-2">
-                                <span className="uppercase text-muted-foreground tracking-widest font-bold">Durabilité / Impact</span>
-                                <span>LVL. 30</span>
-                            </div>
-                            <div className="w-full h-2 bg-muted relative overflow-hidden">
-                                <motion.div 
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: "30%" }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1, delay: 0.5, ease: BEZIER }}
-                                    className="absolute top-0 left-0 h-full bg-primary group-hover:brightness-125 transition-all"
-                                ></motion.div>
-                            </div>
-                        </div>
                     </div>
-                </motion.div>
 
-                {/* ---------- CARD 02 (INVERTED / HERO PACKAGE) ---------- */}
-                <motion.div variants={cardVariants} className="flex-1 border-b md:border-b-0 md:border-r border-border p-6 md:p-10 relative group bg-foreground text-background">
-                    {/* Highlighter Line */}
-                    <motion.div 
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: false, amount: 0.2 }}
-                        variants={lineVariants}
-                        className="absolute top-0 left-0 w-full md:w-[2px] h-[2px] md:h-full bg-primary z-10 origin-left"
-                    ></motion.div>
-                    
-                    <div className="absolute top-4 right-4 font-mono text-xs text-background/50 bg-background/10 px-2 py-1">SEC.02</div>
-                    <div className="mb-12">
-                        <span className="font-mono text-xs text-primary uppercase tracking-widest block mb-1">ÉQUILIBRE // POPULAR</span>
-                        <h3 className="font-sans font-black text-4xl lg:text-5xl uppercase tracking-tighter text-background leading-[0.9]">ÉCLAT.</h3>
+                    <div className="pt-10">
+                        <Link href="/contact" className="w-full block text-center border border-border py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] group-hover:bg-foreground group-hover:text-background transition-colors rounded-[var(--radius)]">
+                            DEMANDER UN RENFORCEMENT
+                        </Link>
                     </div>
-                    
-                    <div className="space-y-8 font-mono text-xs md:text-sm">
-                        <div>
-                            <div className="flex justify-between items-end border-b border-background/20 pb-2 mb-3">
-                                <span className="uppercase text-background/50 tracking-widest font-bold">Spécifications</span>
-                            </div>
-                            <ul className="space-y-2">
-                                <li className="flex gap-3"><span className="text-primary">■</span> Décontamination carrosserie complète</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Polissage One-Step (correction modérée)</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Cire de protection haute performance</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Nettoyage vapeur approfondi sièges/tissus</li>
-                            </ul>
-                        </div>
-                        
-                        <div>
-                            <div className="border-b border-background/20 pb-2 mb-3">
-                                <span className="uppercase text-background/50 tracking-widest font-bold">Matériaux (Pro)</span>
-                            </div>
-                            <p className="text-background/80">Compound abrasif micro-fin, Cire naturelle de Carnauba Grade A.</p>
-                        </div>
-                        
-                        <div>
-                            <div className="flex justify-between items-end pb-2 mb-2">
-                                <span className="uppercase text-background/50 tracking-widest font-bold">Durabilité / Impact</span>
-                                <span>LVL. 70</span>
-                            </div>
-                            <div className="w-full h-2 bg-background/20 relative overflow-hidden">
-                                <motion.div 
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: "70%" }}
-                                    viewport={{ once: false, amount: 0.2 }}
-                                    transition={{ duration: 1, delay: 0.2, ease: BEZIER }}
-                                    className="absolute top-0 left-0 h-full bg-primary"
-                                ></motion.div>
-                                {/* Technical indicators on gauge */}
-                                <div className="absolute top-0 left-1/4 h-full w-[1px] bg-foreground/50"></div>
-                                <div className="absolute top-0 left-2/4 h-full w-[1px] bg-foreground/50"></div>
-                                <div className="absolute top-0 left-3/4 h-full w-[1px] bg-foreground/50"></div>
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+                </motion.article>
 
-                {/* ---------- CARD 03 ---------- */}
-                <motion.div variants={cardVariants} className="flex-1 p-6 md:p-10 relative group bg-card">
-                    <div className="absolute top-4 right-4 font-mono text-xs text-muted-foreground bg-muted px-2 py-1">SEC.03</div>
-                    <div className="mb-12">
-                        <span className="font-mono text-xs text-primary uppercase tracking-widest block mb-2">MAXIMUM // ULTIMATE</span>
-                        <h3 className="font-sans font-black text-4xl lg:text-5xl uppercase tracking-tighter">ÉLITE.</h3>
-                    </div>
-                    
-                    <div className="space-y-8 font-mono text-xs md:text-sm">
-                        <div>
-                            <div className="flex justify-between items-end border-b border-border pb-2 mb-3">
-                                <span className="uppercase text-muted-foreground tracking-widest font-bold">Spécifications</span>
-                            </div>
-                            <ul className="space-y-2">
-                                <li className="flex gap-3"><span className="text-primary">■</span> Correction peinture multi-étapes (95%+)</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Traitement Céramique 9H (Carrosserie)</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Protection céramique jantes & vitres</li>
-                                <li className="flex gap-3"><span className="text-primary">■</span> Détail chirurgical compartiment moteur</li>
+                {/* ---------- CARTE 02 : CONTRAT CADRE FLEXIBILITÉ ---------- */}
+                <motion.article variants={cardVariants} className="flex-1 border-b lg:border-b-0 lg:border-r border-border p-8 md:p-10 flex flex-col justify-between bg-foreground text-background relative group">
+                    <div>
+                        <div className="mb-10">
+                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">// CONTRAT CADRE 6 MOIS</span>
+                            <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-background">FLEXIBILITÉ</h3>
+                        </div>
+                        
+                        <div className="space-y-6 font-sans text-sm text-background/80">
+                            <p className="text-background font-medium leading-relaxed">
+                                Conçu pour les parcs automobiles nécessitant un suivi régulier à moyen terme sans embauche fixe.
+                            </p>
+                            <ul className="space-y-3 pt-4 border-t border-background/20">
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Engagement structuré sur une période de 6 mois</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Volume de 10 jours d'intervention par mois</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Préparation esthétique complète (VN / VO)</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Intégration de la logistique & convoyage inter-sites</li>
                             </ul>
                         </div>
-                        
-                        <div>
-                            <div className="border-b border-border pb-2 mb-3">
-                                <span className="uppercase text-muted-foreground tracking-widest font-bold">Matériaux (Nanotech)</span>
-                            </div>
-                            <p className="opacity-80">Revêtement Nano-Céramique 9H enrichi au Graphène (2 ans de protection).</p>
+                    </div>
+
+                    <div className="pt-10">
+                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-[var(--radius)]">
+                            ÉTABLIR UN CONTRAT 6 MOIS
+                        </Link>
+                    </div>
+                </motion.article>
+
+                {/* ---------- CARTE 03 : CONTRAT CADRE EXPERT ---------- */}
+                <motion.article variants={cardVariants} className="flex-1 p-8 md:p-10 flex flex-col justify-between bg-card group">
+                    <div>
+                        <div className="mb-10">
+                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">// PARTENARIAT RECURRENT 12 MOIS</span>
+                            <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-foreground">FORFAIT EXPERT</h3>
                         </div>
                         
-                        <div>
-                            <div className="flex justify-between items-end pb-2 mb-2">
-                                <span className="uppercase text-muted-foreground tracking-widest font-bold">Durabilité / Impact</span>
-                                <span className="text-primary animate-pulse">LVL. 99+</span>
-                            </div>
-                            <div className="w-full h-2 bg-muted relative overflow-hidden">
-                                <motion.div 
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: "98%" }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 1.2, delay: 0.7, ease: BEZIER }}
-                                    className="absolute top-0 left-0 h-full bg-primary"
-                                ></motion.div>
-                                {/* Technical indicators on gauge */}
-                                <div className="absolute top-0 left-1/4 h-full w-[1px] bg-background"></div>
-                                <div className="absolute top-0 left-2/4 h-full w-[1px] bg-background"></div>
-                                <div className="absolute top-0 left-3/4 h-full w-[1px] bg-background"></div>
-                                <div className="absolute top-0 left-[90%] h-full w-[1px] bg-background"></div>
-                            </div>
+                        <div className="space-y-6 font-sans text-sm text-muted-foreground">
+                            <p className="text-foreground/90 font-medium leading-relaxed">
+                                L'externalisation totale et permanente de votre pôle préparation pour une visibilité financière parfaite.
+                            </p>
+                            <ul className="space-y-3 pt-4 border-t border-border/60">
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Engagement long terme (minimum 12 mois)</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Présence mensuelle garantie de 21 jours</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Prise en charge intégrale du flux et reporting rigoureux</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Optimisation maximale de la marge par véhicule</li>
+                            </ul>
                         </div>
                     </div>
-                </motion.div>
+
+                    <div className="pt-10">
+                        <Link href="/contact" className="w-full block text-center border border-border py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] group-hover:bg-primary group-hover:text-primary-foreground transition-colors rounded-[var(--radius)]">
+                            ACTIVER LA COUVERTURE TOTALE
+                        </Link>
+                    </div>
+                </motion.article>
             </motion.div>
             
-            {/* Footer Diagram Elements */}
-            <div className="h-4 border-t border-border flex relative">
-                {/* Self-tracing top border */}
-                <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={lineVariants}
-                    className="absolute top-0 left-0 w-full h-[1px] bg-border origin-left"
-                ></motion.div>
-
-                <div className="w-1/3 border-r border-border h-full flex items-center px-2">
-                   <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={lineVariants}
-                    className="w-full h-[1px] bg-muted-foreground/30 origin-left"
-                   ></motion.div>
-                </div>
-                <div className="w-1/3 border-r border-border h-full flex items-center justify-center">
-                    <motion.span 
-                        initial="initial"
-                        whileInView="visible"
-                        viewport={{ once: false, amount: 0.2 }}
-                        variants={flickerVariants}
-                        className="font-mono text-[8px] text-muted-foreground uppercase tracking-widest"
-                    >
-                        SYSTEM_READY
-                    </motion.span>
-                </div>
-                <div className="w-1/3 h-full flex items-center px-2">
-                   <motion.div 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.2 }}
-                    variants={lineVariants}
-                    transition={{ delay: 0.2 }}
-                    className="w-full h-[1px] bg-muted-foreground/30 origin-right"
-                   ></motion.div>
-                </div>
+            {/* Ligne de fermeture technique basse */}
+            <div className="h-4 border-t border-border bg-muted/5 flex items-center justify-center">
+                <span className="font-mono text-[8px] text-muted-foreground uppercase tracking-widest select-none">
+                    LAW_CLEAN_CENTER // STRUCTURE_OFFRES_VALIDATED
+                </span>
             </div>
         </section>
     );
