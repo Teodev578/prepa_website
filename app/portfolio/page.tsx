@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import Portfolio from "@/components/Portfolio";
+import Portfolio from "./_componets/Portfolio";
 
 export default function PortfolioPage() {
   return (
