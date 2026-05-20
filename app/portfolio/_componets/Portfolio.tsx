@@ -77,8 +77,9 @@ export default async function Portfolio() {
                         NOS <br /> RÉALISATIONS
                     </h1>
 
+                    {/* Dans ton fichier Portfolio.tsx au niveau du Header */}
                     <p className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed border-l-2 border-primary/30 pl-6 mt-6">
-                        [ACCÈS_PUBLIC] : Vous trouverez ici une sélection de nos interventions clés, classées par typologie de traitement, documentées par des métriques réelles de terrain et d'impact financier B2B.
+                        Découvrez les coulisses de nos interventions. Nous documentons chaque chantier en toute transparence, avec des photos avant/après et les résultats concrets obtenus pour nos clients.
                     </p>
 
                     <div className="absolute top-0 right-0 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground opacity-50 hidden md:block text-right leading-relaxed">
