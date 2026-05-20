@@ -2,8 +2,26 @@
 import React, { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
-// On utilise une fonction pour avoir un ID unique (Date.now()) à CHAQUE réinitialisation
-const getInitialState = () => ({
+// 🛡️ 1. Définition stricte de la structure des données du formulaire
+interface PortfolioFormData {
+    ref_id: string;
+    title: string;
+    treatment: string;
+    date_tag: string;
+    model: string;
+    time_spent: string;
+    solution: string;
+    impact: string;
+    context: string;
+    work_done: string;
+    result: string;
+    size: 'small' | 'medium' | 'large';
+    img_single: string;
+    img_before: string;
+    img_after: string;
+}
+
+const getInitialState = (): PortfolioFormData => ({
     ref_id: `REA_${Date.now()}`,
     title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
     time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
@@ -14,23 +32,26 @@ export default function PortfolioAdd() {
     const supabase = createClient();
     
     const [uploading, setUploading] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false); // 🛡️ Nouvel état pour bloquer le double-clic
+    const [isSubmitting, setIsSubmitting] = useState(false); 
     const [imageStatus, setImageStatus] = useState('');
     const [submitStatus, setSubmitStatus] = useState('');
-    const [formData, setFormData] = useState(getInitialState());
+    const [formData, setFormData] = useState<PortfolioFormData>(getInitialState());
 
-    const handleTextChange = (e: any) => setFormData({ ...formData, [e.target.name]: e.target.value });
+    // 🛡️ 2. Typage précis de l'événement de modification textuelle
+    const handleTextChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+    };
 
-    const handleFileUpload = async (e: any, fieldName: string) => {
-        const file = e.target.files[0];
+    // 🛡️ 3. Typage de l'événement d'upload et sécurisation du fichier
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: keyof Pick<PortfolioFormData, 'img_single' | 'img_before' | 'img_after'>) => {
+        const file = e.target.files?.[0];
         if (!file) return;
         
-        // ⚠️ VALIDATION CÔTÉ CLIENT : Type et Poids
         if (!file.type.startsWith('image/')) {
             setImageStatus("❌ Veuillez sélectionner une image valide (JPG, PNG...).");
             return;
         }
-        if (file.size > 5 * 1024 * 1024) { // 5 Mo
+        if (file.size > 5 * 1024 * 1024) { 
             setImageStatus("❌ L'image est trop lourde (5 Mo maximum).");
             return;
         }
@@ -39,8 +60,10 @@ export default function PortfolioAdd() {
         setImageStatus('Chargement de la photo en cours... ⏳');
         setSubmitStatus('');
 
-        const fileExt = file.name.split('.').pop();
+        // Extraction propre de l'extension sans paramètres parasites
+        const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
         const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
+        
         const { error } = await supabase.storage.from('portfolio-images').upload(fileName, file);
 
         if (error) {
@@ -55,24 +78,24 @@ export default function PortfolioAdd() {
         setUploading(false);
     };
 
-    const handleRemoveImage = async (fieldName: string) => {
-        // 🚨 SUPPRESSION PHYSIQUE SUR SUPABASE
-        const imageUrl = (formData as any)[fieldName];
+    // 🛡️ 4. Nettoyage sécurisé des images (ignore les query params d'URL)
+    const handleRemoveImage = async (fieldName: keyof Pick<PortfolioFormData, 'img_single' | 'img_before' | 'img_after'>) => {
+        const imageUrl = formData[fieldName];
         if (imageUrl) {
-            const fileName = imageUrl.split('/').pop(); // Récupère le nom du fichier à la fin de l'URL
+            // On nettoie l'URL d'éventuels paramètres '?t=...' avant d'isoler le nom du fichier
+            const cleanUrl = imageUrl.split('?')[0];
+            const fileName = cleanUrl.split('/').pop(); 
             if (fileName) {
                 await supabase.storage.from('portfolio-images').remove([fileName]);
             }
         }
 
-        // Met à jour l'interface
         setFormData(prev => ({ ...prev, [fieldName]: '' }));
         setImageStatus('');
     };
 
     const handleSubmitPortfolio = async () => {
-        // 🛑 VALIDATION DU FORMULAIRE OBLIGATOIRE
-        if (!formData.title) {
+        if (!formData.title.trim()) {
             setSubmitStatus("❌ Veuillez au moins donner un nom au projet.");
             return;
         }
@@ -89,8 +112,8 @@ export default function PortfolioAdd() {
         const { error } = await supabase.from('portfolio_projects').insert([{
             ...formData,
             work_done: workArray,
-            title: formData.title.toUpperCase(),
-            treatment: formData.treatment.toUpperCase()
+            title: formData.title.trim().toUpperCase(),
+            treatment: formData.treatment.trim().toUpperCase()
         }]);
 
         if (error) {
@@ -136,7 +159,7 @@ export default function PortfolioAdd() {
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_single} alt="Aperçu" className="w-full h-full object-cover" />
-                                <button onClick={() => handleRemoveImage('img_single')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <button type="button" onClick={() => handleRemoveImage('img_single')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -151,7 +174,7 @@ export default function PortfolioAdd() {
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_before} alt="Aperçu Avant" className="w-full h-full object-cover" />
-                                <button onClick={() => handleRemoveImage('img_before')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <button type="button" onClick={() => handleRemoveImage('img_before')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -166,7 +189,7 @@ export default function PortfolioAdd() {
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_after} alt="Aperçu Après" className="w-full h-full object-cover" />
-                                <button onClick={() => handleRemoveImage('img_after')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <button type="button" onClick={() => handleRemoveImage('img_after')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -232,6 +255,7 @@ export default function PortfolioAdd() {
             )}
             
             <button 
+                type="button"
                 onClick={handleSubmitPortfolio} 
                 disabled={uploading || isSubmitting} 
                 className="w-full md:w-auto bg-primary text-primary-foreground font-bold py-3 px-8 rounded hover:bg-primary/90 transition-colors disabled:opacity-50"
