@@ -49,7 +49,6 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
     return (
         <div 
             ref={containerRef}
-            // 🛡️ CHANGEMENT : On retire le onMouseDown d'ici et le curseur global
             className="relative w-full h-full overflow-hidden border border-border bg-card p-1 select-none group"
             onMouseMove={handleMouseMove}
             onTouchMove={handleTouchMove}
@@ -64,7 +63,6 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
 
             {/* Image AVANT (Masque de découpe) */}
             <div 
-                // 🛡️ CHANGEMENT : On supprime la transition qui créait un décalage lors du glissement manuel
                 className="absolute inset-1 overflow-hidden"
                 style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
             >
@@ -85,7 +83,7 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
                 {afterLabel}
             </div>
 
-            {/* 🛡️ CHANGEMENT : Zone de glissement (Hitbox) élargie pour attraper facilement la barre */}
+            {/* Zone de glissement (Hitbox) */}
             <div 
                 className="absolute top-0 bottom-0 w-10 -ml-5 z-20 cursor-ew-resize flex items-center justify-center"
                 style={{ left: `${sliderPos}%` }}
@@ -104,16 +102,10 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
                 </div>
             </div>
 
-            {/* Calque de données techniques */}
+            {/* Calque de données (Textes naturels et vendeurs) */}
             <div className="absolute inset-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                <div className="absolute top-1/4 left-1/4 text-primary font-mono text-[9px] md:text-[10px] tracking-widest bg-background/80 px-1 backdrop-blur-sm border border-border/50">
-                    + 48.2%_REFL
-                </div>
-                <div className="absolute bottom-1/3 right-1/4 text-primary font-mono text-[9px] md:text-[10px] tracking-widest bg-background/80 px-1 backdrop-blur-sm border border-border/50">
-                    - 0.02μm_DIFF
-                </div>
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] md:text-[9px] text-muted-foreground bg-background/90 px-2 py-0.5 uppercase tracking-[0.4em] border border-border/50">
-                    ANALYSIS_GRID_ACTIVE
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] md:text-[9px] text-muted-foreground bg-background/90 px-3 py-1 uppercase tracking-[0.3em] border border-border/50">
+                    GLISSEZ POUR COMPARER
                 </div>
             </div>
         </div>
