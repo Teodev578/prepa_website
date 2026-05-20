@@ -29,14 +29,13 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  // 🚀 OPTIMISATION : On applique la protection UNIQUEMENT sur les routes privées (ex: /terminal-hq-77 ou /admin)
+  // 🚀 OPTIMISATION : Protection des routes privées
   const isAdminRoute = pathname.startsWith('/terminal-hq-77') || pathname.startsWith('/admin');
 
   if (isAdminRoute) {
-    // On ne vérifie l'utilisateur que s'il tente d'accéder au QG
     const { data: { user } } = await supabase.auth.getUser();
 
-    // 1. L'utilisateur n'est pas connecté
+    // 1. L'utilisateur n'est pas connecté du tout
     if (!user) {
       const url = request.nextUrl.clone();
       url.pathname = '/login';
@@ -49,6 +48,22 @@ export async function middleware(request: NextRequest) {
       url.pathname = '/login';
       url.searchParams.set('error', 'email_unverified');
       await supabase.auth.signOut();
+      return NextResponse.redirect(url);
+    }
+
+    // 🛡️ 3. NOUVEAU : L'utilisateur est-il bien enregistré dans la table admin_users ?
+    const { data: adminUser, error } = await supabase
+      .from('admin_users')
+      .select('id, role')
+      .eq('id', user.id)
+      .single();
+
+    if (error || !adminUser) {
+      // Quelqu'un a un compte, mais n'est pas un admin autorisé !
+      const url = request.nextUrl.clone();
+      url.pathname = '/login';
+      url.searchParams.set('error', 'unauthorized_role');
+      await supabase.auth.signOut(); // On détruit sa session par sécurité
       return NextResponse.redirect(url);
     }
   }
