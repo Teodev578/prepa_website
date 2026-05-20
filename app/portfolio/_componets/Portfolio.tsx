@@ -74,7 +74,7 @@ export default async function Portfolio() {
 
                     {/* 🛠️ SEO : Ton titre principal de section (H1) visible par les robots */}
                     <h1 className="text-display text-primary leading-[0.85] mb-8 uppercase font-black tracking-tighter">
-                        NOS <br /> RÉALISATIONS
+                        NOS <br /> REALISATIONS
                     </h1>
 
                     {/* Dans ton fichier Portfolio.tsx au niveau du Header */}

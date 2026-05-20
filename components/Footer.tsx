@@ -20,7 +20,7 @@ const Footer = () => {
     ];
 
     const technicalData = [
-        { label: "LOCATION", value: "6.1375° N, 1.2123° E" },
+        { label: "LOCATION", value: "49.0974° N, 2.5065° E" },
         { label: "BUILD", value: "REV. 1.0.4" },
         { label: "LICENSE", value: "EXCELLENCE" },
     ];
@@ -90,11 +90,11 @@ const Footer = () => {
 
                             <motion.div variants={itemVariants} className="flex flex-wrap gap-8 items-end mt-12">
                                 <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                    &copy; 2026 PRECISION AUTO - L'ART DE L'INGÉNIERIE
+                                    &copy; 2026 LAW CLEAN CENTER - L'ART DE LA PRÉCISION
                                 </div>
                                 <div className="hidden md:block h-8 w-px bg-border"></div>
                                 <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                    LOMÉ, TOGO
+                                    ROISSY-EN-FRANCE, ÎLE-DE-FRANCE
                                 </div>
                             </motion.div>
                         </motion.div>

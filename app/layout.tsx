@@ -22,8 +22,17 @@ const serif = Libre_Baskerville({
 });
 
 export const metadata: Metadata = {
-  title: "Apex Detailing - L'Art de la Précision",
-  description: "Sublimez chaque détail de votre véhicule avec nos services de protection et de rénovation haut de gamme.",
+  title: "Law Clean Center | Préparation Esthétique & Convoyage de Véhicules B2B",
+  description: "Externalisez la préparation esthétique VN/VO et le convoyage de vos véhicules en Île-de-France. Solutions de logistique et de nettoyage esthétique sur-mesure pour professionnels.",
+  keywords: [
+    "Law Clean Center",
+    "préparateur esthétique auto B2B",
+    "convoyage véhicule Île-de-France",
+    "nettoyage professionnel véhicule",
+    "externalisation pôle préparation auto",
+    "flotte automobile",
+    "VN VO"
+  ],
 };
 
 export default function RootLayout({

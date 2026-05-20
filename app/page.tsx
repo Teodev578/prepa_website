@@ -7,15 +7,45 @@ import CTA from "@/components/home/CTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "AutoServices",
+    "name": "Law Clean Center",
+    "description": "Externalisation de la préparation esthétique VN/VO et du convoyage de véhicules pour les professionnels de l'automobile en Île-de-France.",
+    "url": "https://lawcleancenter.com",
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Île-de-France"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Roissy-en-France",
+      "addressRegion": "Île-de-France",
+      "addressCountry": "FR"
+    },
+    "serviceType": [
+      "Préparation esthétique automobile B2B",
+      "Convoyage de véhicule",
+      "Nettoyage technique VN/VO",
+      "Rénovation de parc automobile"
+    ]
+  };
+
   return (
-    <main className="relative bg-background">
-      <Navbar />
-      <Hero />
-      <TechnicalServices />
-      <ExcellencePhilosophy />
-      <Testimonials />
-      <CTA />
-      <Footer />
-    </main>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <main className="relative bg-background">
+        <Navbar />
+        <Hero />
+        <TechnicalServices />
+        <ExcellencePhilosophy />
+        <Testimonials />
+        <CTA />
+        <Footer />
+      </main>
+    </>
   );
 }

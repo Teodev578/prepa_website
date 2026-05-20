@@ -184,6 +184,7 @@ export default function Hero() {
 
             {/* Le titre est maintenant centré précisément dans l'espace restant ! */}
             <h1 className="font-sans font-black text-5xl sm:text-6xl md:text-[4.5rem] lg:text-[6.5rem] xl:text-[7.5rem] tracking-tighter uppercase text-foreground leading-[0.9] mb-6 md:mb-8 relative z-20">
+              <span className="sr-only">Law Clean Center - Préparation Esthétique B2B & Convoyage de Véhicules en Île-de-France</span>
               {titleLines.map((line, i) => (
                 <div key={i} className="overflow-hidden relative pb-4 -mb-4">
                   <motion.div
