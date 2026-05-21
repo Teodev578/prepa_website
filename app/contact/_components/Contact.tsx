@@ -59,11 +59,14 @@ const Contact = () => {
             if (servicesData) setServices(servicesData);
 
             // Récupérer le formulaire lié au profil
-            const { data: form } = await supabase
+            const { data: forms } = await supabase
                 .from('forms')
                 .select('id')
                 .eq('profile_type', profile)
-                .single();
+                .order('created_at', { ascending: true })
+                .limit(1);
+
+            const form = forms && forms.length > 0 ? forms[0] : null;
 
             if (form) {
                 setFormId(form.id);

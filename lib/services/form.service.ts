@@ -10,10 +10,11 @@ export async function getFormConfig(profileType: 'PARTICULIER' | 'ENTREPRISE'): 
     .select('*')
     .eq('profile_type', profileType)
     .eq('is_active', true)
-    .single(); // On en veut un seul
+    .order('created_at', { ascending: true })
+    .limit(1);
 
-  if (error || !data) return null;
-  return data as FormConfig;
+  if (error || !data || data.length === 0) return null;
+  return data[0] as FormConfig;
 }
 
 // 2. Récupère les questions liées à un formulaire précis, triées dans le bon ordre
