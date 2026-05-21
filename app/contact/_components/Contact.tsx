@@ -110,6 +110,29 @@ const Contact = () => {
             setStatusMessage({ type: 'error', text: `Impossible d'envoyer votre demande pour le moment. Erreur : ${quoteError.message || JSON.stringify(quoteError)}` });
         } else {
             setStatusMessage({ type: 'success', text: "Votre demande de devis a bien été transmise ! Nous revenons vers vous sous 24h." });
+            
+            // Envoi asynchrone de la notification (non-bloquant pour l'utilisateur)
+            fetch('/api/notify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    clientEmail,
+                    formData,
+                    profile,
+                }),
+            }).then(async (res) => {
+                if (!res.ok) {
+                    const errorText = await res.text();
+                    console.warn("Erreur de notification par email :", res.status, errorText);
+                } else {
+                    console.log("Notification email déclenchée avec succès.");
+                }
+            }).catch(err => {
+                console.error("Erreur réseau lors de la notification email :", err);
+            });
+
             setFormData({});
         }
 
