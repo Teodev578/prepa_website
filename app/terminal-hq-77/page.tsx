@@ -9,7 +9,7 @@ import PortfolioAdd from './_components/PortfolioAdd';
 import PortfolioList from './_components/PortfolioList';
 import QuotesInbox from './_components/QuotesInbox';
 import FormsConfig from './_components/FormsConfig';
-import ServicesCatalog from './_components/ServicesCatalog';
+
 
 export default function AdminPage() {
     const supabase = createClient();
@@ -45,7 +45,7 @@ export default function AdminPage() {
                 {currentView === 'PORTFOLIO_ADD' && <PortfolioAdd />}
                 {currentView === 'PORTFOLIO_LIST' && <PortfolioList />} {/* <-- NOUVELLE LIGNE */}
                 {currentView === 'QUOTES_INBOX' && <QuotesInbox />} {/* <-- AJOUTÉE */}
-                {currentView === 'SERVICES_CATALOG' && <ServicesCatalog />} {/* <-- AJOUTE CETTE LIGNE */}
+
                 {currentView === 'FORMS_CONFIG' && <FormsConfig />}
 
                 {/* Mettez à jour la liste des vues exclues du mode "En développement" */}
