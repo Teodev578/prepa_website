@@ -27,7 +27,6 @@ export default function PortfolioPage() {
       <main className="relative bg-background min-h-screen flex flex-col flex-grow pt-20">
         {/* 🛠️ Le discours commercial et stratégique */}
         <AboutSection />
-        
         {/* 🛠️ La preuve par l'image (Études de cas) */}
         <Portfolio />
       </main>
