@@ -27,7 +27,7 @@ const TechnicalServices = () => {
                 <motion.h2 
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.1 }}
+                    viewport={{ once: false, amount: 0.1 }}
                     className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full break-words relative z-10 text-foreground"
                 >
                     {titleLines.map((line, i) => (

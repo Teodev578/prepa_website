@@ -52,7 +52,7 @@ export default function CTA() {
         <motion.span 
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
           transition={{ duration: 0.6, ease: BEZIER }}
           className="font-mono text-[10px] md:text-xs text-muted-foreground tracking-widest md:tracking-[0.3em] uppercase mb-4 md:mb-6 block"
         >
@@ -63,7 +63,7 @@ export default function CTA() {
         <motion.h2 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
+          viewport={{ once: false, amount: 0.1 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-bold tracking-tight mb-8 md:mb-12 leading-[1.05] relative text-foreground uppercase"
         >
           {titleLines.map((line, i) => (
