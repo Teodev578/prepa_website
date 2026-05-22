@@ -23,13 +23,15 @@ export default function Hero() {
   });
 
   const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const smoothYParallax = useSpring(yParallax, { stiffness: 280, damping: 85, mass: 0.9, restDelta: 0.0001 });
+  const smoothYParallax = useSpring(yParallax, { stiffness: 220, damping: 92, mass: 1, restDelta: 0.0001 });
 
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.98]);
-  const smoothHeroOpacity = useSpring(heroOpacity, { stiffness: 320, damping: 82, mass: 0.85, restDelta: 0.0001 });
+  const smoothHeroOpacity = useSpring(heroOpacity, { stiffness: 220, damping: 92, mass: 1, restDelta: 0.0001 });
+  const smoothHeroScale = useSpring(heroScale, { stiffness: 220, damping: 92, mass: 1, restDelta: 0.0001 });
 
   useEffect(() => {
+    images.forEach((src) => { const img = document.createElement("img"); img.src = src; });
     let timer: NodeJS.Timeout;
     const startTimer = () => {
       timer = setInterval(() => setCurrentIndex((prev) => (prev + 1) % images.length), 6000);
@@ -87,7 +89,7 @@ export default function Hero() {
       className="bg-background h-[calc(100dvh-5rem)] md:h-[calc(100dvh-6rem)] w-full flex flex-col overflow-hidden relative border-b border-border"
     >
       <motion.div
-        style={{ opacity: smoothHeroOpacity, scale: heroScale }}
+        style={{ opacity: smoothHeroOpacity, scale: smoothHeroScale }}
         className="flex flex-col md:flex-row w-full h-full origin-bottom"
       >
 
@@ -127,13 +129,13 @@ export default function Hero() {
             style={{ y: smoothYParallax }}
             className="flex-grow relative overflow-hidden bg-background h-full w-full"
           >
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="sync">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, scale: 1.05 }}
+                initial={{ opacity: 0, scale: 1.04 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 1.2, ease: customEase }}
+                exit={{ opacity: 0, scale: 1.02 }}
+                transition={{ duration: 1.6, ease: customEase }}
                 className="w-full h-full absolute inset-0"
               >
                 <Image
