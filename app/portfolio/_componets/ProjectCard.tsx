@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BeforeAfterSlider from './BeforeAfterSlider';
 
-const cubicBezier = [0.22, 1, 0.36, 1] as const;
+// 🛠️ ALIGNEMENT : Utilisation de la courbe de Bézier de ta section Services
+const customEase = [0.16, 1, 0.3, 1] as const;
+
+// 🛠️ ALIGNEMENT : Transition fluide, rejouable au scroll avec seuil de confort
 const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
+    initial: { opacity: 0, y: 40 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.8, ease: cubicBezier }
+    viewport: { once: false, margin: "-50px" }, 
+    transition: { duration: 1, ease: customEase }
 };
 
 // Configuration clean des classes responsive selon la taille
@@ -26,6 +29,7 @@ export default function ProjectCard({ project, index }: { project: any, index: n
     return (
         <motion.div
             {...fadeInUp}
+            // Maintien du léger décalage progressif (stagger) basé sur l'index du projet
             transition={{ ...fadeInUp.transition, delay: (index % 4) * 0.1 }}
             className={`relative group flex flex-col ${config.colSpan}`}
         >
@@ -109,7 +113,7 @@ export default function ProjectCard({ project, index }: { project: any, index: n
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: 'auto', opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.4, ease: cubicBezier }}
+                            transition={{ duration: 0.4, ease: customEase }}
                             className="overflow-hidden"
                         >
                             <div className={`pt-10 pb-4 grid gap-8 mt-6 border-t border-dashed border-border/50 ${project.size === 'large' ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-1'}`}>

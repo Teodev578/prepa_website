@@ -1,6 +1,8 @@
+"use client"; // 🛠️ Requis pour synchroniser les animations fluides au scroll (once: false) sur les titres
+
 import React from 'react';
-import * as motion from 'framer-motion/m'; // Framer motion léger pour Server Components si supporté, ou simple divs pour le conteneur statique
-import { createClient } from '@/lib/client'; // 🛠️ IMPORTANT : Basculer sur ton client Supabase SERVEUR
+import { motion } from 'framer-motion';
+import { createClient } from '@/lib/client';
 import ProjectCard from './ProjectCard';
 
 interface Project {
@@ -25,62 +27,111 @@ interface Project {
     };
 }
 
-// Composant asynchrone qui s'exécute exclusivement sur le serveur
-export default async function Portfolio() {
-    const supabase = createClient();
-    
-    // 🛠️ SEO : Les données sont récupérées au moment de la génération de la page par le serveur
-    const { data, error } = await supabase
-        .from('portfolio_projects')
-        .select('*')
-        .order('created_at', { ascending: false });
+const customEase = [0.16, 1, 0.3, 1] as const;
 
-    if (error) {
-        console.error("Erreur lors de la récupération du portfolio:", error);
+const textRevealVariants = {
+    hidden: { y: "100%", opacity: 0 },
+    show: {
+        y: "0%",
+        opacity: 1,
+        transition: { duration: 1.2, ease: customEase }
     }
+};
 
-    const formattedProjects: Project[] = data ? data.map((p: any) => ({
-        id: p.ref_id,
-        title: p.title,
-        treatment: p.treatment,
-        date: p.date_tag,
-        model: p.model,
-        img: p.img_single,
-        imgBefore: p.img_before,
-        imgAfter: p.img_after,
-        techData: { 
-            time: p.time_spent || '-', 
-            products: p.solution || '-', 
-            defect: p.impact || '-' 
-        },
-        size: (p.size as 'small' | 'medium' | 'large') || 'small',
-        details: {
-            context: p.context || '',
-            workDone: p.work_done || [],
-            result: p.result || ''
-        }
-    })) : [];
+const paragraphVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 1, delay: 0.2, ease: customEase }
+    }
+};
+
+export default function Portfolio() {
+    const [projects, setProjects] = React.useState<Project[]>([]);
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    React.useEffect(() => {
+        const supabase = createClient();
+        const fetchProjects = async () => {
+            const { data, error } = await supabase
+                .from('portfolio_projects')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                console.error("Erreur lors de la récupération du portfolio:", error);
+            } else if (data) {
+                const formatted: Project[] = data.map((p: any) => ({
+                    id: p.ref_id,
+                    title: p.title,
+                    treatment: p.treatment,
+                    date: p.date_tag,
+                    model: p.model,
+                    img: p.img_single,
+                    imgBefore: p.img_before,
+                    imgAfter: p.img_after,
+                    techData: { 
+                        time: p.time_spent || '-', 
+                        products: p.solution || '-', 
+                        defect: p.impact || '-' 
+                    },
+                    size: (p.size as 'small' | 'medium' | 'large') || 'small',
+                    details: {
+                        context: p.context || '',
+                        workDone: p.work_done || [],
+                        result: p.result || ''
+                    }
+                }));
+                setProjects(formatted);
+            }
+            setIsLoading(false);
+        };
+        fetchProjects();
+    }, []);
 
     return (
         <section className="bg-background text-foreground h-auto py-16 md:py-24 px-6 md:px-12 overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 
-                {/* Header Section */}
+                {/* 🛠️ ALIGNEMENT DES ANIMATIONS DU HEADER (Comme la section services) */}
                 <div className="mb-16 relative">
                     <div className="mb-4 flex items-center gap-4">
-                        <div className="w-12 h-[1px] bg-primary" />
-                        <span className="text-primary font-mono text-xs uppercase tracking-[0.2em]">CAS_CONCRETS_&_PERFORMANCES</span>
+                        <motion.div
+                            initial={{ scaleX: 0 }}
+                            whileInView={{ scaleX: 1 }}
+                            viewport={{ once: false, margin: "-50px" }}
+                            transition={{ duration: 1, ease: customEase }}
+                            className="w-12 h-[1px] bg-primary origin-left"
+                        />
+                        <span className="text-primary font-mono text-xs uppercase tracking-[0.2em]">
+                            CAS_CONCRETS_&_PERFORMANCES
+                        </span>
                     </div>
 
-                    {/* 🛠️ SEO : Ton titre principal de section (H1) visible par les robots */}
-                    <h1 className="text-display text-primary leading-[0.85] mb-8 uppercase font-black tracking-tighter">
-                        NOS <br /> REALISATIONS
-                    </h1>
+                    <div className="overflow-hidden py-2">
+                        <motion.h1
+                            variants={textRevealVariants}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: false, margin: "-50px" }}
+                            className="text-display text-primary leading-[0.85] mb-8 uppercase font-black tracking-tighter"
+                        >
+                            NOS <br /> RÉALISATIONS
+                        </motion.h1>
+                    </div>
 
-                    {/* Dans ton fichier Portfolio.tsx au niveau du Header */}
-                    <p className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed border-l-2 border-primary/30 pl-6 mt-6">
-                        Découvrez les coulisses de nos interventions. Nous documentons chaque chantier en toute transparence, avec des photos avant/après et les résultats concrets obtenus pour nos clients.
-                    </p>
+                    <div className="overflow-hidden">
+                        <motion.p
+                            variants={paragraphVariants}
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: false, margin: "-50px" }}
+                            className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed border-l-2 border-primary/30 pl-6 mt-6"
+                        >
+                            Découvrez les coulisses de nos interventions. Nous documentons chaque chantier en toute transparence, avec des photos avant/après et les résultats concrets obtenus pour nos clients.
+                        </motion.p>
+                    </div>
 
                     <div className="absolute top-0 right-0 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground opacity-50 hidden md:block text-right leading-relaxed">
                         LAT: 49.0974° N<br />
@@ -89,12 +140,18 @@ export default async function Portfolio() {
                     </div>
                 </div>
 
-                {/* Portfolio Grid : Plus aucun état de chargement visuel en scintillement (FCP instantané) */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense">
-                    {formattedProjects.map((project, index) => (
-                        <ProjectCard key={project.id} project={project} index={index} />
-                    ))}
-                </div>
+                {/* Grid des projets */}
+                {isLoading ? (
+                    <div className="min-h-[300px] flex items-center justify-center text-muted-foreground font-mono text-xs animate-pulse">
+                        CHARGEMENT DES RAPPORTS DE TERRAIN...
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense">
+                        {projects.map((project, index) => (
+                            <ProjectCard key={project.id} project={project} index={index} />
+                        ))}
+                    </div>
+                )}
 
                 {/* Footer Annotations */}
                 <div className="mt-40 border-t border-border pt-12">
