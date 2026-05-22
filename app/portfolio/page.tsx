@@ -11,12 +11,21 @@ export const metadata: Metadata = {
   description: "Transformez votre préparation automobile en charge variable. Découvrez l'expertise de Law Clean Center et nos études de cas de nettoyage technique en Île-de-France.",
   keywords: ["externalisation", "rénovation", "nettoyage technique", "polissage", "avant après", "études de cas", "Île-de-France", "B2B", "Law Clean Center"],
   
+  alternates: { canonical: "https://lawcleancenter.com/portfolio" },
   openGraph: {
     title: "Expertise & Réalisations | Law Clean Center",
     description: "Externalisation de préparation automobile et convoyage. Métriques d'impact et optimisation des coûts.",
-    type: "website",
-    locale: "fr_FR",
     url: "https://lawcleancenter.com/portfolio",
+    siteName: "Law Clean Center",
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630 }],
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "À Propos & Réalisations | Law Clean Center",
+    description: "Découvrez notre expertise en préparation esthétique et convoyage pour le B2B automobile.",
+    images: ["/twitter-image.png"],
   },
 };
 

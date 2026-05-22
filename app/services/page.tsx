@@ -15,11 +15,21 @@ export const metadata: Metadata = {
     'externalisation pôle préparation auto',
     'law clean center services'
   ],
+  alternates: { canonical: "https://lawcleancenter.com/services" },
   openGraph: {
     title: 'Solutions de Préparation & Logistique Automobile B2B',
     description: 'Transformez vos charges fixes en coûts 100% variables. Standard de qualité unique pour concessions et parcs automobiles.',
-    type: 'website',
+    url: "https://lawcleancenter.com/services",
+    siteName: 'Law Clean Center',
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "Services Law Clean Center - Préparation et convoyage B2B" }],
     locale: 'fr_FR',
+    type: 'website',
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Services Préparation & Convoyage B2B | Law Clean Center",
+    description: "Externalisation pôle esthétique et logistique pour professionnels de l'automobile en IDF.",
+    images: ["/twitter-image.png"],
   },
   robots: {
     index: true,

@@ -23,7 +23,11 @@ const serif = Libre_Baskerville({
 });
 
 export const metadata: Metadata = {
-  title: "Law Clean Center | Préparation Esthétique & Convoyage de Véhicules B2B",
+  metadataBase: new URL('https://lawcleancenter.com'),
+  title: {
+    default: "Law Clean Center | Préparation Esthétique & Convoyage de Véhicules B2B",
+    template: "%s | Law Clean Center"
+  },
   description: "Externalisez la préparation esthétique VN/VO et le convoyage de vos véhicules en Île-de-France. Solutions de logistique et de nettoyage esthétique sur-mesure pour professionnels.",
   keywords: [
     "Law Clean Center",
@@ -32,8 +36,49 @@ export const metadata: Metadata = {
     "nettoyage professionnel véhicule",
     "externalisation pôle préparation auto",
     "flotte automobile",
-    "VN VO"
+    "VN VO",
+    "détailing B2B concessionnaire"
   ],
+  authors: [{ name: "Law Clean Center", url: "https://lawcleancenter.com" }],
+  creator: "Law Clean Center",
+  publisher: "Law Clean Center",
+  category: "business",
+  alternates: {
+    canonical: "https://lawcleancenter.com",
+  },
+  openGraph: {
+    title: "Law Clean Center | Préparation Esthétique & Convoyage Automobile B2B",
+    description: "Externalisez la préparation esthétique VN/VO et le convoyage de vos véhicules en Île-de-France. Solutions de logistique et de nettoyage esthétique sur-mesure pour professionnels.",
+    url: "https://lawcleancenter.com",
+    siteName: "Law Clean Center",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Law Clean Center - Préparation esthétique et convoyage de véhicules pour professionnels en Île-de-France",
+      },
+    ],
+    locale: "fr_FR",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Law Clean Center | Préparation Esthétique & Convoyage B2B Île-de-France",
+    description: "Externalisez la préparation esthétique et le convoyage de vos véhicules. Solutions B2B sur-mesure en Île-de-France.",
+    images: ["/twitter-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({
