@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Logo from '@/components/Logo';
 
-const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
+// 🛠️ HARMONISATION : Reprise de la courbe de Bézier commune à tout le site
+const customEase = [0.16, 1, 0.3, 1] as const;
 
 const Footer = () => {
     const navLinks = [
@@ -20,7 +21,6 @@ const Footer = () => {
         { label: "POLITIQUE DE CONFIDENTIALITÉ", href: "#" },
     ];
 
-    // 🛠️ Intégration des vraies données du client
     const technicalData = [
         { label: "MAIL_PRO", value: "lawcleancenter@outlook.com" },
         { label: "SIRET_ID", value: "922 386 131 00010" },
@@ -28,31 +28,32 @@ const Footer = () => {
         { label: "LOCATION", value: "49.0974° N, 2.5065° E" },
     ];
 
+    // 🛠️ CONFIGURATION DYNAMIQUE : On passe once à false et on adapte le timing
     const containerVariants = {
         hidden: { opacity: 0 },
-        visible: {
+        show: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2
+                staggerChildren: 0.15,
+                delayChildren: 0.1
             }
         }
     };
 
     const itemVariants = {
-        hidden: { opacity: 0, y: 10 },
-        visible: {
+        hidden: { opacity: 0, y: 40 },
+        show: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.5, ease: BEZIER }
+            transition: { duration: 1, ease: customEase }
         }
     };
 
     const lineVariants = {
         hidden: { scaleX: 0 },
-        visible: {
+        show: {
             scaleX: 1,
-            transition: { duration: 1, ease: BEZIER }
+            transition: { duration: 1.2, ease: customEase }
         }
     };
 
@@ -62,8 +63,8 @@ const Footer = () => {
             <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 0.05, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: BEZIER }}
+                viewport={{ once: false, margin: "-20px" }}
+                transition={{ duration: 1.5, ease: customEase }}
                 className="absolute right-0 bottom-0 pointer-events-none select-none"
             >
                 <span className="font-sans font-black text-[25vw] leading-none uppercase text-primary/20">
@@ -80,18 +81,17 @@ const Footer = () => {
                         <motion.div
                             variants={containerVariants}
                             initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
+                            whileInView="show"
+                            viewport={{ once: false, margin: "-40px" }}
                         >
-                            <motion.div variants={itemVariants} className="flex items-center gap-4 mb-12">
+                            <div className="flex items-center gap-4 mb-12">
                                 <Logo />
                                 <motion.div
                                     variants={lineVariants}
                                     className="h-px bg-border flex-1 origin-left"
                                 ></motion.div>
-                            </motion.div>
+                            </div>
 
-                            {/* 🛠️ Intégration du slogan et de la proposition de valeur */}
                             <motion.div variants={itemVariants} className="max-w-xl mt-8 md:mt-16">
                                 <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-foreground mb-4">
                                     Votre partenaire d’esthétique automobile : flexibilité, réactivité, rentabilité.
@@ -121,8 +121,8 @@ const Footer = () => {
                             <motion.div
                                 variants={containerVariants}
                                 initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true }}
+                                whileInView="show"
+                                viewport={{ once: false, margin: "-40px" }}
                                 className="grid grid-cols-2 gap-8"
                             >
                                 <div>
@@ -142,7 +142,6 @@ const Footer = () => {
                                     </ul>
                                 </div>
                                 <div>
-                                    {/* 🛠️ Remplacement des réseaux sociaux par les liens légaux */}
                                     <h3 className="font-mono text-[10px] text-primary mb-6 tracking-[0.2em] uppercase">Entreprise</h3>
                                     <ul className="flex flex-col gap-4">
                                         {legalLinks.map((link) => (
@@ -166,8 +165,8 @@ const Footer = () => {
                             <motion.div
                                 variants={containerVariants}
                                 initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true }}
+                                whileInView="show"
+                                viewport={{ once: false, margin: "-40px" }}
                                 className="flex flex-col gap-5"
                             >
                                 {technicalData.map((data) => (
@@ -196,8 +195,8 @@ const Footer = () => {
                     <motion.span
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 0.5 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 1 }}
+                        viewport={{ once: false }}
+                        transition={{ delay: 0.5, ease: customEase }}
                     >
                         PROTOCOL_FOOTER_v1.0.4 // B2B_SERVICES_ACTIVE
                     </motion.span>
