@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, IBM_Plex_Mono, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { MotionConfig } from "framer-motion";
 
 const sans = Poppins({
   subsets: ["latin"],
@@ -59,7 +60,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
-          {children}
+          <MotionConfig transition={{ ease: [0.16, 1, 0.3, 1] }}>
+            {children}
+          </MotionConfig>
         </ThemeProvider>
       </body>
     </html>

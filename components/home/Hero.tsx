@@ -23,11 +23,11 @@ export default function Hero() {
   });
 
   const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
-  const smoothYParallax = useSpring(yParallax, { stiffness: 300, damping: 90 });
+  const smoothYParallax = useSpring(yParallax, { stiffness: 280, damping: 85, mass: 0.9, restDelta: 0.0001 });
 
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.7], [1, 0.98]);
-  const smoothHeroOpacity = useSpring(heroOpacity, { stiffness: 400, damping: 90 });
+  const smoothHeroOpacity = useSpring(heroOpacity, { stiffness: 320, damping: 82, mass: 0.85, restDelta: 0.0001 });
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -59,14 +59,14 @@ export default function Hero() {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 40 },
-    show: { opacity: 1, y: 0, transition: { duration: 1, ease: customEase } },
+    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 65, damping: 15, mass: 0.9 } },
   };
 
   const textRevealVariants = {
     hidden: { y: "110%" },
     show: {
       y: "0%",
-      transition: { duration: 1.2, ease: customEase }
+      transition: { type: "spring" as const, stiffness: 55, damping: 14, mass: 1 }
     }
   };
 

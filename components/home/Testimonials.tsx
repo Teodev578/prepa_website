@@ -78,7 +78,7 @@ export default function Testimonials() {
   });
 
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
-  const smoothX = useSpring(x, { stiffness: 300, damping: 60 });
+  const smoothX = useSpring(x, { stiffness: 280, damping: 85, mass: 0.9, restDelta: 0.0001 });
 
   const flickerVariants = {
     initial: { opacity: 0 },

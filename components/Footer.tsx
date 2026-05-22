@@ -45,7 +45,7 @@ const Footer = () => {
         show: {
             opacity: 1,
             y: 0,
-            transition: { duration: 1, ease: customEase }
+            transition: { type: "spring" as const, stiffness: 65, damping: 15, mass: 0.9 }
         }
     };
 
@@ -53,7 +53,7 @@ const Footer = () => {
         hidden: { scaleX: 0 },
         show: {
             scaleX: 1,
-            transition: { duration: 1.2, ease: customEase }
+            transition: { type: "spring" as const, stiffness: 80, damping: 16, mass: 0.8 }
         }
     };
 
