@@ -27,52 +27,54 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  const pathname = request.nextUrl.pathname;
+  // 🛡️ Grâce au nouveau matcher, on SAIT que si on est ici, on est forcément sur une route admin.
+  // Plus besoin de faire de vérification de chaîne de caractères lente sur le pathname.
+  const { data: { user } } = await supabase.auth.getUser();
 
-  // 🚀 OPTIMISATION : Protection des routes privées
-  const isAdminRoute = pathname.startsWith('/terminal-hq-77') || pathname.startsWith('/admin');
+  // 1. L'utilisateur n'est pas connecté du tout
+  if (!user) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    return NextResponse.redirect(url);
+  }
 
-  if (isAdminRoute) {
-    const { data: { user } } = await supabase.auth.getUser();
+  // 2. L'utilisateur est connecté mais son email n'est pas validé
+  if (!user.email_confirmed_at) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    url.searchParams.set('error', 'email_unverified');
+    await supabase.auth.signOut();
+    return NextResponse.redirect(url);
+  }
 
-    // 1. L'utilisateur n'est pas connecté du tout
-    if (!user) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/login';
-      return NextResponse.redirect(url);
-    }
+  // 3. L'utilisateur est-il bien enregistré dans la table admin_users ?
+  const { data: adminUser, error } = await supabase
+    .from('admin_users')
+    .select('id, role')
+    .eq('id', user.id)
+    .single();
 
-    // 2. L'utilisateur est connecté mais son email n'est pas validé
-    if (!user.email_confirmed_at) {
-      const url = request.nextUrl.clone();
-      url.pathname = '/login';
-      url.searchParams.set('error', 'email_unverified');
-      await supabase.auth.signOut();
-      return NextResponse.redirect(url);
-    }
-
-    // 🛡️ 3. NOUVEAU : L'utilisateur est-il bien enregistré dans la table admin_users ?
-    const { data: adminUser, error } = await supabase
-      .from('admin_users')
-      .select('id, role')
-      .eq('id', user.id)
-      .single();
-
-    if (error || !adminUser) {
-      // Quelqu'un a un compte, mais n'est pas un admin autorisé !
-      const url = request.nextUrl.clone();
-      url.pathname = '/login';
-      url.searchParams.set('error', 'unauthorized_role');
-      await supabase.auth.signOut(); // On détruit sa session par sécurité
-      return NextResponse.redirect(url);
-    }
+  if (error || !adminUser) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/login';
+    url.searchParams.set('error', 'unauthorized_role');
+    await supabase.auth.signOut(); 
+    return NextResponse.redirect(url);
   }
 
   return response;
 }
 
+// 🛠️ L'OPTIMISATION DU MATCHER : On ne cible QUE le dossier d'administration
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.png$|.*\\.jpg$|.*\\.svg$).*)',
+    /*
+     * Déclenche le middleware uniquement pour :
+     * - Ton dossier secret d'administration /terminal-hq-77
+     * - Tout ce qui commence par /admin
+     * Cela évite de ralentir l'accès au portfolio, contact, et à la page d'accueil.
+     */
+    '/terminal-hq-77/:path*',
+    '/admin/:path*',
   ],
 };

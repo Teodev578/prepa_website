@@ -25,19 +25,13 @@ const Contact = () => {
     const [profile, setProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
     const profiles = ['PARTICULIER', 'ENTREPRISE'] as const;
 
-    // Données de configuration
     const [formId, setFormId] = useState<string | null>(null);
     const [fields, setFields] = useState<FormField[]>([]);
-
-    // Saisies utilisateur
     const [formData, setFormData] = useState<Record<string, string>>({});
-
-    // États de l'interface
     const [isLoadingData, setIsLoadingData] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null);
 
-    // 1. CHARGEMENT UNIQUE DES QUESTIONS DU FORMULAIRE
     useEffect(() => {
         const supabase = createClient();
         const fetchConfig = async () => {
@@ -74,13 +68,11 @@ const Contact = () => {
         setFormData(prev => ({ ...prev, [fieldName]: value }));
     };
 
-    // 2. SOUMISSION DIRECTE EN BDD
     const handleSubmit = async (e: React.FormEvent) => {
         const supabase = createClient();
         e.preventDefault();
         setStatusMessage(null);
 
-        // Vérification des champs obligatoires
         for (const field of fields) {
             if (field.is_required && !formData[field.field_name]?.trim()) {
                 setStatusMessage({ type: 'error', text: `Veuillez remplir le champ obligatoire : ${field.field_label}` });
@@ -90,12 +82,10 @@ const Contact = () => {
 
         setIsSubmitting(true);
 
-        // Extraction automatique de l'email pour le suivi
         const clientEmail = Object.entries(formData).find(([key]) =>
             key.toLowerCase().includes('email') || key.toLowerCase().includes('mail')
         )?.[1] || 'Non renseigné';
 
-        // Enregistrement unique dans la table des requêtes de devis
         const { error: quoteError } = await supabase
             .from('quote_requests')
             .insert([{
@@ -111,7 +101,6 @@ const Contact = () => {
         } else {
             setStatusMessage({ type: 'success', text: "Votre demande de devis a bien été transmise ! Nous revenons vers vous sous 24h." });
             
-            // Envoi asynchrone de la notification (non-bloquant pour l'utilisateur)
             fetch('/api/notify', {
                 method: 'POST',
                 headers: {
@@ -155,12 +144,24 @@ const Contact = () => {
                         <div className="w-12 h-[1px] bg-primary" />
                         <span className="font-mono text-primary uppercase tracking-widest text-[11px]">ÉTABLIR UN PROJET</span>
                     </motion.div>
+                    
                     <motion.h1
                         {...maskReveal}
                         className="text-5xl sm:text-6xl md:text-7xl text-primary leading-tight font-black uppercase tracking-tighter"
                     >
                         DEMANDE <br /> DE DEVIS
                     </motion.h1>
+
+                    {/* 🛠️ AJOUT DE LA PHRASE D'ACCROCHE ICI */}
+                    <motion.p
+                        initial={{ opacity: 0, y: 15 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.8, delay: 0.3, ease: cubicBezier }}
+                        className="text-muted-foreground text-base md:text-lg max-w-xl mt-6 leading-relaxed"
+                    >
+                        Remplissez le formulaire ci-dessous afin de nous aider à comprendre vos besoins.
+                    </motion.p>
                 </div>
 
                 {/* Sélecteur de profil (Particulier / Entreprise) */}
@@ -205,7 +206,7 @@ const Contact = () => {
                                         initial={{ opacity: 0, y: 10 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, scale: 0.95 }}
-                                        className="flex flex-col gap-2"
+                                        className="flex flex-col gap-2 w-full"
                                     >
                                         <label className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">
                                             {field.field_label} {field.is_required && <span className="text-primary">*</span>}
@@ -213,20 +214,20 @@ const Contact = () => {
 
                                         {field.field_type === 'select' && field.options ? (
                                             <select
-                                                className="bg-transparent border-0 border-b border-border py-2.5 focus:ring-0 focus:border-primary transition-colors font-sans text-base outline-none cursor-pointer"
+                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-primary transition-colors font-sans text-base outline-none cursor-pointer text-foreground"
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
                                                 required={field.is_required}
                                             >
-                                                <option value="" disabled className="bg-card text-muted-foreground">Cliquez pour choisir...</option>
+                                                <option value="" disabled className="text-muted-foreground">Cliquez pour choisir...</option>
                                                 {field.options.map(opt => (
-                                                    <option key={opt} value={opt} className="bg-card text-foreground">{opt}</option>
+                                                    <option key={opt} value={opt} className="text-foreground">{opt}</option>
                                                 ))}
                                             </select>
                                         ) : (
                                             <input
                                                 type={field.field_type === 'email' ? 'email' : 'text'}
-                                                className="bg-transparent border-0 border-b border-border py-2.5 focus:ring-0 focus:border-primary transition-colors font-sans text-base outline-none placeholder:text-muted-foreground/40 placeholder:normal-case"
+                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-primary transition-colors font-sans text-base outline-none placeholder:text-muted-foreground/40 placeholder:normal-case text-foreground"
                                                 placeholder={field.is_required ? "Champ obligatoire" : "Facultatif"}
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
