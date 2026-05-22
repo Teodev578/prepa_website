@@ -81,10 +81,10 @@ export default function Hero() {
   const titleLines = ["NUMERO.", "#1."];
 
   return (
-    // 🛠️ RESPONSIVITÉ : Hauteur stricte à 100dvh, plus de padding qui casse le layout
+    // 🛠️ RESPONSIVITÉ : Hauteur calc(100dvh - navbarH) pour full viewport sous navbar fixe (awwwards style), sans toucher au design interne
     <section 
       ref={sectionRef}
-      className="bg-background h-[100dvh] w-full flex flex-col overflow-hidden relative border-b border-border"
+      className="bg-background h-[calc(100dvh-5rem)] md:h-[calc(100dvh-6rem)] w-full flex flex-col overflow-hidden relative border-b border-border"
     >
       <motion.div
         style={{ opacity: smoothHeroOpacity, scale: heroScale }}
