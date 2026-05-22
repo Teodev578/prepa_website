@@ -56,8 +56,9 @@ export default function AboutSection() {
                             viewport={{ once: false }}
                             className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-foreground max-w-4xl leading-[0.9]"
                         >
-                            De la contrainte RH à la <br className="hidden md:block"/>
-                            <span className="text-primary border-b-4 border-primary">force de frappe</span> externalisée.
+                            A propos de nous
+                            <br className="hidden md:block"/>
+                            <span className="text-primary border-b-4 border-primary">LAW CLEAN CENTER</span>
                         </motion.h2>
                     </div>
                 </div>
