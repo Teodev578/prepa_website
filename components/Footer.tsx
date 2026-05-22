@@ -15,14 +15,17 @@ const Footer = () => {
         { label: "CONTACT", href: "/contact" },
     ];
 
-    const socialLinks = [
-        { label: "INSTAGRAM", href: "https://instagram.com" },
+    const legalLinks = [
+        { label: "MENTIONS LÉGALES", href: "#" },
+        { label: "POLITIQUE DE CONFIDENTIALITÉ", href: "#" },
     ];
 
+    // 🛠️ Intégration des vraies données du client
     const technicalData = [
+        { label: "MAIL_PRO", value: "lawcleancenter@outlook.com" },
+        { label: "SIRET_ID", value: "922 386 131 00010" },
+        { label: "ASSURANCE", value: "COUVERTURE_COMPLÈTE_ACTIVE" },
         { label: "LOCATION", value: "49.0974° N, 2.5065° E" },
-        { label: "BUILD", value: "REV. 1.0.4" },
-        { label: "LICENSE", value: "EXCELLENCE" },
     ];
 
     const containerVariants = {
@@ -73,7 +76,7 @@ const Footer = () => {
                 <div className="flex flex-col lg:flex-row">
 
                     {/* Left Block: Identity & Massive Text */}
-                    <div className="lg:w-2/3 p-6 md:p-12 lg:p-20 border-b lg:border-b-0 lg:border-r border-border">
+                    <div className="lg:w-2/3 p-6 md:p-12 lg:p-20 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between">
                         <motion.div
                             variants={containerVariants}
                             initial="hidden"
@@ -88,13 +91,23 @@ const Footer = () => {
                                 ></motion.div>
                             </motion.div>
 
-                            <motion.div variants={itemVariants} className="flex flex-wrap gap-8 items-end mt-12">
+                            {/* 🛠️ Intégration du slogan et de la proposition de valeur */}
+                            <motion.div variants={itemVariants} className="max-w-xl mt-8 md:mt-16">
+                                <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tighter text-foreground mb-4">
+                                    Votre partenaire d’esthétique automobile : flexibilité, réactivité, rentabilité.
+                                </h2>
+                                <p className="text-muted-foreground font-mono text-xs md:text-sm uppercase tracking-widest leading-relaxed border-l-2 border-primary/30 pl-4 mt-6">
+                                    Nous accélérons les ventes de vos véhicules d'occasion et valorisons vos véhicules neufs grâce à une externalisation complète de la préparation.
+                                </p>
+                            </motion.div>
+
+                            <motion.div variants={itemVariants} className="flex flex-wrap gap-8 items-end mt-16 md:mt-32">
                                 <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                    &copy; 2026 LAW CLEAN CENTER - L'ART DE LA PRÉCISION
+                                    &copy; {new Date().getFullYear()} LAW CLEAN CENTER
                                 </div>
                                 <div className="hidden md:block h-8 w-px bg-border"></div>
                                 <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-                                    ROISSY-EN-FRANCE, ÎLE-DE-FRANCE
+                                    2 RUE LOUISE MICHEL, 95470 FOSSES
                                 </div>
                             </motion.div>
                         </motion.div>
@@ -129,19 +142,18 @@ const Footer = () => {
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 className="font-mono text-[10px] text-primary mb-6 tracking-[0.2em] uppercase">Social</h3>
+                                    {/* 🛠️ Remplacement des réseaux sociaux par les liens légaux */}
+                                    <h3 className="font-mono text-[10px] text-primary mb-6 tracking-[0.2em] uppercase">Entreprise</h3>
                                     <ul className="flex flex-col gap-4">
-                                        {socialLinks.map((link) => (
+                                        {legalLinks.map((link) => (
                                             <motion.li key={link.label} variants={itemVariants}>
-                                                <a
+                                                <Link
                                                     href={link.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
                                                     className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors inline-flex items-center group"
                                                 >
                                                     <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 mr-2 text-primary font-bold">{">"}</span>
                                                     {link.label}
-                                                </a>
+                                                </Link>
                                             </motion.li>
                                         ))}
                                     </ul>
@@ -156,7 +168,7 @@ const Footer = () => {
                                 initial="hidden"
                                 whileInView="visible"
                                 viewport={{ once: true }}
-                                className="flex flex-col gap-6"
+                                className="flex flex-col gap-5"
                             >
                                 {technicalData.map((data) => (
                                     <motion.div key={data.label} variants={itemVariants} className="flex justify-between items-end border-b border-border pb-2 group">
@@ -179,7 +191,7 @@ const Footer = () => {
             </div>
 
             {/* Bottom Final Strip */}
-            <div className="border-t border-border py-4 px-6 md:px-12">
+            <div className="border-t border-border py-4 px-6 md:px-12 bg-card">
                 <div className="max-w-[1440px] mx-auto flex justify-between items-center font-mono text-[8px] md:text-[9px] text-muted-foreground uppercase tracking-[0.3em]">
                     <motion.span
                         initial={{ opacity: 0 }}
@@ -187,11 +199,11 @@ const Footer = () => {
                         viewport={{ once: true }}
                         transition={{ delay: 1 }}
                     >
-                        PROTOCOL_FOOTER_v1.0.4 // READY
+                        PROTOCOL_FOOTER_v1.0.4 // B2B_SERVICES_ACTIVE
                     </motion.span>
                     <div className="flex gap-4">
-                        <span className="hidden sm:inline">TERMINAL_OK</span>
-                        <span>[ STATUS: OPTIMAL ]</span>
+                        <span className="hidden sm:inline">RÉGION_IDF_SUPPORT_OK</span>
+                        <span className="text-primary/70">[ STATUS: OPTIMAL ]</span>
                     </div>
                 </div>
             </div>
