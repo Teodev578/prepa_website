@@ -21,12 +21,50 @@ function escapeHtml(str: string): string {
 }
 
 export async function POST(request: Request) {
+    const origin = request.headers.get('origin') || request.headers.get('referer') || '';
+    const allowedOrigins = [
+        process.env.NEXT_PUBLIC_SITE_URL || '',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000',
+    ].filter(Boolean);
+    const isAllowedOrigin = allowedOrigins.some(o => origin.startsWith(o.replace(/\/$/, '')));
+
+    if (!isAllowedOrigin) {
+        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+
+    const notifySecret = request.headers.get('x-notify-secret');
+    const expectedSecret = process.env.NOTIFY_API_SECRET;
+
+    if (expectedSecret && notifySecret !== expectedSecret) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 
+               request.headers.get('x-real-ip') || 'unknown';
+
+    const g = global as unknown as { _rateLimitNotify?: Map<string, number[]> };
+    const rateLimitMap: Map<string, number[]> = g._rateLimitNotify ||= new Map();
+    const now = Date.now();
+    const windowMs = 60_000;
+    const maxRequests = 5;
+
+    const timestamps = rateLimitMap.get(ip) || [];
+    const recent = timestamps.filter((t: number) => now - t < windowMs);
+    if (recent.length >= maxRequests) {
+        return NextResponse.json({ error: "Too Many Requests" }, { status: 429 });
+    }
+    recent.push(now);
+    rateLimitMap.set(ip, recent);
+
+    if (recent.length > 20) rateLimitMap.delete(ip);
+
     try {
         const body = await request.json();
         const { clientEmail, formData, profile } = body;
 
-        if (!clientEmail || !formData) {
-            return NextResponse.json({ error: "Données de formulaire manquantes." }, { status: 400 });
+        if (!clientEmail || typeof clientEmail !== 'string' || !formData || typeof formData !== 'object') {
+            return NextResponse.json({ error: "Données invalides." }, { status: 400 });
         }
 
         // 1. Récupérer la liste des emails actifs dans Supabase
