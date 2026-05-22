@@ -37,15 +37,15 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="relative bg-background">
-        <Navbar />
+      <Navbar />
+      <main className="relative bg-background pt-20 md:pt-24">
         <Hero />
         <TechnicalServices />
         <ExcellencePhilosophy />
         <Testimonials />
         <CTA />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 }

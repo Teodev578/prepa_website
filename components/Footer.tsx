@@ -10,9 +10,9 @@ const customEase = [0.16, 1, 0.3, 1] as const;
 
 const Footer = () => {
     const navLinks = [
+        { label: "ACCUEIL", href: "/" },
         { label: "SERVICES", href: "/services" },
-        { label: "RÉALISATIONS", href: "/portfolio" },
-        { label: "À PROPOS", href: "/about" },
+        { label: "PORTFOLIO", href: "/portfolio" },
         { label: "CONTACT", href: "/contact" },
     ];
 

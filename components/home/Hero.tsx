@@ -87,7 +87,7 @@ export default function Hero() {
   return (
     <section 
       ref={sectionRef}
-      className="bg-background min-h-[100dvh] h-auto lg:h-[100dvh] box-border w-full flex flex-col overflow-hidden relative border-b border-border pt-20 md:pt-24"
+      className="bg-background min-h-[100dvh] h-auto lg:h-[100dvh] box-border w-full flex flex-col overflow-hidden relative border-b border-border"
     >
       <motion.div
         style={{ opacity: smoothHeroOpacity, scale: heroScale }}

@@ -20,8 +20,8 @@ const Logo = ({ className = "" }: { className?: string }) => {
         <circle cx="16" cy="16" r="10" stroke="currentColor" strokeWidth="0.25"/>
         <circle cx="16" cy="16" r="4" stroke="currentColor" strokeWidth="0.25"/>
         
-        {/* Point central de focus (bordeaux technique) */}
-        <circle cx="16" cy="16" r="1.5" fill="#9b2c2c"/>
+        {/* Point central de focus (utilise la couleur primary du thème pour cohérence) */}
+        <circle cx="16" cy="16" r="1.5" fill="var(--primary)"/>
       </svg>
 
       {/* Text Logo - 🚀 Mise à jour du nom de marque & léger ajustement de l'espacement */}

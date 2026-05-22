@@ -129,7 +129,7 @@ const Contact = () => {
     };
 
     return (
-        <section className="bg-background text-foreground min-h-screen pt-24 md:pt-32 pb-24 px-4 sm:px-6 md:px-12 overflow-hidden">
+        <section className="bg-background text-foreground min-h-screen pb-24 px-4 sm:px-6 md:px-12 overflow-hidden">
             <div className="max-w-4xl mx-auto">
 
                 {/* Header */}

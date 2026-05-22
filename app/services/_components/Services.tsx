@@ -75,7 +75,7 @@ const Services = () => {
     ];
 
     return (
-        <div className="bg-background text-foreground min-h-screen pt-20 md:pt-32 pb-16 md:pb-24">
+          <div className="bg-background text-foreground min-h-screen pb-16 md:pb-24">
 
             {/* Header Section */}
             <section className="px-6 md:px-12 mb-12 md:mb-20 overflow-hidden">
@@ -119,7 +119,7 @@ const Services = () => {
                         <motion.article
                             variants={itemVariants}
                             key={service.id}
-                            className="relative p-10 flex flex-col h-full bg-card border-r border-b group hover:bg-muted transition-colors duration-300"
+                            className="relative p-10 flex flex-col h-full bg-card border-r border-b group hover:bg-muted transition-colors duration-300 cursor-pointer"
                         >
                             <div className="flex justify-between items-start mb-16">
                                 <div className="font-mono text-[9px] text-muted-foreground tracking-widest">
