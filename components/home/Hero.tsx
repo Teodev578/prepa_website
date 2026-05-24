@@ -238,7 +238,7 @@ export default function Hero() {
                 >
                   <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                   <span className="w-1.5 h-1.5 bg-secondary group-hover:bg-background block rounded-full transition-colors relative z-10"></span>
-                  <span className="relative z-10 group-hover:text-secondary-foreground transition-colors">NOUS CONTACTER</span>
+                  <span className="relative z-10 group-hover:text-secondary-foreground transition-colors">Faite votre devis</span>
                 </motion.div>
               </Link>
             </motion.div>

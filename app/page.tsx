@@ -80,9 +80,9 @@ export default function Home() {
       <main className="relative bg-background pt-20 md:pt-24">
         <Hero />
         <ExcellencePhilosophy />
-        <TechnicalServices />
+        {/*<TechnicalServices />*/}
         <Testimonials />
-        <CTA />
+        {/*<CTA />*/}
       </main>
       <Footer />
     </>
