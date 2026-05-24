@@ -79,8 +79,8 @@ export default function Home() {
       <Navbar />
       <main className="relative bg-background pt-20 md:pt-24">
         <Hero />
-        <TechnicalServices />
         <ExcellencePhilosophy />
+        <TechnicalServices />
         <Testimonials />
         <CTA />
       </main>
