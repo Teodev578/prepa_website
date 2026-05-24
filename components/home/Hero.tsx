@@ -83,7 +83,6 @@ export default function Hero() {
   const titleLines = ["NUMERO", "#1."];
 
   return (
-    // 🛠️ RESPONSIVITÉ : Hauteur ajustée (min-h pour mobile empêche la coupure du contenu)
     <section 
       ref={sectionRef}
       className="bg-background min-h-[calc(100dvh-5rem)] h-auto md:h-[calc(100dvh-6rem)] w-full flex flex-col overflow-hidden relative border-b border-border"
@@ -96,20 +95,19 @@ export default function Hero() {
         {/* ========================================================= */}
         {/* COLONNE GAUCHE : IMAGE & ANNOTATIONS TECHNIQUES           */}
         {/* ========================================================= */}
-        {/* 🛠️ RESPONSIVITÉ : min-h-[40dvh] sur mobile permet au texte en dessous de respirer */}
         <div className="w-full h-[45dvh] min-h-[300px] md:h-full md:w-1/2 relative flex items-stretch border-b md:border-b-0 md:border-r border-border shrink-0 overflow-hidden">
           
+          {/* 🛠️ CORRECTION : Remplacement du py-10 et pt-24 par un py-12 symétrique pour centrer verticalement les éléments */}
           <motion.div 
             variants={containerVariants} 
             initial="hidden" 
             animate="show" 
-            className="hidden md:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-border bg-background relative z-10 select-none pt-24"
+            className="hidden md:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-12 border-r border-border bg-background relative z-10 select-none"
           >
-            {/* INTÉGRATION SECONDAIRE : Le curseur "radar" clignotant devient secondaire (indicateur de statut) */}
             <motion.div variants={flickerVariants} initial="initial" animate="animate" className="absolute top-0 right-0 w-2 h-2 border-t border-r border-secondary opacity-80"></motion.div>
 
-            <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap mt-20 text-muted-foreground">
-              GPS: 49.0974° N 2.5065° E
+            <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap text-muted-foreground mt-8">
+              GPS: 49 N 2.5065° E
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex flex-col gap-2">
@@ -118,7 +116,7 @@ export default function Hero() {
               <div className="w-8 h-[1px] bg-foreground/50"></div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap mb-12 text-secondary">
+            <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap text-secondary mb-8">
               IDF_OPERATIONAL
             </motion.div>
           </motion.div>
@@ -150,7 +148,6 @@ export default function Hero() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Pagination Lineaire */}
             <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 flex gap-2 z-20 mix-blend-difference">
               {images.map((_, idx) => (
                 <div key={idx} className="h-[2px] w-8 md:w-12 bg-white/30 overflow-hidden relative">
@@ -170,8 +167,8 @@ export default function Hero() {
         {/* ========================================================= */}
         {/* COLONNE DROITE : TYPOGRAPHIE & CALL TO ACTIONS            */}
         {/* ========================================================= */}
-        {/* 🛠️ RESPONSIVITÉ : Flex-grow pour occuper l'espace, padding ajusté */}
-        <div className="flex-1 w-full md:w-1/2 relative bg-background flex flex-col justify-center px-5 sm:px-6 md:px-12 lg:px-20 py-8 md:pt-24 md:pb-0 overflow-hidden">
+        {/* 🛠️ CORRECTION : Remplacement de md:pt-24 md:pb-0 par md:py-12 pour un centrage vertical absolu (justify-center gère le reste) */}
+        <div className="flex-1 w-full md:w-1/2 relative bg-background flex flex-col justify-center px-5 sm:px-6 md:px-12 lg:px-20 py-10 md:py-12 overflow-hidden">
           
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -194,7 +191,6 @@ export default function Hero() {
               <span>EST. 2026</span>
             </motion.div>
 
-            {/* 🛠️ RESPONSIVITÉ : text-4xl sur mobile, ajustement des sauts de ligne pour éviter de couper */}
             <h1 className="font-sans font-black text-[11vw] sm:text-5xl md:text-[4.5rem] lg:text-[6rem] xl:text-[7.5rem] tracking-tighter uppercase text-foreground leading-[0.9] mb-4 md:mb-8 relative z-20 w-full overflow-hidden">
               <span className="sr-only">Law Clean Center - Préparation Esthétique B2B & Convoyage de Véhicules en Île-de-France</span>
               {titleLines.map((line, i) => (
@@ -234,7 +230,6 @@ export default function Hero() {
                 </motion.div>
               </Link>
 
-              {/* INTÉGRATION SECONDAIRE : Call to Action principal (Nous contacter) harmonisé avec la couleur secondaire */}
               <Link href="/contact" className="w-full sm:w-auto">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -242,7 +237,6 @@ export default function Hero() {
                   className="w-full min-h-[44px] md:min-h-[52px] relative px-4 sm:px-6 md:px-8 py-3 md:py-4 border border-secondary bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-3 rounded-[var(--radius)] transition-transform"
                 >
                   <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                  {/* Point clignotant technique (secondaire) */}
                   <span className="w-1.5 h-1.5 bg-secondary group-hover:bg-background block rounded-full transition-colors relative z-10"></span>
                   <span className="relative z-10 group-hover:text-secondary-foreground transition-colors">NOUS CONTACTER</span>
                 </motion.div>
@@ -250,7 +244,8 @@ export default function Hero() {
             </motion.div>
           </motion.div>
           
-          <motion.div variants={flickerVariants} initial="initial" animate="animate" className="absolute top-8 right-8 lg:top-10 lg:right-10 font-mono text-[9px] font-bold tracking-[0.2em] text-muted-foreground uppercase hidden md:block select-none pt-24">
+          {/* 🛠️ CORRECTION : J'ai enlevé le pt-24 caché ici qui décalait ce petit badge vers le bas */}
+          <motion.div variants={flickerVariants} initial="initial" animate="animate" className="absolute top-8 right-8 lg:top-10 lg:right-10 font-mono text-[9px] font-bold tracking-[0.2em] text-muted-foreground uppercase hidden md:block select-none">
             EST. 2026
           </motion.div>
         </div>
