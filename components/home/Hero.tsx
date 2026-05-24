@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 
 const images = [
-  "/images/image_2.png",
-  "/images/image_3.jpeg",
-  "/images/image_4.jpeg",
+  "/images/1.jpeg",
+  "/images/2.jpeg",
+  "/images/3.jpeg",
 ];
 
 const customEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -80,7 +80,7 @@ export default function Hero() {
     }
   };
 
-  const titleLines = ["NUMERO.", "#1."];
+  const titleLines = ["NUMERO", "#1."];
 
   return (
     // 🛠️ RESPONSIVITÉ : Hauteur ajustée (min-h pour mobile empêche la coupure du contenu)
