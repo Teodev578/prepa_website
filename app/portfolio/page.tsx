@@ -35,7 +35,7 @@ export default function PortfolioPage() {
       <Navbar />
       <main className="relative bg-background min-h-screen flex flex-col pt-20 md:pt-24">
         {/* 🛠️ Le discours commercial et stratégique */}
-        <AboutSection />
+        {/*<AboutSection />*/}
         {/* 🛠️ La preuve par l'image (Études de cas) */}
         <Portfolio />
       </main>
