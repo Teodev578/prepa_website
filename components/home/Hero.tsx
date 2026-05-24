@@ -83,10 +83,10 @@ export default function Hero() {
   const titleLines = ["NUMERO.", "#1."];
 
   return (
-    // 🛠️ RESPONSIVITÉ : Hauteur calc(100dvh - navbarH) pour full viewport sous navbar fixe (awwwards style), sans toucher au design interne
+    // 🛠️ RESPONSIVITÉ : Hauteur ajustée (min-h pour mobile empêche la coupure du contenu)
     <section 
       ref={sectionRef}
-      className="bg-background h-[calc(100dvh-5rem)] md:h-[calc(100dvh-6rem)] w-full flex flex-col overflow-hidden relative border-b border-border"
+      className="bg-background min-h-[calc(100dvh-5rem)] h-auto md:h-[calc(100dvh-6rem)] w-full flex flex-col overflow-hidden relative border-b border-border"
     >
       <motion.div
         style={{ opacity: smoothHeroOpacity, scale: smoothHeroScale }}
@@ -96,8 +96,8 @@ export default function Hero() {
         {/* ========================================================= */}
         {/* COLONNE GAUCHE : IMAGE & ANNOTATIONS TECHNIQUES           */}
         {/* ========================================================= */}
-        {/* 🛠️ RESPONSIVITÉ : Ajustement de la hauteur mobile (50vh) pour l'équilibre */}
-        <div className="w-full h-[50dvh] md:h-full md:w-1/2 relative flex items-stretch border-b md:border-b-0 md:border-r border-border shrink-0 overflow-hidden">
+        {/* 🛠️ RESPONSIVITÉ : min-h-[40dvh] sur mobile permet au texte en dessous de respirer */}
+        <div className="w-full h-[45dvh] min-h-[300px] md:h-full md:w-1/2 relative flex items-stretch border-b md:border-b-0 md:border-r border-border shrink-0 overflow-hidden">
           
           <motion.div 
             variants={containerVariants} 
@@ -105,7 +105,8 @@ export default function Hero() {
             animate="show" 
             className="hidden md:flex w-16 xl:w-20 shrink-0 flex-col justify-between items-center py-10 border-r border-border bg-background relative z-10 select-none pt-24"
           >
-            <motion.div variants={flickerVariants} initial="initial" animate="animate" className="absolute top-0 right-0 w-2 h-2 border-t border-r border-foreground opacity-50"></motion.div>
+            {/* INTÉGRATION SECONDAIRE : Le curseur "radar" clignotant devient secondaire (indicateur de statut) */}
+            <motion.div variants={flickerVariants} initial="initial" animate="animate" className="absolute top-0 right-0 w-2 h-2 border-t border-r border-secondary opacity-80"></motion.div>
 
             <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap mt-20 text-muted-foreground">
               GPS: 49.0974° N 2.5065° E
@@ -117,7 +118,7 @@ export default function Hero() {
               <div className="w-8 h-[1px] bg-foreground/50"></div>
             </motion.div>
 
-            <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap mb-12 text-muted-foreground">
+            <motion.div variants={itemVariants} className="font-mono text-[9px] uppercase font-bold tracking-[0.2em] -rotate-90 whitespace-nowrap mb-12 text-secondary">
               IDF_OPERATIONAL
             </motion.div>
           </motion.div>
@@ -149,6 +150,7 @@ export default function Hero() {
               </motion.div>
             </AnimatePresence>
 
+            {/* Pagination Lineaire */}
             <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 flex gap-2 z-20 mix-blend-difference">
               {images.map((_, idx) => (
                 <div key={idx} className="h-[2px] w-8 md:w-12 bg-white/30 overflow-hidden relative">
@@ -168,8 +170,8 @@ export default function Hero() {
         {/* ========================================================= */}
         {/* COLONNE DROITE : TYPOGRAPHIE & CALL TO ACTIONS            */}
         {/* ========================================================= */}
-        {/* 🛠️ RESPONSIVITÉ : Le padding s'applique ici pour décaler le texte sous la navbar */}
-        <div className="flex-1 w-full md:w-1/2 relative bg-background flex flex-col justify-center px-6 md:px-12 lg:px-20 pt-12 md:pt-24 pb-8 md:pb-0 overflow-hidden">
+        {/* 🛠️ RESPONSIVITÉ : Flex-grow pour occuper l'espace, padding ajusté */}
+        <div className="flex-1 w-full md:w-1/2 relative bg-background flex flex-col justify-center px-5 sm:px-6 md:px-12 lg:px-20 py-8 md:pt-24 md:pb-0 overflow-hidden">
           
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -187,19 +189,20 @@ export default function Hero() {
             className="relative z-10 max-w-xl w-full"
           >
             
-            <motion.div variants={itemVariants} className="md:hidden font-mono text-[9px] uppercase font-bold tracking-widest text-muted-foreground mb-4 flex justify-between w-full">
+            <motion.div variants={itemVariants} className="md:hidden font-mono text-[9px] uppercase font-bold tracking-widest text-muted-foreground mb-3 flex justify-between w-full">
               <span>GPS: 49.0974° N 2.5065° E</span>
               <span>EST. 2026</span>
             </motion.div>
 
-            {/* 🛠️ RESPONSIVITÉ : Taille des polices ajustée pour tenir dans 50vh sur mobile */}
-            <h1 className="font-sans font-black text-5xl sm:text-6xl md:text-[4.5rem] lg:text-[6rem] xl:text-[7.5rem] tracking-tighter uppercase text-foreground leading-[0.9] mb-4 md:mb-8 relative z-20">
+            {/* 🛠️ RESPONSIVITÉ : text-4xl sur mobile, ajustement des sauts de ligne pour éviter de couper */}
+            <h1 className="font-sans font-black text-[11vw] sm:text-5xl md:text-[4.5rem] lg:text-[6rem] xl:text-[7.5rem] tracking-tighter uppercase text-foreground leading-[0.9] mb-4 md:mb-8 relative z-20 w-full overflow-hidden">
               <span className="sr-only">Law Clean Center - Préparation Esthétique B2B & Convoyage de Véhicules en Île-de-France</span>
               {titleLines.map((line, i) => (
-                <div key={i} className="overflow-hidden relative pb-4 -mb-4">
+                <div key={i} className="overflow-hidden relative pb-2 md:pb-4 -mb-2 md:-mb-4">
                   <motion.div
                     variants={textRevealVariants}
                     transition={{ ...textRevealVariants.show.transition, delay: 0.1 + (i * 0.15) }}
+                    className="whitespace-nowrap"
                   >
                     {line}
                   </motion.div>
@@ -209,20 +212,20 @@ export default function Hero() {
 
             <motion.p
               variants={itemVariants}
-              className="text-foreground/80 font-medium text-sm md:text-lg leading-relaxed mb-8 md:mb-12 max-w-[95%] md:max-w-md relative z-20"
+              className="text-foreground/80 font-medium text-xs sm:text-sm md:text-lg leading-relaxed mb-6 sm:mb-8 md:mb-12 max-w-[100%] md:max-w-md relative z-20"
             >
               Externalisez la préparation esthétique et le convoyage de vos véhicules. Transformez vos charges fixes en coûts 100% variables et accélérez vos ventes.
             </motion.p>
             
             <motion.div
               variants={itemVariants}
-              className="flex flex-col sm:flex-row gap-3 md:gap-4 font-mono text-[10px] uppercase tracking-widest font-bold w-full relative z-20"
+              className="flex flex-col sm:flex-row gap-3 md:gap-4 font-mono text-[9px] sm:text-[10px] uppercase tracking-widest font-bold w-full relative z-20"
             >
               <Link href="/services" className="w-full sm:w-auto">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full min-h-[48px] md:min-h-[52px] relative px-6 md:px-8 py-3 md:py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-transform"
+                  className="w-full min-h-[44px] md:min-h-[52px] relative px-4 sm:px-6 md:px-8 py-3 md:py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-transform"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-2">
                     DÉCOUVRIR NOS SERVICES
@@ -231,15 +234,17 @@ export default function Hero() {
                 </motion.div>
               </Link>
 
+              {/* INTÉGRATION SECONDAIRE : Call to Action principal (Nous contacter) harmonisé avec la couleur secondaire */}
               <Link href="/contact" className="w-full sm:w-auto">
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full min-h-[48px] md:min-h-[52px] relative px-6 md:px-8 py-3 md:py-4 border border-primary bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-3 rounded-[var(--radius)] transition-transform"
+                  className="w-full min-h-[44px] md:min-h-[52px] relative px-4 sm:px-6 md:px-8 py-3 md:py-4 border border-secondary bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-3 rounded-[var(--radius)] transition-transform"
                 >
-                  <div className="absolute inset-0 bg-primary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                  <span className="w-1.5 h-1.5 bg-primary group-hover:bg-background block rounded-full transition-colors relative z-10"></span>
-                  <span className="relative z-10 group-hover:text-primary-foreground transition-colors">NOUS CONTACTER</span>
+                  <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
+                  {/* Point clignotant technique (secondaire) */}
+                  <span className="w-1.5 h-1.5 bg-secondary group-hover:bg-background block rounded-full transition-colors relative z-10"></span>
+                  <span className="relative z-10 group-hover:text-secondary-foreground transition-colors">NOUS CONTACTER</span>
                 </motion.div>
               </Link>
             </motion.div>
