@@ -91,20 +91,20 @@ export default function Portfolio() {
     }, []);
 
     return (
-        <section className="bg-background text-foreground h-auto py-16 md:py-24 px-6 md:px-12 overflow-hidden">
+        <section className="bg-background text-foreground h-auto py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 
-                {/* 🛠️ ALIGNEMENT DES ANIMATIONS DU HEADER (Comme la section services) */}
-                <div className="mb-16 relative">
-                    <div className="mb-4 flex items-center gap-4">
+                {/* 🛠️ ALIGNEMENT DES ANIMATIONS DU HEADER */}
+                <div className="mb-12 sm:mb-16 relative">
+                    <div className="mb-4 flex items-center gap-3 sm:gap-4">
                         <motion.div
                             initial={{ scaleX: 0 }}
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false, margin: "-50px" }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-12 h-[1px] bg-primary origin-left"
+                            className="w-8 sm:w-12 h-[1px] bg-primary origin-left"
                         />
-                        <span className="text-primary font-mono text-xs uppercase tracking-[0.2em]">
+                        <span className="text-primary font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
                             CAS_CONCRETS_&_PERFORMANCES
                         </span>
                     </div>
@@ -115,9 +115,11 @@ export default function Portfolio() {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, margin: "-50px" }}
-                            className="text-display text-primary leading-[0.85] mb-8 uppercase font-black tracking-tighter"
+                            // 🛠️ RESPONSIVITÉ FLUIDE : text-[12vw] s'adapte parfaitement à la largeur de l'écran mobile, puis passe en tailles fixes (rem) sur tablette et PC
+                            className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
-                            NOS <br /> RÉALISATIONS
+                            NOS <br /> 
+                            RÉALISATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2">↓</span>
                         </motion.h1>
                     </div>
 
@@ -127,13 +129,14 @@ export default function Portfolio() {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, margin: "-50px" }}
-                            className="text-muted-foreground text-lg md:text-xl max-w-2xl leading-relaxed border-l-2 border-primary/30 pl-6 mt-6"
+                            // 🛠️ RESPONSIVITÉ TEXTE : Ajustement subtil de text-sm à text-xl selon l'écran
+                            className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-2 border-primary/30 pl-4 sm:pl-6 mt-4 sm:mt-6"
                         >
                             Découvrez les coulisses de nos interventions. Nous documentons chaque chantier en toute transparence, avec des photos avant/après et les résultats concrets obtenus pour nos clients.
                         </motion.p>
                     </div>
 
-                    <div className="absolute top-0 right-0 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground opacity-50 hidden md:block text-right leading-relaxed">
+                    <div className="absolute top-0 right-0 font-mono text-[9px] md:text-xs tracking-widest uppercase text-foreground opacity-70 hidden lg:block text-right leading-relaxed">
                         LAT: 49.0974° N<br />
                         LON: 2.5065° E<br />
                         <span className="text-secondary opacity-100">SECTEUR: IDF</span>
@@ -142,11 +145,12 @@ export default function Portfolio() {
 
                 {/* Grid des projets */}
                 {isLoading ? (
-                    <div className="min-h-[300px] flex items-center justify-center text-secondary font-mono text-xs animate-pulse">
+                    <div className="min-h-[300px] flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center px-4 animate-pulse uppercase tracking-widest">
                         CHARGEMENT DES RAPPORTS DE TERRAIN...
                     </div>
                 ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-y-24 gap-x-8 lg:gap-x-12 grid-flow-row-dense">
+                    // 🛠️ RESPONSIVITÉ GRID : Ajustement des gouttières (gap) pour le mobile
+                    <div className="grid grid-cols-1 md:grid-cols-12 gap-y-16 sm:gap-y-24 gap-x-6 lg:gap-x-12 grid-flow-row-dense">
                         {projects.map((project, index) => (
                             <ProjectCard key={project.id} project={project} index={index} />
                         ))}
@@ -154,23 +158,24 @@ export default function Portfolio() {
                 )}
 
                 {/* Footer Annotations */}
-                <div className="mt-40 border-t border-border pt-12">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 font-mono text-[10px] md:text-xs tracking-widest uppercase">
-                        <div className="flex flex-col gap-2">
+                <div className="mt-24 sm:mt-32 md:mt-40 border-t border-border pt-8 sm:pt-12">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 md:gap-12 font-mono text-[9px] sm:text-[10px] md:text-xs tracking-widest uppercase">
+                        <div className="flex flex-col gap-1.5 sm:gap-2">
                             <span className="text-primary font-bold">PERFORMANCE:</span>
                             <span className="text-secondary">JUSQU'À -7 JOURS DE STOCKAGE</span>
                         </div>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-1.5 sm:gap-2">
                             <span className="text-primary font-bold">MODÈLE_ÉCONOMIQUE:</span>
                             <span className="text-secondary">CHARGES 100% VARIABLES</span>
                         </div>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-1.5 sm:gap-2">
                             <span className="text-primary font-bold">ZONE_D_INTERVENTION:</span>
                             <span className="text-muted-foreground">RÉGION_ÎLE_DE_FRANCE</span>
                         </div>
-                        <div className="flex flex-col gap-2 md:text-right">
+                        <div className="flex flex-col gap-1.5 sm:gap-2 lg:text-right">
                             <span className="text-primary font-bold">CONTACT_TECHNIQUE:</span>
-                            <span className="text-foreground">LAWCLEANCENTER@OUTLOOK.COM</span>
+                            {/* 🛠️ SÉCURITÉ MOBILE : break-all empêche l'email de casser le layout sur les tout petits écrans */}
+                            <span className="text-foreground break-all">LAWCLEANCENTER@OUTLOOK.COM</span>
                         </div>
                     </div>
                 </div>

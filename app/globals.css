@@ -1,47 +1,45 @@
 @import "tailwindcss";
 
 :root {
-  /* Fond ultra-propre, blanc "galerie" */
+  /* Fond ultra-propre, blanc/bleu glacier "galerie" */
   --background: #DAF0EE;
   --foreground: #201c1d;
 
-  /* Cartes et sections : on oublie le beige, on reste sur du neutre */
+  /* Cartes et sections */
   --card: #ffffff;
   --card-foreground: #201c1d;
 
-  /* L'ACCENT FORT : Ton bordeaux technique */
+  /* L'ACCENT FORT : Ton bleu technique */
   --primary: #1c669b;
   --primary-foreground: #ffffff;
 
-  /* COULEUR SECONDAIRE : Vert technique (utilisateur) */
+  /* COULEUR SECONDAIRE : Vert technique */
   --secondary: #4f7330;
-  --secondary-foreground: #201c1d;
+  --secondary-foreground: #ffffff;
 
   /* Muted & Borders : gris froids et fins pour le côté diagramme */
   --muted: #f2f2f2;
   --muted-foreground: #666666;
-  --border: #e5e5e5;
-  --input: #e5e5e5;
+  --border: #c8d9d7; /* Légèrement teinté bleu pour s'intégrer au fond */
+  --input: #c8d9d7;
 
-  /* Rayon de courbure : on réduit pour un look plus "industriel" */
+  /* Rayon de courbure : tranchant et industriel */
   --radius: 0.125rem;
-  /* Presque tranchant */
 
-  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color: rgba(28, 102, 155, 0.08); /* Ombre légèrement bleutée */
 }
 
 .dark {
-  --background: #201c1d;
+  --background: #111417; /* Un gris/bleu très profond, presque noir */
   --foreground: #f7f5f6;
-  --card: #111111;
+  --card: #181d22;
   --card-foreground: #f2f2f2;
   --primary: #59a8e1;
   --secondary: #95c26d;
-  --secondary-foreground: #111111;
-  /* Un rouge un peu plus vif en dark mode */
-  --border: #404040;
-  --muted: #1a1a1a;
-  --muted-foreground: #C2C2C2;
+  --secondary-foreground: #111417;
+  --border: #2a343d;
+  --muted: #1c2228;
+  --muted-foreground: #a0aab2;
 }
 
 @theme inline {
@@ -55,7 +53,7 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
 
-  /* Fontes : utilisent les variables next/font chargées dans layout.tsx pour cohérence */
+  /* Fontes : utilisent les variables next/font chargées dans layout.tsx */
   --font-family-sans: var(--font-sans);
   --font-family-mono: var(--font-mono);
   --font-family-serif: var(--font-serif);
@@ -63,121 +61,99 @@
 
 @layer base {
   * {
-    @apply border-border tracking-tight;
+    @apply border-border tracking-normal;
   }
 
   body {
     @apply bg-background text-foreground font-sans;
-    /* On enlève les lissages trop doux pour garder le côté brut */
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Cohérence UX : tous les éléments interactifs ont le bon curseur */
   button:not([disabled]), a, [role="button"], .interactive {
     cursor: pointer;
   }
 
-  /* Titres style affiche */
-  h1,
-  h2,
-  h3 {
-    @apply font-black uppercase leading-[1.1] tracking-tighter;
+  /* Titres standards : Moins "écrasants", plus structurés */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-extrabold uppercase leading-[1.15] tracking-tight text-foreground;
+  }
+
+  p {
+    @apply text-base leading-relaxed text-foreground/80 font-medium;
   }
 }
 
 @layer utilities {
 
-  /* Utilitaires pour ton style diagramme/affiche */
+  /* =========================================
+     UTILITAIRES DA (Style Diagramme/Terminal)
+     ========================================= */
   .border-technical {
     border: 1px solid var(--border);
     position: relative;
   }
 
-  /* Les petites croix techniques de tes refs */
   .tech-corner::before {
     content: "+";
-    @apply absolute -top-2 -left-2 text-primary font-mono text-xs;
+    @apply absolute -top-[10px] -left-[10px] text-primary font-mono text-sm leading-none bg-background px-1;
   }
 
-  /* Pour les textes verticaux sur les bords (comme ton affiche rugby) */
   .vertical-text {
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
-}
 
-/* AJOUTEZ CECI À VOTRE FICHIER global.css */
-
-@layer base {
-  /* ... (vos styles h1, h2, h3 existants) */
-
-  /* On étend la règle aux h4 pour les titres de cartes */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-black uppercase leading-[1.1] tracking-tighter;
-  }
-
-  /* Style pour les paragraphes de description standard */
-  p {
-    @apply text-sm leading-relaxed;
-  }
-}
-
-@layer utilities {
-  /* ... (vos utilitaires existants) */
-
-  /* TYPOGRAPHIE SÉMANTIQUE */
-
-  /* Pour les grands titres de page comme "NOS SOLUTIONS" */
+  /* =========================================
+     TYPOGRAPHIE SÉMANTIQUE
+     ========================================= */
+  
+  /* Titres massifs (Hero) : Ici on garde l'effet bloc ultra-serré */
   .text-display {
-    @apply text-6xl md:text-9xl;
+    @apply font-black text-6xl md:text-[8rem] lg:text-[10rem] tracking-tighter leading-[0.85];
   }
 
-  /* Pour les titres de section comme "NOS SERVICES STRATÉGIQUES" */
+  /* Titres de section */
   .text-section-title {
-    @apply text-5xl;
+    @apply font-black text-4xl md:text-6xl tracking-tighter leading-tight;
   }
 
-  /* Pour les titres dans les cartes */
+  /* Titres dans les cartes */
   .text-card-title {
-    @apply text-4xl;
+    @apply font-extrabold text-2xl md:text-3xl tracking-tight;
   }
 
-  /* Pour les sous-titres/labels comme "VOTRE EXPERT SUR SITE" */
+  /* Annotations et labels techniques (Style Terminal) */
   .text-label {
-    @apply font-mono text-[9px] uppercase tracking-[0.2em];
+    @apply font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] font-bold text-primary;
   }
 
-  /* Pour les listes de détails dans les cartes */
+  /* Listes de détails */
   .text-detail {
-    @apply font-mono text-[11px] uppercase leading-tight tracking-normal;
+    @apply font-mono text-xs md:text-sm uppercase leading-relaxed tracking-wide text-muted-foreground;
   }
 
-  /* COMPOSANTS */
-
-  /* Style de base pour les boutons d'action */
+  /* =========================================
+     COMPOSANTS (Boutons)
+     ========================================= */
+  
   .btn-primary {
-    @apply w-full py-5 border font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-300 rounded-[var(--radius)] cursor-pointer;
-    @apply hover:bg-primary hover:text-primary-foreground;
+    @apply w-full py-4 md:py-5 border border-primary font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all duration-300 rounded-[var(--radius)] cursor-pointer bg-primary text-primary-foreground shadow-sm;
+    @apply hover:bg-background hover:text-primary;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
   .btn-primary>span {
-    @apply font-black;
+    @apply font-bold;
   }
 
-  /* Bouton secondaire utilisant la nouvelle couleur technique verte */
   .btn-secondary {
-    @apply w-full py-5 border font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-300 rounded-[var(--radius)] cursor-pointer;
-    @apply hover:bg-secondary hover:text-secondary-foreground border-secondary text-secondary;
+    @apply w-full py-4 md:py-5 border border-secondary font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all duration-300 rounded-[var(--radius)] cursor-pointer bg-transparent text-secondary;
+    @apply hover:bg-secondary hover:text-secondary-foreground hover:shadow-md;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
   .btn-secondary>span {
-    @apply font-black;
+    @apply font-bold;
   }
 }
