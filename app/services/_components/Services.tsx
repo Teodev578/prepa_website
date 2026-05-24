@@ -78,7 +78,7 @@ const Services = () => {
           <div className="bg-background text-foreground min-h-screen pb-16 md:pb-24">
 
             {/* Header Section */}
-            <section className="px-6 md:px-12 mb-12 md:mb-20 overflow-hidden">
+            <section className="pt-16 md:pt-24 px-6 md:px-12 mb-12 md:mb-20 overflow-hidden">
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-4 flex items-center gap-4">
                         <motion.div
