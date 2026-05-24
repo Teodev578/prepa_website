@@ -109,7 +109,8 @@ export default function Testimonials() {
           <div className="px-6 md:px-12 lg:px-24 mb-12 relative z-10">
             <div className="relative">
               <div className="flex items-center gap-4 mb-4">
-                <span className="font-mono text-xs text-primary uppercase tracking-widest bg-primary/10 px-2 py-1">
+                {/* INTÉGRATION SECONDAIRE : Le tag de log système devient secondaire (alerte/donnée) */}
+                <span className="font-mono text-xs text-secondary font-bold uppercase tracking-widest bg-secondary/10 px-2 py-1">
                   SYS.LOG.03
                 </span>
                 <div className="w-24 h-[1px] bg-foreground opacity-20"></div>
@@ -146,7 +147,8 @@ export default function Testimonials() {
                   <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
                     ID: {testimonial.initials}-{index.toString().padStart(4, '0')}
                   </span>
-                  <span className="font-mono text-[9px] text-primary uppercase tracking-widest leading-none">
+                  {/* INTÉGRATION SECONDAIRE : Label de vérification de l'avis comme un statut système */}
+                  <span className="font-mono text-[9px] text-secondary font-bold uppercase tracking-widest leading-none">
                     {"// VERIFIED_LOG"}
                   </span>
                 </div>
@@ -155,6 +157,7 @@ export default function Testimonials() {
                 <div className="p-6 md:p-10 flex-1 flex flex-col justify-between">
                   {/* blockquote est la balise HTML sémantique officielle pour les citations (surpuissant pour Google) */}
                   <blockquote className="mb-8 font-sans font-medium text-lg md:text-xl lg:text-2xl leading-tight text-foreground uppercase tracking-tight">
+                    {/* Les guillemets restent primary pour la déco pure */}
                     <span className="text-primary font-black mr-2">"</span>
                     {testimonial.quote}
                     <span className="text-primary font-black ml-2">"</span>
@@ -170,7 +173,8 @@ export default function Testimonials() {
                       </div>
                       <div className="text-right">
                         <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">UNITÉ SPEC.</span>
-                        <span className="font-bold text-[10px] text-primary tracking-wider">
+                        {/* INTÉGRATION SECONDAIRE : Le modèle de véhicule mis en avant (la "machine" réparée) */}
+                        <span className="font-bold text-[10px] text-secondary tracking-wider">
                           {testimonial.title}
                         </span>
                       </div>
@@ -180,6 +184,7 @@ export default function Testimonials() {
                 
                 {/* Hover line indicators */}
                 <div className="w-full h-1 bg-border relative">
+                  {/* La barre de progression/hover reste primaire pour la cohérence globale */}
                   <div className="absolute top-0 left-0 h-full bg-primary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
                 </div>
               </article>

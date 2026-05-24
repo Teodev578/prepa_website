@@ -51,7 +51,8 @@ const ExcellencePhilosophy = () => {
                                 idx < 3 ? 'border-b sm:border-b-0 sm:border-r' : ''
                             }`}
                         >
-                            <h4 className="font-sans font-black text-xl md:text-2xl text-primary tracking-tight">{metric.title}</h4>
+                            {/* INTÉGRATION SECONDAIRE : Mise en avant de l'impact / du bénéfice client */}
+                            <h4 className="font-sans font-black text-xl md:text-2xl text-secondary tracking-tight">{metric.title}</h4>
                             <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-wider leading-tight">{metric.subtitle}</p>
                         </motion.div>
                     ))}
@@ -66,6 +67,7 @@ const ExcellencePhilosophy = () => {
                     {/* Colonne gauche : Le Titre accrocheur */}
                     <div className="flex-1 w-full">
                         <div className="flex items-center gap-3 mb-6">
+                            {/* Le label structurant reste en primaire */}
                             <span className="font-mono text-[10px] text-primary border border-primary/30 px-2 py-0.5 font-bold">VALEURS</span>
                             <div className="w-16 h-[1px] bg-border" />
                         </div>
@@ -102,7 +104,8 @@ const ExcellencePhilosophy = () => {
                                 <motion.div 
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="group relative border border-secondary px-6 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-transparent text-foreground hover:bg-secondary hover:text-secondary-foreground transition-all flex items-center justify-between gap-4 rounded-[var(--radius)] cursor-pointer"
+                         
+                                    className="group relative border border-secondary px-6 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-transparent text-secondary hover:bg-secondary hover:text-secondary-foreground transition-all flex items-center justify-between gap-4 rounded-[var(--radius)] cursor-pointer"
                                   >
                                     <span>PROGRAMMER UN FORFAIT TEST</span>
                                     <span className="text-secondary group-hover:text-secondary-foreground transition-colors">→</span>
