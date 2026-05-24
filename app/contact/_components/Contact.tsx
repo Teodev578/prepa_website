@@ -209,12 +209,14 @@ const Contact = () => {
                                         className="flex flex-col gap-2 w-full"
                                     >
                                         <label className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                                            {field.field_label} {field.is_required && <span className="text-primary">*</span>}
+                                            {/* INTÉGRATION SECONDAIRE : L'astérisque attire l'œil avec la couleur secondaire */}
+                                            {field.field_label} {field.is_required && <span className="text-secondary">*</span>}
                                         </label>
 
                                         {field.field_type === 'select' && field.options ? (
                                             <select
-                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-primary transition-colors font-sans text-base outline-none cursor-pointer text-foreground"
+                                                /* INTÉGRATION SECONDAIRE : focus:border-secondary */
+                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-secondary transition-colors font-sans text-base outline-none cursor-pointer text-foreground"
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
                                                 required={field.is_required}
@@ -227,7 +229,8 @@ const Contact = () => {
                                         ) : (
                                             <input
                                                 type={field.field_type === 'email' ? 'email' : 'text'}
-                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-primary transition-colors font-sans text-base outline-none placeholder:text-muted-foreground/40 placeholder:normal-case text-foreground"
+                                                /* INTÉGRATION SECONDAIRE : focus:border-secondary */
+                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-secondary transition-colors font-sans text-base outline-none placeholder:text-muted-foreground/40 placeholder:normal-case text-foreground"
                                                 placeholder={field.is_required ? "Champ obligatoire" : "Facultatif"}
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
@@ -252,16 +255,17 @@ const Contact = () => {
                             </motion.div>
                         )}
 
+                        {/* INTÉGRATION SECONDAIRE : Le bouton principal passe en secondary pour un vrai Call to Action contrasté */}
                         <button
                             type="submit"
                             disabled={isSubmitting || isLoadingData}
-                            className="w-full border-2 border-primary bg-primary text-primary-foreground p-5 md:p-6 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:bg-transparent hover:text-primary font-bold rounded-lg shadow-md disabled:opacity-50 disabled:hover:bg-primary disabled:hover:text-primary-foreground"
+                            className="w-full border-2 border-secondary bg-secondary text-secondary-foreground p-5 md:p-6 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:bg-transparent hover:text-secondary font-bold rounded-lg shadow-md disabled:opacity-50 disabled:hover:bg-secondary disabled:hover:text-secondary-foreground"
                         >
                             <span className="text-lg md:text-xl">
                                 {isSubmitting ? 'Transmission de votre dossier...' : 'Envoyer ma demande de devis'}
                             </span>
                             {!isSubmitting && (
-                                <span className="font-mono text-[10px] tracking-widest text-primary-foreground/70 uppercase">
+                                <span className="font-mono text-[10px] tracking-widest text-secondary-foreground/70 uppercase">
                                     Une réponse vous sera apportée sous 24h
                                 </span>
                             )}
@@ -271,6 +275,7 @@ const Contact = () => {
 
                 {/* Footer pratique */}
                 <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 py-12 border-t border-border font-mono text-[11px] text-muted-foreground uppercase tracking-widest relative">
+                    {/* Le trait décoratif reste primaire pour encadrer symétriquement la section */}
                     <div className="absolute -top-[1px] left-0 w-12 h-[1px] bg-primary" />
                     <div className="space-y-2">
                         <span className="text-primary font-black">Zone d'intervention</span><br />

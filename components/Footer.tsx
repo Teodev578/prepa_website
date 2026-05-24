@@ -126,15 +126,15 @@ const Footer = () => {
                                 className="grid grid-cols-2 gap-8"
                             >
                                 <div>
-                                    <h3 className="font-mono text-[10px] text-primary mb-6 tracking-[0.2em] uppercase">Navigation</h3>
+                                    <h3 className="font-mono text-[10px] text-secondary mb-6 tracking-[0.2em] uppercase">Navigation</h3>
                                     <ul className="flex flex-col gap-4">
                                         {navLinks.map((link) => (
                                             <motion.li key={link.label} variants={itemVariants}>
                                                 <Link
                                                     href={link.href}
-                                                    className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors inline-flex items-center group"
+                                                    className="font-mono text-xs uppercase tracking-widest hover:text-secondary transition-colors inline-flex items-center group"
                                                 >
-                                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 mr-2 text-primary font-bold">{">"}</span>
+                                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 mr-2 text-secondary font-bold">{">"}</span>
                                                     {link.label}
                                                 </Link>
                                             </motion.li>
@@ -142,15 +142,15 @@ const Footer = () => {
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 className="font-mono text-[10px] text-primary mb-6 tracking-[0.2em] uppercase">Entreprise</h3>
+                                    <h3 className="font-mono text-[10px] text-secondary mb-6 tracking-[0.2em] uppercase">Entreprise</h3>
                                     <ul className="flex flex-col gap-4">
                                         {legalLinks.map((link) => (
                                             <motion.li key={link.label} variants={itemVariants}>
                                                 <Link
                                                     href={link.href}
-                                                    className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors inline-flex items-center group"
+                                                    className="font-mono text-xs uppercase tracking-widest hover:text-secondary transition-colors inline-flex items-center group"
                                                 >
-                                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 mr-2 text-primary font-bold">{">"}</span>
+                                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300 mr-2 text-secondary font-bold">{">"}</span>
                                                     {link.label}
                                                 </Link>
                                             </motion.li>
@@ -172,15 +172,15 @@ const Footer = () => {
                                 {technicalData.map((data) => (
                                     <motion.div key={data.label} variants={itemVariants} className="flex justify-between items-end border-b border-border pb-2 group">
                                         <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">{data.label}</span>
-                                        <span className="font-mono text-[10px] font-bold uppercase transition-colors group-hover:text-primary">{data.value}</span>
+                                        <span className="font-mono text-[10px] font-bold uppercase transition-colors group-hover:text-secondary">{data.value}</span>
                                     </motion.div>
                                 ))}
 
                                 {/* Technical Corner Decoration */}
                                 <div className="flex justify-between items-center mt-4">
-                                    <div className="font-mono text-[10px] text-primary">+</div>
+                                    <div className="font-mono text-[10px] text-secondary">+</div>
                                     <div className="h-px bg-border flex-1 mx-4 opacity-50"></div>
-                                    <div className="font-mono text-[10px] text-primary">+</div>
+                                    <div className="font-mono text-[10px] text-secondary">+</div>
                                 </div>
                             </motion.div>
                         </div>
@@ -202,7 +202,7 @@ const Footer = () => {
                     </motion.span>
                     <div className="flex gap-4">
                         <span className="hidden sm:inline">RÉGION_IDF_SUPPORT_OK</span>
-                        <span className="text-primary/70">[ STATUS: OPTIMAL ]</span>
+                        <span className="text-secondary/70">[ STATUS: OPTIMAL ]</span>
                     </div>
                 </div>
             </div>

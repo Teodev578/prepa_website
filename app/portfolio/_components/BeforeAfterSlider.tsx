@@ -72,14 +72,14 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
                     alt="Before" 
                 />
                 
-                {/* Étiquette AVANT */}
-                <div className="absolute top-4 left-4 font-mono text-[10px] md:text-xs font-bold text-primary bg-background/90 backdrop-blur-sm px-3 py-1.5 uppercase tracking-widest border border-border">
+                {/* Étiquette AVANT - Reste primaire/neutre pour le constat de base */}
+                <div className="absolute top-4 left-4 font-mono text-[10px] md:text-xs font-bold text-primary bg-background/90 backdrop-blur-sm px-3 py-1.5 uppercase tracking-widest border border-border shadow-sm">
                     {beforeLabel}
                 </div>
             </div>
 
-            {/* Étiquette APRÈS */}
-            <div className="absolute top-4 right-4 font-mono text-[10px] md:text-xs font-bold text-primary-foreground bg-primary px-3 py-1.5 uppercase tracking-widest z-10 pointer-events-none shadow-sm">
+            {/* Étiquette APRÈS - INTÉGRATION SECONDAIRE : Met en valeur le résultat */}
+            <div className="absolute top-4 right-4 font-mono text-[10px] md:text-xs font-bold text-secondary-foreground bg-secondary px-3 py-1.5 uppercase tracking-widest z-10 pointer-events-none shadow-sm">
                 {afterLabel}
             </div>
 
@@ -90,12 +90,12 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
                 onMouseDown={() => setIsDragging(true)}
                 onTouchStart={() => setIsDragging(true)}
             >
-                {/* La fine ligne visuelle */}
-                <div className="absolute top-1 bottom-1 w-[1px] bg-primary pointer-events-none" />
+                {/* La fine ligne visuelle - INTÉGRATION SECONDAIRE */}
+                <div className="absolute top-1 bottom-1 w-[1px] bg-secondary pointer-events-none shadow-[0_0_5px_rgba(0,0,0,0.3)]" />
 
-                {/* Poignée centrale */}
-                <div className={`w-10 h-10 rounded-full border-2 border-primary bg-background flex items-center justify-center shadow-lg transition-transform pointer-events-none ${isDragging ? 'scale-90' : 'scale-100 group-hover:scale-110'}`}>
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                {/* Poignée centrale - INTÉGRATION SECONDAIRE : Appelle à l'interaction */}
+                <div className={`w-10 h-10 rounded-full border-2 border-secondary bg-background flex items-center justify-center shadow-lg transition-transform pointer-events-none ${isDragging ? 'scale-90' : 'scale-100 group-hover:scale-110'}`}>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="text-secondary">
                         <path d="m9 18-6-6 6-6"/>
                         <path d="m15 18 6-6-6-6"/>
                     </svg>
@@ -104,7 +104,8 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
 
             {/* Calque de données (Textes naturels et vendeurs) */}
             <div className="absolute inset-1 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] md:text-[9px] text-muted-foreground bg-background/90 px-3 py-1 uppercase tracking-[0.3em] border border-border/50">
+                {/* Texte incitatif - INTÉGRATION SECONDAIRE pour attirer l'œil */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 font-mono text-[8px] md:text-[9px] font-bold text-secondary bg-background/95 px-3 py-1 uppercase tracking-[0.3em] border border-secondary/30 shadow-sm backdrop-blur-sm">
                     GLISSEZ POUR COMPARER
                 </div>
             </div>

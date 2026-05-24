@@ -136,13 +136,13 @@ export default function Portfolio() {
                     <div className="absolute top-0 right-0 font-mono text-[10px] md:text-xs tracking-widest uppercase text-muted-foreground opacity-50 hidden md:block text-right leading-relaxed">
                         LAT: 49.0974° N<br />
                         LON: 2.5065° E<br />
-                        SECTEUR: IDF
+                        <span className="text-secondary opacity-100">SECTEUR: IDF</span>
                     </div>
                 </div>
 
                 {/* Grid des projets */}
                 {isLoading ? (
-                    <div className="min-h-[300px] flex items-center justify-center text-muted-foreground font-mono text-xs animate-pulse">
+                    <div className="min-h-[300px] flex items-center justify-center text-secondary font-mono text-xs animate-pulse">
                         CHARGEMENT DES RAPPORTS DE TERRAIN...
                     </div>
                 ) : (
@@ -158,11 +158,11 @@ export default function Portfolio() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 font-mono text-[10px] md:text-xs tracking-widest uppercase">
                         <div className="flex flex-col gap-2">
                             <span className="text-primary font-bold">PERFORMANCE:</span>
-                            <span className="text-muted-foreground">JUSQU'À -7 JOURS DE STOCKAGE</span>
+                            <span className="text-secondary">JUSQU'À -7 JOURS DE STOCKAGE</span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <span className="text-primary font-bold">MODÈLE_ÉCONOMIQUE:</span>
-                            <span className="text-muted-foreground">CHARGES 100% VARIABLES</span>
+                            <span className="text-secondary">CHARGES 100% VARIABLES</span>
                         </div>
                         <div className="flex flex-col gap-2">
                             <span className="text-primary font-bold">ZONE_D_INTERVENTION:</span>

@@ -10,8 +10,12 @@
   --card-foreground: #201c1d;
 
   /* L'ACCENT FORT : Ton bordeaux technique */
-  --primary: #9B2C2C;
+  --primary: #59a8e1;
   --primary-foreground: #ffffff;
+
+  /* COULEUR SECONDAIRE : Vert technique (utilisateur) */
+  --secondary: #95c26d;
+  --secondary-foreground: #201c1d;
 
   /* Muted & Borders : gris froids et fins pour le côté diagramme */
   --muted: #f2f2f2;
@@ -31,7 +35,9 @@
   --foreground: #f7f5f6;
   --card: #111111;
   --card-foreground: #f2f2f2;
-  --primary: #fe3333;
+  --primary: #59a8e1;
+  --secondary: #95c26d;
+  --secondary-foreground: #111111;
   /* Un rouge un peu plus vif en dark mode */
   --border: #404040;
   --muted: #1a1a1a;
@@ -43,6 +49,8 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -159,6 +167,17 @@
   }
 
   .btn-primary>span {
+    @apply font-black;
+  }
+
+  /* Bouton secondaire utilisant la nouvelle couleur technique verte */
+  .btn-secondary {
+    @apply w-full py-5 border font-mono text-[10px] uppercase tracking-[0.2em] transition-colors duration-300 rounded-[var(--radius)] cursor-pointer;
+    @apply hover:bg-secondary hover:text-secondary-foreground border-secondary text-secondary;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+  }
+
+  .btn-secondary>span {
     @apply font-black;
   }
 }

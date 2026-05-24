@@ -79,10 +79,11 @@ export default function ProjectCard({ project, index }: { project: any, index: n
                             <span className="text-primary font-bold">{project.treatment}</span>
                         </div>
 
+                        {/* INTÉGRATION SECONDAIRE : Le bouton d'action passe en secondaire */}
                         <button
                             type="button"
                             onClick={() => setIsOpen(!isOpen)}
-                            className="inline-flex items-center gap-3 px-5 py-3 border border-border bg-card font-mono text-xs md:text-sm font-bold uppercase tracking-widest text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 focus:outline-none group/btn shadow-sm"
+                            className="inline-flex items-center gap-3 px-5 py-3 border border-border bg-card font-mono text-xs md:text-sm font-bold uppercase tracking-widest text-secondary hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 focus:outline-none group/btn shadow-sm"
                         >
                             <span className="font-black text-base leading-none transition-transform group-hover/btn:rotate-180">{isOpen ? '-' : '+'}</span>
                             <span>{isOpen ? 'MASQUER_LES_TRAVAUX' : 'DÉTAILS_DES_TRAVAUX'}</span>
@@ -101,7 +102,8 @@ export default function ProjectCard({ project, index }: { project: any, index: n
                         </div>
                         <div className={`flex flex-col ${project.size === 'small' ? 'col-span-2' : ''}`}>
                             <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-1.5">IMPACT_CLIENT</span>
-                            <span className="font-mono text-base md:text-lg font-black uppercase text-primary">{project.techData.defect.split('_')[0]}</span>
+                            {/* INTÉGRATION SECONDAIRE : L'impact final ressort */}
+                            <span className="font-mono text-base md:text-lg font-black uppercase text-secondary">{project.techData.defect.split('_')[0]}</span>
                         </div>
                     </div>
                 </div>
@@ -127,6 +129,7 @@ export default function ProjectCard({ project, index }: { project: any, index: n
                                     <ul className="flex flex-col gap-3 text-base text-foreground/90">
                                         {project.details.workDone.map((work: string, i: number) => (
                                             <li key={i} className="flex items-start gap-3">
+                                                {/* On garde la puce en primaire pour le côté "outil/process" */}
                                                 <span className="text-primary font-mono text-sm mt-0.5">►</span>
                                                 <span className="leading-relaxed">{work}</span>
                                             </li>
@@ -136,7 +139,8 @@ export default function ProjectCard({ project, index }: { project: any, index: n
 
                                 <div className="border-l-2 border-primary/20 pl-5">
                                     <h3 className="font-mono text-xs font-bold tracking-widest uppercase text-muted-foreground mb-4">03. RÉSULTAT B2B</h3>
-                                    <p className="text-base md:text-lg text-primary font-bold leading-relaxed">{project.details.result}</p>
+                                    {/* INTÉGRATION SECONDAIRE : Le résultat B2B est la solution finale */}
+                                    <p className="text-base md:text-lg text-secondary font-bold leading-relaxed">{project.details.result}</p>
                                 </div>
                             </div>
                         </motion.div>

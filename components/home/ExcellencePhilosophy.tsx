@@ -102,10 +102,10 @@ const ExcellencePhilosophy = () => {
                                 <motion.div 
                                     whileHover={{ scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className="group relative border border-primary px-6 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-transparent text-foreground hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-between gap-4 rounded-[var(--radius)] cursor-pointer"
-                                >
+                                    className="group relative border border-secondary px-6 py-3.5 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-transparent text-foreground hover:bg-secondary hover:text-secondary-foreground transition-all flex items-center justify-between gap-4 rounded-[var(--radius)] cursor-pointer"
+                                  >
                                     <span>PROGRAMMER UN FORFAIT TEST</span>
-                                    <span className="text-primary group-hover:text-primary-foreground transition-colors">→</span>
+                                    <span className="text-secondary group-hover:text-secondary-foreground transition-colors">→</span>
                                 </motion.div>
                             </Link>
                         </div>

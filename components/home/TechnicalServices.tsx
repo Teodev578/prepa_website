@@ -93,7 +93,7 @@ const TechnicalServices = () => {
                 <motion.article variants={cardVariants} className="flex-1 border-b lg:border-b-0 lg:border-r border-border p-8 md:p-10 flex flex-col justify-between bg-foreground text-background relative group">
                     <div>
                         <div className="mb-10">
-                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">// CONTRAT CADRE 6 MOIS</span>
+                            <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-2 font-bold">// CONTRAT CADRE 6 MOIS</span>
                             <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-background">FLEXIBILITÉ</h3>
                         </div>
                         
@@ -111,7 +111,7 @@ const TechnicalServices = () => {
                     </div>
 
                     <div className="pt-10">
-                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-primary group-hover:text-primary-foreground transition-all rounded-[var(--radius)]">
+                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-secondary group-hover:text-secondary-foreground transition-all rounded-[var(--radius)]">
                             ÉTABLIR UN CONTRAT 6 MOIS
                         </Link>
                     </div>

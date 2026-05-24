@@ -58,6 +58,7 @@ export default function AboutSection() {
                         >
                             A propos de nous
                             <br className="hidden md:block"/>
+                            {/* Soulignement primaire conservé pour la structure principale */}
                             <span className="text-primary border-b-4 border-primary">LAW CLEAN CENTER</span>
                         </motion.h2>
                     </div>
@@ -81,7 +82,8 @@ export default function AboutSection() {
                         </motion.div>
 
                         <motion.div variants={itemVariants}>
-                            <h3 className="font-mono text-sm font-bold text-primary uppercase tracking-widest mb-4">Notre réponse stratégique</h3>
+                            {/* INTÉGRATION SECONDAIRE : La "réponse" se démarque du "constat" */}
+                            <h3 className="font-mono text-sm font-bold text-secondary uppercase tracking-widest mb-4">Notre réponse stratégique</h3>
                             <p className="text-lg text-foreground font-medium leading-relaxed">
                                 Nous nous positionnons comme votre partenaire privilégié, mobilisable selon vos réels besoins. En nous déléguant la préparation de vos véhicules, vous transformez une masse salariale rigide en une charge 100 % variable.
                             </p>
@@ -96,17 +98,18 @@ export default function AboutSection() {
                             className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-border mt-8"
                         >
                             <motion.div variants={itemVariants} className="space-y-2">
-                                <span className="text-2xl block text-primary mb-2">01.</span>
+                                {/* INTÉGRATION SECONDAIRE : Numérotation d'impact */}
+                                <span className="text-2xl block text-secondary font-black mb-2">01.</span>
                                 <h4 className="font-bold uppercase tracking-wide text-sm">Constante Qualité</h4>
                                 <p className="text-xs text-muted-foreground font-mono">Standards d'excellence maintenus sur chaque unité.</p>
                             </motion.div>
                             <motion.div variants={itemVariants} className="space-y-2">
-                                <span className="text-2xl block text-primary mb-2">02.</span>
+                                <span className="text-2xl block text-secondary font-black mb-2">02.</span>
                                 <h4 className="font-bold uppercase tracking-wide text-sm">Flexibilité Totale</h4>
                                 <p className="text-xs text-muted-foreground font-mono">Intervention sur site ou sur parc selon les flux.</p>
                             </motion.div>
                             <motion.div variants={itemVariants} className="space-y-2">
-                                <span className="text-2xl block text-primary mb-2">03.</span>
+                                <span className="text-2xl block text-secondary font-black mb-2">03.</span>
                                 <h4 className="font-bold uppercase tracking-wide text-sm">Optimisation Coûts</h4>
                                 <p className="text-xs text-muted-foreground font-mono">Facturation à l'unité, aucune charge fixe inutile.</p>
                             </motion.div>
@@ -124,16 +127,19 @@ export default function AboutSection() {
                         <motion.div variants={itemVariants} className="aspect-[3/4] bg-muted relative rounded-sm overflow-hidden border border-border group">
                             {/* TODO: Remplacer le src par la photo "En tenue pro" */}
                             <img src="/placeholder-pro.jpg" alt="Équipe Law Clean Center en tenue professionnelle" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                            <div className="absolute bottom-3 left-3 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border">ÉQUIPE_SUR_SITE</div>
+                            {/* INTÉGRATION SECONDAIRE : Étiquette style industriel */}
+                            <div className="absolute bottom-3 left-3 bg-background/95 backdrop-blur font-mono text-[9px] font-bold text-secondary uppercase px-2 py-1 border border-secondary shadow-sm">ÉQUIPE_SUR_SITE</div>
                         </motion.div>
                         <motion.div variants={itemVariants} className="flex flex-col gap-4">
                             <div className="aspect-square bg-muted relative rounded-sm overflow-hidden border border-border group">
                                 {/* TODO: Remplacer le src par la photo "Matériel / Voiture Allemande" */}
                                 <img src="/placeholder-materiel.jpg" alt="Matériel professionnel de polissage" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
-                                <div className="absolute bottom-3 left-3 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border">MATÉRIEL_TECH.</div>
+                                {/* INTÉGRATION SECONDAIRE : Étiquette style industriel */}
+                                <div className="absolute bottom-3 left-3 bg-background/95 backdrop-blur font-mono text-[9px] font-bold text-secondary uppercase px-2 py-1 border border-secondary shadow-sm">MATÉRIEL_TECH.</div>
                             </div>
-                            <div className="flex-1 bg-primary/5 border border-primary/20 flex flex-col items-center justify-center p-6 text-center rounded-sm">
-                                <span className="font-mono text-primary text-xs uppercase tracking-widest mb-2">Partenaire</span>
+                            {/* INTÉGRATION SECONDAIRE : Encart partenaire pour équilibrer la couleur */}
+                            <div className="flex-1 bg-secondary/5 border border-secondary/20 flex flex-col items-center justify-center p-6 text-center rounded-sm transition-colors hover:bg-secondary/10 cursor-default">
+                                <span className="font-mono text-secondary font-bold text-xs uppercase tracking-widest mb-2">Partenaire</span>
                                 <span className="font-black text-foreground uppercase tracking-tight text-xl leading-none">Esthétique<br/>Automobile</span>
                             </div>
                         </motion.div>

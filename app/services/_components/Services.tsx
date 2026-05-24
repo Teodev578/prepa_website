@@ -144,10 +144,10 @@ const Services = () => {
                                 ))}
                             </ul>
 
-                            {/* 🚀 CHANGEMENT : Le bouton devient un vrai lien Link sémantique vers ton formulaire */}
+                            {/* INTÉGRATION SECONDAIRE : Le bouton devient secondaire pour inciter à l'action */}
                             <Link 
                                 href="/contact" 
-                                className="btn-primary flex items-center justify-center text-center group"
+                                className="btn-secondary flex items-center justify-center text-center group"
                             >
                                 <span className="relative z-10">{service.cta}</span>
                             </Link>
@@ -188,7 +188,8 @@ const Services = () => {
                     <motion.div variants={itemVariants} className="border-technical tech-corner p-12 bg-card flex flex-col gap-8 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground vertical-text uppercase">SERVICE_REF: LC_CONVOYAGE_01</div>
                         <div className="flex items-center gap-6">
-                            <div className="w-16 h-16 border flex items-center justify-center font-mono text-xl text-primary font-bold">01</div>
+                            {/* INTÉGRATION SECONDAIRE : Numéro accrocheur */}
+                            <div className="w-16 h-16 border border-secondary flex items-center justify-center font-mono text-xl text-secondary font-bold">01</div>
                             <div>
                                 <h4 className="text-2xl">LOGISTIQUE & CONVOYAGE</h4>
                                 <p className="font-mono text-[10px] text-muted-foreground uppercase py-1 border-b w-fit">VOS VÉHICULES, NOTRE RESPONSABILITÉ</p>
@@ -207,7 +208,8 @@ const Services = () => {
                     <motion.div variants={itemVariants} className="border-technical tech-corner p-12 bg-card flex flex-col gap-8 relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground vertical-text uppercase">SERVICE_REF: LC_FORMATION_02</div>
                         <div className="flex items-center gap-6">
-                            <div className="w-16 h-16 border flex items-center justify-center font-mono text-xl text-primary font-bold">02</div>
+                            {/* INTÉGRATION SECONDAIRE : Numéro accrocheur */}
+                            <div className="w-16 h-16 border border-secondary flex items-center justify-center font-mono text-xl text-secondary font-bold">02</div>
                             <div>
                                 <h4 className="text-2xl">FORMATION DU PERSONNEL</h4>
                                 <p className="font-mono text-[10px] text-muted-foreground uppercase py-1 border-b w-fit">TRANSFORMEZ VOS ÉQUIPES EN EXPERTS</p>
@@ -252,15 +254,18 @@ const Services = () => {
                     >
                         <motion.div variants={itemVariants} className="flex items-center gap-4">
                             <span className="text-primary">PRINCIPE N°1:</span>
-                            <span className="bg-muted px-2 py-1 border rounded-[var(--radius)]">QUALITÉ CONSTANTE</span>
+                            {/* INTÉGRATION SECONDAIRE : Mise en avant de l'engagement */}
+                            <span className="bg-muted px-2 py-1 border border-secondary/30 text-secondary font-bold rounded-[var(--radius)]">QUALITÉ CONSTANTE</span>
                         </motion.div>
                         <motion.div variants={itemVariants} className="flex items-center gap-4">
                             <span className="text-primary">TRANSPARENCE:</span>
-                            <span className="bg-muted px-2 py-1 border rounded-[var(--radius)]">REPORTING DÉTAILLÉ</span>
+                            {/* INTÉGRATION SECONDAIRE : Mise en avant de l'engagement */}
+                            <span className="bg-muted px-2 py-1 border border-secondary/30 text-secondary font-bold rounded-[var(--radius)]">REPORTING DÉTAILLÉ</span>
                         </motion.div>
                         <motion.div variants={itemVariants} className="flex items-center gap-4">
                             <span className="text-primary">SÉCURITÉ:</span>
-                            <span className="bg-muted px-2 py-1 border rounded-[var(--radius)]">CONTRAT PARTENAIRE</span>
+                            {/* INTÉGRATION SECONDAIRE : Mise en avant de l'engagement */}
+                            <span className="bg-muted px-2 py-1 border border-secondary/30 text-secondary font-bold rounded-[var(--radius)]">CONTRAT PARTENAIRE</span>
                         </motion.div>
                     </motion.div>
                 </div>
