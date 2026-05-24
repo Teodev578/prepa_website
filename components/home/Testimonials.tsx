@@ -3,44 +3,48 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
-const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
-
 const TESTIMONIALS = [
   {
-    quote: "Le résultat sur ma Porsche est bluffant. La peinture a retrouvé une profondeur incroyable, bien plus belle qu'à sa sortie d'usine.",
+    quote: "L'externalisation de notre pôle préparation à LAW CLEAN CENTER a transformé notre logistique. Les véhicules d'occasion (VO) sont livrés irréprochables, dans des délais records.",
+    author: "Marc A. - Dir. Ventes",
+    title: "CONCESSION PORSCHE",
+    initials: "MA",
+    rating: 5,
+  },
+  {
+    quote: "Le résultat sur ma carrosserie est bluffant. La peinture a retrouvé une profondeur incroyable, bien plus belle qu'à sa sortie d'usine. Le traitement céramique est une merveille.",
     author: "Julien L.",
     title: "PORSCHE 911 GT3",
     initials: "JL",
+    rating: 5,
   },
   {
-    quote: "Un professionnalisme rare. Chaque détail est inspecté à la loupe. Le traitement céramique facilite énormément mes lavages hebdomadaires.",
-    author: "Marc A.",
-    title: "FERRARI 488",
-    initials: "MA",
+    quote: "Une régularité chirurgicale. Que ce soit pour une simple remise à neuf ou un detailing complet sur un véhicule de direction, leur niveau d'exigence ne baisse jamais.",
+    author: "Thomas B. - Fleet Manager",
+    title: "PARC AUTOMOBILE PRO",
+    initials: "TB",
+    rating: 5,
   },
   {
-    quote: "Prestation intérieure incroyable. J'avais des taches tenaces sur mes cuirs clairs qui ont totalement disparu. Comme neuf.",
+    quote: "Prestation intérieure incroyable. J'avais des taches tenaces sur mes cuirs clairs qui ont totalement disparu. Le véhicule sent le neuf. Un professionnalisme rare.",
     author: "Sophie D.",
     title: "RANGE ROVER VOGUE",
     initials: "SD",
+    rating: 5,
   },
   {
-    quote: "Le soin apporté aux jantes et aux étriers de freins est exceptionnel. On sent la passion du détail à chaque étape du nettoyage.",
-    author: "Thomas B.",
-    title: "BMW M4 COMPETITION",
-    initials: "TB",
+    quote: "Un gain de temps et de rentabilité massif pour notre garage. Transformer cette masse salariale fixe en prestation à la demande a sauvé notre marge sur les ventes.",
+    author: "Antoine V. - Gérant",
+    title: "RÉSEAU MULTIMARQUES",
+    initials: "AV",
+    rating: 5,
   },
   {
-    quote: "C'est simple, ils ont redonné vie à ma carrosserie. L'équipe est super chaleureuse et prodigue d'excellents conseils pour l'entretien.",
+    quote: "Le soin apporté aux jantes et aux étriers de freins est exceptionnel. On sent la passion du détail à chaque étape. L'équipe est super chaleureuse et prodigue d'excellents conseils.",
     author: "Emma R.",
     title: "MERCEDES A45 AMG",
     initials: "ER",
-  },
-  {
-    quote: "Polissage parfait, les micro-rayures ont totalement disparu. La voiture est resplendissante et protégée avec la céramique.",
-    author: "Antoine V.",
-    title: "TESLA MODEL 3",
-    initials: "AV",
+    rating: 5,
   },
 ];
 
@@ -48,14 +52,13 @@ export default function Testimonials() {
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
-  const [isDesktop, setIsDesktop] = useState(false); // 🚀 Sécurité pour ne pas casser le SSR
+  const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
     const updateRange = () => {
       if (scrollRef.current) {
         setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
       }
-      // On n'active l'effet de scroll forcé que sur grand écran (> 1024px)
       setIsDesktop(window.innerWidth >= 1024);
     };
 
@@ -74,107 +77,104 @@ export default function Testimonials() {
   }, []);
 
   const { scrollYProgress } = useScroll({
-    target: isDesktop ? targetRef : undefined, // Désactivé si mobile pour libérer le processeur
+    target: isDesktop ? targetRef : undefined,
   });
 
   const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
   const smoothX = useSpring(x, { stiffness: 280, damping: 85, mass: 0.9, restDelta: 0.0001 });
 
-  const flickerVariants = {
-    initial: { opacity: 0 },
-    visible: {
-        opacity: [0, 1, 0.3, 1, 0.8],
-        transition: { duration: 0.5, ease: "linear" as const }
-    }
-  };
-
   return (
-    // 🚀 SEO : Utilisation de h-auto sur mobile (évite le vide noir de 300vh) et h-[300vh] uniquement sur desktop
     <section 
       ref={targetRef} 
       className={`relative bg-background ${isDesktop ? 'h-[300vh]' : 'h-auto py-16 md:py-24'}`}
     >
-      {/* On utilise une structure standard "sticky" uniquement sur PC */}
       <div className={`${isDesktop ? 'sticky top-0 h-[100dvh] flex items-center overflow-hidden' : 'w-full'}`}>
         
-        {/* Background Decor - Caché sur mobile pour la lisibilité */}
+        {/* Typographie géante en arrière-plan */}
         {isDesktop && (
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full text-center z-0 select-none opacity-[0.02]">
-            <span className="font-sans font-black text-[35vw] leading-none uppercase">LOGS</span>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none w-full text-center z-0 select-none opacity-[0.02] mix-blend-overlay">
+            <span className="font-sans font-black text-[35vw] leading-none uppercase tracking-tighter">TRUST</span>
           </div>
         )}
 
         <div className="flex flex-col w-full">
-          {/* Header */}
-          <div className="px-6 md:px-12 lg:px-24 mb-12 relative z-10">
+          {/* En-tête de section */}
+          <div className="px-6 md:px-12 lg:px-24 mb-10 relative z-10">
             <div className="relative">
               <div className="flex items-center gap-4 mb-4">
-                {/* INTÉGRATION SECONDAIRE : Le tag de log système devient secondaire (alerte/donnée) */}
-                <span className="font-mono text-xs text-secondary font-bold uppercase tracking-widest bg-secondary/10 px-2 py-1">
-                  SYS.LOG.03
+                <span className="font-mono text-[10px] text-secondary font-bold uppercase tracking-widest border border-secondary/30 bg-secondary/5 px-2 py-1">
+                  SYS.LOG.03 // FEEDBACK
                 </span>
-                <div className="w-24 h-[1px] bg-foreground opacity-20"></div>
+                <div className="w-16 h-[1px] bg-border"></div>
               </div>
               
-              {/* 🚀 SEO : Titre H2 sémantique clair pour les moteurs */}
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.9] mb-6">
-                AVIS & <span className="text-primary">RAPPORTS CLIENTS</span>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.95] mb-6">
+                AVIS & <br className="hidden md:block" />
+                <span className="text-primary">RAPPORTS CLIENTS.</span>
               </h2>
             </div>
           </div>
 
-          {/* 🚀 RESPONSIVE & SEO GRID : 
-              Sur Desktop: Défilé horizontal propulsé par Framer Motion.
-              Sur Mobile: Véritable grille de lecture verticale native, 100% accessible et indexable. */}
+          {/* Grille / Slider */}
           <motion.div 
             ref={scrollRef}
             style={isDesktop ? { x: smoothX } : undefined} 
             className={`flex ${
               isDesktop 
-                ? 'gap-6 pl-24 pr-24 flex-row w-max' 
+                ? 'gap-8 pl-24 pr-24 flex-row w-max pb-12' 
                 : 'grid grid-cols-1 md:grid-cols-2 gap-6 px-6 md:px-12'
             }`}
           >
             {TESTIMONIALS.map((testimonial, index) => (
               <article
                 key={index}
-                className={`flex-shrink-0 bg-card border border-border group relative overflow-hidden flex flex-col rounded-[var(--radius)] ${
-                  isDesktop ? 'w-[35vw]' : 'w-full'
+                className={`flex-shrink-0 bg-background border border-border hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden flex flex-col ${
+                  isDesktop ? 'w-[32vw] min-w-[400px]' : 'w-full'
                 }`}
               >
+                {/* Filigrane Guillemet géant */}
+                <div className="absolute -top-10 -right-4 text-[12rem] font-serif text-primary opacity-[0.03] select-none pointer-events-none group-hover:opacity-[0.06] transition-opacity duration-500">
+                  "
+                </div>
+
                 {/* Top Accent line & ID */}
-                <div className="flex items-center justify-between px-6 py-2 border-b border-border bg-muted/50">
-                  <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest">
+                <div className="flex items-center justify-between px-6 py-3 border-b border-border bg-muted/20">
+                  <span className="font-mono text-[9px] text-muted-foreground uppercase tracking-widest flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 animate-pulse"></span>
                     ID: {testimonial.initials}-{index.toString().padStart(4, '0')}
                   </span>
-                  {/* INTÉGRATION SECONDAIRE : Label de vérification de l'avis comme un statut système */}
-                  <span className="font-mono text-[9px] text-secondary font-bold uppercase tracking-widest leading-none">
-                    {"// VERIFIED_LOG"}
+                  
+                  {/* Note étoiles technique */}
+                  <span className="font-mono text-[10px] text-foreground font-bold flex items-center gap-2">
+                    <span className="text-primary">★★★★★</span>
+                    <span className="opacity-50">[{testimonial.rating}.0]</span>
                   </span>
                 </div>
                 
                 {/* Content */}
-                <div className="p-6 md:p-10 flex-1 flex flex-col justify-between">
-                  {/* blockquote est la balise HTML sémantique officielle pour les citations (surpuissant pour Google) */}
-                  <blockquote className="mb-8 font-sans font-medium text-lg md:text-xl lg:text-2xl leading-tight text-foreground uppercase tracking-tight">
-                    {/* Les guillemets restent primary pour la déco pure */}
-                    <span className="text-primary font-black mr-2">"</span>
-                    {testimonial.quote}
-                    <span className="text-primary font-black ml-2">"</span>
+                <div className="p-8 md:p-10 flex-1 flex flex-col justify-between relative z-10">
+                  
+                  {/* Le texte repasse en casse normale pour une lisibilité parfaite */}
+                  <blockquote className="mb-10 font-sans text-base md:text-lg leading-relaxed text-muted-foreground group-hover:text-foreground transition-colors duration-300">
+                    "{testimonial.quote}"
                   </blockquote>
 
-                  <div className="mt-auto pt-6 border-t border-border border-dashed font-mono uppercase">
+                  {/* Footer de la carte */}
+                  <div className="mt-auto pt-5 border-t border-border border-dashed font-mono uppercase">
                     <div className="flex items-end justify-between gap-4">
                       <div>
-                        <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">COMMANDITAIRE</span>
-                        <span className="font-black text-xs md:text-sm text-foreground tracking-widest">
+                        <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1.5">
+                          COMMANDITAIRE
+                        </span>
+                        <span className="font-bold text-xs md:text-sm text-foreground tracking-wider">
                           {testimonial.author}
                         </span>
                       </div>
                       <div className="text-right">
-                        <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1">UNITÉ SPEC.</span>
-                        {/* INTÉGRATION SECONDAIRE : Le modèle de véhicule mis en avant (la "machine" réparée) */}
-                        <span className="font-bold text-[10px] text-secondary tracking-wider">
+                        <span className="block text-[8px] tracking-[0.2em] text-muted-foreground mb-1.5">
+                          UNITÉ / PROJET
+                        </span>
+                        <span className="font-bold text-[10px] text-secondary tracking-widest bg-secondary/10 px-2 py-1 rounded-sm">
                           {testimonial.title}
                         </span>
                       </div>
@@ -182,10 +182,9 @@ export default function Testimonials() {
                   </div>
                 </div>
                 
-                {/* Hover line indicators */}
-                <div className="w-full h-1 bg-border relative">
-                  {/* La barre de progression/hover reste primaire pour la cohérence globale */}
-                  <div className="absolute top-0 left-0 h-full bg-primary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
+                {/* Hover line bottom */}
+                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-transparent">
+                  <div className="absolute top-0 left-0 h-full bg-primary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
                 </div>
               </article>
             ))}
