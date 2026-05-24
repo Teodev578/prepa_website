@@ -59,7 +59,7 @@ export default function AboutSection() {
                             A propos de nous
                             <br className="hidden md:block"/>
                             {/* Soulignement primaire conservé pour la structure principale */}
-                            <span className="text-primary border-b-4 border-primary">LAW CLEAN CENTER</span>
+                            {/*<span className="text-primary border-b-4 border-primary">LAW CLEAN CENTER</span>*/}
                         </motion.h2>
                     </div>
                 </div>
