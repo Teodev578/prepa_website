@@ -5,7 +5,6 @@ import { createClient } from '@/lib/client';
 
 const customEase = [0.16, 1, 0.3, 1] as const;
 
-// 🛠️ ALIGNEMENT ANIMATIONS : Même configuration que le Portfolio
 const textRevealVariants = {
     hidden: { y: "100%", opacity: 0 },
     show: {
@@ -34,7 +33,6 @@ interface FormField {
 }
 
 const Contact = () => {
-    // Ordre d'origine conservé (PARTICULIER d'abord)
     const [profile, setProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
     const profiles = ['PARTICULIER', 'ENTREPRISE'] as const;
 
@@ -145,7 +143,7 @@ const Contact = () => {
         <section className="bg-background text-foreground h-auto py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
             <div className="max-w-7xl mx-auto">
 
-                {/* 🛠️ ALIGNEMENT DU HEADER */}
+                {/* 🛠️ HEADER */}
                 <div className="mb-12 sm:mb-16 relative">
                     <div className="mb-4 flex items-center gap-3 sm:gap-4">
                         <motion.div
@@ -153,7 +151,8 @@ const Contact = () => {
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false, margin: "-50px" }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-8 sm:w-12 h-[1px] bg-primary origin-left"
+                            /* 🛠️ COULEUR SUBTILE : Opacité réduite sur la ligne */
+                            className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
                         />
                         <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
                             ÉTABLIR UN PROJET
@@ -169,7 +168,7 @@ const Contact = () => {
                             className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
                             DEMANDE <br /> 
-                            DE DEVIS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-60">↓</span>
+                            DE DEVIS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30">↓</span>
                         </motion.h1>
                     </div>
 
@@ -179,14 +178,15 @@ const Contact = () => {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, margin: "-50px" }}
-                            className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border pl-4 sm:pl-6 mt-4 sm:mt-6"
+                            /* 🛠️ COULEUR SUBTILE : Bordure discrète */
+                            className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border/50 pl-4 sm:pl-6 mt-4 sm:mt-6"
                         >
                             Remplissez le formulaire ci-dessous afin de nous aider à comprendre vos besoins et à agir en conséquence.
                         </motion.p>
                     </div>
                 </div>
 
-                {/* 🛠️ SÉLECTEUR DE PROFIL : Amélioration du contraste pour une meilleure lisibilité */}
+                {/* Sélecteur de profil */}
                 <div className="flex relative gap-0 border bg-muted mb-12 sm:mb-16 p-1 w-fit rounded-[var(--radius)]">
                     {profiles.map((p) => (
                         <button
@@ -194,13 +194,14 @@ const Contact = () => {
                             onClick={() => setProfile(p)}
                             className="px-6 py-2.5 md:px-8 md:py-3 font-mono text-xs font-bold uppercase tracking-wider transition-colors duration-300 relative z-10 focus:outline-none"
                         >
-                            <span className={`relative z-20 ${profile === p ? 'text-background' : 'text-muted-foreground hover:text-foreground'}`}>
+                            <span className={`relative z-20 transition-colors duration-300 ${profile === p ? 'text-background' : 'text-muted-foreground hover:text-foreground'}`}>
                                 {p === 'PARTICULIER' ? 'Particulier' : 'Professionnel / Entreprise'}
                             </span>
                             {profile === p && (
                                 <motion.div
                                     layoutId="profileSelector"
-                                    className="absolute inset-0 bg-primary rounded-[calc(var(--radius)-0.25rem)] shadow-sm"
+                                    /* 🛠️ COULEUR SUBTILE : Utilisation de bg-foreground (le bleu ardoise foncé) pour un contraste élégant sans être flashy */
+                                    className="absolute inset-0 bg-foreground rounded-[calc(var(--radius)-0.25rem)] shadow-sm"
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 />
                             )}
@@ -208,12 +209,12 @@ const Contact = () => {
                     ))}
                 </div>
 
-                {/* Formulaire Unique et Linéaire */}
+                {/* Formulaire */}
                 <form onSubmit={handleSubmit} className="space-y-12">
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-10 relative min-h-[150px]">
                         {isLoadingData ? (
-                            <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] sm:text-xs text-muted-foreground animate-pulse uppercase tracking-widest text-center">
+                            <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] sm:text-xs text-muted-foreground/60 animate-pulse uppercase tracking-widest text-center">
                                 Chargement des critères du formulaire...
                             </div>
                         ) : fields.length === 0 ? (
@@ -231,13 +232,14 @@ const Contact = () => {
                                         className="flex flex-col gap-2 w-full"
                                     >
                                         <label className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                                            {/* 🛠️ COULEUR SUBTILE : L'astérisque garde la couleur secondaire mais plus discrète */}
-                                            {field.field_label} {field.is_required && <span className="text-secondary opacity-70 ml-1">*</span>}
+                                            {/* 🛠️ COULEUR SUBTILE : L'astérisque est moins agressive avec opacity-40 */}
+                                            {field.field_label} {field.is_required && <span className="text-secondary opacity-40 ml-1">*</span>}
                                         </label>
 
                                         {field.field_type === 'select' && field.options ? (
                                             <select
-                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-secondary transition-colors font-sans text-base outline-none cursor-pointer text-foreground"
+                                                /* 🛠️ COULEUR SUBTILE : Le focus utilise border-foreground au lieu de secondary pour rester neutre */
+                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-foreground transition-colors font-sans text-base outline-none cursor-pointer text-foreground"
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
                                                 required={field.is_required}
@@ -250,7 +252,7 @@ const Contact = () => {
                                         ) : (
                                             <input
                                                 type={field.field_type === 'email' ? 'email' : 'text'}
-                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-secondary transition-colors font-sans text-base outline-none placeholder:text-muted-foreground/40 placeholder:normal-case text-foreground"
+                                                className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-foreground transition-colors font-sans text-base outline-none placeholder:text-muted-foreground/40 placeholder:normal-case text-foreground"
                                                 placeholder={field.is_required ? "Champ obligatoire" : "Facultatif"}
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
@@ -263,7 +265,6 @@ const Contact = () => {
                         )}
                     </div>
 
-                    {/* Zone de notification de statut et d'envoi */}
                     <div className="pt-8">
                         {statusMessage && (
                             <motion.div
@@ -292,13 +293,15 @@ const Contact = () => {
                     </div>
                 </form>
 
-                {/* Footer pratique : Alignement des paddings avec Portfolio */}
+                {/* Footer pratique */}
                 <div className="mt-24 sm:mt-32 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-8 sm:pt-12 border-t border-border font-mono text-[9px] sm:text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest relative">
-                    <div className="absolute top-0 left-0 w-8 sm:w-12 h-[1px] bg-primary" />
+                    {/* 🛠️ COULEUR SUBTILE : Ligne avec opacité réduite */}
+                    <div className="absolute top-0 left-0 w-8 sm:w-12 h-[1px] bg-primary/40" />
                     
                     <div className="space-y-1.5 sm:space-y-2">
                         <span className="text-foreground font-bold flex items-center gap-2">
-                            <span className="w-1 h-1 bg-primary rounded-full"></span> Zone d'intervention
+                            {/* 🛠️ COULEUR SUBTILE : Points avec opacité réduite */}
+                            <span className="w-1 h-1 bg-primary/50 rounded-full"></span> Zone d'intervention
                         </span>
                         <div>
                             Région Île-de-France<br />
@@ -307,7 +310,7 @@ const Contact = () => {
                     </div>
                     <div className="space-y-1.5 sm:space-y-2">
                         <span className="text-foreground font-bold flex items-center gap-2">
-                            <span className="w-1 h-1 bg-primary rounded-full"></span> Garanties Pro
+                            <span className="w-1 h-1 bg-primary/50 rounded-full"></span> Garanties Pro
                         </span>
                         <div>
                             Assurance spécifique incluse<br />
