@@ -210,12 +210,12 @@ export default function Hero() {
               ))}
             </h1>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-muted-foreground font-medium text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-12 max-w-lg relative z-20"
-            >
-              Avec Law Clean Center, vous n'avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
-            </motion.p>
+<motion.p
+               variants={itemVariants}
+               className="text-muted-foreground font-medium text-sm sm:text-base md:text-lg leading-relaxed mb-8 md:mb-12 max-w-lg relative z-20"
+             >
+               Avec <strong className="font-bold">Law Clean Center</strong>, vous n'avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
+             </motion.p>
             
             <motion.div
               variants={itemVariants}

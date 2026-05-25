@@ -41,9 +41,9 @@ const Services = () => {
             price: 'SUR DEVIS',
             details: [
                 'Vous avez besoin d\'un préparateur expert ?',
-                'Nous intervenons pour gérer vos pics d\'activité, livraisons ou événements.',
-                'Aucune contrainte de recrutement, une flexibilité totale.',
-                'Votre activité ne s\'arrête jamais, la nôtre non plus.'
+                'D\'un simple coup d\'aspirateur à une remise à neuf complète, on s\'adapte.',
+                "Profitez d'un service flexible, rapide et sans prise de tête.",
+                "Retrouvez le plaisir de rouler dans une voiture impeccable."
             ],
             cta: 'OBTENIR DU RENFORT'
         },
