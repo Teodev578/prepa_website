@@ -6,9 +6,9 @@ import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 
 const images = [
-  "/images/1.jpeg",
+  "/images/8.jpeg",
   "/images/2.jpeg",
-  "/images/3.jpeg",
+  "/images/1.jpeg",
 ];
 
 const customEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -80,7 +80,7 @@ export default function Hero() {
     }
   };
 
-  const titleLines = ["NUMERO", "#1."];
+  const titleLines = ["PREPA.", "AUTO."];
 
   return (
     <section 
@@ -210,7 +210,7 @@ export default function Hero() {
               variants={itemVariants}
               className="text-foreground/80 font-medium text-xs sm:text-sm md:text-lg leading-relaxed mb-6 sm:mb-8 md:mb-12 max-w-[100%] md:max-w-md relative z-20"
             >
-              Externalisez la préparation esthétique et le convoyage de vos véhicules. Transformez vos charges fixes en coûts 100% variables et accélérez vos ventes.
+              Avec Law Clean Center, vous n'avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
             </motion.p>
             
             <motion.div
@@ -238,7 +238,7 @@ export default function Hero() {
                 >
                   <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                   <span className="w-1.5 h-1.5 bg-secondary group-hover:bg-background block rounded-full transition-colors relative z-10"></span>
-                  <span className="relative z-10 group-hover:text-secondary-foreground transition-colors">Faite votre devis</span>
+                  <span className="relative z-10 group-hover:text-secondary-foreground transition-colors">Faites votre devis</span>
                 </motion.div>
               </Link>
             </motion.div>

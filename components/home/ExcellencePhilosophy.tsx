@@ -17,28 +17,33 @@ const ExcellencePhilosophy = () => {
                     {/* Titre */}
                     <h2 className="font-sans font-black text-4xl sm:text-5xl lg:text-5xl xl:text-6xl uppercase tracking-tighter leading-[0.95] text-foreground mb-10 mt-4 lg:mt-0">
                         NOTRE EXPERTISE <br />
-                        <span className="text-primary">EN IMAGES.</span>
+                        EN IMAGES.
                     </h2>
-
+                    {/* Sous-titre */}
+                    <p className="text-lg md:text-xl text-muted-foreground mb-8">
+                        De la simple remise à neuf au nettoyage extrême, parcourez nos récentes interventions et constatez par vous-même l&apos;impact de notre savoir-faire.
+                    </p>
                     {/* Paragraphes */}
                     <div className="flex flex-col gap-8 text-sm md:text-base text-muted-foreground leading-relaxed">
+                        {/*
                         <div className="space-y-3">
                             <h3 className="font-sans font-bold text-foreground uppercase tracking-tight text-xs border-b pb-1 border-border/60 inline-block w-full">
                                 La qualité au premier regard
                             </h3>
                             <p className="text-sm">
-                                Ne nous croyez pas sur parole, jugez sur pièces. Notre niveau d'exigence se reflète instantanément dans chaque véhicule préparé par les équipes LAW CLEAN CENTER.
+                                Ne nous croyez pas sur parole, jugez sur pièces. Notre niveau d&apos;exigence se reflète instantanément dans chaque véhicule préparé par les équipes LAW CLEAN CENTER.
                             </p>
                         </div>
                         
                         <div className="space-y-3">
                             <h3 className="font-sans font-bold text-foreground uppercase tracking-tight text-xs border-b pb-1 border-border/60 inline-block w-full">
-                                L'exigence du détail
+                                L&apos;exigence du détail
                             </h3>
                             <p className="text-sm">
-                                De la simple remise à neuf au nettoyage extrême, parcourez nos récentes interventions et constatez par vous-même l'impact de notre savoir-faire.
+                                De la simple remise à neuf au nettoyage extrême, parcourez nos récentes interventions et constatez par vous-même l&apos;impact de notre savoir-faire.
                             </p>
                         </div>
+                        */}
                     </div>
 
                 </div>
@@ -49,7 +54,7 @@ const ExcellencePhilosophy = () => {
                     {/* Image 1 */}
                     <div className="relative border-b border-r border-border group overflow-hidden h-[25vh] lg:h-[35vh] min-h-[200px]">
                         <Image 
-                            src="/images/1.jpeg" 
+                            src="/images/6.jpeg" 
                             fill 
                             alt="Préparation esthétique automobile - Réalisation 1" 
                             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" 
@@ -62,7 +67,7 @@ const ExcellencePhilosophy = () => {
                     {/* Image 2 */}
                     <div className="relative border-b lg:border-r border-border group overflow-hidden h-[25vh] lg:h-[35vh] min-h-[200px]">
                         <Image 
-                            src="/images/2.jpeg" 
+                            src="/images/7.jpeg" 
                             fill 
                             alt="Préparation esthétique automobile - Réalisation 2" 
                             className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" 
@@ -112,12 +117,12 @@ const ExcellencePhilosophy = () => {
                     </div>
 
                     {/* Bloc 6 : Call To Action Massif (Redirection Portfolio) */}
-                    <Link href="/portfolio" className="relative bg-secondary text-secondary-foreground group flex flex-col items-center justify-center p-4 text-center transition-colors hover:bg-foreground hover:text-background overflow-hidden h-[25vh] lg:h-[35vh] min-h-[200px]">
+                    <Link href="/portfolio" className="relative bg-primary text-primary-foreground group flex flex-col items-center justify-center p-4 text-center transition-colors hover:bg-secondary hover:text-secondary-foreground overflow-hidden h-[25vh] lg:h-[35vh] min-h-[200px]">
                         {/* Décoration technique animée */}
                         <div className="absolute top-4 right-4 w-2 h-2 border-t-2 border-r-2 border-current opacity-50 group-hover:animate-ping" />
                         
                         <span className="font-mono text-[9px] uppercase tracking-widest font-bold mb-3 opacity-80">
-                            // GALERIE COMPLÈTE
+                            {"// GALERIE COMPLÈTE"}
                         </span>
                         <h3 className="font-sans font-black text-lg xl:text-xl uppercase tracking-tighter leading-tight mb-4">
                             VOIR TOUTES NOS <br/>RÉALISATIONS
