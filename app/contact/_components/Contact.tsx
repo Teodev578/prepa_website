@@ -34,6 +34,7 @@ interface FormField {
 }
 
 const Contact = () => {
+    // Ordre d'origine conservé (PARTICULIER d'abord)
     const [profile, setProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
     const profiles = ['PARTICULIER', 'ENTREPRISE'] as const;
 
@@ -144,7 +145,7 @@ const Contact = () => {
         <section className="bg-background text-foreground h-auto py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
             <div className="max-w-7xl mx-auto">
 
-                {/* 🛠️ ALIGNEMENT DU HEADER : Calqué exactement sur Portfolio */}
+                {/* 🛠️ ALIGNEMENT DU HEADER */}
                 <div className="mb-12 sm:mb-16 relative">
                     <div className="mb-4 flex items-center gap-3 sm:gap-4">
                         <motion.div
@@ -168,7 +169,7 @@ const Contact = () => {
                             className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
                             DEMANDE <br /> 
-                            DE DEVIS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2">↓</span>
+                            DE DEVIS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-60">↓</span>
                         </motion.h1>
                     </div>
 
@@ -185,7 +186,7 @@ const Contact = () => {
                     </div>
                 </div>
 
-                {/* Sélecteur de profil (Particulier / Entreprise) */}
+                {/* 🛠️ SÉLECTEUR DE PROFIL : Amélioration du contraste pour une meilleure lisibilité */}
                 <div className="flex relative gap-0 border bg-muted mb-12 sm:mb-16 p-1 w-fit rounded-[var(--radius)]">
                     {profiles.map((p) => (
                         <button
@@ -193,13 +194,13 @@ const Contact = () => {
                             onClick={() => setProfile(p)}
                             className="px-6 py-2.5 md:px-8 md:py-3 font-mono text-xs font-bold uppercase tracking-wider transition-colors duration-300 relative z-10 focus:outline-none"
                         >
-                            <span className={profile === p ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}>
+                            <span className={`relative z-20 ${profile === p ? 'text-background' : 'text-muted-foreground hover:text-foreground'}`}>
                                 {p === 'PARTICULIER' ? 'Particulier' : 'Professionnel / Entreprise'}
                             </span>
                             {profile === p && (
                                 <motion.div
                                     layoutId="profileSelector"
-                                    className="absolute inset-0 bg-primary rounded-[calc(var(--radius)-0.25rem)]"
+                                    className="absolute inset-0 bg-primary rounded-[calc(var(--radius)-0.25rem)] shadow-sm"
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 />
                             )}
@@ -212,7 +213,7 @@ const Contact = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-10 relative min-h-[150px]">
                         {isLoadingData ? (
-                            <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] sm:text-xs text-secondary animate-pulse uppercase tracking-widest text-center">
+                            <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] sm:text-xs text-muted-foreground animate-pulse uppercase tracking-widest text-center">
                                 Chargement des critères du formulaire...
                             </div>
                         ) : fields.length === 0 ? (
@@ -230,7 +231,8 @@ const Contact = () => {
                                         className="flex flex-col gap-2 w-full"
                                     >
                                         <label className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                                            {field.field_label} {field.is_required && <span className="text-secondary">*</span>}
+                                            {/* 🛠️ COULEUR SUBTILE : L'astérisque garde la couleur secondaire mais plus discrète */}
+                                            {field.field_label} {field.is_required && <span className="text-secondary opacity-70 ml-1">*</span>}
                                         </label>
 
                                         {field.field_type === 'select' && field.options ? (
@@ -276,13 +278,13 @@ const Contact = () => {
                         <button
                             type="submit"
                             disabled={isSubmitting || isLoadingData}
-                            className="w-full border-2 border-secondary bg-secondary text-secondary-foreground p-5 md:p-6 flex flex-col items-center justify-center gap-1 transition-all duration-300 hover:bg-transparent hover:text-secondary font-bold rounded-[var(--radius)] shadow-sm disabled:opacity-50 disabled:hover:bg-secondary disabled:hover:text-secondary-foreground"
+                            className="btn-secondary w-full md:w-auto md:min-w-[300px] flex flex-col items-center justify-center gap-1.5 opacity-100 disabled:opacity-50 mx-0"
                         >
-                            <span className="text-lg md:text-xl uppercase tracking-tight">
-                                {isSubmitting ? 'Transmission de votre dossier...' : 'Envoyer ma demande de devis'}
+                            <span className="text-sm md:text-base tracking-widest uppercase">
+                                {isSubmitting ? 'Transmission...' : 'Envoyer ma demande'}
                             </span>
                             {!isSubmitting && (
-                                <span className="font-mono text-[10px] tracking-widest text-secondary-foreground/70 uppercase mt-1">
+                                <span className="font-mono text-[8px] md:text-[9px] tracking-widest opacity-70 uppercase">
                                     Une réponse vous sera apportée sous 24h
                                 </span>
                             )}
