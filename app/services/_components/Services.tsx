@@ -3,7 +3,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import Image from 'next/image'; // 🚀 Import ajouté pour la gestion optimisée des images
 
 const customEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -34,14 +33,12 @@ const textRevealVariants = {
 };
 
 const Services = () => {
-    // 🚀 Ajout d'une propriété "image" pour chaque service
     const services = [
         {
             id: 'RO-01',
             title: 'VOTRE PRÉPARATEUR EN RENFORT',
             subtitle: 'VOTRE EXPERT DIRECTEMENT SUR SITE',
             price: 'SUR DEVIS',
-            image: '/images/1.jpeg', 
             details: [
                 'Vous avez besoin d\'un préparateur expert ?',
                 'Nous intervenons pour gérer vos pics d\'activité, livraisons ou événements.',
@@ -55,7 +52,6 @@ const Services = () => {
             title: 'ACCÉLÉREZ VOS VENTES',
             subtitle: 'DÉSENGORGEZ VOTRE PARC AUTOMOBILE',
             price: 'SUR DEVIS',
-            image: '/images/2.jpeg',
             details: [
                 'Votre parc de véhicules d\'occasion est saturé ?',
                 'Nous prenons en charge la préparation de vos lots de véhicules en un temps record.',
@@ -69,9 +65,8 @@ const Services = () => {
             title: 'DÉLÉGUEZ EN TOUTE CONFIANCE',
             subtitle: 'VOTRE PÔLE PRÉPARATION PARTENAIRE',
             price: 'SUR DEVIS',
-            image: '/images/3.jpeg',
             details: [
-                'Et si vous nous confiez l\'intégralité de votre pôle préparation ?',
+                'Et si vous nous confions l\'intégralité de votre pôle préparation ?',
                 'Transformez vos charges fixes en un coût variable et maîtrisé.',
                 'Gagnez en visibilité grâce à un suivi clair de nos actions.',
                 'Libérez vos équipes pour la vente.'
@@ -112,7 +107,7 @@ const Services = () => {
                 </div>
             </section>
 
-            {/* Fiches Techniques Grid (Avec Images) */}
+            {/* Fiches Techniques Grid */}
             <section className="px-6 md:px-12 max-w-7xl mx-auto">
                 <motion.div
                     variants={containerVariants}
@@ -127,27 +122,12 @@ const Services = () => {
                             key={service.id}
                             className="relative flex flex-col h-full bg-card border-r border-b border-border group hover:bg-muted/50 transition-colors duration-500 cursor-pointer overflow-hidden"
                         >
-                            {/* 🖼️ Bloc Image "Scanner" */}
-                            <div className="relative w-full h-56 md:h-64 overflow-hidden border-b border-border">
-                                <Image 
-                                    src={service.image} 
-                                    alt={service.title} 
-                                    fill 
-                                    className="object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700 group-hover:scale-105"
-                                />
-                                {/* Overlay technique */}
-                                <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-colors duration-500" />
-                                <div className="absolute top-4 left-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border z-10 text-foreground font-bold flex items-center gap-2">
-                                    <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse" />
-                                    {service.id}
-                                </div>
-                            </div>
-
                             {/* Contenu Texte */}
                             <div className="p-8 md:p-10 flex flex-col flex-grow">
-                                <div className="flex justify-between items-start mb-10">
-                                    <div className="font-mono text-[9px] text-muted-foreground tracking-widest">
-                                        TARIFICATION:
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="font-mono text-[9px] text-muted-foreground tracking-widest flex items-center gap-2">
+                                        <span className="w-1.5 h-1.5 bg-primary rounded-full" />
+                                        {service.id}
                                     </div>
                                     <div className="font-mono text-[10px] text-foreground font-black border-b border-primary pb-1">
                                         {service.price}
@@ -182,7 +162,7 @@ const Services = () => {
                 </motion.div>
             </section>
 
-            {/* Services Stratégiques (Avec Image d'illustration transversale) */}
+            {/* Services Stratégiques */}
             <section className="px-6 md:px-12 mt-24 md:mt-40 max-w-7xl mx-auto">
                 <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
                     <div>
@@ -215,11 +195,6 @@ const Services = () => {
                     {/* Logistique & Convoyage */}
                     <motion.div variants={itemVariants} className="border border-border p-8 md:p-12 bg-card flex flex-col gap-8 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500">
                         <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground [writing-mode:vertical-rl] uppercase tracking-widest">REF: LC_CONVOYAGE_01</div>
-                        
-                        {/* 🖼️ Petite image d'en-tête interne */}
-                        <div className="relative w-full h-32 mb-4 overflow-hidden border border-border/50 rounded-sm">
-                            <Image src="/images/4.jpeg" alt="Convoyage" fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                        </div>
 
                         <div className="flex items-center gap-6 relative z-10">
                             <div className="w-12 h-12 border border-secondary flex items-center justify-center font-mono text-lg text-secondary font-bold shrink-0">01</div>
@@ -236,11 +211,6 @@ const Services = () => {
                     {/* Formation du Personnel */}
                     <motion.div variants={itemVariants} className="border border-border p-8 md:p-12 bg-card flex flex-col gap-8 relative overflow-hidden group hover:border-primary/50 transition-colors duration-500">
                         <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground [writing-mode:vertical-rl] uppercase tracking-widest">REF: LC_FORMATION_02</div>
-                        
-                        {/* 🖼️ Petite image d'en-tête interne */}
-                        <div className="relative w-full h-32 mb-4 overflow-hidden border border-border/50 rounded-sm">
-                            <Image src="/images/5.jpeg" alt="Formation" fill className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-105" />
-                        </div>
 
                         <div className="flex items-center gap-6 relative z-10">
                             <div className="w-12 h-12 border border-secondary flex items-center justify-center font-mono text-lg text-secondary font-bold shrink-0">02</div>
@@ -256,12 +226,10 @@ const Services = () => {
                 </motion.div>
             </section>
 
-            {/* Notre Engagement Partenaire (Avec Grande Image) */}
+            {/* Notre Engagement Partenaire */}
             <section className="px-6 md:px-12 mt-24 md:mt-32 max-w-7xl mx-auto overflow-hidden">
-                <div className="border-t border-border pt-16 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-                    
-                    {/* Colonne Gauche : Texte */}
-                    <div className="order-2 lg:order-1">
+                <div className="border-t border-border pt-16">
+                    <div className="max-w-3xl">
                         <div className="overflow-hidden mb-8">
                             <motion.h3
                                 variants={textRevealVariants}
@@ -297,31 +265,6 @@ const Services = () => {
                             </motion.div>
                         </motion.div>
                     </div>
-
-                    {/* 🖼️ Colonne Droite : Grande Image Illustrative */}
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1, ease: customEase }}
-                        viewport={{ once: true }}
-                        className="order-1 lg:order-2 relative w-full aspect-square lg:aspect-[4/3] border border-border p-2 bg-card"
-                    >
-                        <div className="relative w-full h-full overflow-hidden group">
-                            <Image 
-                                src="/images/6.jpeg" 
-                                alt="Partenariat de confiance" 
-                                fill 
-                                className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-primary/5 mix-blend-overlay" />
-                            
-                            {/* Éléments HUD sur l'image */}
-                            <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-3 py-2 border border-border text-foreground font-bold">
-                                SYSTÈME OPÉRATIONNEL // OK
-                            </div>
-                        </div>
-                    </motion.div>
-
                 </div>
             </section>
         </div>
