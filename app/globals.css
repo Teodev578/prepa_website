@@ -3,11 +3,13 @@
 :root {
   /* Fond ultra-propre, blanc/bleu glacier "galerie" */
   --background: #DAF0EE;
-  --foreground: #201c1d;
+  
+  /* 🛠️ NOUVEAU : Un bleu ardoise extrêmement profond au lieu d'un noir chaud */
+  --foreground: #0f212f;
 
   /* Cartes et sections */
   --card: #ffffff;
-  --card-foreground: #201c1d;
+  --card-foreground: #0f212f; /* Aligné avec le foreground */
 
   /* L'ACCENT FORT : Ton bleu technique */
   --primary: #1c669b;
@@ -17,10 +19,10 @@
   --secondary: #4f7330;
   --secondary-foreground: #ffffff;
 
-  /* Muted & Borders : gris froids et fins pour le côté diagramme */
-  --muted: #f2f2f2;
-  --muted-foreground: #666666;
-  --border: #c8d9d7; /* Légèrement teinté bleu pour s'intégrer au fond */
+  /* 🛠️ NOUVEAU : Muted & Borders refroidis pour s'intégrer au thème glacier */
+  --muted: #ebf5f4; /* Un gris très très clair légèrement bleuté */
+  --muted-foreground: #546a7b; /* Un gris-bleu élégant au lieu du gris plat #666 */
+  --border: #c8d9d7; 
   --input: #c8d9d7;
 
   /* Rayon de courbure : tranchant et industriel */
