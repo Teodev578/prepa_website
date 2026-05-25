@@ -200,7 +200,7 @@ export default function Services() {
                                 viewport={{ once: true }}
                                 className="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-[0.9] pb-2"
                             >
-                                NOS SERVICES <br /><span className="text-primary opacity-50">STRATÉGIQUES.</span>
+                                NOS SERVICES <br /><span className="text-primary opacity-50">STRATEGIQUES.</span>
                             </motion.h3>
                         </div>
                         <motion.div
@@ -277,7 +277,6 @@ export default function Services() {
                             </motion.h3>
                         </div>
                         <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed mb-10">
-                            Pour nous, un partenariat réussi repose sur une confiance totale. C'est pourquoi la transparence est au cœur de notre méthode. Fini le flou sur les prestations : grâce à nos reportings clairs, vous suivez chaque intervention, maîtrisez vos coûts et mesurez concrètement le retour sur investissement.
                         </p>
                     </div>
 
