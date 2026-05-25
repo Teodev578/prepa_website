@@ -194,14 +194,13 @@ const Contact = () => {
                             onClick={() => setProfile(p)}
                             className="px-6 py-2.5 md:px-8 md:py-3 font-mono text-xs font-bold uppercase tracking-wider transition-colors duration-300 relative z-10 focus:outline-none"
                         >
-                            <span className={`relative z-20 transition-colors duration-300 ${profile === p ? 'text-background' : 'text-muted-foreground hover:text-foreground'}`}>
+                            <span className={`relative z-20 transition-colors duration-300 ${profile === p ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
                                 {p === 'PARTICULIER' ? 'Particulier' : 'Professionnel / Entreprise'}
                             </span>
                             {profile === p && (
                                 <motion.div
                                     layoutId="profileSelector"
-                                    /* 🛠️ COULEUR SUBTILE : Utilisation de bg-foreground (le bleu ardoise foncé) pour un contraste élégant sans être flashy */
-                                    className="absolute inset-0 bg-foreground rounded-[calc(var(--radius)-0.25rem)] shadow-sm"
+                                    className="absolute inset-0 bg-primary rounded-[calc(var(--radius)-0.25rem)] shadow-sm"
                                     transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                                 />
                             )}
