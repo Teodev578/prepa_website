@@ -112,27 +112,6 @@ export default function Services() {
                             </motion.h1>
                         </div>
                     </div>
-
-                    <motion.div 
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ delay: 0.5, duration: 1 }}
-                        className="hidden md:flex flex-col items-end gap-3"
-                    >
-                        <div className="w-24 h-24 border border-border rounded-full relative flex items-center justify-center">
-                            <div className="w-1 h-1 bg-secondary rounded-full" />
-                            <motion.div 
-                                animate={{ rotate: 360 }} 
-                                transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
-                                className="absolute inset-0 border-t border-secondary rounded-full opacity-50 origin-center"
-                            />
-                            <div className="absolute inset-0 border border-secondary rounded-full scale-[0.6] opacity-20" />
-                        </div>
-                        <div className="font-mono text-[8px] text-muted-foreground tracking-[0.2em] uppercase text-right">
-                            SCAN_OPERATIONAL <br/>
-                            SYS: ONLINE
-                        </div>
-                    </motion.div>
                 </div>
             </section>
 

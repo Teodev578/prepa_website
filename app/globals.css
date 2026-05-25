@@ -63,7 +63,8 @@
 
 @layer base {
   * {
-    @apply border-border tracking-normal;
+    /* Suppression du tracking-normal global pour laisser les classes utilitaires gérer l'espacement */
+    @apply border-border;
   }
 
   body {
@@ -76,11 +77,12 @@
     cursor: pointer;
   }
 
-  /* Titres standards : Moins "écrasants", plus structurés */
+  /* 🛠️ NOUVEAU : Titres standards revus pour la DA "Swiss" (Medium + Ultra serré) */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-extrabold uppercase leading-[1.15] tracking-tight text-foreground;
+    @apply font-medium uppercase leading-[0.95] tracking-tighter text-foreground;
   }
 
+  /* 🛠️ NOUVEAU : Paragraphes plus élégants */
   p {
     @apply text-base leading-relaxed text-foreground/80 font-medium;
   }
@@ -107,32 +109,37 @@
   }
 
   /* =========================================
-     TYPOGRAPHIE SÉMANTIQUE
+     TYPOGRAPHIE SÉMANTIQUE (Mise à jour DA "Swiss Design")
      ========================================= */
   
-  /* Titres massifs (Hero) : Ici on garde l'effet bloc ultra-serré */
+  /* Titres massifs (Hero) : On remplace le "black" par "medium" avec un tracking négatif puissant */
   .text-display {
-    @apply font-black text-6xl md:text-[8rem] lg:text-[10rem] tracking-tighter leading-[0.85];
+    @apply font-medium text-6xl md:text-[8rem] lg:text-[10rem] tracking-[-0.04em] leading-[0.85] uppercase;
   }
 
   /* Titres de section */
   .text-section-title {
-    @apply font-black text-4xl md:text-6xl tracking-tighter leading-tight;
+    @apply font-medium text-4xl md:text-6xl tracking-[-0.03em] leading-[0.9] uppercase;
   }
 
   /* Titres dans les cartes */
   .text-card-title {
-    @apply font-extrabold text-2xl md:text-3xl tracking-tight;
+    @apply font-medium text-2xl md:text-3xl tracking-tight uppercase leading-[1.1];
   }
 
-  /* Annotations et labels techniques (Style Terminal) */
+  /* 🛠️ NOUVEAU : Annotations style parenthèses (ex: "(Sur devis)", "(01)") */
+  .text-annotation {
+    @apply font-sans text-sm font-medium tracking-tight text-foreground/90;
+  }
+
+  /* Annotations et labels techniques (On conserve l'ADN technique pour les petits détails) */
   .text-label {
-    @apply font-mono text-[10px] md:text-xs uppercase tracking-[0.25em] font-bold text-primary;
+    @apply font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] font-medium text-primary;
   }
 
   /* Listes de détails */
   .text-detail {
-    @apply font-mono text-xs md:text-sm uppercase leading-relaxed tracking-wide text-muted-foreground;
+    @apply font-mono text-xs md:text-sm uppercase leading-relaxed tracking-wider text-muted-foreground;
   }
 
   /* =========================================
@@ -140,22 +147,22 @@
      ========================================= */
   
   .btn-primary {
-    @apply w-full py-4 md:py-5 border border-primary font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all duration-300 rounded-[var(--radius)] cursor-pointer bg-primary text-primary-foreground shadow-sm;
+    @apply w-full py-4 md:py-5 border border-primary font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] transition-all duration-300 rounded-[var(--radius)] cursor-pointer bg-primary text-primary-foreground shadow-sm;
     @apply hover:bg-background hover:text-primary;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
   .btn-primary>span {
-    @apply font-bold;
+    @apply font-medium; /* Passé de bold à medium pour l'élégance */
   }
 
   .btn-secondary {
-    @apply w-full py-4 md:py-5 border border-secondary font-mono text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all duration-300 rounded-[var(--radius)] cursor-pointer bg-transparent text-secondary;
+    @apply w-full py-4 md:py-5 border border-secondary font-mono text-[10px] md:text-xs uppercase tracking-[0.15em] transition-all duration-300 rounded-[var(--radius)] cursor-pointer bg-transparent text-secondary;
     @apply hover:bg-secondary hover:text-secondary-foreground hover:shadow-md;
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 focus-visible:ring-offset-background;
   }
 
   .btn-secondary>span {
-    @apply font-bold;
+    @apply font-medium; /* Passé de bold à medium pour l'élégance */
   }
 }
