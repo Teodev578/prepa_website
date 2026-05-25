@@ -168,7 +168,7 @@ const Contact = () => {
                             className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
                             DEMANDE <br /> 
-                            DE DEVIS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30">↓</span>
+                            DE DEVIS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30"></span>
                         </motion.h1>
                     </div>
 
@@ -215,7 +215,7 @@ const Contact = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 md:gap-x-16 gap-y-8 md:gap-y-10 relative min-h-[150px]">
                         {isLoadingData ? (
                             <div className="absolute inset-0 flex items-center justify-center font-mono text-[10px] sm:text-xs text-muted-foreground/60 animate-pulse uppercase tracking-widest text-center">
-                                Chargement des critères du formulaire...
+                                Chargement...
                             </div>
                         ) : fields.length === 0 ? (
                             <div className="col-span-full text-sm text-muted-foreground italic">

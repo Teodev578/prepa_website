@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  /* Fond ultra-propre, blanc/bleu glacier "galerie" */
-  --background: #DAF0EE;
+  /* Fond ultra-propre, blanc/bleu glacier "galerie" ffffff */
+  --background: #ffffff;
   
   /* 🛠️ NOUVEAU : Un bleu ardoise extrêmement profond au lieu d'un noir chaud */
   --foreground: #0f212f;
 
-  /* Cartes et sections */
-  --card: #ffffff;
+  /* Cartes et sections DAF0EE*/
+  --card: #DAF0EE;
   --card-foreground: #0f212f; /* Aligné avec le foreground */
 
   /* L'ACCENT FORT : Ton bleu technique */

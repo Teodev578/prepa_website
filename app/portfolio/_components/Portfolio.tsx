@@ -146,7 +146,7 @@ export default function Portfolio() {
                 {/* Grid des projets */}
                 {isLoading ? (
                     <div className="min-h-[300px] flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center px-4 animate-pulse uppercase tracking-widest">
-                        CHARGEMENT DES RAPPORTS DE TERRAIN...
+                        CHARGEMENT...
                     </div>
                 ) : (
                     // 🛠️ RESPONSIVITÉ GRID : Ajustement des gouttières (gap) pour le mobile
