@@ -223,9 +223,7 @@ export default function Hero() {
             >
               <Link href="/services" className="w-full sm:w-auto">
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full min-h-[56px] relative px-6 md:px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-sm transition-transform"
+                  className="w-full min-h-[56px] relative px-6 md:px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors hover:bg-primary/90"
                 >
                   <span className="relative z-10 flex items-center justify-center gap-3">
                     DÉCOUVRIR NOS SERVICES
@@ -236,9 +234,7 @@ export default function Hero() {
 
               <Link href="/contact" className="w-full sm:w-auto">
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  className="w-full min-h-[56px] relative px-6 md:px-8 py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-3 rounded-sm transition-all hover:border-secondary"
+                  className="w-full min-h-[56px] relative px-6 md:px-8 py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-3 rounded-[var(--radius)] transition-all hover:border-secondary"
                 >
                   <div className="absolute inset-0 bg-secondary translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                   <span className="w-1.5 h-1.5 bg-secondary group-hover:bg-background block rounded-full transition-colors relative z-10" />

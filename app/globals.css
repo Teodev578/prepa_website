@@ -54,6 +54,8 @@
   --color-border: var(--border);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
 
   /* Fontes : utilisent les variables next/font chargées dans layout.tsx */
   --font-family-sans: var(--font-sans);
@@ -164,5 +166,12 @@
 
   .btn-secondary>span {
     @apply font-medium; /* Passé de bold à medium pour l'élégance */
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

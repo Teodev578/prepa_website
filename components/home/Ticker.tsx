@@ -25,7 +25,7 @@ export default function ServiceTicker() {
     <div className="w-full border-b border-border bg-background overflow-hidden relative flex items-center py-3 md:py-4 select-none">
       
       {/* Effet d'ombre sur les bords pour une apparition fluide du texte */}
-      <div className="absolute left-0 top-0 bottom-0 w-8 md:w-24 bg-gradient-to-r from-background to-transparent z-10 pointer-events-none" />
+      <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-32 md:w-48 bg-gradient-to-r from-background via-background to-transparent z-10 pointer-events-none" />
       <div className="absolute right-0 top-0 bottom-0 w-8 md:w-24 bg-gradient-to-l from-background to-transparent z-10 pointer-events-none" />
 
       {/* Petit indicateur "Live" fixe à gauche */}

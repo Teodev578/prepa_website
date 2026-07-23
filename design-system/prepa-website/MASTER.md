@@ -18,25 +18,24 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#0F766E` | `--color-primary` |
-| Secondary | `#14B8A6` | `--color-secondary` |
-| CTA/Accent | `#0369A1` | `--color-cta` |
-| Background | `#F0FDFA` | `--color-background` |
-| Text | `#134E4A` | `--color-text` |
+| Primary | `#1c669b` | `--color-primary` |
+| Secondary | `#4f7330` | `--color-secondary` |
+| Background | `#ffffff` | `--color-background` |
+| Text | `#0f212f` | `--color-foreground` |
+| Card | `#DAF0EE` | `--color-card` |
 
-**Color Notes:** Trust teal + professional blue
+**Color Notes:** Bleu ardoise technique + accents verts. Mode sombre très profond.
 
 ### Typography
 
-- **Heading Font:** Lexend
-- **Body Font:** Source Sans 3
-- **Mood:** corporate, trustworthy, accessible, readable, professional, clean
-- **Google Fonts:** [Lexend + Source Sans 3](https://fonts.google.com/share?selection.family=Lexend:wght@300;400;500;600;700|Source+Sans+3:wght@300;400;500;600;700)
+- **Heading Font:** Poppins
+- **Body Font:** Poppins
+- **Mono Font:** IBM Plex Mono
+- **Mood:** corporate, technical, industrial, authoritative
+- **Google Fonts:** Poppins + IBM Plex Mono
 
 **CSS Import:**
-```css
-@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap');
-```
+Utilise `next/font/google` dans `layout.tsx`.
 
 ### Spacing Variables
 

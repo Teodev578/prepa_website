@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
+import { Star } from "lucide-react";
 
 const TESTIMONIALS = [
   {
@@ -146,7 +147,11 @@ export default function Testimonials() {
                   
                   {/* Note étoiles technique */}
                   <span className="font-mono text-[10px] text-foreground font-bold flex items-center gap-2">
-                    <span className="text-primary">★★★★★</span>
+                    <span className="text-primary flex gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-3 h-3 fill-current" />
+                      ))}
+                    </span>
                     <span className="opacity-50">[{testimonial.rating}.0]</span>
                   </span>
                 </div>
