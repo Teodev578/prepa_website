@@ -70,9 +70,9 @@ export default function Hero() {
   return (
     <section 
       ref={sectionRef}
-      className="bg-background min-h-[100dvh] w-full flex flex-col items-center justify-center relative overflow-hidden"
+      className="bg-background h-[100dvh] w-full relative overflow-hidden -mt-20"
     >
-      {/* BACKGROUND IMAGE WITH PARALLAX */}
+      {/* BACKGROUND IMAGE WITH PARALLAX — couvre tout le viewport */}
       <motion.div
         style={{ y: smoothYParallax, opacity: heroOpacity }}
         className="absolute inset-0 z-0 w-full h-full"
@@ -101,22 +101,23 @@ export default function Hero() {
         <div className="absolute inset-0 bg-background/85 dark:bg-background/85 z-10" />
       </motion.div>
 
-      {/* FOREGROUND CONTENT */}
+      {/* FOREGROUND CONTENT — pt-20 pour passer sous le header, h-full + flex pour centrer */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="show"
         style={{ y: smoothTextYParallax }}
-        className="relative z-20 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center h-full mt-20"
+        className="relative z-20 w-full h-full pt-20 flex flex-col items-start justify-center"
       >
-        <motion.div variants={itemVariants} className="font-mono text-[10px] sm:text-xs uppercase font-semibold tracking-widest text-primary mb-6 flex items-center gap-4">
-          <span className="w-8 h-[1px] bg-primary"></span>
-          SPÉCIALISTE ÎLE-DE-FRANCE
-        </motion.div>
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
+          <motion.div variants={itemVariants} className="font-mono text-[10px] sm:text-xs uppercase font-semibold tracking-widest text-primary mb-6 flex items-center gap-4">
+            <span className="w-8 h-[1px] bg-primary"></span>
+            SPÉCIALISTE ÎLE-DE-FRANCE
+          </motion.div>
 
-        <h1 className="font-sans font-black text-6xl sm:text-7xl md:text-[8rem] lg:text-[10rem] tracking-tighter uppercase text-foreground leading-[0.85] mb-8 relative w-full">
+        <h1 className="font-sans font-black text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] xl:text-[8rem] tracking-tighter uppercase text-foreground leading-[0.85] mb-8 relative w-full">
           <span className="sr-only">Law Clean Center - Préparation Esthétique B2B</span>
-          <RevealText text={"PREPA.\nAUTO."} delay={0.4} />
+          <RevealText text={"PREPARATEUR \n AUTO."} delay={0.4} />
         </h1>
 
         <motion.p
@@ -155,6 +156,7 @@ export default function Hero() {
             </Link>
           </Magnetic>
         </motion.div>
+        </div>
       </motion.div>
       
       {/* SCROLL INDICATOR */}
