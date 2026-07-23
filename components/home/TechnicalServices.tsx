@@ -7,18 +7,19 @@ import RevealText from '@/components/RevealText';
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
+// Hoisted to module scope — static data, no local state
+const titleLines = ["NOS FORFAITS", "PARTENAIRES."];
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 15 },
+    visible: { 
+        opacity: 1, 
+        y: 0, 
+        transition: { duration: 0.5, ease: BEZIER } 
+    }
+};
+
 const TechnicalServices = () => {
-    const titleLines = ["NOS FORFAITS", "PARTENAIRES."];
-
-    const cardVariants = {
-        hidden: { opacity: 0, y: 15 },
-        visible: { 
-            opacity: 1, 
-            y: 0, 
-            transition: { duration: 0.5, ease: BEZIER } 
-        }
-    };
-
     return (
         <section className="bg-background text-foreground relative border-y border-border mt-0 overflow-hidden w-full max-w-[100vw] h-auto">
             {/* Zone du Grand Titre de la Section */}
@@ -94,7 +95,7 @@ const TechnicalServices = () => {
                     </div>
 
                     <div className="pt-10">
-                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-secondary group-hover:text-secondary-foreground transition-all rounded-[var(--radius)]">
+                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-secondary group-hover:text-secondary-foreground transition-[background-color,color] rounded-[var(--radius)]">
                             ÉTABLIR UN CONTRAT 6 MOIS
                         </Link>
                     </div>

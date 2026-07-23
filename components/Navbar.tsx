@@ -7,6 +7,14 @@ import { useTheme } from '@/components/ThemeProvider';
 import Logo from '@/components/Logo';
 import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 
+// Hoisted to module scope — static navigation data, no local state
+const links = [
+    { label: "ACCUEIL", href: "/" },
+    { label: "SERVICES", href: "/services" },
+    { label: "PORTFOLIO", href: "/portfolio" },
+    { label: "CONTACT", href: "/contact" },
+];
+
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isHidden, setIsHidden] = useState(false);
@@ -24,13 +32,6 @@ export default function Navbar() {
         }
         setIsScrolled(latest > 20);
     });
-
-    const links = [
-        { label: "ACCUEIL", href: "/" },
-        { label: "SERVICES", href: "/services" },
-        { label: "PORTFOLIO", href: "/portfolio" },
-        { label: "CONTACT", href: "/contact" },
-    ];
 
     return (
         <motion.header 
@@ -92,6 +93,7 @@ export default function Navbar() {
                         </div>
 
                         <button 
+                            type="button"
                             id="theme-toggle" 
                             className="w-16 xl:w-20 h-full border-l border-border/20 flex items-center justify-center hover:bg-muted/40 text-foreground hover:text-primary transition-colors focus:outline-none" 
                             onClick={toggleTheme} 
@@ -117,7 +119,7 @@ export default function Navbar() {
                 </Link>
 
                 <div className="flex items-center gap-2">
-                    <button id="theme-toggle-mobile" className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-primary transition-none text-foreground" onClick={toggleTheme} aria-label="Changer le mode de couleur sur mobile">
+                    <button type="button" id="theme-toggle-mobile" className="min-w-[44px] min-h-[44px] flex items-center justify-center hover:text-primary transition-none text-foreground" onClick={toggleTheme} aria-label="Changer le mode de couleur sur mobile">
                         {theme === 'dark' ? (
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                         ) : (
@@ -126,6 +128,7 @@ export default function Navbar() {
                     </button>
 
                     <button 
+                        type="button"
                         onClick={() => setIsMenuOpen(!isMenuOpen)}
                         className="min-w-[44px] min-h-[44px] flex flex-col justify-center items-end gap-1.5 cursor-pointer focus:outline-none"
                         aria-label={isMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}

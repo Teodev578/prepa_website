@@ -15,6 +15,20 @@ const images = [
 
 const customEase = [0.16, 1, 0.3, 1] as const;
 
+// Hoisted to module scope — no local state captured
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.8 },
+  },
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: customEase } },
+};
+
 export default function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
@@ -52,19 +66,6 @@ export default function Hero() {
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
-
-  const containerVariants: Variants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.8 },
-    },
-  };
-
-  const itemVariants: Variants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.8, ease: customEase } },
-  };
 
   return (
     <section 

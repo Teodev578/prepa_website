@@ -128,7 +128,7 @@ export default function Testimonials() {
           >
             {TESTIMONIALS.map((testimonial, index) => (
               <article
-                key={index}
+                key={testimonial.initials}
                 className={`flex-shrink-0 bg-background border border-border hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden flex flex-col ${
                   isDesktop ? 'w-[32vw] min-w-[400px]' : 'w-full'
                 }`}

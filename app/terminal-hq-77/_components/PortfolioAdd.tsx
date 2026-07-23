@@ -201,20 +201,20 @@ export default function PortfolioAdd() {
                 <h2 className="text-lg font-semibold mb-4">2. Informations principales</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Nom du projet *</label>
-                        <input className="border border-border p-3 rounded bg-background" name="title" value={formData.title} placeholder="Ex: Rénovation Peugeot 208" onChange={handleTextChange} disabled={isSubmitting} />
+                        <label htmlFor="pa-title" className="text-xs font-semibold text-muted-foreground uppercase">Nom du projet *</label>
+                        <input id="pa-title" className="border border-border p-3 rounded bg-background" name="title" value={formData.title} placeholder="Ex: Rénovation Peugeot 208" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Service réalisé</label>
-                        <input className="border border-border p-3 rounded bg-background" name="treatment" value={formData.treatment} placeholder="Ex: Polissage" onChange={handleTextChange} disabled={isSubmitting} />
+                        <label htmlFor="pa-treatment" className="text-xs font-semibold text-muted-foreground uppercase">Service réalisé</label>
+                        <input id="pa-treatment" className="border border-border p-3 rounded bg-background" name="treatment" value={formData.treatment} placeholder="Ex: Polissage" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Modèle ou Objet</label>
-                        <input className="border border-border p-3 rounded bg-background" name="model" value={formData.model} placeholder="Ex: Berline noire" onChange={handleTextChange} disabled={isSubmitting} />
+                        <label htmlFor="pa-model" className="text-xs font-semibold text-muted-foreground uppercase">Modèle ou Objet</label>
+                        <input id="pa-model" className="border border-border p-3 rounded bg-background" name="model" value={formData.model} placeholder="Ex: Berline noire" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Taille d'affichage</label>
-                        <select className="border border-border p-3 rounded bg-background" name="size" value={formData.size} onChange={handleTextChange} disabled={isSubmitting}>
+                        <label htmlFor="pa-size" className="text-xs font-semibold text-muted-foreground uppercase">Taille d'affichage</label>
+                        <select id="pa-size" className="border border-border p-3 rounded bg-background" name="size" value={formData.size} onChange={handleTextChange} disabled={isSubmitting}>
                             <option value="small">Taille normale</option>
                             <option value="medium">Taille moyenne</option>
                             <option value="large">Grande taille</option>
@@ -228,23 +228,23 @@ export default function PortfolioAdd() {
                 <h2 className="text-lg font-semibold mb-4">3. Les petits détails</h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Temps passé</label>
-                        <input className="border border-border p-3 rounded bg-background" name="time_spent" value={formData.time_spent} placeholder="Ex: 4 heures" onChange={handleTextChange} disabled={isSubmitting} />
+                        <label htmlFor="pa-time-spent" className="text-xs font-semibold text-muted-foreground uppercase">Temps passé</label>
+                        <input id="pa-time-spent" className="border border-border p-3 rounded bg-background" name="time_spent" value={formData.time_spent} placeholder="Ex: 4 heures" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Action phare</label>
-                        <input className="border border-border p-3 rounded bg-background" name="solution" value={formData.solution} placeholder="Ex: Nettoyage vapeur" onChange={handleTextChange} disabled={isSubmitting} />
+                        <label htmlFor="pa-solution" className="text-xs font-semibold text-muted-foreground uppercase">Action phare</label>
+                        <input id="pa-solution" className="border border-border p-3 rounded bg-background" name="solution" value={formData.solution} placeholder="Ex: Nettoyage vapeur" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label className="text-xs font-semibold text-muted-foreground uppercase">Bénéfice</label>
-                        <input className="border border-border p-3 rounded bg-background" name="impact" value={formData.impact} placeholder="Ex: Aspect neuf" onChange={handleTextChange} disabled={isSubmitting} />
+                        <label htmlFor="pa-impact" className="text-xs font-semibold text-muted-foreground uppercase">Bénéfice</label>
+                        <input id="pa-impact" className="border border-border p-3 rounded bg-background" name="impact" value={formData.impact} placeholder="Ex: Aspect neuf" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
-                    <textarea className="border border-border p-3 rounded bg-background h-24" name="context" value={formData.context} placeholder="Problème de départ ?" onChange={handleTextChange} disabled={isSubmitting} />
-                    <textarea className="border border-border p-3 rounded bg-background h-24" name="work_done" value={formData.work_done} placeholder="Travaux (virgule entre chaque étape)" onChange={handleTextChange} disabled={isSubmitting} />
-                    <textarea className="border border-border p-3 rounded bg-background h-24" name="result" value={formData.result} placeholder="Résultat final ?" onChange={handleTextChange} disabled={isSubmitting} />
+                    <textarea aria-label="Problème de départ" className="border border-border p-3 rounded bg-background h-24" name="context" value={formData.context} placeholder="Problème de départ ?" onChange={handleTextChange} disabled={isSubmitting} />
+                    <textarea aria-label="Travaux réalisés" className="border border-border p-3 rounded bg-background h-24" name="work_done" value={formData.work_done} placeholder="Travaux (virgule entre chaque étape)" onChange={handleTextChange} disabled={isSubmitting} />
+                    <textarea aria-label="Résultat final" className="border border-border p-3 rounded bg-background h-24" name="result" value={formData.result} placeholder="Résultat final ?" onChange={handleTextChange} disabled={isSubmitting} />
                 </div>
             </div>
 

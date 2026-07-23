@@ -5,34 +5,38 @@ import Link from "next/link";
 
 const BEZIER = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
-export default function CTA() {
-  const titleLines = ["Vous aussi faites partie", "de nos nombreux clients", "satisfaits."];
+// Hoisted to module scope — static data, no local state
+const titleLines = ["Vous aussi faites partie", "de nos nombreux clients", "satisfaits."];
 
-  const flickerVariants = {
-    initial: { opacity: 0 },
-    visible: {
-        opacity: [0, 1, 0.3, 1, 0.8],
-        transition: {
-            duration: 0.5,
-            times: [0, 0.2, 0.4, 0.6, 1],
-            ease: "linear" as const,
-        }
-    }
-  };
+const flickerVariants = {
+  initial: { opacity: 0 },
+  visible: {
+      opacity: [0, 1, 0.3, 1, 0.8],
+      transition: {
+          duration: 0.5,
+          times: [0, 0.2, 0.4, 0.6, 1],
+          ease: "linear" as const,
+      }
+  }
+};
+
+const CORNER_MARKERS = [
+  { pos: "top-6 left-6", delay: 0.1, id: "top-left" },
+  { pos: "top-6 right-6", delay: 0.2, id: "top-right" },
+  { pos: "bottom-6 left-6", delay: 0.3, id: "bottom-left" },
+  { pos: "bottom-6 right-6", delay: 0.4, id: "bottom-right" },
+];
+
+export default function CTA() {
 
   return (
     // 🛠️ OPTIMISATION : Remplacement des paddings géants py-32/md:py-52 par le standard py-16/md:py-24
     <section className="py-16 md:py-24 px-6 bg-background relative border-b border-border overflow-hidden flex justify-center items-center h-auto">
       {/* Technical background marks (Corners) */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        {[
-          { pos: "top-6 left-6", delay: 0.1 },
-          { pos: "top-6 right-6", delay: 0.2 },
-          { pos: "bottom-6 left-6", delay: 0.3 },
-          { pos: "bottom-6 right-6", delay: 0.4 },
-        ].map((marker, i) => (
+      {CORNER_MARKERS.map((marker) => (
           <motion.div
-            key={i}
+            key={marker.id}
             initial="initial"
             whileInView="visible"
             viewport={{ once: false, amount: 0.2 }}
@@ -66,14 +70,14 @@ export default function CTA() {
           viewport={{ once: false, amount: 0.1 }}
           className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-sans font-bold tracking-tight mb-8 md:mb-12 leading-[1.05] relative text-foreground uppercase"
         >
-          {titleLines.map((line, i) => (
-            <div key={i} className="overflow-hidden relative pb-1 md:pb-0">
+          {titleLines.map((line) => (
+            <div key={line} className="overflow-hidden relative pb-1 md:pb-0">
               <motion.div
                 variants={{
                   hidden: { y: "110%" },
                   visible: { y: 0 }
                 }}
-                transition={{ duration: 0.7, delay: 0.1 + (i * 0.1), ease: BEZIER }}
+                transition={{ duration: 0.7, delay: 0.1 + (titleLines.indexOf(line) * 0.1), ease: BEZIER }}
               >
                 {line}
               </motion.div>

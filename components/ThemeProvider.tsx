@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
 type Theme = "light" | "dark";
 
@@ -23,20 +23,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const initial: Theme = stored ?? (prefersDark ? "dark" : "light");
     setTheme(initial);
-    document.documentElement.classList.toggle("dark", initial === "dark");
   }, []);
 
+  // Side effects run in an effect (never inside the updater), so React can
+  // call the state updater multiple times safely in concurrent / strict mode.
+  useEffect(() => {
+    localStorage.setItem("theme", theme);
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, [theme]);
+
   const toggleTheme = () => {
-    setTheme((prev) => {
-      const next: Theme = prev === "light" ? "dark" : "light";
-      localStorage.setItem("theme", next);
-      document.documentElement.classList.toggle("dark", next === "dark");
-      return next;
-    });
+    // Pure updater — returns next state only, no side effects.
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
+  const contextValue = useMemo(
+    () => ({ theme, toggleTheme }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [theme] // toggleTheme is stable (no closure over mutable state)
+  );
+
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );

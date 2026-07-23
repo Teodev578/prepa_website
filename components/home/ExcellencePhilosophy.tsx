@@ -41,7 +41,8 @@ const ExcellencePhilosophy = () => {
                                     src="/images/6.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 1" 
-                                    className="object-cover transition-all duration-700 group-hover:scale-105" 
+                                    sizes="(max-width: 768px) 100vw, 50vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -57,7 +58,8 @@ const ExcellencePhilosophy = () => {
                                     src="/images/7.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 2" 
-                                    className="object-cover transition-all duration-700 group-hover:scale-105" 
+                                    sizes="(max-width: 768px) 50vw, 25vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -73,7 +75,8 @@ const ExcellencePhilosophy = () => {
                                     src="/images/3.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 3" 
-                                    className="object-cover transition-all duration-700 group-hover:scale-105" 
+                                    sizes="(max-width: 768px) 50vw, 25vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -89,7 +92,8 @@ const ExcellencePhilosophy = () => {
                                     src="/images/4.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 4" 
-                                    className="object-cover transition-all duration-700 group-hover:scale-105" 
+                                    sizes="(max-width: 768px) 100vw, 25vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -105,7 +109,8 @@ const ExcellencePhilosophy = () => {
                                     src="/images/5.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 5" 
-                                    className="object-cover transition-all duration-700 group-hover:scale-105" 
+                                    sizes="(max-width: 768px) 50vw, 25vw"
+                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />

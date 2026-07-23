@@ -32,14 +32,15 @@ function Counter({ from, to, duration = 2, suffix = "" }: { from: number, to: nu
   return <span ref={nodeRef}>{from}{suffix}</span>;
 }
 
-export default function Stats() {
-  const stats = [
-    { value: 150, suffix: "+", label: "VÉHICULES/MOIS", description: "Capacité de traitement actuelle sur l'ensemble de nos hubs." },
-    { value: 24, suffix: "H", label: "DÉLAI MOYEN", description: "Rotation ultra-rapide pour maximiser la rentabilité de votre parc." },
-    { value: 100, suffix: "%", label: "CHARGES VARIABLES", description: "Transformez vos coûts fixes en flexibilité totale." },
-    { value: 5, suffix: "", label: "CONCESSIONS PARTENAIRES", description: "Des leaders du marché nous font confiance au quotidien." }
-  ];
+// Hoisted to module scope — static data, no local state
+const stats = [
+  { value: 150, suffix: "+", label: "VÉHICULES/MOIS", description: "Capacité de traitement actuelle sur l'ensemble de nos hubs." },
+  { value: 24, suffix: "H", label: "DÉLAI MOYEN", description: "Rotation ultra-rapide pour maximiser la rentabilité de votre parc." },
+  { value: 100, suffix: "%", label: "CHARGES VARIABLES", description: "Transformez vos coûts fixes en flexibilité totale." },
+  { value: 5, suffix: "", label: "CONCESSIONS PARTENAIRES", description: "Des leaders du marché nous font confiance au quotidien." }
+];
 
+export default function Stats() {
   return (
     <section className="py-24 bg-background border-b border-border relative overflow-hidden">
       {/* Decorative Background */}
@@ -51,7 +52,7 @@ export default function Stats() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {stats.map((stat, idx) => (
             <motion.div 
-              key={idx}
+              key={stat.label}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -70,7 +71,7 @@ export default function Stats() {
                 {stat.description}
               </p>
               
-              <div className="absolute top-0 -left-6 w-[2px] h-0 bg-primary group-hover:h-full transition-all" />
+              <div className="absolute top-0 -left-6 w-[2px] h-0 bg-primary group-hover:h-full transition-[height]" />
             </motion.div>
           ))}
         </div>

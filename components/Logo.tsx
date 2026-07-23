@@ -14,6 +14,7 @@ const Logo = ({ className = "" }: { className?: string }) => {
           src="/logo.png" /* ⚠️ REMPLACE "/logo.png" PAR LE NOM EXACT DE TON FICHIER */
           alt="Logo Law Clean Center"
           fill
+          sizes="(max-width: 768px) 24px, 32px"
           className="object-contain"
           priority /* Très important pour le SEO et LCP : charge le logo instantanément */
         />

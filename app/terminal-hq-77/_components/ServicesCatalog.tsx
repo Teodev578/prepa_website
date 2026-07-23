@@ -135,7 +135,7 @@ export default function ServicesCatalog() {
                     <h1 className="text-2xl font-bold text-primary mb-2">Prestations & Tarifs</h1>
                     <p className="text-muted-foreground">Configurez vos services de detailing et vos grilles tarifaires.</p>
                 </div>
-                <button 
+                <button type="button" 
                     onClick={handleOpenCreate}
                     className="bg-primary text-primary-foreground font-bold px-5 py-2.5 rounded hover:bg-primary/90 transition-colors text-sm self-start sm:self-center"
                 >
@@ -193,7 +193,7 @@ export default function ServicesCatalog() {
                                     </span>
                                 </label>
 
-                                <button 
+                                <button type="button" 
                                     onClick={() => handleOpenEdit(service)}
                                     className="text-xs font-bold text-primary hover:bg-primary/10 px-3 py-1.5 rounded transition-colors"
                                 >
@@ -219,8 +219,9 @@ export default function ServicesCatalog() {
                         <div className="p-6 space-y-4 overflow-y-auto">
                             {/* CODE ID - Uniquement en création */}
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Code technique unique</label>
+                                <label htmlFor="sc-id" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Code technique unique</label>
                                 <input 
+                                    id="sc-id"
                                     type="text" 
                                     disabled={!!editingService}
                                     value={formData.id}
@@ -233,8 +234,9 @@ export default function ServicesCatalog() {
 
                             {/* LIBELLÉ */}
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Nom affiché sur le site</label>
+                                <label htmlFor="sc-label" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Nom affiché sur le site</label>
                                 <input 
+                                    id="sc-label"
                                     type="text" 
                                     value={formData.label}
                                     onChange={e => setFormData({ ...formData, label: e.target.value })}
@@ -246,8 +248,9 @@ export default function ServicesCatalog() {
 
                             {/* PRIX */}
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Prix estimatif de base (€)</label>
+                                <label htmlFor="sc-price" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Prix estimatif de base (€)</label>
                                 <input 
+                                    id="sc-price"
                                     type="number" 
                                     value={formData.base_price}
                                     onChange={e => setFormData({ ...formData, base_price: Number(e.target.value) })}
@@ -260,8 +263,9 @@ export default function ServicesCatalog() {
 
                             {/* DESCRIPTION */}
                             <div className="flex flex-col gap-1.5">
-                                <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Description technique de la prestation</label>
+                                <label htmlFor="sc-description" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Description technique de la prestation</label>
                                 <textarea 
+                                    id="sc-description"
                                     value={formData.description}
                                     onChange={e => setFormData({ ...formData, description: e.target.value })}
                                     className="border border-border p-3 rounded bg-background text-sm focus:border-primary h-28 resize-none leading-relaxed" 
@@ -272,14 +276,14 @@ export default function ServicesCatalog() {
                         </div>
 
                         <div className="p-6 border-t border-border flex justify-end gap-3 bg-card">
-                            <button 
+                            <button
                                 type="button" 
                                 onClick={() => setIsModaleOpen(false)}
                                 className="px-5 py-2 rounded font-semibold text-muted-foreground hover:bg-muted transition-colors text-sm"
                             >
                                 Annuler
                             </button>
-                            <button 
+                            <button
                                 type="submit" 
                                 disabled={isSubmitting}
                                 className="px-5 py-2 rounded font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-colors text-sm disabled:opacity-50"

@@ -167,7 +167,7 @@ export default function QuotesInbox() {
                         {/* 🛠️ BARRE DE FILTRAGE */}
                         <div className="flex overflow-x-auto pb-2 gap-2 custom-scrollbar -mx-4 px-4 md:mx-0 md:px-0">
                             {(['TOUTES', 'NOUVEAU', 'EN_COURS', 'DEVIS_ENVOYÉ', 'REFUSÉ'] as FilterOption[]).map((filter) => (
-                                <button
+                                <button type="button"
                                     key={filter}
                                     onClick={() => handleFilterClick(filter)}
                                     className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all whitespace-nowrap border ${activeFilter === filter
@@ -236,11 +236,12 @@ export default function QuotesInbox() {
 
                                     {/* Sélecteur de statut */}
                                     <div className="flex flex-col gap-1.5 w-full sm:w-auto shrink-0">
-                                        <label className="text-xs font-bold uppercase text-muted-foreground tracking-wider">Statut du dossier</label>
+                                        <label htmlFor="qi-status" className="text-xs font-bold uppercase text-muted-foreground tracking-wider">Statut du dossier</label>
                                         <select
+                                            id="qi-status"
                                             value={selectedQuote.status}
                                             onChange={(e) => handleStatusChange(selectedQuote.id, e.target.value as QuoteStatus)}
-                                            className="border border-border py-2 px-3 rounded-lg text-sm bg-background font-bold text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none cursor-pointer shadow-sm transition-all"
+                                            className="border border-border py-2 px-3 rounded-lg text-sm bg-background font-bold text-foreground focus:border-primary focus:ring-1 focus:ring-primary outline-none cursor-pointer shadow-sm transition-[border-color,box-shadow]"
                                         >
                                             <option value="NOUVEAU">🔵 NOUVEAU</option>
                                             <option value="EN_COURS">🟠 EN COURS</option>
@@ -278,7 +279,7 @@ export default function QuotesInbox() {
                                         Répondre par e-mail
                                     </a>
 
-                                    <button
+                                    <button type="button"
                                         onClick={() => handleDeleteQuote(selectedQuote.id)}
                                         className="text-xs text-destructive hover:bg-destructive/10 px-4 py-2.5 rounded-md font-semibold transition-colors w-full sm:w-auto text-center"
                                     >

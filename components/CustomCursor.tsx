@@ -7,8 +7,11 @@ export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
@@ -44,8 +47,8 @@ export default function CustomCursor() {
     };
   }, [isVisible]);
 
-  // If not visible or on mobile, don't render or hide
-  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+  // Render nothing on server and until mounted (avoids hydration mismatch)
+  if (!isMounted) return null;
 
   return (
     <motion.div
@@ -57,11 +60,13 @@ export default function CustomCursor() {
       }}
       transition={{ type: "spring", stiffness: 800, damping: 35, mass: 0.2 }}
     >
+      {/* Use scaleX/scaleY instead of width/height — compositor-only, zero layout thrash */}
       <motion.div
         className="rounded-full bg-white flex items-center justify-center text-black font-mono text-[8px] tracking-widest overflow-hidden"
+        style={{ width: 48, height: 48, transformOrigin: "center" }}
         animate={{
-          width: isHovering ? 48 : 16,
-          height: isHovering ? 48 : 16,
+          scaleX: isHovering ? 1 : 16 / 48,
+          scaleY: isHovering ? 1 : 16 / 48,
         }}
         transition={{ duration: 0.2, ease: "easeOut" }}
       >

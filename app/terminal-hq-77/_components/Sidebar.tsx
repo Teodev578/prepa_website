@@ -35,7 +35,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                 
                 <div className="flex items-center gap-2">
                     {/* Commutateur de Thème */}
-                    <button 
+                    <button type="button" 
                         onClick={toggleTheme} 
                         className="p-2 text-muted-foreground hover:text-primary transition-colors flex items-center justify-center"
                         aria-label="Changer de thème"
@@ -48,8 +48,9 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                     </button>
 
                     {/* Menu Hamburger */}
-                    <button 
+                    <button type="button"
                         onClick={() => setIsOpen(true)} 
+                        aria-label="Ouvrir le menu de navigation"
                         className="p-2 text-muted-foreground hover:text-primary transition-colors"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -82,7 +83,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                     {/* En-tête principal */}
                     <div className="flex justify-between items-center mb-8 border-b border-border pb-5">
                         <h2 className="text-foreground text-sm font-bold tracking-wider uppercase">Tableau de bord</h2>
-                        <button onClick={() => setIsOpen(false)} className="md:hidden text-muted-foreground hover:text-foreground">
+                        <button type="button" onClick={() => setIsOpen(false)} aria-label="Fermer le menu de navigation" className="md:hidden text-muted-foreground hover:text-foreground">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -97,12 +98,12 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                         <div className="space-y-1">
                             <p className="text-muted-foreground font-semibold text-[10px] tracking-wider uppercase mb-2 pl-2">Portfolio</p>
                             
-                            <button onClick={() => handleViewChange('PORTFOLIO_ADD')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'PORTFOLIO_ADD' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
+                            <button type="button" onClick={() => handleViewChange('PORTFOLIO_ADD')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'PORTFOLIO_ADD' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                                 <span>Nouveau projet</span>
                             </button>
                             
-                            <button onClick={() => handleViewChange('PORTFOLIO_LIST')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'PORTFOLIO_LIST' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
+                            <button type="button" onClick={() => handleViewChange('PORTFOLIO_LIST')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'PORTFOLIO_LIST' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="M12 16V12"></path><path d="M12 8h.01"></path></svg>
                                 <span>Vos réalisations</span>
                             </button>
@@ -112,7 +113,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                         <div className="space-y-1">
                             <p className="text-muted-foreground font-semibold text-[10px] tracking-wider uppercase mb-2 pl-2">Activité commerciale</p>
                             
-                            <button onClick={() => handleViewChange('QUOTES_INBOX')} className={`w-full flex items-center justify-between px-3 py-2.5 rounded transition-colors text-left ${currentView === 'QUOTES_INBOX' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
+                            <button type="button" onClick={() => handleViewChange('QUOTES_INBOX')} className={`w-full flex items-center justify-between px-3 py-2.5 rounded transition-colors text-left ${currentView === 'QUOTES_INBOX' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
                                 <div className="flex items-center gap-3">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
                                     <span>Demandes de devis</span>
@@ -125,7 +126,7 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                         <div className="space-y-1">
                             <p className="text-muted-foreground font-semibold text-[10px] tracking-wider uppercase mb-2 pl-2">CONTACT</p>
                             
-                            <button onClick={() => handleViewChange('FORMS_CONFIG')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'FORMS_CONFIG' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
+                            <button type="button" onClick={() => handleViewChange('FORMS_CONFIG')} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded transition-colors text-left ${currentView === 'FORMS_CONFIG' ? 'bg-primary text-primary-foreground font-semibold' : 'text-foreground/80 hover:bg-muted'}`}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                                 <span>Informations du formulaire</span>
                             </button>
@@ -135,13 +136,13 @@ export default function Sidebar({ currentView, setCurrentView }: SidebarProps) {
                 
                 {/* Pied de la barre latérale */}
                 <div className="p-4 border-t border-border flex items-center justify-between bg-background/30">
-                    <button onClick={handleLogout} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-destructive transition-colors rounded">
+                    <button type="button" onClick={handleLogout} className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-muted-foreground hover:text-destructive transition-colors rounded">
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                         <span>Déconnexion</span>
                     </button>
                     
                     {/* Commutateur de Thème de Bureau */}
-                    <button 
+                    <button type="button" 
                         onClick={toggleTheme} 
                         className="hidden md:flex p-2 text-muted-foreground hover:text-primary transition-colors items-center justify-center rounded hover:bg-muted"
                         aria-label="Changer de thème"

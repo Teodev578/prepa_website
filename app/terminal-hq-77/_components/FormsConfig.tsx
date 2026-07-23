@@ -255,14 +255,14 @@ export default function FormsConfig() {
                                 </div>
 
                                 <div className="flex items-center gap-3">
-                                    <button
+                                    <button type="button"
                                         onClick={() => handleToggleEmailActive(item.id, item.is_active)}
                                         className={`text-xs font-bold px-3 py-1.5 rounded transition-colors border ${item.is_active ? 'bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20' : 'bg-muted text-muted-foreground hover:bg-muted/80'}`}
                                     >
                                         {item.is_active ? 'Recevoir les alertes' : 'Alerte désactivée'}
                                     </button>
 
-                                    <button onClick={() => handleDeleteNotificationEmail(item.id, item.email)} className="text-muted-foreground hover:text-destructive text-sm px-2 py-1 transition-colors">
+                                    <button type="button" onClick={() => handleDeleteNotificationEmail(item.id, item.email)} className="text-muted-foreground hover:text-destructive text-sm px-2 py-1 transition-colors">
                                         Supprimer
                                     </button>
                                 </div>
@@ -293,7 +293,7 @@ export default function FormsConfig() {
 
                 <div className="flex bg-muted p-1 rounded-lg w-fit mb-8 border border-border">
                     {['PARTICULIER', 'ENTREPRISE'].map((p) => (
-                        <button
+                        <button type="button"
                             key={p}
                             onClick={() => setActiveProfile(p as any)}
                             className={`px-6 py-2.5 text-sm font-bold rounded-md transition-all ${activeProfile === p ? 'bg-card text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
@@ -316,7 +316,7 @@ export default function FormsConfig() {
                                 <div className="flex items-start gap-4">
                                     {/* 🛠️ CONTRÔLES DE RÉORGANISATION (FLÈCHES) */}
                                     <div className="flex flex-col gap-1 items-center bg-muted/50 p-1 rounded border border-border/50">
-                                        <button
+                                        <button type="button"
                                             onClick={() => handleMoveField(index, 'up')}
                                             disabled={index === 0}
                                             className="text-muted-foreground hover:text-primary disabled:opacity-30 disabled:hover:text-muted-foreground p-0.5"
@@ -324,7 +324,7 @@ export default function FormsConfig() {
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="m18 15-6-6-6 6" /></svg>
                                         </button>
                                         <span className="text-[10px] font-black text-primary/40 leading-none">{(index + 1).toString().padStart(2, '0')}</span>
-                                        <button
+                                        <button type="button"
                                             onClick={() => handleMoveField(index, 'down')}
                                             disabled={index === formFields.length - 1}
                                             className="text-muted-foreground hover:text-primary disabled:opacity-30 disabled:hover:text-muted-foreground p-0.5"
@@ -352,13 +352,13 @@ export default function FormsConfig() {
 
                                 {/* 🛠️ BOUTONS D'ACTION (MODIFIER / SUPPRIMER) */}
                                 <div className="flex items-center gap-2 self-end sm:self-auto">
-                                    <button
+                                    <button type="button"
                                         onClick={() => handleEditClick(field)}
                                         className="text-xs font-semibold px-3 py-2 transition-colors rounded bg-muted hover:bg-foreground hover:text-background border border-border"
                                     >
                                         Modifier
                                     </button>
-                                    <button
+                                    <button type="button"
                                         onClick={() => handleDeleteField(field.id, field.field_label)}
                                         className="text-xs text-muted-foreground hover:text-destructive font-semibold px-3 py-2 transition-colors rounded hover:bg-destructive/5"
                                     >
@@ -433,7 +433,7 @@ export default function FormsConfig() {
                     )}
 
                     <div className="flex flex-col sm:flex-row gap-3">
-                        <button
+                        <button type="button"
                             onClick={handleSaveField}
                             disabled={isSubmitting}
                             className="bg-primary text-primary-foreground font-bold px-8 py-3.5 rounded-lg text-sm hover:bg-primary/90 transition-colors shadow-md disabled:opacity-50 flex-1 sm:flex-none text-center"
@@ -442,7 +442,7 @@ export default function FormsConfig() {
                         </button>
 
                         {editingFieldId && (
-                            <button
+                            <button type="button"
                                 onClick={handleCancelEdit}
                                 disabled={isSubmitting}
                                 className="bg-muted text-foreground border border-border font-bold px-8 py-3.5 rounded-lg text-sm hover:bg-muted/80 transition-colors flex-1 sm:flex-none text-center"
