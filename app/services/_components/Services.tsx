@@ -3,7 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowUpRight } from "lucide-react";
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -70,87 +70,108 @@ export default function Services() {
           </motion.p>
         </motion.div>
 
-        {/* Grille de services */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={{
             visible: { transition: { staggerChildren: 0.1 } }
           }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-y border-border"
         >
           {/* Service 1 */}
-          <motion.article variants={cardVariants} className="group flex flex-col justify-between bg-card border border-border p-8 md:p-10 rounded-[var(--radius)] hover:border-primary/50 transition-colors">
-            <div>
+          <motion.article variants={cardVariants} className="group flex flex-col border-b md:border-b-0 md:border-r border-border p-8 md:p-10 bg-card hover:bg-muted/10 transition-colors cursor-pointer relative overflow-hidden h-full">
+            <div className="flex justify-between items-start mb-8">
+              <ArrowUpRight className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground group-hover:text-primary transition-colors stroke-[1.5]" />
+              <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-foreground">01.</span>
+            </div>
+            
+            <div className="flex-grow z-10">
               <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">// VN & VO</span>
-              <h2 className="text-card-title mb-6">PRÉPARATION ESTHÉTIQUE B2B</h2>
-              <p className="text-muted-foreground font-medium mb-8 leading-relaxed">
+              <h2 className="text-2xl font-bold mb-4 tracking-tight">PRÉPARATION ESTHÉTIQUE B2B</h2>
+              <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
                 Nettoyage technique VN/VO, detailing intérieur/extérieur et rénovation de véhicules pour concessionnaires et parcs automobiles.
               </p>
-              <ul className="space-y-4 font-sans text-sm text-muted-foreground">
+              <ul className="space-y-3 font-sans text-sm text-muted-foreground mb-12">
                 <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Lavage approfondi et décontamination</li>
                 <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Shampoing des tissus et traitement des cuirs</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Polissage et lustrage (suppression micro-rayures)</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Protections céramiques et cires haut de gamme</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Polissage et lustrage</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Protections céramiques</li>
               </ul>
             </div>
+
+
           </motion.article>
 
           {/* Service 2 */}
-          <motion.article variants={cardVariants} className="group flex flex-col justify-between bg-card border border-border p-8 md:p-10 rounded-[var(--radius)] hover:border-primary/50 transition-colors">
-            <div>
+          <motion.article variants={cardVariants} className="group flex flex-col border-b md:border-b-0 lg:border-r border-border p-8 md:p-10 bg-card hover:bg-muted/10 transition-colors cursor-pointer relative overflow-hidden h-full">
+            <div className="flex justify-between items-start mb-8">
+              <ArrowUpRight className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground group-hover:text-primary transition-colors stroke-[1.5]" />
+              <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-foreground">02.</span>
+            </div>
+            
+            <div className="flex-grow z-10">
               <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">// LOGISTIQUE SÉCURISÉE</span>
-              <h2 className="text-card-title mb-6">CONVOYAGE DE VÉHICULES</h2>
-              <p className="text-muted-foreground font-medium mb-8 leading-relaxed">
+              <h2 className="text-2xl font-bold mb-4 tracking-tight">CONVOYAGE DE VÉHICULES</h2>
+              <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
                 Transport sécurisé et convoyage de flottes automobiles en Île-de-France avec traçabilité complète de la prise en charge à la livraison.
               </p>
-              <ul className="space-y-4 font-sans text-sm text-muted-foreground">
+              <ul className="space-y-3 font-sans text-sm text-muted-foreground mb-12">
                 <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Chauffeurs professionnels certifiés</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Assurance spécifique couvrant la valeur du véhicule</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> États des lieux digitalisés avant/après</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Délais respectés et flexibilité d'intervention</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Assurance valeur du véhicule</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> États des lieux digitalisés</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Délais respectés et flexibilité</li>
               </ul>
             </div>
+
+
           </motion.article>
 
           {/* Service 3 */}
-          <motion.article variants={cardVariants} className="group flex flex-col justify-between bg-foreground text-background border border-foreground p-8 md:p-10 rounded-[var(--radius)] relative overflow-hidden md:col-span-2 lg:col-span-1">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-secondary opacity-10 rounded-bl-full pointer-events-none" />
-            <div>
+          <motion.article variants={cardVariants} className="group flex flex-col border-b md:border-b-0 lg:border-r border-border p-8 md:p-10 bg-foreground text-background hover:bg-foreground/90 transition-colors cursor-pointer relative overflow-hidden h-full">
+            <div className="flex justify-between items-start mb-8">
+              <ArrowUpRight className="w-8 h-8 md:w-12 md:h-12 text-background/50 group-hover:text-secondary transition-colors stroke-[1.5]" />
+              <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-background">03.</span>
+            </div>
+            
+            <div className="flex-grow z-10">
               <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-4 font-bold">// CHARGES FIXES → VARIABLES</span>
-              <h2 className="text-card-title mb-6 text-background">EXTERNALISATION PÔLE PRÉPARATION</h2>
-              <p className="text-background/80 font-medium mb-8 leading-relaxed">
+              <h2 className="text-2xl font-bold mb-4 tracking-tight text-background">EXTERNALISATION PÔLE PRÉPARATION</h2>
+              <p className="text-background/80 font-medium mb-8 leading-relaxed text-sm">
                 Gestion externalisée de votre pôle esthétique et logistique. Transformez vos charges fixes liées à la préparation en coûts 100% variables.
               </p>
-              <ul className="space-y-4 font-sans text-sm text-background/70">
-                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Aucun coût salarial fixe, facturation à l'acte</li>
-                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Gestion des pics d'activité sans embauche</li>
-                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Standard de qualité garanti sur chaque véhicule</li>
-                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Contrats cadres flexibles (urgence, 6 mois, 12 mois)</li>
+              <ul className="space-y-3 font-sans text-sm text-background/70 mb-12">
+                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Aucun coût salarial fixe</li>
+                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Gestion des pics d'activité</li>
+                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Standard de qualité garanti</li>
+                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Contrats cadres flexibles</li>
               </ul>
             </div>
-            <div className="mt-10 pt-8 border-t border-background/20">
-              <Link href="/contact" className="inline-flex items-center gap-2 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-secondary hover:text-background transition-colors group/link">
-                ÉTUDE DE FAISABILITÉ <span className="group-hover/link:translate-x-1 transition-transform">→</span>
-              </Link>
-            </div>
+            
+
           </motion.article>
 
           {/* Service 4 */}
-          <motion.article variants={cardVariants} className="group flex flex-col justify-between bg-card border border-border p-8 md:p-10 rounded-[var(--radius)] hover:border-primary/50 transition-colors">
-            <div>
+          <motion.article variants={cardVariants} className="group flex flex-col p-8 md:p-10 bg-card hover:bg-muted/10 transition-colors cursor-pointer relative overflow-hidden h-full">
+            <div className="flex justify-between items-start mb-8">
+              <ArrowUpRight className="w-8 h-8 md:w-12 md:h-12 text-muted-foreground group-hover:text-primary transition-colors stroke-[1.5]" />
+              <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-foreground">04.</span>
+            </div>
+            
+            <div className="flex-grow z-10">
               <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">// VALORISATION VO</span>
-              <h2 className="text-card-title mb-6">RÉNOVATION & DETAILING PARC</h2>
-              <p className="text-muted-foreground font-medium mb-8 leading-relaxed">
+              <h2 className="text-2xl font-bold mb-4 tracking-tight">RÉNOVATION & DETAILING PARC</h2>
+              <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
                 Remise en état complète de véhicules d'occasion pour maximiser la valeur de revente et accélérer la rotation de votre parc.
               </p>
-              <ul className="space-y-4 font-sans text-sm text-muted-foreground">
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Rattrapage des défauts critiques carrosserie</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Désinfection totale et suppression des odeurs</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Rénovation des optiques et plastiques ternis</li>
-                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Augmentation du prix de vente (ROI immédiat)</li>
+              <ul className="space-y-3 font-sans text-sm text-muted-foreground mb-12">
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Rattrapage des défauts carrosserie</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Désinfection totale et odeurs</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Rénovation optiques et plastiques</li>
+                <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Augmentation du prix de vente</li>
               </ul>
             </div>
+
+
           </motion.article>
 
         </motion.div>
