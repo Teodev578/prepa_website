@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/home/Hero";
 import TechnicalServices from "@/components/home/TechnicalServices";
 import ExcellencePhilosophy from "@/components/home/ExcellencePhilosophy";
+import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import Ticker from "@/components/home/Ticker"; // Ton nouveau composant
 import CTA from "@/components/home/CTA";
@@ -81,10 +82,11 @@ export default function Home() {
       <main className="relative bg-background pt-20 md:pt-24">
         <Hero />
         <Ticker />
+        <Stats />
         <ExcellencePhilosophy />
-        {/*<TechnicalServices />*/}
+        <TechnicalServices />
         <Testimonials />
-        {/*<CTA />*/}
+        <CTA />
       </main>
       <Footer />
     </>

@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
+import RevealText from '@/components/RevealText';
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -24,27 +25,9 @@ const TechnicalServices = () => {
             <div className="py-16 md:py-24 px-6 md:px-12 lg:px-24 border-b border-border relative">
                 
                 {/* 🚀 FIXED : Animation simplifiée et blindée qui ignore les conflits d'héritage parent */}
-                <motion.h2 
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: false, amount: 0.1 }}
-                    className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full break-words relative z-10 text-foreground"
-                >
-                    {titleLines.map((line, i) => (
-                        <span key={i} className="overflow-hidden relative py-1 block">
-                            <motion.span
-                                variants={{
-                                    hidden: { y: "110%", opacity: 0 },
-                                    visible: { y: 0, opacity: 1 }
-                                }}
-                                transition={{ duration: 0.6, delay: i * 0.12, ease: BEZIER }}
-                                className="block"
-                            >
-                                {line}
-                            </motion.span>
-                        </span>
-                    ))}
-                </motion.h2>
+                <h2 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full break-words relative z-10 text-foreground">
+                    <RevealText text="NOS FORFAITS PARTENAIRES." delay={0.1} />
+                </h2>
                 
                 {/* Métadonnées épurées et professionnelles */}
                 <div className="absolute top-8 right-6 md:right-12 hidden md:flex flex-col items-end gap-1 font-mono text-[10px] text-muted-foreground uppercase tracking-widest select-none">
@@ -147,11 +130,7 @@ const TechnicalServices = () => {
             </motion.div>
             
             {/* Ligne de fermeture technique basse */}
-            <div className="h-4 border-t border-border bg-muted/5 flex items-center justify-center">
-                <span className="font-mono text-[8px] text-muted-foreground uppercase tracking-widest select-none">
-                    LAW_CLEAN_CENTER // STRUCTURE_OFFRES_VALIDATED
-                </span>
-            </div>
+            <div className="h-4 border-t border-border bg-muted/5"></div>
         </section>
     );
 };

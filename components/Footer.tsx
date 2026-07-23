@@ -140,12 +140,6 @@ const Footer = () => {
                         <span className="hidden sm:inline w-1 h-1 bg-border rounded-full"></span>
                         <span className="hidden sm:inline">2 RUE LOUISE MICHEL, 95470 FOSSES</span>
                     </motion.div>
-
-                    <div className="flex items-center gap-4">
-                        <span className="hidden md:inline">PROTOCOL_FOOTER_v1.0.4</span>
-                        <span className="text-secondary/80 font-bold tracking-widest">[ STATUS: OPTIMAL ]</span>
-                    </div>
-
                 </div>
             </div>
         </footer>

@@ -3,6 +3,10 @@ import { Poppins, IBM_Plex_Mono, Libre_Baskerville } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { MotionConfig } from "framer-motion";
+import SmoothScroll from "@/components/SmoothScroll";
+import Preloader from "@/components/Preloader";
+import CustomCursor from "@/components/CustomCursor";
+import GrainOverlay from "@/components/GrainOverlay";
 
 const sans = Poppins({
   subsets: ["latin"],
@@ -105,8 +109,13 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ThemeProvider>
+          <Preloader />
+          <CustomCursor />
+          <GrainOverlay />
           <MotionConfig transition={{ ease: [0.16, 1, 0.3, 1] }}>
-            {children}
+            <SmoothScroll>
+              {children}
+            </SmoothScroll>
           </MotionConfig>
         </ThemeProvider>
       </body>
