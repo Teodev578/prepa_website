@@ -1,312 +1,346 @@
 "use client";
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-// Ajout des icônes Lucide
-import { Sparkles, Gauge, ShieldCheck } from 'lucide-react'; 
+import React from "react";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { ArrowLeft, Printer, FileText } from "lucide-react";
 
 const customEase = [0.16, 1, 0.3, 1] as const;
 
-const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-        opacity: 1,
-        transition: { staggerChildren: 0.15 }
-    }
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    show: {
-        opacity: 1,
-        y: 0,
-        transition: { duration: 0.8, ease: customEase }
-    }
-};
-
-const textRevealVariants = {
-    hidden: { y: "100%", opacity: 0 },
-    show: {
-        y: "0%",
-        opacity: 1,
-        transition: { duration: 1, ease: customEase }
-    }
-};
-
 export default function Services() {
-    const services = [
-        {
-            id: 'RO-01',
-            icon: Sparkles, // Icône pour le nettoyage/esthétique
-            title: 'VOTRE PRÉPARATEUR EN RENFORT',
-            subtitle: 'VOTRE EXPERT DIRECTEMENT SUR SITE',
-            price: 'SUR DEVIS',
-            details: [
-                'Vous avez besoin d\'un préparateur expert ?',
-                'D\'un simple coup d\'aspirateur à une remise à neuf complète, on s\'adapte.',
-                "Profitez d'un service flexible, rapide et sans prise de tête.",
-                "Retrouvez le plaisir de rouler dans une voiture impeccable."
-            ],
-            cta: 'OBTENIR DU RENFORT'
-        },
-        {
-            id: 'GF-02',
-            icon: Gauge, // Icône pour la vitesse/flux
-            title: 'ACCÉLÉREZ VOS VENTES',
-            subtitle: 'DÉSENGORGEZ VOTRE PARC AUTOMOBILE',
-            price: 'SUR DEVIS',
-            details: [
-                'Votre parc de véhicules d\'occasion est saturé ?',
-                'Nous prenons en charge la préparation de vos lots de véhicules en un temps record.',
-                'Accélérez vos mises en vente et libérez de la trésorerie.',
-                'Nous appliquons un standard de qualité unique pour valoriser chaque véhicule.'
-            ],
-            cta: 'OPTIMISER MON FLUX'
-        },
-        {
-            id: 'EC-03',
-            icon: ShieldCheck, // Icône pour la confiance/partenariat
-            title: 'DÉLÉGUEZ EN TOUTE CONFIANCE',
-            subtitle: 'VOTRE PÔLE PRÉPARATION PARTENAIRE',
-            price: 'SUR DEVIS',
-            details: [
-                'Et si vous nous confiez l\'intégralité de votre pôle préparation ?',
-                'Transformez vos charges fixes en un coût variable et maîtrisé.',
-                'Gagnez en visibilité grâce à un suivi clair de nos actions.',
-                'Libérez vos équipes pour la vente.'
-            ],
-            cta: 'DEVENIR PARTENAIRE'
-        }
-    ];
+  const handlePrint = () => {
+    window.print();
+  };
 
-    return (
-        <div className="bg-background text-foreground min-h-screen pb-16 md:pb-24 relative">
-            <div className="absolute inset-0 pointer-events-none bg-[url('/images/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03]" />
+  return (
+    <div className="bg-background text-foreground min-h-screen pb-16 md:pb-24 relative">
+      <div className="absolute inset-0 pointer-events-none bg-[url('/images/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03]" />
 
-            {/* Header Section */}
-            <section className="pt-16 md:pt-24 px-6 md:px-12 mb-12 md:mb-20 overflow-hidden relative z-10">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
-                    <div>
-                        <div className="mb-6 flex items-center gap-4">
-                            <motion.div
-                                initial={{ scaleX: 0 }}
-                                whileInView={{ scaleX: 1 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 1, ease: customEase }}
-                                className="w-16 h-[1px] bg-primary origin-left"
-                            />
-                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest font-bold">
-                                FLEXIBILITÉ_RÉACTIVITÉ_RENTABILITÉ
-                            </span>
-                        </div>
-                        <div className="overflow-hidden py-2">
-                            <motion.h1
-                                variants={textRevealVariants}
-                                initial="hidden"
-                                whileInView="show"
-                                viewport={{ once: true }}
-                                className="text-5xl md:text-7xl font-sans font-black tracking-tighter text-foreground uppercase leading-[0.9]"
-                            >
-                                NOS <br className="hidden md:block" /><span className="text-primary">SERVICES.</span>
-                            </motion.h1>
-                        </div>
-                    </div>
-                </div>
-            </section>
+      <div className="max-w-4xl mx-auto px-6 md:px-12 pt-16 md:pt-24 relative z-10 w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: customEase }}
+          className="mb-12 pb-8 border-b border-border/60"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-primary transition-colors tracking-wider uppercase group"
+            >
+              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              <span>Retour à l&apos;accueil</span>
+            </Link>
 
-            {/* Fiches Techniques Grid */}
-            <section className="px-6 md:px-12 max-w-7xl mx-auto relative z-10">
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-50px" }}
-                    className="grid grid-cols-1 lg:grid-cols-3 gap-0 border-t border-l border-border relative"
-                >
-                    {services.map((service, index) => {
-                        const Icon = service.icon;
-                        
-                        return (
-                            <motion.article
-                                variants={itemVariants}
-                                key={service.id}
-                                className="relative flex flex-col h-full bg-card border-r border-b border-border group hover:bg-muted/30 transition-colors duration-500 cursor-pointer overflow-hidden"
-                            >
-                                {/* Ligne d'accentuation au hover */}
-                                <div className="absolute top-0 left-0 w-full h-[2px] bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left z-20" />
+            <button
+              onClick={handlePrint}
+              className="inline-flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded bg-card hover:bg-accent border border-border text-foreground transition-colors"
+            >
+              <Printer className="w-3.5 h-3.5 text-muted-foreground" />
+              <span>Imprimer / PDF</span>
+            </button>
+          </div>
 
-                                <div className="p-8 md:p-10 flex flex-col flex-grow relative z-10">
-                                    <div className="flex justify-between items-start mb-8">
-                                        <div className="font-mono text-[10px] text-muted-foreground tracking-widest flex items-center gap-3">
-                                            <span className="font-bold text-foreground">0{index + 1}</span>
-                                            <span className="w-px h-3 bg-border" />
-                                            {service.id}
-                                        </div>
-                                        <div className="font-mono text-[10px] text-secondary font-black bg-secondary/10 px-2 py-1 rounded-sm">
-                                            {service.price}
-                                        </div>
-                                    </div>
+          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground font-sans">
+            Conditions Générales de Vente<br/>et de Prestation de Services (CGV/CGPS)
+          </h1>
+          <p className="mt-6 text-base text-muted-foreground leading-relaxed">
+            Les présentes conditions générales de vente et de prestation de services (ci-après les « CGV ») régissent l’ensemble des prestations fournies par LAW CLEAN CENTER (ci-après le « Prestataire ») à ses clients (ci-après le « Client »).
+          </p>
+          <div className="mt-4 p-4 bg-muted/30 border border-border rounded-md text-sm text-foreground">
+            <strong>LAW CLEAN CENTER – EURL</strong><br />
+            Siège social : 2 rue Louise Michel, 95470 Fosses, France<br />
+            SIRET : 922 386 131 00010<br />
+            E-mail : lawcleancenter@outlook.com
+          </div>
+        </motion.div>
 
-                                    {/* Intégration de l'icône à côté du titre */}
-                                    <div className="flex items-start justify-between gap-4 mb-8">
-                                        <div>
-                                            <span className="font-mono text-[10px] text-primary block mb-4 uppercase tracking-wider">{service.subtitle}</span>
-                                            <h2 className="text-2xl font-sans font-black uppercase tracking-tight text-foreground leading-[1.1]">{service.title}</h2>
-                                        </div>
-                                        
-                                        {/* Bloc Icône Tech */}
-                                        <div className="w-12 h-12 border border-border shrink-0 flex items-center justify-center relative overflow-hidden group-hover:border-secondary/50 transition-colors duration-500 rounded-sm">
-                                            <div className="absolute inset-0 bg-secondary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                                            <Icon 
-                                                className="w-5 h-5 text-muted-foreground group-hover:text-secondary relative z-10 transition-colors duration-500" 
-                                                strokeWidth={1.5} 
-                                            />
-                                        </div>
-                                    </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.2, ease: customEase }}
+          className="prose prose-invert max-w-none prose-headings:font-sans prose-headings:font-bold prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-6 prose-p:text-muted-foreground prose-li:text-muted-foreground prose-strong:text-foreground"
+        >
+          {/* Article 1 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 1 : Objet et champ d’application
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Les présentes CGV ont pour objet de définir les conditions dans lesquelles le Prestataire réalise, au profit du Client, des prestations de :
+            </p>
+            <ul className="space-y-3 mb-4 list-disc pl-5">
+              <li className="text-muted-foreground"><strong className="text-foreground">Préparation esthétique de véhicules :</strong> nettoyage intérieur et extérieur, remise à neuf, detailing, polissage, traitement et protection (céramique, cire), préparation de véhicules neufs (VN) et d’occasion (VO) ;</li>
+              <li className="text-muted-foreground"><strong className="text-foreground">Convoyage de véhicules :</strong> déplacement de véhicules pour le compte du Client, principalement en région Île-de-France ;</li>
+              <li className="text-muted-foreground"><strong className="text-foreground">Formation du personnel :</strong> formation des collaborateurs du Client aux techniques de préparation esthétique automobile et, le cas échéant, aux bonnes pratiques de manipulation et de convoyage des véhicules ; ces sessions sont dispensées en présentiel, sur le site du Client ou en tout autre lieu convenu entre les parties.</li>
+            </ul>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Les prestations de préparation esthétique et de convoyage s’adressent aux professionnels comme aux particuliers. Les prestations de formation du personnel s’adressent par nature aux Clients professionnels souhaitant former leurs équipes.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Elles s’appliquent à toute commande passée auprès du Prestataire, que le Client soit un professionnel (agissant dans le cadre de son activité : concessionnaire, garage, gestionnaire de flotte, etc.) ou un consommateur (personne physique agissant à des fins n’entrant pas dans le cadre de son activité professionnelle, au sens du Code de la consommation).
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Certaines clauses comportent des dispositions distinctes selon que le Client est un Client professionnel ou un Client consommateur ; ces dispositions sont alors expressément identifiées.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Les prestations de formation peuvent en outre faire l’objet de conditions particulières (programme, durée, effectif, lieu, tarif, modalités d’évaluation et de sanction de la formation) annexées au devis ou à une convention de formation, lesquelles prévalent sur les présentes CGV en cas de contradiction sur ces points.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Toute commande implique l’adhésion sans réserve du Client aux présentes CGV, qui prévalent sur tout autre document du Client, sauf dérogation écrite et expresse du Prestataire. Le fait que le Prestataire ne se prévale pas à un moment donné d’une clause des CGV ne vaut pas renonciation à s’en prévaloir ultérieurement.
+            </p>
+          </section>
 
-                                    <ul className="flex-grow space-y-5 mb-12">
-                                        {service.details?.map((detail, idx) => (
-                                            <li key={idx} className="flex items-start gap-4">
-                                                <div className="font-mono text-[8px] text-secondary mt-1.5 shrink-0 opacity-70">++</div>
-                                                <span className="text-sm font-sans text-muted-foreground leading-relaxed">{detail}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+          {/* Article 2 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 2 : Définitions
+            </h2>
+            <ul className="space-y-3 list-disc pl-5">
+              <li className="text-muted-foreground"><strong className="text-foreground">Prestation(s) :</strong> tout service de préparation esthétique, de convoyage et/ou de formation du personnel réalisé par le Prestataire.</li>
+              <li className="text-muted-foreground"><strong className="text-foreground">Devis ou Contrat :</strong> document chiffré décrivant la ou les Prestations, transmis au Client préalablement à toute commande.</li>
+              <li className="text-muted-foreground"><strong className="text-foreground">Véhicule :</strong> le véhicule confié par le Client au Prestataire aux fins de réalisation de la Prestation.</li>
+              <li className="text-muted-foreground"><strong className="text-foreground">État des lieux :</strong> constat contradictoire de l’état du Véhicule, établi à la prise en charge et à la restitution.</li>
+            </ul>
+          </section>
 
-                                    <Link 
-                                        href="/contact" 
-                                        className="mt-auto border border-border px-6 py-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-foreground hover:border-secondary hover:text-secondary transition-all flex items-center justify-between group/btn rounded-sm"
-                                    >
-                                        <span>{service.cta}</span>
-                                        <span className="group-hover/btn:translate-x-2 transition-transform duration-300">→</span>
-                                    </Link>
-                                </div>
-                            </motion.article>
-                        );
-                    })}
-                </motion.div>
-            </section>
+          {/* Article 3 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 3 : Devis et formation du contrat
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Toute Prestation fait l’objet d’un devis établi par le Prestataire sur la base des informations communiquées par le Client. Le devis précise la nature des Prestations, leur prix, les délais indicatifs et, le cas échéant, les conditions particulières.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Le devis est valable 30 jours à compter de sa date d’émission. Le contrat est formé à la réception par le Prestataire du devis daté, accepté et signé par le Client (par tout moyen, y compris électronique), accompagné le cas échéant du versement de l’acompte prévu à l’article 6.
+            </p>
+          </section>
 
-            {/* Services Stratégiques */}
-            <section className="px-6 md:px-12 mt-24 md:mt-40 max-w-7xl mx-auto relative z-10">
-                <div className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8">
-                    <div>
-                        <div className="overflow-hidden">
-                            <motion.h3
-                                variants={textRevealVariants}
-                                initial="hidden"
-                                whileInView="show"
-                                viewport={{ once: true }}
-                                className="text-4xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-[0.9] pb-2"
-                            >
-                                NOS SERVICES <br /><span className="text-primary opacity-50">STRATEGIQUES.</span>
-                            </motion.h3>
-                        </div>
-                        <motion.div
-                            initial={{ scaleX: 0 }}
-                            whileInView={{ scaleX: 1 }}
-                            transition={{ duration: 1, delay: 0.3, ease: customEase }}
-                            className="w-24 h-[2px] bg-primary mt-8 origin-left"
-                        />
-                    </div>
-                </div>
+          {/* Article 4 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 4 : Prix
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Les prix sont indiqués en euros. Pour les Clients consommateurs, ils sont exprimés toutes taxes comprises (TTC) ; pour les Clients professionnels, ils sont exprimés hors taxes (HT), la TVA applicable étant ajoutée le cas échéant.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Les prix s’entendent pour les Prestations décrites au devis. Toute prestation supplémentaire, ou tout surcoût lié à un état du Véhicule sensiblement différent de celui décrit lors de l’établissement du devis (encrassement extrême, salissures particulières, dégradations préexistantes nécessitant un traitement spécifique), fera l’objet d’un devis/avenant complémentaire soumis à l’accord préalable du Client.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Les éventuels frais de déplacement, de convoyage ou de carburant sont précisés au devis/contrat.
+            </p>
+          </section>
 
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: true, margin: "-50px" }}
-                    className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-                >
-                    {/* Logistique & Convoyage */}
-                    <motion.div variants={itemVariants} className="border border-border p-8 md:p-12 bg-card flex flex-col gap-8 relative overflow-hidden group hover:bg-muted/20 transition-colors duration-500">
-                        <div className="absolute -right-16 -top-16 w-32 h-32 border border-border rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700" />
-                        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground [writing-mode:vertical-rl] uppercase tracking-widest">REF: LC_CONVOYAGE_01</div>
+          {/* Article 5 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 5 : Modalités de paiement
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Sauf stipulation contraire au contrat/devis, le paiement s’effectue à réception de facture par virement, carte, ou encore espèces dans la limite légale.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Clients professionnels.</strong> Sauf accord particulier, les factures sont payables à compter de la date de réception de la facture, dans la limite des délais légaux de l’article L.441-10 du Code de commerce. En cas de retard de paiement, sont exigibles de plein droit, sans mise en demeure préalable : des pénalités de retard au taux d’intérêt légal majoré, et au minimum égal à trois fois le taux d’intérêt légal, ainsi qu’une indemnité forfaitaire pour frais de recouvrement de 40 € (articles L.441-10 et D.441-5 du Code de commerce), sans préjudice de toute indemnisation complémentaire sur justificatifs.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Clients consommateurs.</strong> En cas de défaut de paiement à l’échéance, les sommes dues pourront porter intérêt au taux légal après mise en demeure restée infructueuse.
+            </p>
+          </section>
 
-                        <div className="flex items-center gap-6 relative z-10">
-                            <div className="w-14 h-14 border border-secondary/50 flex items-center justify-center font-mono text-xl text-secondary font-black shrink-0 relative overflow-hidden">
-                                <span className="relative z-10">01</span>
-                                <div className="absolute inset-0 bg-secondary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                            </div>
-                            <div>
-                                <h4 className="text-xl font-black uppercase tracking-tight text-foreground">LOGISTIQUE & CONVOYAGE</h4>
-                                <p className="font-mono text-[9px] text-primary uppercase mt-2 tracking-wider">VOS VÉHICULES, NOTRE RESPONSABILITÉ</p>
-                            </div>
-                        </div>
-                        <p className="font-sans text-sm text-muted-foreground leading-relaxed relative z-10">
-                            Le déplacement de vos véhicules est un casse-tête logistique qui mobilise vos équipes de vente ? Déléguez-nous le convoyage entre vos différents sites. Nous garantissons une prise en charge complète et sécurisée, le tout couvert par notre assurance professionnelle spécifique.
-                        </p>
-                    </motion.div>
+          {/* Article 6 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 6 : Acompte, modification et annulation
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              La commande peut être subordonnée au versement d’un acompte de 30 à 50% du montant total, le solde étant exigible selon les modalités de l’article 5.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Toute demande de modification de la commande par le Client doit être formulée par écrit et n’est effective qu’après accord du Prestataire et, le cas échéant, établissement d’un devis rectificatif.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              En cas d’annulation par le Client après formation du contrat, l’acompte versé reste acquis au Prestataire à titre de dédommagement, sans préjudice de la facturation des prestations déjà engagées. Les dispositions du présent article s’appliquent sous réserve, pour les Clients consommateurs, du droit de rétractation prévu à l’article 15.
+            </p>
+          </section>
 
-                    {/* Formation du Personnel */}
-                    <motion.div variants={itemVariants} className="border border-border p-8 md:p-12 bg-card flex flex-col gap-8 relative overflow-hidden group hover:bg-muted/20 transition-colors duration-500">
-                        <div className="absolute -right-16 -top-16 w-32 h-32 border border-border rounded-full opacity-20 group-hover:scale-150 transition-transform duration-700" />
-                        <div className="absolute top-0 right-0 p-4 font-mono text-[8px] text-muted-foreground [writing-mode:vertical-rl] uppercase tracking-widest">REF: LC_FORMATION_02</div>
+          {/* Article 7 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 7 : Exécution des prestations de préparation esthétique
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Le Prestataire s’engage à réaliser les Prestations conformément aux règles de l’art et au devis accepté. Il est tenu à une obligation de moyens : il met en œuvre son savoir-faire et des produits adaptés, sans pouvoir garantir la disparition totale de défauts résultant de l’usure, de l’ancienneté, d’une dégradation antérieure ou de la nature des matériaux du Véhicule (cuirs anciens, vernis dégradés, micro-rayures profondes, etc.)
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Le Prestataire informe le Client lorsqu’un résultat optimal ne peut être garanti compte tenu de l’état initial du Véhicule. Les photographies « avant/après » éventuellement réalisées le sont à titre de constat et, sous réserve de l’article 19, peuvent illustrer le savoir-faire du Prestataire.
+            </p>
+          </section>
 
-                        <div className="flex items-center gap-6 relative z-10">
-                            <div className="w-14 h-14 border border-secondary/50 flex items-center justify-center font-mono text-xl text-secondary font-black shrink-0 relative overflow-hidden">
-                                <span className="relative z-10">02</span>
-                                <div className="absolute inset-0 bg-secondary/10 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-                            </div>
-                            <div>
-                                <h4 className="text-xl font-black uppercase tracking-tight text-foreground">FORMATION DU PERSONNEL</h4>
-                                <p className="font-mono text-[9px] text-primary uppercase mt-2 tracking-wider">TRANSFORMEZ VOS ÉQUIPES EN EXPERTS</p>
-                            </div>
-                        </div>
-                        <p className="font-sans text-sm text-muted-foreground leading-relaxed relative z-10">
-                            La qualité de votre préparation en interne est inégale et dépend de la personne en poste ? Nous formons vos collaborateurs à nos méthodes rigoureuses pour standardiser vos processus, garantir un résultat impeccable à chaque fois et valoriser durablement votre personnel.
-                        </p>
-                    </motion.div>
-                </motion.div>
-            </section>
+          {/* Article 8 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 8 : Exécution des prestations de convoyage
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Le convoyage est réalisé par un conducteur titulaire des permis requis et habilité par le Prestataire. Le trajet est limité à l’itinéraire nécessaire à l’exécution de la Prestation.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Le Client garantit que le Véhicule est en état de circuler (notamment contrôle technique en cours de validité lorsqu’il est obligatoire, pneumatiques, freinage et éclairage conformes) et qu’il dispose d’une assurance valide couvrant sa circulation. Le Véhicule doit disposer d’un niveau de carburant ou d’énergie suffisant ; à défaut, les frais engagés par le Prestataire sont refacturés.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Les frais de péage, de stationnement et de carburant liés au convoyage sont à la charge du Client, sauf mention contraire au devis. Les contraventions et amendes consécutives à une infraction commise pendant le convoyage sont à la charge de la partie responsable : elles sont supportées par le Prestataire lorsqu’elles résultent d’une faute de son conducteur, et par le Client dans les autres cas (notamment infractions liées à l’état du Véhicule ou à un défaut de documents). Les parties coopèrent pour la désignation du conducteur auprès des autorités.
+            </p>
+          </section>
 
-            {/* Notre Engagement Partenaire */}
-            <section className="px-6 md:px-12 mt-24 md:mt-32 max-w-7xl mx-auto overflow-hidden relative z-10">
-                <div className="border-t border-border pt-16 md:pt-24 flex flex-col md:flex-row gap-12 md:gap-24">
-                    <div className="max-w-2xl flex-1">
-                        <div className="overflow-hidden mb-8">
-                            <motion.h3
-                                variants={textRevealVariants}
-                                initial="hidden"
-                                whileInView="show"
-                                viewport={{ once: true }}
-                                className="text-3xl md:text-5xl font-sans font-black tracking-tighter uppercase leading-[0.9]"
-                            >
-                                UN PARTENARIAT BASÉ <br /> SUR <span className="text-primary">LA CONFIANCE.</span>
-                            </motion.h3>
-                        </div>
-                        <p className="font-sans text-muted-foreground text-sm md:text-base leading-relaxed mb-10">
-                        </p>
-                    </div>
+          {/* Article 9 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 9 : Obligations du Client
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">Le Client s’engage à :</p>
+            <ul className="space-y-3 list-disc pl-5">
+              <li className="text-muted-foreground">Fournir des informations exactes sur le Véhicule et la Prestation souhaitée ;</li>
+              <li className="text-muted-foreground">Mettre le Véhicule à disposition aux date, heure et lieu convenus, avec les documents nécessaires (clés, et pour le convoyage : certificat d’immatriculation, attestation d’assurance) ;</li>
+              <li className="text-muted-foreground">Retirer tous objets personnels et de valeur du Véhicule avant la prise en charge ; le Prestataire décline toute responsabilité quant aux objets laissés dans le Véhicule ;</li>
+              <li className="text-muted-foreground">Signaler tout élément particulier du Véhicule (équipements fragiles, modifications, défauts connus, dispositifs spécifiques).</li>
+            </ul>
+          </section>
 
-                    <div className="flex-1 flex flex-col justify-center">
-                        <motion.div
-                            variants={containerVariants}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true }}
-                            className="flex flex-col gap-6 font-mono text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest border-l border-border pl-6 md:pl-10 py-4"
-                        >
-                            <motion.div variants={itemVariants} className="flex items-center gap-6">
-                                <span className="font-bold text-foreground opacity-30">01</span>
-                                <span className="w-8 h-[1px] bg-border" />
-                                <span>QUALITÉ CONSTANTE GARANTIE</span>
-                            </motion.div>
-                            <motion.div variants={itemVariants} className="flex items-center gap-6">
-                                <span className="font-bold text-foreground opacity-30">02</span>
-                                <span className="w-8 h-[1px] bg-border" />
-                                <span>REPORTING INTERVENTION DÉTAILLÉ</span>
-                            </motion.div>
-                            <motion.div variants={itemVariants} className="flex items-center gap-6">
-                                <span className="font-bold text-secondary">03</span>
-                                <span className="w-12 h-[1px] bg-secondary" />
-                                <span className="text-secondary font-bold">COUVERTURE ASSURANCE PRO</span>
-                            </motion.div>
-                        </motion.div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    );
+          {/* Article 10 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 10 : Prise en charge et restitution du Véhicule
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              À la prise en charge et à la restitution, un état des lieux contradictoire est établi entre les parties, le cas échéant accompagné de photographies, mentionnant l’état apparent du Véhicule, le kilométrage et le niveau de carburant.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Toute réserve sur l’état du Véhicule à la restitution doit être formulée par le Client lors de cet état des lieux, ou par écrit dans les meilleurs délais. À défaut d’état des lieux contradictoire signé, le Véhicule est réputé restitué dans l’état constaté à la prise en charge.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Le Client s’engage à venir récupérer le Véhicule dans le délai convenu. Passé un délai de 5 jours après mise à disposition et mise en demeure restée sans effet, des frais de gardiennage pourront être facturés.
+            </p>
+          </section>
+
+          {/* Article 11 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 11 : Délais et immobilisation
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Les délais d’exécution et la durée d’immobilisation du Véhicule sont communiqués à titre indicatif. Un retard raisonnable ne peut donner lieu à annulation de la commande, à indemnité ou à pénalité, sauf engagement écrit exprès du Prestataire sur un délai ferme. Le Prestataire informe le Client de tout retard significatif.
+            </p>
+          </section>
+
+          {/* Article 12 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 12 : Assurances
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Le Prestataire déclare être titulaire des assurances nécessaires à l’exercice de son activité, couvrant sa responsabilité civile professionnelle et la garde des véhicules qui lui sont confiés.
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              Le Client conserve l’obligation de maintenir sa propre assurance sur le Véhicule pendant toute la durée de la Prestation.
+            </p>
+          </section>
+
+          {/* Article 13 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 13 : Responsabilité
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Le Prestataire est responsable des dommages causés au Véhicule par sa faute pendant la durée de la garde, dans la limite des constatations effectuées aux états des lieux et des garanties de ses assurances.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Le Prestataire n’est pas responsable : des dommages résultant d’un vice propre, de l’usure ou de l’état préexistant du Véhicule ; des dommages causés par des informations inexactes ou incomplètes communiquées par le Client ; des objets laissés dans le Véhicule.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Clients professionnels.</strong> Sauf faute lourde ou dolosive, la responsabilité du Prestataire est limitée au montant des Prestations effectivement payées par le Client au titre de la commande concernée, et exclut les dommages indirects (perte d’exploitation, perte de chiffre d’affaires, préjudice commercial).
+            </p>
+            <p className="text-muted-foreground leading-relaxed">
+              <strong className="text-foreground">Clients consommateurs.</strong> Aucune disposition des présentes CGV n’a pour effet de limiter les droits que le Client consommateur tient des dispositions légales impératives, notamment des garanties légales.
+            </p>
+          </section>
+
+          {/* Article 14 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 14 : Force majeure
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Aucune des parties ne pourra être tenue responsable d’un manquement à ses obligations résultant d’un cas de force majeure au sens de l’article 1218 du Code civil. Les obligations sont suspendues pendant la durée de l’événement ; si celui-ci se prolonge au-delà d’un délai raisonnable, le contrat pourra être résilié sans indemnité.
+            </p>
+          </section>
+
+          {/* Article 15 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 15 : Réclamations et garanties
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Toute réclamation doit être adressée au Prestataire par e-mail à lawcleancenter@outlook.com dans les meilleurs délais. Le Client consommateur bénéficie, le cas échéant, des garanties légales applicables.
+            </p>
+          </section>
+
+          {/* Article 16 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 16 : Données personnelles
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Les données personnelles collectées dans le cadre de la relation contractuelle sont traitées conformément à la Politique de confidentialité du Prestataire et au Règlement (UE) 2016/679 (RGPD).
+            </p>
+          </section>
+
+          {/* Article 17 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 17 : Propriété intellectuelle
+            </h2>
+            <p className="text-muted-foreground leading-relaxed">
+              Le Prestataire conserve la propriété intellectuelle sur les photographies et contenus qu’il réalise. Sauf opposition écrite du Client, le Prestataire peut utiliser des photographies « avant/après » du Véhicule à des fins d’illustration de son savoir-faire (site, portfolio, réseaux sociaux), en veillant à ne pas faire apparaître d’élément identifiant (plaque d’immatriculation notamment) sans accord.
+            </p>
+          </section>
+
+          {/* Article 18 */}
+          <section className="mb-10">
+            <h2 className="flex items-center gap-3 text-xl font-bold text-foreground mb-4">
+              <FileText className="w-5 h-5 text-primary" />
+              Article 18 : Droit applicable et litiges
+            </h2>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              Les présentes CGV sont régies par le droit français.
+            </p>
+            <p className="mb-4 text-muted-foreground leading-relaxed">
+              En cas de litige, les parties s’efforceront de trouver une solution amiable. À défaut :
+            </p>
+            <ul className="space-y-3 list-disc pl-5">
+              <li className="text-muted-foreground">Pour les Clients professionnels, et sauf disposition impérative contraire, tout litige sera soumis aux tribunaux compétents du ressort du siège social du Prestataire.</li>
+            </ul>
+          </section>
+        </motion.div>
+      </div>
+    </div>
+  );
 }
