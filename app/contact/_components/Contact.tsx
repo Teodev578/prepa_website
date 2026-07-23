@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createClient } from '@/lib/client';
 
@@ -32,48 +32,92 @@ interface FormField {
     is_required: boolean;
 }
 
+interface ProfileData {
+    formId: string | null;
+    fields: FormField[];
+}
+
+type ProfileCache = Partial<Record<'PARTICULIER' | 'ENTREPRISE', ProfileData>>;
+
 const Contact = () => {
     const [profile, setProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
     const profiles = ['PARTICULIER', 'ENTREPRISE'] as const;
 
-    const [formId, setFormId] = useState<string | null>(null);
-    const [fields, setFields] = useState<FormField[]>([]);
+    const cacheRef = useRef<ProfileCache>({});
+    const [currentData, setCurrentData] = useState<ProfileData>({ formId: null, fields: [] });
     const [formData, setFormData] = useState<Record<string, string>>({});
     const [isLoadingData, setIsLoadingData] = useState(true);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [statusMessage, setStatusMessage] = useState<{ type: 'error' | 'success', text: string } | null>(null);
 
-    useEffect(() => {
+    const fetchProfile = async (profileType: 'PARTICULIER' | 'ENTREPRISE'): Promise<ProfileData> => {
+        // Retourner depuis le cache si disponible
+        if (cacheRef.current[profileType]) {
+            return cacheRef.current[profileType]!;
+        }
+
         const supabase = createClient();
-        const fetchConfig = async () => {
+
+        const { data: forms } = await supabase
+            .from('forms')
+            .select('id')
+            .eq('profile_type', profileType)
+            .order('created_at', { ascending: true })
+            .limit(1);
+
+        const form = forms && forms.length > 0 ? forms[0] : null;
+
+        if (!form) {
+            const result = { formId: null, fields: [] };
+            cacheRef.current[profileType] = result;
+            return result;
+        }
+
+        const { data: formFields } = await supabase
+            .from('form_fields')
+            .select('*')
+            .eq('form_id', form.id)
+            .order('display_order', { ascending: true });
+
+        const result = { formId: form.id, fields: formFields || [] };
+        cacheRef.current[profileType] = result;
+        return result;
+    };
+
+    useEffect(() => {
+        let cancelled = false;
+
+        const load = async () => {
             setIsLoadingData(true);
 
-            const { data: forms } = await supabase
-                .from('forms')
-                .select('id')
-                .eq('profile_type', profile)
-                .order('created_at', { ascending: true })
-                .limit(1);
+            // Charger le profil actif en priorité
+            const data = await fetchProfile(profile);
 
-            const form = forms && forms.length > 0 ? forms[0] : null;
+            if (!cancelled) {
+                setCurrentData(data);
+                setIsLoadingData(false);
 
-            if (form) {
-                setFormId(form.id);
-                const { data: formFields } = await supabase
-                    .from('form_fields')
-                    .select('*')
-                    .eq('form_id', form.id)
-                    .order('display_order', { ascending: true });
-
-                setFields(formFields || []);
+                // Pré-charger l'autre profil en arrière-plan
+                const other = profile === 'PARTICULIER' ? 'ENTREPRISE' : 'PARTICULIER';
+                fetchProfile(other).catch(() => {});
             }
-
-            setFormData({});
-            setIsLoadingData(false);
         };
 
-        fetchConfig();
+        load();
+        return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profile]);
+
+    const handleProfileChange = (p: 'PARTICULIER' | 'ENTREPRISE') => {
+        setProfile(p);
+        setFormData({});
+        setStatusMessage(null);
+        // Si déjà en cache, afficher instantanément
+        if (cacheRef.current[p]) {
+            setCurrentData(cacheRef.current[p]!);
+            setIsLoadingData(false);
+        }
+    };
 
     const handleInputChange = (fieldName: string, value: string) => {
         setFormData(prev => ({ ...prev, [fieldName]: value }));
@@ -84,7 +128,7 @@ const Contact = () => {
         e.preventDefault();
         setStatusMessage(null);
 
-        for (const field of fields) {
+        for (const field of currentData.fields) {
             if (field.is_required && !formData[field.field_name]?.trim()) {
                 setStatusMessage({ type: 'error', text: `Veuillez remplir le champ obligatoire : ${field.field_label}` });
                 return;
@@ -100,7 +144,7 @@ const Contact = () => {
         const { error: quoteError } = await supabase
             .from('quote_requests')
             .insert([{
-                form_id: formId,
+                form_id: currentData.formId,
                 client_email: clientEmail,
                 form_data: formData,
                 status: 'NOUVEAU'
@@ -114,21 +158,8 @@ const Contact = () => {
             
             fetch('/api/notify', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    clientEmail,
-                    formData,
-                    profile,
-                }),
-            }).then(async (res) => {
-                if (!res.ok) {
-                    const errorText = await res.text();
-                    console.warn("Erreur de notification par email :", res.status, errorText);
-                } else {
-                    console.log("Notification email déclenchée avec succès.");
-                }
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ clientEmail, formData, profile }),
             }).catch(err => {
                 console.error("Erreur réseau lors de la notification email :", err);
             });
@@ -138,6 +169,9 @@ const Contact = () => {
 
         setIsSubmitting(false);
     };
+
+    const fields = currentData.fields;
+    const formId = currentData.formId;
 
     return (
         <section className="bg-background text-foreground h-auto py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
@@ -151,7 +185,6 @@ const Contact = () => {
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false, margin: "-50px" }}
                             transition={{ duration: 1, ease: customEase }}
-                            /* 🛠️ COULEUR SUBTILE : Opacité réduite sur la ligne */
                             className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
                         />
                         <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
@@ -178,7 +211,6 @@ const Contact = () => {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, margin: "-50px" }}
-                            /* 🛠️ COULEUR SUBTILE : Bordure discrète */
                             className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border/50 pl-4 sm:pl-6 mt-4 sm:mt-6"
                         >
                             Remplissez le formulaire ci-dessous afin de nous aider à comprendre vos besoins et à agir en conséquence.
@@ -191,7 +223,7 @@ const Contact = () => {
                     {profiles.map((p) => (
                         <button
                             key={p}
-                            onClick={() => setProfile(p)}
+                            onClick={() => handleProfileChange(p)}
                             className="px-6 py-2.5 md:px-8 md:py-3 font-mono text-xs font-bold uppercase tracking-wider transition-colors duration-300 relative z-10 focus:outline-none"
                         >
                             <span className={`relative z-20 transition-colors duration-300 ${profile === p ? 'text-primary-foreground' : 'text-muted-foreground hover:text-foreground'}`}>
@@ -231,13 +263,11 @@ const Contact = () => {
                                         className="flex flex-col gap-2 w-full"
                                     >
                                         <label className="font-mono text-xs font-bold text-muted-foreground uppercase tracking-wider">
-                                            {/* 🛠️ COULEUR SUBTILE : L'astérisque est moins agressive avec opacity-40 */}
                                             {field.field_label} {field.is_required && <span className="text-secondary opacity-40 ml-1">*</span>}
                                         </label>
 
                                         {field.field_type === 'select' && field.options ? (
                                             <select
-                                                /* 🛠️ COULEUR SUBTILE : Le focus utilise border-foreground au lieu de secondary pour rester neutre */
                                                 className="w-full bg-background border-0 border-b border-border py-2.5 focus:ring-0 focus:border-foreground transition-colors font-sans text-base outline-none cursor-pointer text-foreground"
                                                 value={formData[field.field_name] || ''}
                                                 onChange={(e) => handleInputChange(field.field_name, e.target.value)}
@@ -294,17 +324,15 @@ const Contact = () => {
 
                 {/* Footer pratique */}
                 <div className="mt-24 sm:mt-32 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-8 sm:pt-12 border-t border-border font-mono text-[9px] sm:text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest relative">
-                    {/* 🛠️ COULEUR SUBTILE : Ligne avec opacité réduite */}
                     <div className="absolute top-0 left-0 w-8 sm:w-12 h-[1px] bg-primary/40" />
                     
                     <div className="space-y-1.5 sm:space-y-2">
                         <span className="text-foreground font-bold flex items-center gap-2">
-                            {/* 🛠️ COULEUR SUBTILE : Points avec opacité réduite */}
                             <span className="w-1 h-1 bg-primary/50 rounded-full"></span> Zone d'intervention
                         </span>
                         <div>
                             Région Île-de-France<br />
-                            Déplacements sur site & parcs
+                            Déplacements sur site &amp; parcs
                         </div>
                     </div>
                     <div className="space-y-1.5 sm:space-y-2">
@@ -313,7 +341,7 @@ const Contact = () => {
                         </span>
                         <div>
                             Assurance spécifique incluse<br />
-                            Convoyages & Préparations sécurisés
+                            Convoyages &amp; Préparations sécurisés
                         </div>
                     </div>
                     <div className="space-y-1.5 sm:space-y-2 text-left md:text-right">
