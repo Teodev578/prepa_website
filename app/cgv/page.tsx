@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Cgv from "./_components/Cgv";
 
 export const metadata: Metadata = {
@@ -15,12 +13,8 @@ export const metadata: Metadata = {
 
 export default function CgvPage() {
   return (
-    <>
-      <Navbar />
-      <main className="relative bg-background min-h-screen flex flex-col pt-20 md:pt-24">
+      <>
         <Cgv />
-      </main>
-      <Footer />
-    </>
+      </>
   );
 }

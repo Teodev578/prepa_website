@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Portfolio from "./_components/Portfolio";
 import AboutSection from "./_components/AboutSection";
 
@@ -31,15 +29,11 @@ export const metadata: Metadata = {
 
 export default function PortfolioPage() {
   return (
-    <>
-      <Navbar />
-      <main className="relative bg-background min-h-screen flex flex-col pt-20 md:pt-24">
+      <>
         {/* 🛠️ Le discours commercial et stratégique */}
         {/*<AboutSection />*/}
         {/* 🛠️ La preuve par l'image (Études de cas) */}
         <Portfolio />
-      </main>
-      <Footer />
-    </>
+      </>
   );
 }

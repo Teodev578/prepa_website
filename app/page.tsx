@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import Hero from "@/components/home/Hero";
 import TechnicalServices from "@/components/home/TechnicalServices";
 import ExcellencePhilosophy from "@/components/home/ExcellencePhilosophy";
@@ -6,8 +5,6 @@ import Stats from "@/components/home/Stats";
 import Testimonials from "@/components/home/Testimonials";
 import Ticker from "@/components/home/Ticker"; // Ton nouveau composant
 import CTA from "@/components/home/CTA";
-import Footer from "@/components/Footer";
-
 export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
@@ -78,8 +75,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Navbar />
-      <main className="relative bg-background pt-20 md:pt-24">
+      <>
         <Hero />
         <Ticker />
         <Stats />
@@ -87,8 +83,7 @@ export default function Home() {
         <TechnicalServices />
         <Testimonials />
         <CTA />
-      </main>
-      <Footer />
+      </>
     </>
   );
 }

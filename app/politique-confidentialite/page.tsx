@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import PolitiqueConfidentialiteContent from "./_components/PolitiqueConfidentialiteContent";
 
 export const metadata: Metadata = {
@@ -30,12 +28,8 @@ export const metadata: Metadata = {
 
 export default function PolitiqueConfidentialitePage() {
   return (
-    <>
-      <Navbar />
-      <main className="relative bg-background min-h-screen flex flex-col pt-24 md:pt-32 pb-20 overflow-hidden">
+      <div className="pb-20 overflow-hidden">
         <PolitiqueConfidentialiteContent />
-      </main>
-      <Footer />
-    </>
+      </div>
   );
 }

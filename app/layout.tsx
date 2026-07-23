@@ -7,6 +7,8 @@ import SmoothScroll from "@/components/SmoothScroll";
 import Preloader from "@/components/Preloader";
 import CustomCursor from "@/components/CustomCursor";
 import GrainOverlay from "@/components/GrainOverlay";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 
 const sans = Poppins({
   subsets: ["latin"],
@@ -114,7 +116,11 @@ export default function RootLayout({
           <GrainOverlay />
           <MotionConfig transition={{ ease: [0.16, 1, 0.3, 1] }}>
             <SmoothScroll>
-              {children}
+              <Navbar />
+              <main className="relative flex flex-col min-h-screen bg-background pt-20">
+                {children}
+              </main>
+              <Footer />
             </SmoothScroll>
           </MotionConfig>
         </ThemeProvider>

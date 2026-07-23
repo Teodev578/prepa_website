@@ -1,6 +1,4 @@
 import { Metadata } from 'next';
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import Services from "./_components/Services";
 
 // 🚀 Métadonnées lues par les robots de Google (SEO)
@@ -40,11 +38,9 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <Navbar />
-      <main className="relative bg-background min-h-screen flex flex-col pt-20 md:pt-24">
+      <>
         <Services />
-      </main>
-      <Footer />
+      </>
     </>
   );
 }

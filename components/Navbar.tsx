@@ -17,35 +17,23 @@ const links = [
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [isHidden, setIsHidden] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const { theme, toggleTheme } = useTheme();
     const pathname = usePathname();
     const { scrollY } = useScroll();
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        const previous = scrollY.getPrevious() ?? 0;
-        if (latest > previous && latest > 150) {
-            setIsHidden(true);
-        } else {
-            setIsHidden(false);
-        }
         setIsScrolled(latest > 20);
     });
 
     return (
-        <motion.header 
-            variants={{
-                visible: { y: 0 },
-                hidden: { y: "-150%" }
-            }}
-            animate={isHidden && !isMenuOpen ? "hidden" : "visible"}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className={`fixed top-0 md:top-4 left-0 md:left-4 right-0 md:right-4 z-[100] transition-all duration-300 md:max-w-7xl md:mx-auto md:rounded-lg ${
-                isScrolled ? 'bg-background/85 backdrop-blur-md border-b md:border border-border/50 shadow-sm' : 'bg-transparent border-transparent'
+        <>
+            <header 
+            className={`fixed top-0 left-0 right-0 w-full z-[100] transition-colors duration-300 ${
+                isScrolled ? 'bg-background/85 backdrop-blur-md border-b border-border/50 shadow-sm' : 'bg-transparent border-transparent'
             }`}
         >
-            <div className="h-20 md:h-20 hidden lg:flex w-full items-stretch overflow-hidden md:rounded-lg">
+            <div className="h-20 hidden lg:flex w-full max-w-7xl mx-auto items-stretch overflow-hidden">
                 
                 {/* BLOC GAUCHE : Identité de marque */}
                 <div className="w-1/2 h-full flex items-center pl-6 xl:pl-8">
@@ -140,8 +128,10 @@ export default function Navbar() {
                 </div>
             </div>
 
+            </header>
+
             {/* Menu plein écran mobile */}
-            <div className={`fixed left-0 top-0 w-full h-[100dvh] bg-background lg:hidden transition-all duration-500 overflow-hidden flex flex-col pt-20 z-[101] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
+            <div className={`fixed left-0 top-0 w-full h-[100dvh] bg-background lg:hidden transition-all duration-500 overflow-hidden flex flex-col pt-20 z-[99] ${isMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
                 <nav className="flex-1 flex flex-col justify-center px-8 relative" aria-label="Navigation mobile">
                     <ul className="flex flex-col gap-6 text-3xl sm:text-5xl font-mono uppercase tracking-widest font-bold">
                         {links.map((link, index) => (
@@ -167,6 +157,6 @@ export default function Navbar() {
                     <div>EST. 2026</div>
                 </div>
             </div>
-        </motion.header>
+        </>
     );
 }
