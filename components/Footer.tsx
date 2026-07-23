@@ -17,8 +17,8 @@ const Footer = () => {
     ];
 
     const legalLinks = [
-        { label: "MENTIONS LÉGALES", href: "#" },
-        { label: "POLITIQUE DE CONFIDENTIALITÉ", href: "#" },
+        { label: "MENTIONS LÉGALES", href: "/mentions-legales" },
+        { label: "POLITIQUE DE CONFIDENTIALITÉ", href: "/politique-confidentialite" },
     ];
 
     const technicalData = [
