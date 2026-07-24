@@ -94,7 +94,7 @@ export default function Portfolio() {
         <section className="bg-background text-foreground h-auto py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
             <div className="max-w-7xl mx-auto">
                 
-                {/* 🛠️ ALIGNEMENT DES ANIMATIONS DU HEADER */}
+                {/* 🛠️ HEADER */}
                 <div className="mb-12 sm:mb-16 relative">
                     <div className="mb-4 flex items-center gap-3 sm:gap-4">
                         <motion.div
@@ -102,10 +102,10 @@ export default function Portfolio() {
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false, margin: "-50px" }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-8 sm:w-12 h-[1px] bg-primary origin-left"
+                            className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
                         />
-                        <span className="text-primary font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
-                            CAS_CONCRETS_&_PERFORMANCES
+                        <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
+                            CAS CONCRETS & PERFORMANCES
                         </span>
                     </div>
 
@@ -115,11 +115,10 @@ export default function Portfolio() {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, margin: "-50px" }}
-                            // 🛠️ RESPONSIVITÉ FLUIDE : text-[12vw] s'adapte parfaitement à la largeur de l'écran mobile, puis passe en tailles fixes (rem) sur tablette et PC
                             className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
-                            NOS <br /> 
-                            REALISATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2">↓</span>
+                            <span className="block pb-2 sm:pb-4">NOS</span>
+                            <span className="block">RÉALISATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30"></span></span>
                         </motion.h1>
                     </div>
 
@@ -129,17 +128,10 @@ export default function Portfolio() {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, margin: "-50px" }}
-                            // 🛠️ RESPONSIVITÉ TEXTE : Ajustement subtil de text-sm à text-xl selon l'écran
-                            className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-2 border-primary/30 pl-4 sm:pl-6 mt-4 sm:mt-6"
+                            className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border/50 pl-4 sm:pl-6 mt-4 sm:mt-6"
                         >
                             Notre travail parle de lui-même. Découvrez nos réalisations en images : des photos avant/après et des résultats concrets qui font la fierté de nos clients. 
                         </motion.p>
-                    </div>
-
-                    <div className="absolute top-0 right-0 font-mono text-[9px] md:text-xs tracking-widest uppercase text-foreground opacity-70 hidden lg:block text-right leading-relaxed">
-                        LAT: 49.0974° N<br />
-                        LON: 2.5065° E<br />
-                        <span className="text-secondary opacity-100">SECTEUR: IDF</span>
                     </div>
                 </div>
 

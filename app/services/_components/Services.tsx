@@ -3,13 +3,31 @@
 import React from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+
+const customEase = [0.16, 1, 0.3, 1] as const;
+
+const textRevealVariants = {
+    hidden: { y: "100%", opacity: 0 },
+    show: {
+        y: "0%",
+        opacity: 1,
+        transition: { duration: 1.2, ease: customEase }
+    }
+};
+
+const paragraphVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 1, delay: 0.2, ease: customEase }
+    }
+};
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
 export default function Services() {
-  const titleLines = ["NOS", "PRESTATIONS."];
-
   const cardVariants = {
     hidden: { opacity: 0, y: 15 },
     visible: {
@@ -25,50 +43,46 @@ export default function Services() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24 relative z-10 w-full">
         {/* En-tête de page */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: BEZIER }}
-          className="mb-16 md:mb-24 pb-8 border-b border-border/60"
-        >
-          <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-primary transition-colors tracking-wider uppercase group"
-            >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              <span>Retour à l'accueil</span>
-            </Link>
-            
-            <div className="flex flex-col items-end gap-1 font-mono text-[10px] text-muted-foreground uppercase tracking-widest select-none">
-              <span className="text-primary font-bold">OFFRES B2B</span>
-              <span>ÎLE-DE-FRANCE</span>
+        {/* 🛠️ HEADER */}
+        <div className="mb-12 sm:mb-16 relative">
+            <div className="mb-4 flex items-center gap-3 sm:gap-4">
+                <motion.div
+                    initial={{ scaleX: 0 }}
+                    whileInView={{ scaleX: 1 }}
+                    viewport={{ once: false, margin: "-50px" }}
+                    transition={{ duration: 1, ease: customEase }}
+                    className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
+                />
+                <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
+                    OFFRES B2B
+                </span>
             </div>
-          </div>
 
-          <h1 className="text-display font-sans text-foreground">
-            {titleLines.map((line, i) => (
-              <span key={i} className="block overflow-hidden relative pb-2 -mb-2">
-                <motion.span
-                  initial={{ y: "110%" }}
-                  animate={{ y: "0%" }}
-                  transition={{ duration: 0.8, delay: i * 0.1, ease: BEZIER }}
-                  className="block"
+            <div className="overflow-hidden py-2">
+                <motion.h1
+                    variants={textRevealVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: false, margin: "-50px" }}
+                    className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                 >
-                  {line}
-                </motion.span>
-              </span>
-            ))}
-          </h1>
-          <motion.p 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 1, delay: 0.4 }}
-            className="mt-8 text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl font-medium"
-          >
-            Découvrez nos solutions conçues sur-mesure pour les professionnels de l'automobile. De la préparation unitaire au contrat cadre d'externalisation.
-          </motion.p>
-        </motion.div>
+                    NOS <br /> 
+                    PRESTATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30"></span>
+                </motion.h1>
+            </div>
+
+            <div className="overflow-hidden">
+                <motion.p
+                    variants={paragraphVariants}
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: false, margin: "-50px" }}
+                    className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border/50 pl-4 sm:pl-6 mt-4 sm:mt-6"
+                >
+                    Découvrez nos solutions conçues sur-mesure pour les professionnels de l&apos;automobile. De la préparation unitaire au contrat cadre d&apos;externalisation.
+                </motion.p>
+            </div>
+        </div>
 
         <motion.div
           initial="hidden"
@@ -86,7 +100,7 @@ export default function Services() {
             </div>
             
             <div className="flex-grow z-10">
-              <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">// VN & VO</span>
+              <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">{"//"} VN & VO</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">PRÉPARATION ESTHÉTIQUE B2B</h2>
               <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
                 Nettoyage technique VN/VO, detailing intérieur/extérieur et rénovation de véhicules pour concessionnaires et parcs automobiles.
@@ -110,7 +124,7 @@ export default function Services() {
             </div>
             
             <div className="flex-grow z-10">
-              <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">// LOGISTIQUE SÉCURISÉE</span>
+              <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">{"//"} LOGISTIQUE SÉCURISÉE</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">CONVOYAGE DE VÉHICULES</h2>
               <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
                 Transport sécurisé et convoyage de flottes automobiles en Île-de-France avec traçabilité complète de la prise en charge à la livraison.
@@ -134,14 +148,14 @@ export default function Services() {
             </div>
             
             <div className="flex-grow z-10">
-              <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-4 font-bold">// CHARGES FIXES → VARIABLES</span>
+              <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-4 font-bold">{"//"} CHARGES FIXES → VARIABLES</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight text-background">EXTERNALISATION PÔLE PRÉPARATION</h2>
               <p className="text-background/80 font-medium mb-8 leading-relaxed text-sm">
                 Gestion externalisée de votre pôle esthétique et logistique. Transformez vos charges fixes liées à la préparation en coûts 100% variables.
               </p>
               <ul className="space-y-3 font-sans text-sm text-background/70 mb-12">
                 <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Aucun coût salarial fixe</li>
-                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Gestion des pics d'activité</li>
+                <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Gestion des pics d&apos;activité</li>
                 <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Standard de qualité garanti</li>
                 <li className="flex gap-3 items-start"><span className="text-secondary mt-1">■</span> Contrats cadres flexibles</li>
               </ul>
@@ -158,10 +172,10 @@ export default function Services() {
             </div>
             
             <div className="flex-grow z-10">
-              <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">// VALORISATION VO</span>
+              <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">{"//"} VALORISATION VO</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">RÉNOVATION & DETAILING PARC</h2>
               <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
-                Remise en état complète de véhicules d'occasion pour maximiser la valeur de revente et accélérer la rotation de votre parc.
+                Remise en état complète de véhicules d&apos;occasion pour maximiser la valeur de revente et accélérer la rotation de votre parc.
               </p>
               <ul className="space-y-3 font-sans text-sm text-muted-foreground mb-12">
                 <li className="flex gap-3 items-start"><span className="text-primary mt-1">■</span> Rattrapage des défauts carrosserie</li>
