@@ -9,7 +9,7 @@ description: Orchestrateur intelligent de projet — analyse le contexte et acti
 
 Ce fichier est le point d'entrée principal du projet. Il orchestre l'activation des skills disponibles en fonction du **type de tâche détecté**, de la **phase du projet** et du **contexte technique**. Il garantit que chaque intervention est faite avec le bon expert, au bon moment, selon la bonne méthode.
 
-> **Règle fondamentale** : `rigueur-code` est TOUJOURS activé en premier pour toute tâche impliquant du code. Aucune ligne de code n'est écrite sans avoir d'abord suivi le processus obligatoire de ce skill (reformulation → plan → vérification → implémentation → auto-revue).
+> **Règle fondamentale** : La méthode **BMAD** (implémentée via le skill `rigueur-code`) est TOUJOURS activée en premier pour toute tâche impliquant du code. Aucune ligne de code n'est écrite sans avoir d'abord suivi le processus obligatoire de BMAD (reformulation → plan → vérification → implémentation → auto-revue).
 
 ---
 
@@ -166,11 +166,16 @@ L'agent doit détecter automatiquement le contexte via ces signaux :
 | Fichiers `*.tsx`, `*.jsx`, composants | `frontend-developer` |
 | Dossier `app/`, `pages/`, `layout.tsx` | `nextjs-developer` |
 | `route.ts`, `actions.ts`, middleware | `nextjs-developer` + `backend-developer` |
-| Fichiers `*.sql`, schémas de DB | `sql-pro` |
-| Fichier CSS, design system | `ui-ux-pro-max` |
+| Base de données, requêtes, migrations, `*.sql` | `sql-pro` |
+| Design, UI, visuel, CSS, couleurs, mise en page | `ui-ux-pro-max` (par défaut) + `ui-designer` + `ui-ux-designer` |
 | Fichier de test `*.test.ts` | `review` + `typescript-pro` |
 | `package.json`, `tsconfig.json` | `build-engineer` + `typescript-pro` |
 | Message de commit, PR, push | `git` ou `finalize` |
 | Erreur / bug report | `troubleshoot` |
 | Demande de documentation | `document` |
 | Demande floue / "idée" | `brainstorm` |
+| Sécurité Web & Pentest (OWASP) | `performing-web-application-penetration-test` |
+| Sécurité des WebSockets | `exploiting-websocket-vulnerabilities` |
+| Récupération d'identifiants (DPAPI) | `abusing-dpapi-for-credential-access` |
+| Analyse forensic de la mémoire | `analyzing-memory-forensics-with-lime-and-volatility` |
+| Refactoring ou nettoyage de code massif | `refactoring-specialist` + `cleanup` |
