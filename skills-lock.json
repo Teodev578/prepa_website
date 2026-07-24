@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "skills": {
+    "abusing-dpapi-for-credential-access": {
+      "source": "mukul975/Anthropic-Cybersecurity-Skills",
+      "sourceType": "github",
+      "skillPath": "skills/abusing-dpapi-for-credential-access/SKILL.md",
+      "computedHash": "b3eb595ec2d6b08d80156a72ba72a9f993d66933dac64eeb649eacaad77a4c7f"
+    },
+    "analyzing-memory-forensics-with-lime-and-volatility": {
+      "source": "mukul975/Anthropic-Cybersecurity-Skills",
+      "sourceType": "github",
+      "skillPath": "skills/analyzing-memory-forensics-with-lime-and-volatility/SKILL.md",
+      "computedHash": "2312f132fbee5d6f97fdbdab1022e23d72705fc0ea1527de693a0e1d103fa277"
+    },
+    "exploiting-websocket-vulnerabilities": {
+      "source": "mukul975/Anthropic-Cybersecurity-Skills",
+      "sourceType": "github",
+      "skillPath": "skills/exploiting-websocket-vulnerabilities/SKILL.md",
+      "computedHash": "fa1d9415096c0ec2bfc90e86515d764f813dd096efbbfb83e8fdc01ce63f4a64"
+    },
+    "performing-web-application-penetration-test": {
+      "source": "mukul975/Anthropic-Cybersecurity-Skills",
+      "sourceType": "github",
+      "skillPath": "skills/performing-web-application-penetration-test/SKILL.md",
+      "computedHash": "78c01653296b7ff15f8bf1b8319e657880b8affc431f66de6641d838da93d90b"
+    }
+  }
+}

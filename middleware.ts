@@ -2,10 +2,42 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+/** Génère un nonce cryptographique unique par requête */
+function generateNonce(): string {
+  return Buffer.from(crypto.randomUUID()).toString('base64');
+}
+
+/** Construit la CSP avec nonce — unsafe-eval seulement en dev (requis par React DevTools) */
+function buildCsp(nonce: string): string {
+  const isDev = process.env.NODE_ENV === 'development';
+  return [
+    "default-src 'self'",
+    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${isDev ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com`,
+    `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
+    "font-src 'self' https://fonts.gstatic.com",
+    "img-src 'self' data: https: blob:",
+    "connect-src 'self' https://*.supabase.co https://api.resend.com",
+    "frame-ancestors 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+  ].join('; ');
+}
+
 export async function middleware(request: NextRequest) {
+  const nonce = generateNonce();
+  const csp = buildCsp(nonce);
+
+  // Propager le nonce dans les headers de la requête (lisible par les Server Components via next/headers)
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-nonce', nonce);
+  requestHeaders.set('Content-Security-Policy', csp);
+
   let response = NextResponse.next({
-    request: { headers: request.headers },
+    request: { headers: requestHeaders },
   });
+
+  // Appliquer la CSP dynamique sur la réponse
+  response.headers.set('Content-Security-Policy', csp);
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,12 +47,14 @@ export async function middleware(request: NextRequest) {
         get(name: string) { return request.cookies.get(name)?.value; },
         set(name: string, value: string, options: CookieOptions) {
           request.cookies.set({ name, value, ...options });
-          response = NextResponse.next({ request: { headers: request.headers } });
+          response = NextResponse.next({ request: { headers: requestHeaders } });
+          response.headers.set('Content-Security-Policy', csp);
           response.cookies.set({ name, value, ...options });
         },
         remove(name: string, options: CookieOptions) {
           request.cookies.set({ name, value: '', ...options });
-          response = NextResponse.next({ request: { headers: request.headers } });
+          response = NextResponse.next({ request: { headers: requestHeaders } });
+          response.headers.set('Content-Security-Policy', csp);
           response.cookies.set({ name, value: '', ...options });
         },
       },

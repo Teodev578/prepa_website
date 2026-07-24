@@ -53,36 +53,42 @@ export default function Testimonials() {
   const targetRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
+
+  // PERF: matchMedia pour isDesktop = pas de re-render au simple resize
   const [isDesktop, setIsDesktop] = useState(false);
 
   useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1024px)");
+    setIsDesktop(mq.matches);
+
     const updateRange = () => {
       if (scrollRef.current) {
         setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
       }
-      setIsDesktop(window.innerWidth >= 1024);
     };
-
     updateRange();
-    
-    const observer = new ResizeObserver(() => updateRange());
-    if (scrollRef.current) {
-      observer.observe(scrollRef.current);
-    }
-    
-    window.addEventListener("resize", updateRange);
+
+    const observer = new ResizeObserver(updateRange);
+    if (scrollRef.current) observer.observe(scrollRef.current);
+
+    const handler = (e: MediaQueryListEvent) => {
+      setIsDesktop(e.matches);
+      updateRange();
+    };
+    mq.addEventListener("change", handler);
+
     return () => {
       observer.disconnect();
-      window.removeEventListener("resize", updateRange);
+      mq.removeEventListener("change", handler);
     };
   }, []);
 
-  const { scrollYProgress } = useScroll({
-    target: isDesktop ? targetRef : undefined,
-  });
+  // useScroll toujours appelé (règles des hooks)
+  const { scrollYProgress } = useScroll({ target: targetRef });
 
-  const x = useTransform(scrollYProgress, [0, 1], [0, -scrollRange]);
-  const smoothX = useSpring(x, { stiffness: 280, damping: 85, mass: 0.9, restDelta: 0.0001 });
+  // Syntaxe standard, compatible toutes versions framer-motion
+  const x = useTransform(scrollYProgress, [0, 1], [0, isDesktop ? -scrollRange : 0]);
+  const smoothX = useSpring(x, { stiffness: 200, damping: 40, mass: 0.6, restDelta: 0.5 });
 
   return (
     <section 

@@ -1,5 +1,7 @@
 import type { NextConfig } from "next";
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.1.78'],
   images: {
@@ -25,9 +27,12 @@ const nextConfig: NextConfig = {
           { key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains; preload' },
           {
             key: 'Content-Security-Policy',
+            // Note: les routes /terminal-hq-77 et /admin reçoivent une CSP dynamique
+            // avec nonce via le middleware (qui écrase cet header statique).
+            // Cette CSP statique s'applique aux routes publiques.
             value: [
               "default-src 'self'",
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+              `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''} https://www.googletagmanager.com`,
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
               "img-src 'self' data: https: blob:",
@@ -44,3 +49,4 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+

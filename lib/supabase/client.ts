@@ -2,11 +2,14 @@
 import { createBrowserClient } from '@supabase/ssr'
 
 export const createClient = () => {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://qhvkomzmofxecbdtmdgv.supabase.co';
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'sb_publishable_AyBahLfactiSbPtzKflMCg_x0dXEfu8';
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!url || !key) {
-    throw new Error("Supabase URL ou Key manquante dans les variables d'environnement !");
+    throw new Error(
+      "Variables d'environnement Supabase manquantes. " +
+      "Vérifiez NEXT_PUBLIC_SUPABASE_URL et NEXT_PUBLIC_SUPABASE_ANON_KEY dans .env.local"
+    );
   }
 
   return createBrowserClient(url, key);

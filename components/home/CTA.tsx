@@ -39,7 +39,7 @@ export default function CTA() {
             key={marker.id}
             initial="initial"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.2 }}
+            viewport={{ once: true, amount: 0.2 }}
             variants={flickerVariants}
             transition={{ delay: marker.delay }}
             className={`absolute ${marker.pos} text-primary font-mono text-xl opacity-50`}
@@ -56,7 +56,7 @@ export default function CTA() {
         <motion.span 
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false }}
+          viewport={{ once: true }}
           transition={{ duration: 0.6, ease: BEZIER }}
           className="font-mono text-[10px] md:text-xs text-muted-foreground tracking-widest md:tracking-[0.3em] uppercase mb-4 md:mb-6 block"
         >

@@ -1,18 +1,23 @@
 "use client";
 
-import React from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import RevealText from '@/components/RevealText';
 
 const ExcellencePhilosophy = () => {
-    // Basic parallax effect for images
-    const { scrollYProgress } = useScroll();
-    const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+    // PERF: useScroll scopé sur la section, pas sur la page entière
+    const sectionRef = useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: sectionRef,
+        offset: ["start end", "end start"],
+    });
+    // PERF: un seul useTransform partagé entre toutes les images
+    const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
     return (
-        <section className="bg-background text-foreground relative border-b border-border w-full max-w-[100vw] overflow-hidden">
+        <section ref={sectionRef} className="bg-background text-foreground relative border-b border-border w-full max-w-[100vw] overflow-hidden">
             
             <div className="flex flex-col lg:flex-row w-full">
                 
@@ -36,13 +41,13 @@ const ExcellencePhilosophy = () => {
                         
                         {/* Image 1 - Large Rectangle */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-2 md:col-span-2 row-span-2 md:row-span-2">
-                            <motion.div style={{ y: yParallax, height: "120%", marginTop: "-10%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/6.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 1" 
                                     sizes="(max-width: 768px) 100vw, 50vw"
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                            className="object-cover" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -53,13 +58,13 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 2 - Square */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
-                            <motion.div style={{ y: yParallax, height: "120%", marginTop: "-10%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/7.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 2" 
                                     sizes="(max-width: 768px) 50vw, 25vw"
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                            className="object-cover" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -70,13 +75,13 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 3 - Square */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
-                            <motion.div style={{ y: yParallax, height: "120%", marginTop: "-10%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/3.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 3" 
                                     sizes="(max-width: 768px) 50vw, 25vw"
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                            className="object-cover" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -87,13 +92,13 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 4 - Tall Rectangle */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-2 md:col-span-1 row-span-2 md:row-span-2">
-                            <motion.div style={{ y: yParallax, height: "120%", marginTop: "-10%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/4.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 4" 
                                     sizes="(max-width: 768px) 100vw, 25vw"
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                            className="object-cover" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
@@ -104,13 +109,13 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 5 - Square */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
-                            <motion.div style={{ y: yParallax, height: "120%", marginTop: "-10%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/5.jpeg" 
                                     fill 
                                     alt="Préparation esthétique automobile - Réalisation 5" 
                                     sizes="(max-width: 768px) 50vw, 25vw"
-                                    className="object-cover transition-transform duration-700 group-hover:scale-105" 
+                            className="object-cover" 
                                 />
                             </motion.div>
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
