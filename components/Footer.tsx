@@ -1,9 +1,12 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import Logo from '@/components/Logo';
+import Modal from '@/components/Modal';
+import MentionsLegalesContent from '@/components/MentionsLegalesContent';
+import PolitiqueConfidentialiteContent from '@/components/PolitiqueConfidentialiteContent';
 
 // 🛠️ HARMONISATION : Reprise de la courbe de Bézier commune à tout le site
 const customEase = [0.16, 1, 0.3, 1] as const;
@@ -14,11 +17,6 @@ const navLinks = [
     { label: "SERVICES", href: "/services" },
     { label: "PORTFOLIO", href: "/portfolio" },
     { label: "CONTACT", href: "/contact" },
-];
-
-const legalLinks = [
-    { label: "MENTIONS LÉGALES", href: "/mentions-legales" },
-    { label: "POLITIQUE DE CONFIDENTIALITÉ", href: "/politique-confidentialite" },
 ];
 
 const technicalData = [
@@ -49,6 +47,8 @@ const itemVariants = {
 };
 
 const Footer = () => {
+    const [legalModal, setLegalModal] = useState<'mentions' | 'politique' | null>(null);
+
     return (
         <footer className="relative w-full bg-background border-t border-border overflow-hidden pt-16 md:pt-24 flex flex-col justify-between">
             
@@ -95,17 +95,24 @@ const Footer = () => {
                             Légal
                         </h3>
                         <ul className="flex flex-col gap-4">
-                            {legalLinks.map((link) => (
-                                <li key={link.label}>
-                                    <Link
-                                        href={link.href}
-                                        className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors inline-flex items-center group"
-                                    >
-                                        <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-[opacity,transform,margin-left] duration-300 mr-2 text-primary font-bold">{">"}</span>
-                                        {link.label}
-                                    </Link>
-                                </li>
-                            ))}
+                            <li>
+                                <button
+                                    onClick={() => setLegalModal('mentions')}
+                                    className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors inline-flex items-center group text-left"
+                                >
+                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-[opacity,transform,margin-left] duration-300 mr-2 text-primary font-bold">{">"}</span>
+                                    MENTIONS LÉGALES
+                                </button>
+                            </li>
+                            <li>
+                                <button
+                                    onClick={() => setLegalModal('politique')}
+                                    className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors inline-flex items-center group text-left"
+                                >
+                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-[opacity,transform,margin-left] duration-300 mr-2 text-primary font-bold">{">"}</span>
+                                    POLITIQUE DE CONFIDENTIALITÉ
+                                </button>
+                            </li>
                         </ul>
                     </motion.div>
 
@@ -143,6 +150,14 @@ const Footer = () => {
                     </motion.div>
                 </div>
             </div>
+
+            {/* Modals */}
+            <Modal isOpen={legalModal === 'mentions'} onClose={() => setLegalModal(null)}>
+                <MentionsLegalesContent />
+            </Modal>
+            <Modal isOpen={legalModal === 'politique'} onClose={() => setLegalModal(null)}>
+                <PolitiqueConfidentialiteContent />
+            </Modal>
         </footer>
     );
 };

@@ -65,24 +65,35 @@ export default function MentionsLegalesContent() {
   const [activeSection, setActiveSection] = useState<string>("editeur");
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
-      for (const section of sections) {
-        const el = document.getElementById(section.id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section.id);
-            break;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
           }
-        }
+        });
+      },
+      {
+        root: document.getElementById('modal-scroll-container'),
+        rootMargin: '-20% 0px -60% 0px',
       }
-    };
+    );
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    sections.forEach((section) => {
+      const el = document.getElementById(section.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
   }, []);
+
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   const handlePrint = () => {
     window.print();
@@ -98,13 +109,9 @@ export default function MentionsLegalesContent() {
         className="mb-12 md:mb-16 pb-8 border-b border-border/60"
       >
         <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-primary transition-colors tracking-wider uppercase group"
-          >
-            <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-            <span>Retour à l&apos;accueil</span>
-          </Link>
+          <div className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground tracking-wider uppercase">
+            <span>Informations Légales</span>
+          </div>
 
           <div className="flex items-center gap-3">
             <span className="font-mono text-[10px] uppercase tracking-widest px-3 py-1 bg-primary/10 text-primary rounded-full border border-primary/20">
@@ -136,7 +143,7 @@ export default function MentionsLegalesContent() {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
         {/* Sticky Table of Contents (Desktop Sidebar) */}
         <aside className="hidden lg:block lg:col-span-4 xl:col-span-3">
-          <div className="sticky top-28 space-y-4 p-5 rounded-xl bg-card/60 border border-border backdrop-blur-sm">
+          <div className="sticky top-4 space-y-4 p-5 rounded-xl bg-card/60 border border-border backdrop-blur-sm">
             <div className="flex items-center justify-between border-b border-border/60 pb-3">
               <span className="font-mono text-xs font-semibold text-primary uppercase tracking-widest">
                 SOMMAIRE
@@ -153,6 +160,7 @@ export default function MentionsLegalesContent() {
                   <a
                     key={sec.id}
                     href={`#${sec.id}`}
+                    onClick={(e) => handleNavClick(e, sec.id)}
                     className={`flex items-center gap-3 px-3 py-2 rounded-lg font-mono text-xs transition-all ${
                       isActive
                         ? "bg-primary/15 text-primary font-semibold border-l-2 border-primary pl-2.5"
