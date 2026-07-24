@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,8 +13,16 @@ const ExcellencePhilosophy = () => {
         target: sectionRef,
         offset: ["start end", "end start"],
     });
-    // PERF: un seul useTransform partagé entre toutes les images
     const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+
+    const [isDesktop, setIsDesktop] = useState(true);
+    useEffect(() => {
+        const mq = window.matchMedia("(min-width: 1024px)");
+        setIsDesktop(mq.matches);
+        const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
+        mq.addEventListener("change", handler);
+        return () => mq.removeEventListener("change", handler);
+    }, []);
 
     return (
         <section ref={sectionRef} className="bg-background text-foreground relative border-b border-border w-full max-w-[100vw] overflow-hidden">
@@ -41,7 +49,7 @@ const ExcellencePhilosophy = () => {
                         
                         {/* Image 1 - Large Rectangle */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-2 md:col-span-2 row-span-2 md:row-span-2">
-                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/6.jpeg" 
                                     fill 
@@ -58,7 +66,7 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 2 - Square */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
-                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/7.jpeg" 
                                     fill 
@@ -75,7 +83,7 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 3 - Square */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
-                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/3.jpeg" 
                                     fill 
@@ -92,7 +100,7 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 4 - Tall Rectangle */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-2 md:col-span-1 row-span-2 md:row-span-2">
-                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/4.jpeg" 
                                     fill 
@@ -109,7 +117,7 @@ const ExcellencePhilosophy = () => {
 
                         {/* Image 5 - Square */}
                         <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
-                            <motion.div style={{ y: yParallax, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
+                            <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/5.jpeg" 
                                     fill 

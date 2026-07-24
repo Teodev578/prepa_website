@@ -12,6 +12,11 @@ export default function CustomCursor() {
   useEffect(() => {
     setIsMounted(true);
 
+    // Only attach heavy mouse listeners if device has a fine pointer (mouse)
+    if (!window.matchMedia("(pointer: fine)").matches) {
+      return;
+    }
+
     const updateMousePosition = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);

@@ -60,7 +60,6 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    images.forEach((src) => { const img = document.createElement("img"); img.src = src; });
     let timer: NodeJS.Timeout;
     const startTimer = () => {
       timer = setInterval(() => setCurrentIndex((prev) => (prev + 1) % images.length), 8000);
