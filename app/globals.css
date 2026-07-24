@@ -75,8 +75,18 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  button:not([disabled]), a, [role="button"], .interactive {
-    cursor: pointer;
+  /* Sur mobile/tablette (< 768px), le CustomCursor est masqué, on garde le curseur classique */
+  @media (max-width: 767px) {
+    button:not([disabled]), a, [role="button"], .interactive {
+      cursor: pointer;
+    }
+  }
+
+  /* Sur desktop (>= 768px), le CustomCursor est actif, on masque totalement le curseur OS */
+  @media (min-width: 768px) {
+    * {
+      cursor: none !important;
+    }
   }
 
   /* 🛠️ NOUVEAU : Titres standards revus pour la DA "Swiss" (Medium + Ultra serré) */
