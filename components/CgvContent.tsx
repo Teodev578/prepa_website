@@ -2,35 +2,27 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
-import { ArrowLeft, Printer, FileText } from "lucide-react";
+import { Printer, FileText } from "lucide-react";
 
 const customEase = [0.16, 1, 0.3, 1] as const;
 
-export default function Cgv() {
+export default function CgvContent() {
   const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div className="bg-background text-foreground min-h-screen pb-16 md:pb-24 relative">
-      <div className="absolute inset-0 pointer-events-none bg-[url('/images/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03]" />
-
-      <div className="max-w-4xl mx-auto px-6 md:px-12 pt-16 md:pt-24 relative z-10 w-full">
+    <div className="max-w-4xl mx-auto px-6 md:px-12 w-full">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: customEase }}
-          className="mb-12 pb-8 border-b border-border/60"
+          className="mb-12 md:mb-16 pb-8 border-b border-border/60"
         >
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-primary transition-colors tracking-wider uppercase group"
-            >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
-              <span>Retour à l&apos;accueil</span>
-            </Link>
+            <div className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground tracking-wider uppercase">
+              <span>Conditions Générales</span>
+            </div>
 
             <button
               onClick={handlePrint}
@@ -340,7 +332,6 @@ export default function Cgv() {
             </ul>
           </section>
         </motion.div>
-      </div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import Logo from '@/components/Logo';
 import Modal from '@/components/Modal';
 import MentionsLegalesContent from '@/components/MentionsLegalesContent';
 import PolitiqueConfidentialiteContent from '@/components/PolitiqueConfidentialiteContent';
+import CgvContent from '@/components/CgvContent';
 
 // 🛠️ HARMONISATION : Reprise de la courbe de Bézier commune à tout le site
 const customEase = [0.16, 1, 0.3, 1] as const;
@@ -47,7 +48,7 @@ const itemVariants = {
 };
 
 const Footer = () => {
-    const [legalModal, setLegalModal] = useState<'mentions' | 'politique' | null>(null);
+    const [legalModal, setLegalModal] = useState<'cgv' | 'mentions' | 'politique' | null>(null);
 
     return (
         <footer className="relative w-full bg-background border-t border-border overflow-hidden pt-16 md:pt-24 flex flex-col justify-between">
@@ -95,6 +96,15 @@ const Footer = () => {
                             Légal
                         </h3>
                         <ul className="flex flex-col gap-4">
+                            <li>
+                                <button
+                                    onClick={() => setLegalModal('cgv')}
+                                    className="font-mono text-xs uppercase tracking-widest text-muted-foreground hover:text-foreground transition-colors inline-flex items-center group text-left"
+                                >
+                                    <span className="opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-[opacity,transform,margin-left] duration-300 mr-2 text-primary font-bold">{">"}</span>
+                                    CONDITIONS GÉNÉRALES (CGV)
+                                </button>
+                            </li>
                             <li>
                                 <button
                                     onClick={() => setLegalModal('mentions')}
@@ -152,6 +162,9 @@ const Footer = () => {
             </div>
 
             {/* Modals */}
+            <Modal isOpen={legalModal === 'cgv'} onClose={() => setLegalModal(null)}>
+                <CgvContent />
+            </Modal>
             <Modal isOpen={legalModal === 'mentions'} onClose={() => setLegalModal(null)}>
                 <MentionsLegalesContent />
             </Modal>
