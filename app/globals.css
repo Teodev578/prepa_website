@@ -82,9 +82,8 @@
     }
   }
 
-  /* Sur desktop (>= 768px), le CustomCursor est actif, on masque totalement le curseur OS */
   @media (min-width: 768px) {
-    * {
+    .hide-native-cursor, .hide-native-cursor * {
       cursor: none !important;
     }
   }
