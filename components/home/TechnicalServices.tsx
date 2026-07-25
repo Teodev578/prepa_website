@@ -7,8 +7,7 @@ import RevealText from '@/components/RevealText';
 
 const BEZIER = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
-// Hoisted to module scope — static data, no local state
-const titleLines = ["NOS FORFAITS", "PARTENAIRES."];
+
 
 const cardVariants = {
     hidden: { opacity: 0, y: 15 },
