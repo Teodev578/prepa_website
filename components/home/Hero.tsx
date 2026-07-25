@@ -129,26 +129,26 @@ export default function Hero() {
             SPÉCIALISTE ÎLE-DE-FRANCE
           </motion.div>
 
-        <h1 className="font-sans font-black text-[12vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] xl:text-[8rem] tracking-tighter uppercase text-foreground leading-[0.95] md:leading-[0.85] mb-8 relative w-full">
+        <h1 className="font-sans font-black text-[11vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] xl:text-[8rem] tracking-tighter uppercase text-foreground leading-[0.95] md:leading-[0.85] mb-6 md:mb-8 relative w-full">
           <span className="sr-only">Law Clean Center - Préparation Esthétique B2B</span>
           <RevealText text={"L'EXCELLENCE AUTO.\nSANS CONTRAINTE."} delay={0.4} />
         </h1>
 
         <motion.p
           variants={itemVariants}
-          className="text-muted-foreground font-medium text-base sm:text-lg md:text-xl leading-relaxed mb-12 max-w-2xl"
+          className="text-muted-foreground font-medium text-sm sm:text-base md:text-xl leading-relaxed mb-8 md:mb-12 max-w-2xl"
         >
           Avec <strong className="text-foreground font-bold">Law Clean Center</strong>, vous n'avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
         </motion.p>
         
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold mt-4"
+          className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold mt-4 w-full sm:w-auto"
         >
-          <Magnetic magneticPull={0.1}>
-            <Link href="/contact" className="w-full sm:w-auto block">
+          <Magnetic magneticPull={0.1} className="w-full sm:w-auto">
+            <Link href="/contact" className="w-full block">
               <motion.div
-                className="w-full sm:w-auto min-h-[60px] relative px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors"
+                className="w-full min-h-[60px] relative px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors"
               >
                 <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-background transition-colors duration-300">
@@ -159,13 +159,13 @@ export default function Hero() {
             </Link>
           </Magnetic>
 
-          <Magnetic magneticPull={0.1}>
-            <Link href="/services" className="w-full sm:w-auto block">
+          <Magnetic magneticPull={0.1} className="w-full sm:w-auto">
+            <Link href="/services" className="w-full block">
               <motion.div
-                className="w-full sm:w-auto min-h-[50px] md:min-h-[60px] relative px-8 py-3 md:py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors hover:border-foreground"
+                className="w-full min-h-[60px] relative px-8 py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors hover:border-foreground"
               >
                 <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
-                <span className="relative z-10 group-hover:text-background transition-colors duration-300">DÉCOUVRIR NOS SERVICES</span>
+                <span className="relative z-10 group-hover:text-background transition-colors duration-300 text-center">DÉCOUVRIR NOS SERVICES</span>
               </motion.div>
             </Link>
           </Magnetic>
