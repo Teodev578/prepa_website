@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import BeforeAfterSlider from './BeforeAfterSlider';
+import CarouselSlider from './CarouselSlider';
 
 const customEase = [0.16, 1, 0.3, 1] as const;
 
@@ -43,7 +44,9 @@ export default function ProjectCard({ project, index }: { project: any, index: n
             {/* --- COMPOSANT VISUEL EN 4:3 --- */}
             {/* 🛠️ DESIGN : Ajout de aspect-[4/3] pour verrouiller le format de l'image */}
             <div className={`border-technical overflow-hidden bg-card p-1 relative w-full aspect-[4/3] ${project.size === 'large' ? 'md:aspect-video' : ''}`}>
-                {project.imgBefore && project.imgAfter ? (
+                {project.carouselImages && project.carouselImages.length > 0 ? (
+                    <CarouselSlider images={project.carouselImages} />
+                ) : project.imgBefore && project.imgAfter ? (
                     <BeforeAfterSlider
                         beforeImg={project.imgBefore}
                         afterImg={project.imgAfter}

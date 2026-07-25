@@ -14,6 +14,7 @@ interface Project {
     img?: string;
     imgBefore?: string;
     imgAfter?: string;
+    carouselImages?: string[];
     techData: {
         time: string;
         products: string;
@@ -71,6 +72,7 @@ export default function Portfolio() {
                     img: p.img_single,
                     imgBefore: p.img_before,
                     imgAfter: p.img_after,
+                    carouselImages: p.carousel_images || [],
                     techData: { 
                         time: p.time_spent || '-', 
                         products: p.solution || '-', 

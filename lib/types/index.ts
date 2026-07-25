@@ -11,6 +11,7 @@ export interface PortfolioProject {
   img_single?: string;
   img_before?: string;
   img_after?: string;
+  carousel_images?: string[];
   time_spent: string;
   solution: string;
   impact: string;

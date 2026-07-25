@@ -19,13 +19,14 @@ interface PortfolioFormData {
     img_single: string;
     img_before: string;
     img_after: string;
+    carousel_images: string[];
 }
 
 const getInitialState = (): PortfolioFormData => ({
     ref_id: `REA_${Date.now()}`,
     title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
     time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
-    size: 'small', img_single: '', img_before: '', img_after: ''
+    size: 'small', img_single: '', img_before: '', img_after: '', carousel_images: []
 });
 
 export default function PortfolioAdd() {
@@ -94,13 +95,74 @@ export default function PortfolioAdd() {
         setImageStatus('');
     };
 
+    // 🛡️ 5. Gestion spécifique du carrousel
+    const handleCarouselUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const files = Array.from(e.target.files || []);
+        if (!files.length) return;
+        
+        if (formData.carousel_images.length + files.length > 5) {
+            setImageStatus("❌ Vous ne pouvez ajouter que 5 photos maximum au carrousel.");
+            return;
+        }
+
+        setUploading(true);
+        setImageStatus(`Chargement de ${files.length} photo(s) en cours... ⏳`);
+        setSubmitStatus('');
+
+        const newUrls: string[] = [];
+        let hasError = false;
+
+        for (const file of files) {
+            if (!file.type.startsWith('image/') || file.size > 5 * 1024 * 1024) {
+                hasError = true;
+                continue;
+            }
+
+            const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+            const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
+            
+            const { error } = await supabase.storage.from('portfolio-images').upload(fileName, file);
+            if (!error) {
+                const { data } = supabase.storage.from('portfolio-images').getPublicUrl(fileName);
+                newUrls.push(data.publicUrl);
+            } else {
+                hasError = true;
+            }
+        }
+
+        if (newUrls.length > 0) {
+            setFormData(prev => ({ ...prev, carousel_images: [...prev.carousel_images, ...newUrls] }));
+            setImageStatus(hasError ? '⚠️ Certaines images ont échoué ou étaient invalides.' : '');
+        } else {
+            setImageStatus("❌ Erreur lors du chargement des images.");
+        }
+        setUploading(false);
+    };
+
+    const handleRemoveCarouselImage = async (indexToRemove: number) => {
+        const imageUrl = formData.carousel_images[indexToRemove];
+        if (imageUrl) {
+            const cleanUrl = imageUrl.split('?')[0];
+            const fileName = cleanUrl.split('/').pop(); 
+            if (fileName) {
+                await supabase.storage.from('portfolio-images').remove([fileName]);
+            }
+        }
+
+        setFormData(prev => ({
+            ...prev,
+            carousel_images: prev.carousel_images.filter((_, i) => i !== indexToRemove)
+        }));
+        setImageStatus('');
+    };
+
     const handleSubmitPortfolio = async () => {
         if (!formData.title.trim()) {
             setSubmitStatus("❌ Veuillez au moins donner un nom au projet.");
             return;
         }
-        if (!formData.img_single && !formData.img_before) {
-            setSubmitStatus("❌ Veuillez ajouter au moins une photo pour ce projet.");
+        if (!formData.img_single && !formData.img_before && formData.carousel_images.length === 0) {
+            setSubmitStatus("❌ Veuillez ajouter au moins une photo, un avant/après ou un carrousel pour ce projet.");
             return;
         }
 
@@ -129,6 +191,7 @@ export default function PortfolioAdd() {
 
     const hasSingleImage = !!formData.img_single;
     const hasBeforeAfter = !!formData.img_before || !!formData.img_after;
+    const hasCarousel = formData.carousel_images.length > 0;
 
     return (
         <div className="max-w-4xl mx-auto p-8 bg-card border border-border rounded-lg shadow-lg relative text-foreground">
@@ -139,7 +202,7 @@ export default function PortfolioAdd() {
             <div className="mb-10 bg-background/50 p-6 rounded-md border border-border">
                 <div className="mb-6">
                     <h2 className="text-lg font-semibold">1. Les photos du projet</h2>
-                    <p className="text-sm text-muted-foreground">Choisissez soit de mettre une seule belle photo, soit un avant/après.</p>
+                    <p className="text-sm text-muted-foreground">Choisissez soit de mettre une seule belle photo, un avant/après, ou un carrousel (jusqu'à 5 photos).</p>
                 </div>
 
                 {imageStatus && (
@@ -148,12 +211,12 @@ export default function PortfolioAdd() {
                     </div>
                 )}
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className={`flex flex-col gap-2 ${hasBeforeAfter ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div className={`flex flex-col gap-2 ${hasBeforeAfter || hasCarousel ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
                         <label className="text-sm font-bold">Photo Unique</label>
                         {!formData.img_single ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_single')} disabled={uploading || hasBeforeAfter || isSubmitting} />
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_single')} disabled={uploading || hasBeforeAfter || hasCarousel || isSubmitting} />
                                 <span className="text-primary text-sm font-medium">➕ Ajouter une photo</span>
                             </div>
                         ) : (
@@ -164,11 +227,11 @@ export default function PortfolioAdd() {
                         )}
                     </div>
 
-                    <div className={`flex flex-col gap-2 ${hasSingleImage ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
+                    <div className={`flex flex-col gap-2 ${hasSingleImage || hasCarousel ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
                         <label className="text-sm font-bold">Photo "Avant"</label>
                         {!formData.img_before ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_before')} disabled={uploading || hasSingleImage || isSubmitting} />
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_before')} disabled={uploading || hasSingleImage || hasCarousel || isSubmitting} />
                                 <span className="text-primary text-sm font-medium">➕ Photo Avant</span>
                             </div>
                         ) : (
@@ -179,17 +242,35 @@ export default function PortfolioAdd() {
                         )}
                     </div>
 
-                    <div className={`flex flex-col gap-2 ${hasSingleImage ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
+                    <div className={`flex flex-col gap-2 ${hasSingleImage || hasCarousel ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
                         <label className="text-sm font-bold">Photo "Après"</label>
                         {!formData.img_after ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
-                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_after')} disabled={uploading || hasSingleImage || isSubmitting} />
+                                <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_after')} disabled={uploading || hasSingleImage || hasCarousel || isSubmitting} />
                                 <span className="text-primary text-sm font-medium">➕ Photo Après</span>
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
                                 <img src={formData.img_after} alt="Aperçu Après" className="w-full h-full object-cover" />
                                 <button type="button" onClick={() => handleRemoveImage('img_after')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <div className={`flex flex-col gap-2 ${hasSingleImage || hasBeforeAfter ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
+                    <label className="text-sm font-bold">Carrousel de Photos (Max 5)</label>
+                    <div className="flex flex-wrap gap-4">
+                        {formData.carousel_images.map((img, i) => (
+                            <div key={i} className="relative h-32 w-32 rounded-lg overflow-hidden border border-border group">
+                                <img src={img} alt={`Carrousel ${i}`} className="w-full h-full object-cover" />
+                                <button type="button" onClick={() => handleRemoveCarouselImage(i)} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">X</button>
+                            </div>
+                        ))}
+                        {formData.carousel_images.length < 5 && (
+                            <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 w-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
+                                <input type="file" accept="image/*" multiple className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleCarouselUpload} disabled={uploading || hasSingleImage || hasBeforeAfter || isSubmitting} />
+                                <span className="text-primary text-xs font-medium text-center px-2">➕ Ajouter</span>
                             </div>
                         )}
                     </div>
