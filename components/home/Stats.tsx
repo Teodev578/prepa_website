@@ -34,7 +34,7 @@ function Counter({ from, to, duration = 2, suffix = "" }: { from: number, to: nu
 
 // Hoisted to module scope — static data, no local state
 const stats = [
-  { value: 150, suffix: "+", label: "VÉHICULES/MOIS", description: "Capacité de traitement actuelle sur l'ensemble de nos hubs." },
+  { value: 150, suffix: "+", label: "VÉHICULES/MOIS", description: "Capacité de traitement actuelle sur nos sites d'intervention en Île-de-France." },
   { value: 24, suffix: "H", label: "DÉLAI MOYEN", description: "Rotation ultra-rapide pour maximiser la rentabilité de votre parc." },
   { value: 100, suffix: "%", label: "CHARGES VARIABLES", description: "Transformez vos coûts fixes en flexibilité totale." },
   { value: 5, suffix: "", label: "CONCESSIONS PARTENAIRES", description: "Des leaders du marché nous font confiance au quotidien." }
