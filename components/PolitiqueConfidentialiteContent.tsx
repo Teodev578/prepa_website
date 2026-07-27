@@ -93,9 +93,7 @@ export default function PolitiqueConfidentialiteContent() {
     }
   };
 
-  const handlePrint = () => {
-    window.print();
-  };
+
 
   return (
     <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
@@ -115,14 +113,7 @@ export default function PolitiqueConfidentialiteContent() {
             <span className="font-mono text-[10px] uppercase tracking-widest px-3 py-1 bg-primary/10 text-primary rounded-full border border-primary/20">
               [ RGPD COMPLIANT ]
             </span>
-            <button
-              onClick={handlePrint}
-              className="inline-flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded bg-card hover:bg-accent border border-border text-foreground transition-colors"
-              title="Imprimer cette page"
-            >
-              <Printer className="w-3.5 h-3.5 text-muted-foreground" />
-              <span className="hidden sm:inline">Imprimer / PDF</span>
-            </button>
+
           </div>
         </div>
 
@@ -641,28 +632,7 @@ export default function PolitiqueConfidentialiteContent() {
             </a>
           </motion.section>
 
-          {/* Support Box Bottom */}
-          <motion.div
-            variants={itemVariants}
-            className="p-6 md:p-8 rounded-2xl bg-primary/5 border border-primary/20 flex flex-col md:flex-row items-center justify-between gap-6"
-          >
-            <div>
-              <h3 className="text-lg font-bold text-foreground flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-primary" />
-                Une question concernant vos données ?
-              </h3>
-              <p className="text-xs md:text-sm text-muted-foreground mt-1">
-                Notre équipe est à votre disposition pour vous accompagner dans l&apos;exercice de vos droits.
-              </p>
-            </div>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-primary text-primary-foreground font-mono text-xs font-bold uppercase tracking-wider hover:opacity-90 transition-opacity shrink-0"
-            >
-              Contactez-nous
-              <ChevronRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
+
         </motion.div>
       </div>
     </div>
