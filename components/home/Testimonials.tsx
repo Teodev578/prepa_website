@@ -95,7 +95,7 @@ export default function Testimonials() {
       ref={targetRef} 
       className={`relative bg-background ${isDesktop ? 'h-[300vh]' : 'h-auto py-16 md:py-24'}`}
     >
-      <div className={`${isDesktop ? 'sticky top-0 h-[100dvh] flex items-center overflow-hidden' : 'w-full'}`}>
+      <div className={`${isDesktop ? 'sticky top-0 h-dvh flex items-center overflow-hidden' : 'w-full'}`}>
         
         {/* Typographie géante en arrière-plan */}
         {isDesktop && (
@@ -112,7 +112,7 @@ export default function Testimonials() {
                 <span className="font-mono text-[10px] text-secondary font-bold uppercase tracking-widest border border-secondary/30 bg-secondary/5 px-2 py-1">
                   SYS.LOG.03 // FEEDBACK
                 </span>
-                <div className="w-16 h-[1px] bg-border"></div>
+                <div className="w-16 h-px bg-border"></div>
               </div>
               
               <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.95] mb-6">
@@ -135,8 +135,8 @@ export default function Testimonials() {
             {TESTIMONIALS.map((testimonial, index) => (
               <article
                 key={testimonial.initials}
-                className={`flex-shrink-0 bg-background border border-border hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden flex flex-col ${
-                  isDesktop ? 'w-[32vw] min-w-[400px]' : 'w-full'
+                className={`shrink-0 bg-background border border-border hover:border-primary/50 transition-colors duration-500 group relative overflow-hidden flex flex-col ${
+                  isDesktop ? 'w-[32vw] min-w-100' : 'w-full'
                 }`}
               >
                 {/* Filigrane Guillemet géant */}
@@ -194,7 +194,7 @@ export default function Testimonials() {
                 </div>
                 
                 {/* Hover line bottom */}
-                <div className="absolute bottom-0 left-0 w-full h-[2px] bg-transparent">
+                <div className="absolute bottom-0 left-0 w-full h-0.5 bg-transparent">
                   <div className="absolute top-0 left-0 h-full bg-primary w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out" />
                 </div>
               </article>

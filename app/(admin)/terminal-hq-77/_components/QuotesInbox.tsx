@@ -289,7 +289,7 @@ export default function QuotesInbox() {
 
                             </div>
                         ) : (
-                            <div className="flex items-center justify-center h-full min-h-[300px] text-center text-muted-foreground font-medium">
+                            <div className="flex items-center justify-center h-full min-h-75 text-center text-muted-foreground font-medium">
                                 Sélectionnez un dossier dans la liste pour afficher ses détails.
                             </div>
                         )}

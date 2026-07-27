@@ -43,7 +43,7 @@ export default function AboutSection() {
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-12 h-[1px] bg-primary origin-left" 
+                            className="w-12 h-px bg-primary origin-left" 
                         />
                         <span className="text-primary font-mono text-xs uppercase tracking-[0.2em]">NOTRE_ADN_&_VISION</span>
                     </div>

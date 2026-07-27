@@ -104,9 +104,9 @@ export default function Portfolio() {
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false, margin: "-50px" }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
+                            className="w-8 sm:w-12 h-px bg-primary/40 origin-left"
                         />
-                        <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
+                        <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] wrap-break-word">
                             CAS CONCRETS & PERFORMANCES
                         </span>
                     </div>
@@ -139,7 +139,7 @@ export default function Portfolio() {
 
                 {/* Grid des projets */}
                 {isLoading ? (
-                    <div className="min-h-[300px] flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center px-4 animate-pulse uppercase tracking-widest">
+                    <div className="min-h-75 flex items-center justify-center text-secondary font-mono text-[10px] sm:text-xs text-center px-4 animate-pulse uppercase tracking-widest">
                         CHARGEMENT...
                     </div>
                 ) : (

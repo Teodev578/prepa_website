@@ -185,9 +185,9 @@ const Contact = () => {
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false, margin: "-50px" }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
+                            className="w-8 sm:w-12 h-px bg-primary/40 origin-left"
                         />
-                        <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
+                        <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] wrap-break-word">
                             ÉTABLIR UN PROJET
                         </span>
                     </div>
@@ -308,7 +308,7 @@ const Contact = () => {
                         <button
                             type="submit"
                             disabled={isSubmitting || isLoadingData}
-                            className="btn-secondary w-full md:w-auto md:min-w-[300px] flex flex-col items-center justify-center gap-1.5 opacity-100 disabled:opacity-50 mx-0"
+                            className="btn-secondary w-full md:w-auto md:min-w-75 flex flex-col items-center justify-center gap-1.5 opacity-100 disabled:opacity-50 mx-0"
                         >
                             <span className="text-sm md:text-base tracking-widest uppercase">
                                 {isSubmitting ? 'Transmission...' : 'Envoyer ma demande'}
@@ -324,7 +324,7 @@ const Contact = () => {
 
                 {/* Footer pratique */}
                 <div className="mt-24 sm:mt-32 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-8 sm:pt-12 border-t border-border font-mono text-[9px] sm:text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest relative">
-                    <div className="absolute top-0 left-0 w-8 sm:w-12 h-[1px] bg-primary/40" />
+                    <div className="absolute top-0 left-0 w-8 sm:w-12 h-px bg-primary/40" />
                     
                     <div className="space-y-1.5 sm:space-y-2">
                         <span className="text-foreground font-bold flex items-center gap-2">

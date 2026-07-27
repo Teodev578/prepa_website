@@ -59,7 +59,7 @@ export default function CustomCursor() {
     <>
       {/* Outer Trailing Ring */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9998] mix-blend-difference hidden md:flex items-center justify-center"
+        className="pointer-events-none fixed top-0 left-0 z-9998 mix-blend-difference hidden md:flex items-center justify-center"
         animate={{
           x: mousePosition.x - 16,
           y: mousePosition.y - 16,
@@ -94,7 +94,7 @@ export default function CustomCursor() {
 
       {/* Inner Precision Dot */}
       <motion.div
-        className="pointer-events-none fixed top-0 left-0 z-[9999] mix-blend-difference hidden md:flex items-center justify-center"
+        className="pointer-events-none fixed top-0 left-0 z-9999 mix-blend-difference hidden md:flex items-center justify-center"
         animate={{
           x: mousePosition.x - 2,
           y: mousePosition.y - 2,

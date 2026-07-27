@@ -42,8 +42,8 @@ export default function ProjectCard({ project, index }: { project: any, index: n
             className={`relative group flex flex-col ${config.colSpan}`}
         >
             {/* --- COMPOSANT VISUEL EN 4:3 --- */}
-            {/* 🛠️ DESIGN : Ajout de aspect-[4/3] pour verrouiller le format de l'image */}
-            <div className={`border-technical overflow-hidden bg-card p-1 relative w-full aspect-[4/3] ${project.size === 'large' ? 'md:aspect-video' : ''}`}>
+            {/* 🛠️ DESIGN : Ajout de aspect-4/3 pour verrouiller le format de l'image */}
+            <div className={`border-technical overflow-hidden bg-card p-1 relative w-full aspect-4/3 ${project.size === 'large' ? 'md:aspect-video' : ''}`}>
                 {project.carouselImages && project.carouselImages.length > 0 ? (
                     <CarouselSlider images={project.carouselImages} />
                 ) : project.imgBefore && project.imgAfter ? (

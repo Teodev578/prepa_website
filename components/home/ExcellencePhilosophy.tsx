@@ -45,10 +45,10 @@ const ExcellencePhilosophy = () => {
 
                 {/* 🖼️ COLONNE DROITE : GRILLE BENTO (Prend 2/3 de l'écran sur PC) */}
                 <div className="w-full lg:w-2/3 xl:w-8/12 bg-muted/20 p-2 md:p-4">
-                    <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-4 md:grid-rows-3 gap-2 md:gap-4 h-[80vh] md:h-[70vh] min-h-[500px]">
+                    <div className="grid grid-cols-2 md:grid-cols-4 grid-rows-4 md:grid-rows-3 gap-2 md:gap-4 h-[80vh] md:h-[70vh] min-h-125">
                         
                         {/* Image 1 - Large Rectangle */}
-                        <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-2 md:col-span-2 row-span-2 md:row-span-2">
+                        <div className="relative border border-border group overflow-hidden rounded-(--radius) col-span-2 md:col-span-2 row-span-2 md:row-span-2">
                             <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/6.jpeg" 
@@ -58,14 +58,14 @@ const ExcellencePhilosophy = () => {
                             className="object-cover" 
                                 />
                             </motion.div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                             <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border z-10 text-foreground font-bold">
                                 #OP_01
                             </div>
                         </div>
 
                         {/* Image 2 - Square */}
-                        <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
+                        <div className="relative border border-border group overflow-hidden rounded-(--radius) col-span-1 md:col-span-1 row-span-1 md:row-span-1">
                             <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/7.jpeg" 
@@ -75,14 +75,14 @@ const ExcellencePhilosophy = () => {
                             className="object-cover" 
                                 />
                             </motion.div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                             <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border z-10 text-foreground font-bold hidden sm:block">
                                 #OP_02
                             </div>
                         </div>
 
                         {/* Image 3 - Square */}
-                        <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
+                        <div className="relative border border-border group overflow-hidden rounded-(--radius) col-span-1 md:col-span-1 row-span-1 md:row-span-1">
                             <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/3.jpeg" 
@@ -92,14 +92,14 @@ const ExcellencePhilosophy = () => {
                             className="object-cover" 
                                 />
                             </motion.div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                             <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border z-10 text-foreground font-bold hidden sm:block">
                                 #OP_03
                             </div>
                         </div>
 
                         {/* Image 4 - Tall Rectangle */}
-                        <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-2 md:col-span-1 row-span-2 md:row-span-2">
+                        <div className="relative border border-border group overflow-hidden rounded-(--radius) col-span-2 md:col-span-1 row-span-2 md:row-span-2">
                             <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/4.jpeg" 
@@ -109,14 +109,14 @@ const ExcellencePhilosophy = () => {
                             className="object-cover" 
                                 />
                             </motion.div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                             <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border z-10 text-foreground font-bold hidden sm:block">
                                 #OP_04
                             </div>
                         </div>
 
                         {/* Image 5 - Square */}
-                        <div className="relative border border-border group overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-1 row-span-1 md:row-span-1">
+                        <div className="relative border border-border group overflow-hidden rounded-(--radius) col-span-1 md:col-span-1 row-span-1 md:row-span-1">
                             <motion.div style={{ y: isDesktop ? yParallax : 0, height: "115%", marginTop: "-7.5%" }} className="w-full absolute inset-0">
                                 <Image 
                                     src="/images/5.jpeg" 
@@ -126,14 +126,14 @@ const ExcellencePhilosophy = () => {
                             className="object-cover" 
                                 />
                             </motion.div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+                            <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
                             <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur font-mono text-[9px] uppercase px-2 py-1 border border-border z-10 text-foreground font-bold hidden sm:block">
                                 #OP_05
                             </div>
                         </div>
 
                         {/* Bloc 6 : Call To Action Massif (Redirection Portfolio) */}
-                        <Link href="/portfolio" className="relative bg-primary text-primary-foreground group flex flex-col items-center justify-center p-4 text-center transition-colors hover:bg-secondary hover:text-secondary-foreground overflow-hidden rounded-[var(--radius)] col-span-1 md:col-span-2 row-span-1 md:row-span-1">
+                        <Link href="/portfolio" className="relative bg-primary text-primary-foreground group flex flex-col items-center justify-center p-4 text-center transition-colors hover:bg-secondary hover:text-secondary-foreground overflow-hidden rounded-(--radius) col-span-1 md:col-span-2 row-span-1 md:row-span-1">
                             {/* Décoration technique animée */}
                             <div className="absolute top-4 right-4 w-2 h-2 border-t-2 border-r-2 border-current opacity-50" />
                             

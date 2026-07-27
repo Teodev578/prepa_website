@@ -71,7 +71,7 @@ export default function Stats() {
                 {stat.description}
               </p>
               
-              <div className="absolute top-0 -left-6 w-[2px] h-0 bg-primary group-hover:h-full transition-[height]" />
+              <div className="absolute top-0 -left-6 w-0.5 h-0 bg-primary group-hover:h-full transition-[height]" />
             </motion.div>
           ))}
         </div>

@@ -25,7 +25,7 @@ const TechnicalServices = () => {
             <div className="py-16 md:py-24 px-6 md:px-12 lg:px-24 border-b border-border relative">
                 
                 {/* 🚀 FIXED : Animation simplifiée et blindée qui ignore les conflits d'héritage parent */}
-                <h2 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full break-words relative z-10 text-foreground">
+                <h2 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full wrap-break-word relative z-10 text-foreground">
                     <RevealText text="NOS FORFAITS PARTENAIRES." delay={0.1} />
                 </h2>
                 
@@ -66,7 +66,7 @@ const TechnicalServices = () => {
                     </div>
 
                     <div className="pt-10">
-                        <Link href="/contact" className="w-full block text-center border border-border py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] group-hover:bg-foreground group-hover:text-background transition-colors rounded-[var(--radius)]">
+                        <Link href="/contact" className="w-full block text-center border border-border py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] group-hover:bg-foreground group-hover:text-background transition-colors rounded-(--radius)">
                             DEMANDER UN RENFORCEMENT
                         </Link>
                     </div>
@@ -94,7 +94,7 @@ const TechnicalServices = () => {
                     </div>
 
                     <div className="pt-10">
-                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-secondary group-hover:text-secondary-foreground transition-[background-color,color] rounded-[var(--radius)]">
+                        <Link href="/contact" className="w-full block text-center border border-background/30 py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] bg-background text-foreground group-hover:bg-secondary group-hover:text-secondary-foreground transition-[background-color,color] rounded-(--radius)">
                             ÉTABLIR UN CONTRAT 6 MOIS
                         </Link>
                     </div>
@@ -122,7 +122,7 @@ const TechnicalServices = () => {
                     </div>
 
                     <div className="pt-10">
-                        <Link href="/contact" className="w-full block text-center border border-border py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] group-hover:bg-primary group-hover:text-primary-foreground transition-colors rounded-[var(--radius)]">
+                        <Link href="/contact" className="w-full block text-center border border-border py-3 px-4 font-mono text-[10px] font-bold uppercase tracking-[0.2em] group-hover:bg-primary group-hover:text-primary-foreground transition-colors rounded-(--radius)">
                             ACTIVER LA COUVERTURE TOTALE
                         </Link>
                     </div>

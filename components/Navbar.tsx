@@ -153,7 +153,7 @@ export default function Navbar() {
                 </nav>
 
                 <div className="px-8 pb-12 mt-auto flex flex-col gap-8 text-[10px] font-mono font-bold text-muted-foreground uppercase opacity-50 tracking-[0.2em]">
-                    <div className="w-12 h-[1px] bg-border"></div>
+                    <div className="w-12 h-px bg-border"></div>
                     <div>EST. 2026</div>
                 </div>
             </div>

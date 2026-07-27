@@ -97,7 +97,7 @@ export default function CTA() {
             <motion.div
               whileHover="hover"
               whileTap={{ scale: 0.98 }}
-              className="w-full sm:w-auto min-h-[52px] md:min-h-[60px] relative px-8 md:px-10 py-4 border border-primary bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-4 rounded-[var(--radius)] cursor-pointer"
+              className="w-full sm:w-auto min-h-13 md:min-h-15 relative px-8 md:px-10 py-4 border border-primary bg-transparent text-foreground group overflow-hidden flex items-center justify-center gap-4 rounded-(--radius) cursor-pointer"
             >
               {/* Fill effect background */}
               <div 

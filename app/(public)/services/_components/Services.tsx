@@ -39,7 +39,7 @@ export default function Services() {
 
   return (
     <div className="bg-background text-foreground min-h-screen pb-16 md:pb-24 relative overflow-hidden">
-      <div className="absolute inset-0 pointer-events-none bg-[url('/images/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03]" />
+      <div className="absolute inset-0 pointer-events-none bg-[url('/images/grid.svg')] bg-center mask-[linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-[0.03]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24 relative z-10 w-full">
         {/* En-tête de page */}
@@ -51,9 +51,9 @@ export default function Services() {
                     whileInView={{ scaleX: 1 }}
                     viewport={{ once: false, margin: "-50px" }}
                     transition={{ duration: 1, ease: customEase }}
-                    className="w-8 sm:w-12 h-[1px] bg-primary/40 origin-left"
+                    className="w-8 sm:w-12 h-px bg-primary/40 origin-left"
                 />
-                <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] break-words">
+                <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] wrap-break-word">
                     OFFRES B2B
                 </span>
             </div>
@@ -99,7 +99,7 @@ export default function Services() {
               <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-foreground">01.</span>
             </div>
             
-            <div className="flex-grow z-10">
+            <div className="grow z-10">
               <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">{"//"} VN & VO</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">PRÉPARATION ESTHÉTIQUE B2B</h2>
               <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
@@ -123,7 +123,7 @@ export default function Services() {
               <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-foreground">02.</span>
             </div>
             
-            <div className="flex-grow z-10">
+            <div className="grow z-10">
               <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">{"//"} LOGISTIQUE SÉCURISÉE</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">CONVOYAGE DE VÉHICULES</h2>
               <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
@@ -147,7 +147,7 @@ export default function Services() {
               <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-background">03.</span>
             </div>
             
-            <div className="flex-grow z-10">
+            <div className="grow z-10">
               <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-4 font-bold">{"//"} CHARGES FIXES → VARIABLES</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight text-background">EXTERNALISATION PÔLE PRÉPARATION</h2>
               <p className="text-background/80 font-medium mb-8 leading-relaxed text-sm">
@@ -171,7 +171,7 @@ export default function Services() {
               <span className="text-4xl md:text-5xl font-sans font-light tracking-tighter text-foreground">04.</span>
             </div>
             
-            <div className="flex-grow z-10">
+            <div className="grow z-10">
               <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-4 font-bold">{"//"} VALORISATION VO</span>
               <h2 className="text-2xl font-bold mb-4 tracking-tight">RÉNOVATION & DETAILING PARC</h2>
               <p className="text-muted-foreground font-medium mb-8 leading-relaxed text-sm">
@@ -198,7 +198,7 @@ export default function Services() {
           transition={{ duration: 0.8, delay: 0.2, ease: BEZIER }}
           className="mt-16 md:mt-24 text-center pb-8"
         >
-          <Link href="/contact" className="btn-primary inline-flex items-center justify-center w-full md:w-auto md:min-w-[300px] gap-3 mx-auto">
+          <Link href="/contact" className="btn-primary inline-flex items-center justify-center w-full md:w-auto md:min-w-75 gap-3 mx-auto">
             <span>OBTENIR UN DEVIS PERSONNALISÉ</span>
           </Link>
           <p className="mt-4 font-mono text-[10px] text-muted-foreground uppercase tracking-widest">

@@ -82,7 +82,7 @@ export default function Hero() {
   return (
     <section 
       ref={sectionRef}
-      className="bg-background h-[100dvh] w-full relative overflow-hidden -mt-20"
+      className="bg-background h-dvh w-full relative overflow-hidden -mt-20"
     >
       {/* BACKGROUND IMAGE WITH PARALLAX — calque GPU uniquement */}
       <motion.div
@@ -125,7 +125,7 @@ export default function Hero() {
       >
         <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
           <motion.div variants={itemVariants} className="font-mono text-[10px] sm:text-xs uppercase font-semibold tracking-widest text-primary mb-6 flex items-center gap-4">
-            <span className="w-8 h-[1px] bg-primary"></span>
+            <span className="w-8 h-px bg-primary"></span>
             SPÉCIALISTE ÎLE-DE-FRANCE
           </motion.div>
 
@@ -148,7 +148,7 @@ export default function Hero() {
           <Magnetic magneticPull={0.1} className="w-full sm:w-auto">
             <Link href="/contact" className="w-full block">
               <motion.div
-                className="w-full min-h-[60px] relative px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors"
+                className="w-full min-h-15 relative px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-(--radius) transition-colors"
               >
                 <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-background transition-colors duration-300">
@@ -162,7 +162,7 @@ export default function Hero() {
           <Magnetic magneticPull={0.1} className="w-full sm:w-auto">
             <Link href="/services" className="w-full block">
               <motion.div
-                className="w-full min-h-[60px] relative px-8 py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center rounded-[var(--radius)] transition-colors hover:border-foreground"
+                className="w-full min-h-15 relative px-8 py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center rounded-(--radius) transition-colors hover:border-foreground"
               >
                 <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 <span className="relative z-10 group-hover:text-background transition-colors duration-300 text-center">DÉCOUVRIR NOS SERVICES</span>
@@ -178,13 +178,13 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 left-6 md:left-12 z-20 flex flex-col items-center gap-4 hidden md:flex"
+        className="absolute bottom-8 left-6 md:left-12 z-20 flex-col items-center gap-4 hidden md:flex"
       >
         <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground rotate-90 origin-left translate-y-8 translate-x-1.5">SCROLL</span>
         <motion.div 
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-[1px] h-12 bg-foreground"
+          className="w-px h-12 bg-foreground"
         />
       </motion.div>
 
