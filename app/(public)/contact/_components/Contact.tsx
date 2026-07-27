@@ -323,7 +323,7 @@ const Contact = () => {
                 </form>
 
                 {/* Footer pratique */}
-                <div className="mt-24 sm:mt-32 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-8 sm:pt-12 border-t border-border font-mono text-[9px] sm:text-[10px] md:text-xs text-muted-foreground uppercase tracking-widest relative">
+                <div className="mt-24 sm:mt-32 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pt-8 sm:pt-12 border-t border-border font-mono text-xs sm:text-sm md:text-base text-foreground/90 uppercase tracking-wider relative">
                     <div className="absolute top-0 left-0 w-8 sm:w-12 h-px bg-primary/40" />
                     
                     <div className="space-y-1.5 sm:space-y-2">
