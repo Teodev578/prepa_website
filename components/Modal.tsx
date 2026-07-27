@@ -31,9 +31,9 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm"
+            className="fixed inset-0 z-[999] bg-background/80 backdrop-blur-sm"
           />
-          <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none p-4 sm:p-6 md:p-12">
+          <div className="fixed inset-0 z-[999] flex items-center justify-center pointer-events-none p-4 sm:p-6 md:p-12">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
