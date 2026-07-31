@@ -18,10 +18,6 @@ export default function FormsConfig() {
         field_label: '', field_type: 'text', options: '', is_required: true
     });
 
-    // ÉTATS NOTIFICATIONS EMAILS
-    const [notificationEmails, setNotificationEmails] = useState<any[]>([]);
-    const [newNotificationEmail, setNewNotificationEmail] = useState('');
-
     // ÉTATS UI
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [status, setStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null);
@@ -70,20 +66,11 @@ export default function FormsConfig() {
         }
     }, [activeProfile, supabase]);
 
-    const loadNotificationEmails = useCallback(async () => {
-        const { data, error } = await supabase
-            .from('notification_emails')
-            .select('*')
-            .order('created_at', { ascending: false });
-        if (!error && data) setNotificationEmails(data);
-    }, [supabase]);
-
     useEffect(() => {
         loadFormConfig();
-        loadNotificationEmails();
         setStatus(null);
         handleCancelEdit(); // Réinitialise l'édition quand on change d'onglet
-    }, [loadFormConfig, loadNotificationEmails]);
+    }, [loadFormConfig]);
 
     // === 🛠️ ACTIONS SUR LES QUESTIONS DU FORMULAIRE ===
     const handleSaveField = async () => {
@@ -185,34 +172,6 @@ export default function FormsConfig() {
         ]);
     };
 
-    // === ACTIONS EMAILS ===
-    const handleAddNotificationEmail = async (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!newNotificationEmail) return;
-
-        const { error } = await supabase.from('notification_emails').insert([{ email: newNotificationEmail.toLowerCase().trim() }]);
-        if (error) {
-            setStatus({ type: 'error', text: "Cet e-mail reçoit déjà les alertes." });
-        } else {
-            setNewNotificationEmail('');
-            setStatus({ type: 'success', text: "Nouvelle adresse e-mail ajoutée !" });
-            loadNotificationEmails();
-        }
-    };
-
-    const handleToggleEmailActive = async (id: string, currentStatus: boolean) => {
-        const nextStatus = !currentStatus;
-        setNotificationEmails(prev => prev.map(item => item.id === id ? { ...item, is_active: nextStatus } : item));
-        const { error } = await supabase.from('notification_emails').update({ is_active: nextStatus }).eq('id', id);
-        if (error) setNotificationEmails(prev => prev.map(item => item.id === id ? { ...item, is_active: currentStatus } : item));
-    };
-
-    const handleDeleteNotificationEmail = async (id: string, email: string) => {
-        if (!window.confirm(`Ne plus envoyer d'alertes à ${email} ?`)) return;
-        await supabase.from('notification_emails').delete().eq('id', id);
-        loadNotificationEmails();
-    };
-
     const getTypeLabel = (type: string) => {
         switch (type) {
             case 'text': return 'Le client tapera un texte';
@@ -232,64 +191,12 @@ export default function FormsConfig() {
             )}
 
             <div className="mb-8">
-                <h1 className="text-3xl font-black text-primary uppercase tracking-tighter mb-2">Paramètres de contact</h1>
-                <p className="text-muted-foreground text-lg">Gérez ici comment les clients vous contactent et qui reçoit leurs demandes.</p>
+                <h1 className="text-3xl font-black text-primary uppercase tracking-tighter mb-2">Informations du formulaire</h1>
+                <p className="text-muted-foreground text-lg">Quelles informations avez-vous besoin de demander à vos clients pour pouvoir leur faire un devis précis ?</p>
             </div>
 
-            {/* SECTION 1 : QUI REÇOIT LES MAILS ? */}
             <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
-                <h2 className="text-xl font-bold mb-2">1. Réception des demandes de devis</h2>
-                <p className="text-sm text-muted-foreground mb-6">Ajoutez les adresses e-mails de votre équipe. Dès qu'un client remplira un formulaire sur votre site, une alerte sera envoyée.</p>
-
-                <div className="space-y-3 mb-6">
-                    {notificationEmails.length === 0 ? (
-                        <div className="p-4 bg-muted/50 border border-border rounded-lg text-center text-sm text-muted-foreground">
-                            Aucune adresse e-mail configurée. Vous ne recevrez pas d'alerte.
-                        </div>
-                    ) : (
-                        notificationEmails.map((item) => (
-                            <div key={item.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-background border border-border rounded-lg gap-4">
-                                <div className="flex items-center gap-3">
-                                    <div className={`w-2.5 h-2.5 rounded-full shadow-sm ${item.is_active ? 'bg-green-500' : 'bg-muted-foreground/30'}`} />
-                                    <span className={`font-medium ${item.is_active ? 'text-foreground' : 'text-muted-foreground line-through'}`}>{item.email}</span>
-                                </div>
-
-                                <div className="flex items-center gap-3">
-                                    <button type="button"
-                                        onClick={() => handleToggleEmailActive(item.id, item.is_active)}
-                                        className={`text-xs font-bold px-3 py-1.5 rounded transition-colors border ${item.is_active ? 'bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20' : 'bg-muted text-muted-foreground hover:bg-muted/80'}`}
-                                    >
-                                        {item.is_active ? 'Recevoir les alertes' : 'Alerte désactivée'}
-                                    </button>
-
-                                    <button type="button" onClick={() => handleDeleteNotificationEmail(item.id, item.email)} className="text-muted-foreground hover:text-destructive text-sm px-2 py-1 transition-colors">
-                                        Supprimer
-                                    </button>
-                                </div>
-                            </div>
-                        ))
-                    )}
-                </div>
-
-                <form onSubmit={handleAddNotificationEmail} className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
-                    <input
-                        type="email"
-                        value={newNotificationEmail}
-                        onChange={e => setNewNotificationEmail(e.target.value)}
-                        placeholder="Ajouter une adresse (ex: contact@monentreprise.com)"
-                        className="flex-1 border border-border p-3 rounded-lg bg-background text-sm outline-none focus:border-primary"
-                        required
-                    />
-                    <button type="submit" className="bg-foreground text-background hover:bg-foreground/90 px-6 py-3 rounded-lg text-sm font-bold transition-colors shadow-sm">
-                        Ajouter l'e-mail
-                    </button>
-                </form>
-            </div>
-
-            {/* SECTION 2 : LE FORMULAIRE DU CLIENT */}
-            <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
-                <h2 className="text-xl font-bold mb-2">2. Le formulaire rempli par le client</h2>
-                <p className="text-sm text-muted-foreground mb-8">Quelles informations avez-vous besoin de demander à vos clients pour pouvoir leur faire un devis précis ?</p>
+                <h2 className="text-xl font-bold mb-6">Questions du formulaire</h2>
 
                 <div className="flex bg-muted p-1 rounded-lg w-fit mb-8 border border-border">
                     {['PARTICULIER', 'ENTREPRISE'].map((p) => (

@@ -18,16 +18,26 @@ export default function CarouselSlider({ images }: { images: string[] }) {
     return (
         <div className="relative w-full h-full group overflow-hidden bg-muted">
             <AnimatePresence initial={false} mode="wait">
-                <motion.img
-                    key={currentIndex}
-                    src={images[currentIndex]}
-                    alt={`Carrousel image ${currentIndex + 1}`}
-                    className="w-full h-full object-cover"
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.3 }}
-                />
+                    <motion.img
+                        key={currentIndex}
+                        src={images[currentIndex]}
+                        alt={`Carrousel image ${currentIndex + 1}`}
+                        className="w-full h-full object-cover cursor-grab active:cursor-grabbing"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        transition={{ duration: 0.3 }}
+                        drag="x"
+                        dragConstraints={{ left: 0, right: 0 }}
+                        dragElastic={0.2}
+                        onDragEnd={(e, { offset }) => {
+                            if (offset.x < -40) {
+                                handleNext();
+                            } else if (offset.x > 40) {
+                                handlePrev();
+                            }
+                        }}
+                    />
             </AnimatePresence>
 
             {images.length > 1 && (

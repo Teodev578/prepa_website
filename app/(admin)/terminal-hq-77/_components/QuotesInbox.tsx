@@ -23,8 +23,15 @@ export default function QuotesInbox() {
     // 🛠️ NOUVEL ÉTAT : Le filtre actif
     const [activeFilter, setActiveFilter] = useState<FilterOption>('TOUTES');
 
+    // ÉTATS NOTIFICATIONS EMAILS
+    const [notificationEmails, setNotificationEmails] = useState<any[]>([]);
+    const [newNotificationEmail, setNewNotificationEmail] = useState('');
+    const [status, setStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
     useEffect(() => {
         fetchQuotes();
+        loadNotificationEmails();
+        setStatus(null);
     }, []);
 
     const fetchQuotes = async () => {
@@ -43,6 +50,42 @@ export default function QuotesInbox() {
             }
         }
         setLoading(false);
+    };
+
+    const loadNotificationEmails = async () => {
+        const { data, error } = await supabase
+            .from('notification_emails')
+            .select('*')
+            .order('created_at', { ascending: false });
+        if (!error && data) setNotificationEmails(data);
+    };
+
+    // === ACTIONS EMAILS ===
+    const handleAddNotificationEmail = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!newNotificationEmail) return;
+
+        const { error } = await supabase.from('notification_emails').insert([{ email: newNotificationEmail.toLowerCase().trim() }]);
+        if (error) {
+            setStatus({ type: 'error', text: "Cet e-mail reçoit déjà les alertes." });
+        } else {
+            setNewNotificationEmail('');
+            setStatus({ type: 'success', text: "Nouvelle adresse e-mail ajoutée !" });
+            loadNotificationEmails();
+        }
+    };
+
+    const handleToggleEmailActive = async (id: string, currentStatus: boolean) => {
+        const nextStatus = !currentStatus;
+        setNotificationEmails(prev => prev.map(item => item.id === id ? { ...item, is_active: nextStatus } : item));
+        const { error } = await supabase.from('notification_emails').update({ is_active: nextStatus }).eq('id', id);
+        if (error) setNotificationEmails(prev => prev.map(item => item.id === id ? { ...item, is_active: currentStatus } : item));
+    };
+
+    const handleDeleteNotificationEmail = async (id: string, email: string) => {
+        if (!window.confirm(`Ne plus envoyer d'alertes à ${email} ?`)) return;
+        await supabase.from('notification_emails').delete().eq('id', id);
+        loadNotificationEmails();
     };
 
     const handleStatusChange = async (quoteId: string, newStatus: QuoteStatus) => {
@@ -144,6 +187,62 @@ export default function QuotesInbox() {
             <div className="mb-8">
                 <h1 className="text-3xl font-black text-foreground tracking-tight mb-2">Demandes de devis</h1>
                 <p className="text-muted-foreground">Gérez, répondez et suivez les demandes entrantes de vos futurs clients.</p>
+            </div>
+
+            {status && (
+                <div className={`p-4 rounded shadow-lg fixed bottom-5 right-5 z-50 text-sm font-medium border bg-card ${status.type === 'error' ? 'text-destructive border-destructive/20' : 'text-green-600 border-green-500/20'}`}>
+                    {status.text}
+                </div>
+            )}
+
+            {/* SECTION: RÉCEPTION DES DEMANDES DE DEVIS */}
+            <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm mb-8">
+                <h2 className="text-xl font-bold mb-2">Réception des demandes de devis</h2>
+                <p className="text-sm text-muted-foreground mb-6">Ajoutez les adresses e-mails de votre équipe. Dès qu'un client remplira un formulaire sur votre site, une alerte sera envoyée.</p>
+
+                <div className="space-y-3 mb-6">
+                    {notificationEmails.length === 0 ? (
+                        <div className="p-4 bg-muted/50 border border-border rounded-lg text-center text-sm text-muted-foreground">
+                            Aucune adresse e-mail configurée. Vous ne recevrez pas d'alerte.
+                        </div>
+                    ) : (
+                        notificationEmails.map((item) => (
+                            <div key={item.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-background border border-border rounded-lg gap-4">
+                                <div className="flex items-center gap-3">
+                                    <div className={`w-2.5 h-2.5 rounded-full shadow-sm ${item.is_active ? 'bg-green-500' : 'bg-muted-foreground/30'}`} />
+                                    <span className={`font-medium ${item.is_active ? 'text-foreground' : 'text-muted-foreground line-through'}`}>{item.email}</span>
+                                </div>
+
+                                <div className="flex items-center gap-3">
+                                    <button type="button"
+                                        onClick={() => handleToggleEmailActive(item.id, item.is_active)}
+                                        className={`text-xs font-bold px-3 py-1.5 rounded transition-colors border ${item.is_active ? 'bg-green-500/10 text-green-600 border-green-500/20 hover:bg-green-500/20' : 'bg-muted text-muted-foreground hover:bg-muted/80'}`}
+                                    >
+                                        {item.is_active ? 'Recevoir les alertes' : 'Alerte désactivée'}
+                                    </button>
+
+                                    <button type="button" onClick={() => handleDeleteNotificationEmail(item.id, item.email)} className="text-muted-foreground hover:text-destructive text-sm px-2 py-1 transition-colors">
+                                        Supprimer
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+
+                <form onSubmit={handleAddNotificationEmail} className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
+                    <input
+                        type="email"
+                        value={newNotificationEmail}
+                        onChange={e => setNewNotificationEmail(e.target.value)}
+                        placeholder="Ajouter une adresse (ex: contact@monentreprise.com)"
+                        className="flex-1 border border-border p-3 rounded-lg bg-background text-sm outline-none focus:border-primary"
+                        required
+                    />
+                    <button type="submit" className="bg-foreground text-background hover:bg-foreground/90 px-6 py-3 rounded-lg text-sm font-bold transition-colors shadow-sm">
+                        Ajouter l'e-mail
+                    </button>
+                </form>
             </div>
 
             {error && (
