@@ -131,7 +131,7 @@ export default function Hero() {
 
         <h1 className="font-sans font-black text-[11vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] xl:text-[8rem] tracking-tighter uppercase text-foreground leading-[0.95] md:leading-[0.85] mb-6 md:mb-8 relative w-full">
           <span className="sr-only">Law Clean Center - Préparation Esthétique B2B</span>
-          <RevealText text={"L'EXCELLENCE AUTO.\nSANS CONTRAINTE."} delay={0.4} />
+          <RevealText text={"L'EXCELLENCE AUTO\nSANS CONTRAINTE."} delay={0.4} />
         </h1>
 
         <motion.p
