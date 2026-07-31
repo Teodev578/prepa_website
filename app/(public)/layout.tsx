@@ -1,6 +1,5 @@
 import { MotionConfig } from "framer-motion";
 import SmoothScroll from "@/components/SmoothScroll";
-import Preloader from "@/components/Preloader";
 import CustomCursor from "@/components/CustomCursor";
 import GrainOverlay from "@/components/GrainOverlay";
 import Footer from "@/components/Footer";
@@ -13,7 +12,6 @@ export default function PublicLayout({
 }>) {
   return (
     <div className="hide-native-cursor">
-      <Preloader />
       <CustomCursor />
       <GrainOverlay />
       <MotionConfig transition={{ ease: [0.16, 1, 0.3, 1] }}>
