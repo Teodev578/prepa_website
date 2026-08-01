@@ -178,13 +178,18 @@ const Contact = () => {
             <div className="max-w-7xl mx-auto">
 
                 {/* 🛠️ HEADER */}
-                <div className="mb-12 sm:mb-16 relative">
+                <motion.div 
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: false, margin: "-50px" }}
+                    className="mb-12 sm:mb-16 relative"
+                >
                     <div className="mb-4 flex items-center gap-3 sm:gap-4">
                         <motion.div
-                            initial={{ scaleX: 0 }}
-                            whileInView={{ scaleX: 1 }}
-                            viewport={{ once: false, margin: "-50px" }}
-                            transition={{ duration: 1, ease: customEase }}
+                            variants={{
+                                hidden: { scaleX: 0 },
+                                show: { scaleX: 1, transition: { duration: 1, ease: customEase } }
+                            }}
                             className="w-8 sm:w-12 h-px bg-primary/40 origin-left"
                         />
                         <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] wrap-break-word">
@@ -195,9 +200,6 @@ const Contact = () => {
                     <div className="overflow-hidden py-2">
                         <motion.h1
                             variants={textRevealVariants}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: false, margin: "-50px" }}
                             className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
                             DEMANDE <br /> 
@@ -208,15 +210,12 @@ const Contact = () => {
                     <div className="overflow-hidden">
                         <motion.p
                             variants={paragraphVariants}
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: false, margin: "-50px" }}
                             className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border/50 pl-4 sm:pl-6 mt-4 sm:mt-6"
                         >
                             Remplissez le formulaire ci-dessous afin de nous aider à comprendre vos besoins et à agir en conséquence.
                         </motion.p>
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Sélecteur de profil */}
                 <div className="flex relative gap-0 border bg-muted mb-12 sm:mb-16 p-1 w-fit rounded-[var(--radius)]">

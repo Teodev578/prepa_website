@@ -44,13 +44,18 @@ export default function Services() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 pt-16 md:pt-24 relative z-10 w-full">
         {/* En-tête de page */}
         {/* 🛠️ HEADER */}
-        <div className="mb-12 sm:mb-16 relative">
+        <motion.div 
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: false, margin: "-50px" }}
+            className="mb-12 sm:mb-16 relative"
+        >
             <div className="mb-4 flex items-center gap-3 sm:gap-4">
                 <motion.div
-                    initial={{ scaleX: 0 }}
-                    whileInView={{ scaleX: 1 }}
-                    viewport={{ once: false, margin: "-50px" }}
-                    transition={{ duration: 1, ease: customEase }}
+                    variants={{
+                        hidden: { scaleX: 0 },
+                        show: { scaleX: 1, transition: { duration: 1, ease: customEase } }
+                    }}
                     className="w-8 sm:w-12 h-px bg-primary/40 origin-left"
                 />
                 <span className="text-muted-foreground font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] wrap-break-word">
@@ -61,9 +66,6 @@ export default function Services() {
             <div className="overflow-hidden py-2">
                 <motion.h1
                     variants={textRevealVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: false, margin: "-50px" }}
                     className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
                 >
                     NOS <br /> 
@@ -74,15 +76,12 @@ export default function Services() {
             <div className="overflow-hidden">
                 <motion.p
                     variants={paragraphVariants}
-                    initial="hidden"
-                    whileInView="show"
-                    viewport={{ once: false, margin: "-50px" }}
                     className="text-muted-foreground text-sm sm:text-base md:text-lg lg:text-xl max-w-2xl leading-relaxed border-l-[3px] border-border/50 pl-4 sm:pl-6 mt-4 sm:mt-6"
                 >
                     Découvrez nos solutions conçues sur-mesure pour les professionnels de l&apos;automobile. De la préparation unitaire au contrat cadre d&apos;externalisation.
                 </motion.p>
             </div>
-        </div>
+        </motion.div>
 
         <motion.div
           initial="hidden"
