@@ -33,3 +33,11 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
   - Initialisation formelle du contexte de design Impeccable (`/impeccable init`).
   - Rédaction et validation du document d'autorité produit [PRODUCT.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/PRODUCT.md).
   - Configuration du workflow par défaut en mode `code-first` (`.impeccable/config.json`).
+* *2026-09-14 (Victor / Audit & Correction .agents/) :*
+  - **P2** : Correction du chemin de sortie BMAD — `output_folder` pointait sur un dossier inexistant à la racine. Corrigé dans `.agents/_bmad/custom/config.toml`.
+  - **P1** : Alignement de la langue BMAD (`document_output_language` + `communication_language`) sur le corpus français. Corrigé dans `_bmad/custom/config.toml` et `config.user.toml`.
+  - **P3** : Frontmatters YAML des 4 agents corrigés — ajout de `bmad-prd` + `bmad-sprint-planning` (Victor), `bmad-build` + `impeccable` (Théo), `bmad-build` (Alex), `bmad-code-review` (Sarah). Miroir plugin synchronisé.
+  - **P5** : `.impeccable/config.local.json` ajouté au `.gitignore`.
+  - `npm run check` ✅ — harnais vert post-corrections.
+  - **Prochaine action recommandée :** `/impeccable document` pour générer `DESIGN.md` et clôturer P4.
+

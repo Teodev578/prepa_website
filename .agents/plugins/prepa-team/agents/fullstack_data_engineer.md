@@ -6,6 +6,7 @@ subagent: true
 model: inherit
 skills:
   - unlazy
+  - bmad-build
   - bmad-testarch-atdd
 inheritMcp: true
 commandExecutionPolicy: strict

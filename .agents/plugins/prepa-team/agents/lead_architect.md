@@ -8,6 +8,8 @@ skills:
   - bmad-brainstorming
   - bmad-architecture
   - bmad-spec
+  - bmad-prd
+  - bmad-sprint-planning
   - unlazy
 inheritMcp: true
 commandExecutionPolicy: strict

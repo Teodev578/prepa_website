@@ -8,6 +8,7 @@ skills:
   - unlazy
   - react-doctor
   - bmad-review
+  - bmad-code-review
 inheritMcp: true
 commandExecutionPolicy: strict
 ---

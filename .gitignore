@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# impeccable — local preferences (hook consent, session buildPath overrides)
+.impeccable/config.local.json

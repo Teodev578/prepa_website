@@ -6,8 +6,10 @@ subagent: true
 model: inherit
 skills:
   - bmad-brainstorming
-  - unlazy
+  - bmad-build
   - bmad-ux
+  - impeccable
+  - unlazy
 inheritMcp: true
 commandExecutionPolicy: always-proceed
 ---
