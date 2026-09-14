@@ -18,10 +18,12 @@ Ce document constitue la **mémoire factuelle permanente** du projet `prepa_webs
   * Supabase Client (`@supabase/supabase-js: ^2.105.4`)
   * Supabase SSR (`@supabase/ssr: ^0.10.3`)
   * Envoi d'emails : Resend (`^6.12.3`)
-* **Qualité & Diagnostics** :
-  * TypeScript `^5` (typage strict sans `any`)
-  * ESLint `^9` (`eslint-config-next: 16.2.3`)
-  * React Doctor (`react-doctor: ^0.9.1` accessible via `npm run doctor`)
+* **Qualité, Tests & Diagnostics** :
+  * TypeScript `^5` (typage strict sans `any` : vérifié via `npm run typecheck`)
+  * Moteur de Tests : Vitest (`vitest: ^5.0.0` avec `@vitejs/plugin-react` : exécuté via `npm run test`)
+  * Harnais Déterministe : `npm run check` (`tsc --noEmit` + `vitest run`)
+  * Diagnostic React : `npm run doctor` (`react-doctor: ^0.9.1`)
+  * Linting : ESLint `^9` (`eslint-config-next: 16.2.3`)
 
 ---
 
@@ -40,6 +42,7 @@ components/
 ├── ui/                       # Composants atomiques réutilisables
 └── GrainOverlay.tsx, etc.    # Effets graphiques globaux
 lib/                          # Utilitaires, clients Supabase, helpers partagés
+tests/                        # Suites de tests automatisés Vitest
 .agents/                      # Configuration de l'équipe d'agents et mémoire
 ```
 
@@ -49,4 +52,5 @@ lib/                          # Utilitaires, clients Supabase, helpers partagés
 
 1. **Vérification de la mémoire** : Au début d'une session ou d'une tâche, inspecter [.agents/memory/SESSION_STATE.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/.agents/memory/SESSION_STATE.md) et [DECISIONS.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/.agents/memory/DECISIONS.md).
 2. **Gestion de l'état UI** : Séparer rigoureusement les composants serveurs (RSC) par défaut des composants clients marqués `"use client"` (limités aux composants interactifs et animés).
-3. **Consignation des choix structurants** : Tout nouvel arbitrage technique doit être consigné sous forme d'ADR dans [DECISIONS.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/.agents/memory/DECISIONS.md).
+3. **Validation déterministe obligatoire** : Avant toute clôture de tâche, exécuter `npm run check`. Aucun travail n'est accepté si le statut n'est pas vert.
+4. **Consignation des choix structurants** : Tout nouvel arbitrage technique doit être consigné sous forme d'ADR dans [DECISIONS.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/.agents/memory/DECISIONS.md).
