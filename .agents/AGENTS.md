@@ -5,8 +5,8 @@
 Le projet s'appuie sur une équipe de sous-agents dédiés, articulés autour d'un système de mémoire persistante et d'un contrôle qualité indépendant :
 
 * **Victor (`lead_architect`)** : Coordination globale, arbitrages d'architecture, cadrage BMAD, animation de l'idéation (`bmad-brainstorming`) et intégrité de la mémoire.
-* **Théo (`motion_ui_engineer`)** : Interface, design system, intégration Tailwind CSS v4, cinématiques Framer Motion/Lenis, idéation UI (`bmad-brainstorming`) et rigueur d'implémentation (`unlazy`).
-* **Alex (`fullstack_data_engineer`)** : Routes API, Server Actions, Supabase SSR, schémas de données, intégration Resend, typage strict et discipline d'implémentation (`unlazy`).
+* **Théo (`motion_ui_engineer`)** : Interface, design system ([DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md)), intégration Tailwind CSS v4, cinématiques Framer Motion/Lenis, direction artistique (`impeccable`), idéation UI (`bmad-brainstorming`) et rigueur d'implémentation (`unlazy`).
+* **Alex (`fullstack_data_engineer`)** : Routes API, Server Actions, Supabase SSR, schémas de données, intégration Resend, typage strict et discipline d'implémentation (`unlazy`). *(Interdiction formelle de toucher au style ou d'utiliser `impeccable`)*.
 * **Sarah (`quality_assurance_engineer`)** : **Review Gatekeeper indépendante**, garante du passage réussi de `npm run check`, de l'audit des portes d'acceptation (`unlazy`), des diagnostics DevTools et de la conformité React 19 (`react-doctor`). *(Interdiction formelle de `bmad-brainstorming`)*.
 
 ---
@@ -17,21 +17,26 @@ Pour concilier rigueur architecturale et vélocité de développement, l'équipe
 
 1. **Fast Track (Itérations courantes & UI) :**
    * *Périmètre :* Création ou retouche de composants UI, micro-animations, ajustements de style Tailwind, corrections de bogues isolés, endpoints simples.
-   * *Protocole :* Traitement direct en coupe verticale (*vertical slice*). Aucune obligation de produire des documents BMAD lourds (PRD, Architecture Spine). Seuls le respect des faits techniques et la validation de fin de tâche s'appliquent.
+   * *Protocole :* Traitement direct en coupe verticale (*vertical slice*). Aucune obligation de produire des documents BMAD lourds (PRD, Architecture Spine). Seuls le respect des faits techniques, l'alignement sur [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) et la validation de fin de tâche s'appliquent.
 2. **BMAD Track (Chantiers structurants) :**
    * *Périmètre :* Nouveaux modules complets, refonte du modèle de données Supabase, flux d'authentification ou intégrations tierces majeures.
    * *Protocole :* Cycle formel BMAD via Victor (`bmad-spec` → `bmad-architecture` → `bmad-build`), avec génération d'artefacts dans `.agents/_bmad-output/`.
 
 ---
 
-## 3. Matrice des Compétences & Protocoles d'Usage
+## 3. Matrice des Compétences & Gouvernance des Outils
 
 | Rôle | Compétences Phares | Protocole de Déclenchement |
 | :--- | :--- | :--- |
-| **Victor** | `bmad-brainstorming`, `unlazy` (Depth Tree), suite BMAD Architecture | Déclenche `bmad-brainstorming` lors des phases amont d'exploration fonctionnelle. Utilise `unlazy` pour décomposer les initiatives en Depth Tree. |
-| **Théo** | `bmad-brainstorming` (UI), `unlazy` (Solo 4 passes), `bmad-ux` | Utilise `bmad-brainstorming` pour explorer des partis pris graphiques. Déclenche `unlazy` pour coder des composants complexes sans placeholders. |
-| **Alex** | `unlazy` (Solo backend), `bmad-build`, `bmad-testarch-atdd` | Déclenche `unlazy` sur les Server Actions et flux Supabase pour verrouiller la gestion des erreurs et les types. *(Pas de brainstorming)*. |
-| **Sarah** | `unlazy` (Audit des gates), `react-doctor`, `bmad-review`, DevTools | Audite les `GATES.md` (`gate-check.mjs --status`). Refuse toute complétion sans oracles validés. *(Interdiction absolue de brainstorming)*. |
+| **Victor** | `bmad-brainstorming`, `bmad-prd`, `bmad-architecture`, `bmad-spec`, `bmad-sprint-planning`, `unlazy` | Déclenche `bmad-brainstorming` lors des phases amont d'exploration fonctionnelle. Utilise `unlazy` pour décomposer les initiatives en Depth Tree. |
+| **Théo** | `impeccable`, `bmad-brainstorming` (UI), `bmad-build`, `bmad-ux`, `unlazy` | Pilote exclusif d'Impeccable (`critique`, `audit`, `polish`, `bolder`, `typeset`). Implémente les composants selon [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) en passes bornées. |
+| **Alex** | `unlazy` (Solo backend), `bmad-build`, `bmad-testarch-atdd` | Déclenche `unlazy` sur les Server Actions et flux Supabase pour verrouiller la gestion des erreurs et les types. *(Pas de brainstorming, pas d'UI)*. |
+| **Sarah** | `unlazy` (Audit des gates), `react-doctor`, `bmad-review`, `bmad-code-review`, DevTools | Audite les `GATES.md` (`gate-check.mjs --status`). Refuse toute complétion sans oracles validés. *(Interdiction absolue de brainstorming)*. |
+
+### 🔒 Doctrine Impeccable & Passes Bornées (*Bounded Passes*)
+1. **Exclusivité du périmètre UI :** L'usage du skill `impeccable` est formellement réservé à Théo pour les composants et pages frontend. Alex et Victor ont interdiction d'invoquer ce skill sur la logique backend, les schémas Supabase ou les fonctions API.
+2. **Interdiction des boucles ouvertes (*No Self-QA Loop*) :** Les retouches visuelles doivent s'effectuer en passes bornées (maximum 2 itérations d'audit/correction par lot). Aucune boucle récursive de micro-ajustements n'est autorisée. Le livrable est immédiatement soumis à `npm run check`.
+
 
 ---
 

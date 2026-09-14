@@ -61,4 +61,19 @@ Ce registre consigne l'historique décisionnel immuable du projet. Chaque arbitr
   * Focus mental préservé pour chaque spécialiste.
   * Élimination de la complétion fantôme (*phantom completeness*) sur les tâches de production.
 
+---
 
+## ADR-005 : Gouvernance du design system Impeccable et doctrine des passes bornées
+
+* **Date :** 2026-09-14
+* **Statut :** Accepté
+* **Contexte :** 
+  L'initialisation d'Impeccable (`PRODUCT.md`) laissait le projet sans référentiel formel de design tokens (`DESIGN.md`), exposant le front-end à des dérives graphiques (*AI slop*). De plus, l'utilisation non encadrée d'outils d'évaluation esthétique par les LLMs peut entraîner des boucles d'auto-évaluation infinies et une dispersion hors du périmètre UI.
+* **Décision :** 
+  1. Formalisation et verrouillage du document d'autorité de design [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) (Creative North Star "Le Terminal Industriel & Glacier", tokens conformes au spec Google Labs) et de son sidecar `.impeccable/design.json`.
+  2. Restriction stricte du skill `impeccable` au périmètre de Théo (`motion_ui_engineer`) pour les composants d'interface. Interdiction formelle aux rôles backend/architecture (Alex, Victor).
+  3. Règle des passes bornées (*Bounded Passes*) : toute tâche d'amélioration ou de critique UI est limitée à 2 itérations maximum (audit/critique puis correction par lot), proscrivant les boucles ouvertes de self-QA.
+* **Conséquences :** 
+  * Source de vérité unique pour les styles, contrastes, polices et formes du site.
+  * Clôture définitive du point d'audit P4.
+  * Consommation de tokens optimisée et absence de dérive récursive sur le style.

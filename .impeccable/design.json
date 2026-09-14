@@ -1,0 +1,191 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-14T11:06:00.000Z",
+  "title": "Design System: Law Clean Center",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "Bleu Technique Industriel",
+        "canonical": "oklch(48% 0.12 230)",
+        "tonalRamp": [
+          "#081b2b",
+          "#0f3654",
+          "#154e77",
+          "#1c669b",
+          "#3481b7",
+          "#5fa0ce",
+          "#96c3e4",
+          "#d9ebf7"
+        ]
+      },
+      "secondary": {
+        "role": "secondary",
+        "displayName": "Vert Validation Opérationnelle",
+        "canonical": "oklch(50% 0.11 135)",
+        "tonalRamp": [
+          "#17230d",
+          "#273b17",
+          "#3b5722",
+          "#4f7330",
+          "#6c9c42",
+          "#8ec25f",
+          "#b9de97",
+          "#e6f4d7"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "Bleu Ardoise Profond",
+        "canonical": "oklch(22% 0.03 225)",
+        "tonalRamp": [
+          "#050c12",
+          "#0a1721",
+          "#0f212f",
+          "#1d3a50",
+          "#345b7a",
+          "#5d84a3",
+          "#9db9cf",
+          "#e5eef5"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "Glacier Surface",
+        "canonical": "oklch(93% 0.02 195)",
+        "tonalRamp": [
+          "#234340",
+          "#41726d",
+          "#6aa6a0",
+          "#9cd1cc",
+          "#c4e5e2",
+          "#daf0ee",
+          "#ebf7f6",
+          "#f7fcfb"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headlines et transitions d'impact."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Titres de sections principales."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Titres de cartes d'offres et modules."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Paragraphes descriptifs et argumentaires B2B."
+      },
+      "label": {
+        "displayName": "Label / Mono",
+        "purpose": "Annotations techniques, badges de statut, numérotations."
+      }
+    },
+    "shadows": [
+      {
+        "name": "subtle-technical-glow",
+        "value": "0 1px 2px 0 rgba(28, 102, 155, 0.08)",
+        "purpose": "Ombre bleutée subtile pour boutons et cartes au repos."
+      },
+      {
+        "name": "active-elevation",
+        "value": "0 4px 6px -1px rgba(28, 102, 155, 0.08)",
+        "purpose": "Élévation lors du survol des cartes interactives."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-quint",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Cinématiques de révélation de composants et transitions d'état."
+      },
+      {
+        "name": "duration-fast",
+        "value": "200ms",
+        "purpose": "Micro-interactions sur boutons et champs de saisie."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Bouton d'action principale (devis, contact, confirmation).",
+      "html": "<button class=\"ds-btn-primary\">DEMANDER UN DEVIS EXPRESS</button>",
+      "css": ".ds-btn-primary { background: #1c669b; color: #ffffff; padding: 16px 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid #1c669b; border-radius: 2px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 1px 2px 0 rgba(28, 102, 155, 0.08); } .ds-btn-primary:hover { background: #ffffff; color: #1c669b; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Bouton d'action secondaire (en savoir plus, spécifications).",
+      "html": "<button class=\"ds-btn-secondary\">DÉCOUVRIR LE PROTOCOLE VN/VO</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: #4f7330; padding: 16px 24px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid #4f7330; border-radius: 2px; cursor: pointer; transition: all 0.3s ease; } .ds-btn-secondary:hover { background: #4f7330; color: #ffffff; box-shadow: 0 4px 6px -1px rgba(79, 115, 48, 0.15); }"
+    },
+    {
+      "name": "Technical Card",
+      "kind": "card",
+      "refersTo": "card-technical",
+      "description": "Conteneur technique avec repère angulaire pour cartes de service.",
+      "html": "<div class=\"ds-card-technical\"><span class=\"ds-tech-corner\">+</span><div class=\"ds-card-title\">FORFAIT FLEXIBILITÉ FLOTTE</div><p class=\"ds-card-body\">Externalisation sans contrainte avec intervention garantie sous 24 heures.</p></div>",
+      "css": ".ds-card-technical { position: relative; background: #DAF0EE; color: #0f212f; border: 1px solid #c8d9d7; border-radius: 2px; padding: 24px 32px; font-family: 'Poppins', sans-serif; } .ds-tech-corner { position: absolute; top: -10px; left: -10px; color: #1c669b; font-family: 'IBM Plex Mono', monospace; font-size: 14px; background: #ffffff; padding: 0 4px; border: 1px solid #c8d9d7; line-height: 1; } .ds-card-title { font-size: 20px; font-weight: 500; text-transform: uppercase; letter-spacing: -0.02em; margin-bottom: 8px; } .ds-card-body { font-size: 14px; line-height: 1.6; color: rgba(15, 33, 47, 0.8); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le Terminal Industriel & Glacier (Swiss Technical Precision)",
+    "overview": "L'identité visuelle de Law Clean Center rompt délibérément avec les stéréotypes génériques du detailing automobile. Elle adopte les codes d'une ingénierie logistique de haute précision : typographie suisse structurée, contrastes froids glacier, composition modulaire en grille et finitions tranchantes. L'interface est conçue pour des décideurs B2B.",
+    "keyCharacteristics": [
+      "Rigueur typographique suisse avec graisses medium et tracking resserré.",
+      "Teintes glacier et ardoise excluant le noir pur artificiel.",
+      "Angles industriels tranchants avec rayon minimaliste de 2px.",
+      "Détails de diagramme technique avec bordures fines et repères angulaires (+)."
+    ],
+    "rules": [
+      {
+        "name": "The Rarity Rule",
+        "body": "La couleur primaire (#1c669b) ne couvre jamais plus de 10% de la surface visible d'un écran. Sa rareté confère toute sa force au signal d'action.",
+        "section": "colors"
+      },
+      {
+        "name": "The No-Pure-Black Rule",
+        "body": "Aucun élément textuel ou d'arrière-plan n'utilise #000000. La profondeur naît de la nuance ardoise (#0f212f).",
+        "section": "colors"
+      },
+      {
+        "name": "The Medium Uppercase Rule",
+        "body": "Les titres majeurs s'expriment en majuscules avec une graisse font-medium (et non black ou extrabold), préservant l'élégance typographique sans agressivité visuelle.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tonal Layering Rule",
+        "body": "Les plans de profondeur se superposent : Fond #ffffff -> Carte #DAF0EE -> Badge #ebf5f4 -> Action #1c669b. Les ombres n'interviennent que comme révélateur dynamique d'interaction.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do utiliser systématiquement les majuscules avec tracking négatif serré pour les titres d'envergure.",
+      "Do privilégier les repères techniques discrets (numérotation entre parenthèses, croix +, séparateurs fins) pour asseoir la tonalité B2B.",
+      "Do maintenir le rayon de courbure à 2px (0.125rem) sur tous les éléments d'interface.",
+      "Do utiliser des photographies réelles d'interventions en atelier pour illustrer les prestations."
+    ],
+    "donts": [
+      "Don't employer de dégradés multicolores (violet/rose/bleu) typiques des interfaces IA génériques.",
+      "Don't utiliser de grands arrondis (rounded-2xl ou rounded-3xl) incompatibles avec l'esprit industriel de Law Clean Center.",
+      "Don't insérer de fausses évaluations avec des étoiles dorées ou de faux avis Google inventés.",
+      "Don't surcharger l'écran de micro-animations continues qui perturbent la consultation professionnelle sur mobile ou tablette d'atelier."
+    ]
+  }
+}

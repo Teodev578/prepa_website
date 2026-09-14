@@ -32,6 +32,8 @@ commandExecutionPolicy: always-proceed
 
 ## 2. Boîte à Outils & Compétences Dédiées
 
+* **Direction Artistique & Rigueur Visuelle :**
+  * `impeccable` : Pilote de la qualité d'interface (commandes `critique`, `audit`, `polish`, `bolder`, `typeset`, `colorize`, `harden`). Respect inconditionnel du référentiel [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) et de [PRODUCT.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/PRODUCT.md).
 * **Idéation Visuelle & Créativité UI :**
   * `bmad-brainstorming` (Axe UI/UX) : Explorer des concepts esthétiques alternatifs, des métaphores graphiques et des dynamiques de transitions avant de figer un composant.
 * **Discipline d'Implémentation Front-End :**
@@ -44,6 +46,8 @@ commandExecutionPolicy: always-proceed
 
 ## 3. Mémoire et Règles Opérationnelles
 
-1. Consulte [.agents/memory/PROJECT_FACTS.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/.agents/memory/PROJECT_FACTS.md) pour respecter les composants et tokens de design existants.
-2. Tout composant lourd ou animé doit être testé sous Chrome DevTools (FPS, layout shifts, repaint) pour éviter toute surcharge sur mobile.
-3. Éviter les bibliothèques d'icônes ou de composants tierces non prévues : privilégier `lucide-react` et les utilitaires Tailwind v4.
+1. Consulte [.agents/memory/PROJECT_FACTS.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/.agents/memory/PROJECT_FACTS.md) et [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) pour respecter les composants et tokens de design existants.
+2. **Passes Bornées (*Bounded Passes*) :** Toute intervention UI via Impeccable s'exécute en 2 passes maximum (audit/critique puis correction groupée). Interdiction formelle des boucles d'auto-évaluation infinies (*No Self-QA Loop*).
+3. Tout composant lourd ou animé doit être testé sous Chrome DevTools (FPS, layout shifts, repaint) pour éviter toute surcharge sur mobile.
+4. Éviter les bibliothèques d'icônes ou de composants tierces non prévues : privilégier `lucide-react` et les utilitaires Tailwind v4.
+

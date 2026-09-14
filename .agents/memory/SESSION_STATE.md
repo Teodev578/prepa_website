@@ -17,9 +17,9 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
 | Domaine | Responsable désigné | Statut | Note de relais & Toolkit |
 | :--- | :--- | :--- | :--- |
 | **Architecture & Mémoire** | Victor (`lead_architect`) | Opérationnel | `bmad-brainstorming`, `unlazy` (Depth Tree), suite BMAD Architecture. |
-| **UI & Motion** | Théo (`motion_ui_engineer`) | Opérationnel | `bmad-brainstorming` (UI), `unlazy` (Solo 4 passes sans placeholders), `bmad-ux`. |
+| **UI & Motion** | Théo (`motion_ui_engineer`) | Opérationnel | `impeccable`, `bmad-brainstorming` (UI), `bmad-build`, `bmad-ux`, `unlazy` (Solo 4 passes sans placeholders). |
 | **Fullstack & API** | Alex (`fullstack_data_engineer`) | Opérationnel | `unlazy` (Solo backend & intégrité), `bmad-build`, `bmad-testarch-atdd`. |
-| **Qualité & Gatekeeper** | Sarah (`quality_assurance_engineer`) | Opérationnel | `unlazy` (Audit des gates), `react-doctor`, `bmad-review`, DevTools. *(Interdiction Brainstorming)*. |
+| **Qualité & Gatekeeper** | Sarah (`quality_assurance_engineer`) | Opérationnel | `unlazy` (Audit des gates), `react-doctor`, `bmad-review`, `bmad-code-review`, DevTools. *(Interdiction Brainstorming)*. |
 
 ---
 
@@ -30,14 +30,16 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
   - Sarah est confirmée comme seule auditrice des oracles `GATES.md` avec pouvoir de véto.
   - Harnais `npm run check` opérationnel et passant au vert.
 * *2026-09-14 (Théo / UI & Impeccable) :*
-  - Initialisation formelle du contexte de design Impeccable (`/impeccable init`).
-  - Rédaction et validation du document d'autorité produit [PRODUCT.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/PRODUCT.md).
-  - Configuration du workflow par défaut en mode `code-first` (`.impeccable/config.json`).
+  - Initialisation formelle du contexte de design Impeccable (`/impeccable init`) et rédaction de [PRODUCT.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/PRODUCT.md).
+  - Rédaction et verrouillage du référentiel [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) (Direction "Le Terminal Industriel & Glacier", standard Google Labs) et de son sidecar `.impeccable/design.json` (clôture du point P4).
+  - Formalisation de la doctrine des passes bornées (*Bounded Passes*) et de l'exclusivité UI de Théo dans `AGENTS.md` et ADR-005.
 * *2026-09-14 (Victor / Audit & Correction .agents/) :*
-  - **P2** : Correction du chemin de sortie BMAD — `output_folder` pointait sur un dossier inexistant à la racine. Corrigé dans `.agents/_bmad/custom/config.toml`.
-  - **P1** : Alignement de la langue BMAD (`document_output_language` + `communication_language`) sur le corpus français. Corrigé dans `_bmad/custom/config.toml` et `config.user.toml`.
-  - **P3** : Frontmatters YAML des 4 agents corrigés — ajout de `bmad-prd` + `bmad-sprint-planning` (Victor), `bmad-build` + `impeccable` (Théo), `bmad-build` (Alex), `bmad-code-review` (Sarah). Miroir plugin synchronisé.
-  - **P5** : `.impeccable/config.local.json` ajouté au `.gitignore`.
-  - `npm run check` ✅ — harnais vert post-corrections.
-  - **Prochaine action recommandée :** `/impeccable document` pour générer `DESIGN.md` et clôturer P4.
+  - **P2** : Correction du chemin de sortie BMAD dans `.agents/_bmad/custom/config.toml`.
+  - **P1** : Forçage de la langue française dans `_bmad/custom/config.toml` et `config.user.toml`.
+  - **P3** : Frontmatters YAML des 4 agents synchronisés avec les skills réels.
+  - **P4** : [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) créé et opérationnel.
+  - **P5** : `.impeccable/config.local.json` exclu dans `.gitignore`.
+  - `npm run check` ✅ — zéro régression, types et tests au vert.
+  - **État général :** Setup `.agents/` intégralement assaini, gouvernance Impeccable opérationnelle.
+
 
