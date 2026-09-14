@@ -60,7 +60,7 @@ export default function CTA() {
           transition={{ duration: 0.6, ease: BEZIER }}
           className="font-mono text-[10px] md:text-xs text-muted-foreground tracking-widest md:tracking-[0.3em] uppercase mb-4 md:mb-6 block"
         >
-          // INITIATION_DE_CONTACT
+          {"// INITIATION_DE_CONTACT"}
         </motion.span>
 
         {/* Massive Animated Title */}

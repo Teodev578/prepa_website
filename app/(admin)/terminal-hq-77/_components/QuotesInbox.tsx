@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
 type QuoteStatus = 'NOUVEAU' | 'EN_COURS' | 'DEVIS_ENVOYÉ' | 'REFUSÉ';
@@ -13,6 +13,13 @@ type QuoteRequest = {
     created_at: string;
 };
 
+interface NotificationEmail {
+    id: string;
+    email: string;
+    is_active: boolean;
+    created_at?: string;
+}
+
 export default function QuotesInbox() {
     const supabase = createClient();
     const [quotes, setQuotes] = useState<QuoteRequest[]>([]);
@@ -24,41 +31,52 @@ export default function QuotesInbox() {
     const [activeFilter, setActiveFilter] = useState<FilterOption>('TOUTES');
 
     // ÉTATS NOTIFICATIONS EMAILS
-    const [notificationEmails, setNotificationEmails] = useState<any[]>([]);
+    const [notificationEmails, setNotificationEmails] = useState<NotificationEmail[]>([]);
     const [newNotificationEmail, setNewNotificationEmail] = useState('');
     const [status, setStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
-    useEffect(() => {
-        fetchQuotes();
-        loadNotificationEmails();
-        setStatus(null);
-    }, []);
-
-    const fetchQuotes = async () => {
-        setLoading(true);
-        const { data, error } = await supabase
-            .from('quote_requests')
-            .select('*')
-            .order('created_at', { ascending: false });
-
-        if (error) {
-            setError("Impossible de charger les demandes : " + error.message);
-        } else {
-            setQuotes(data || []);
-            if (data && data.length > 0) {
-                setSelectedQuote(data[0]);
-            }
-        }
-        setLoading(false);
-    };
-
-    const loadNotificationEmails = async () => {
+    const loadNotificationEmails = useCallback(async () => {
         const { data, error } = await supabase
             .from('notification_emails')
             .select('*')
             .order('created_at', { ascending: false });
-        if (!error && data) setNotificationEmails(data);
-    };
+        if (!error && data) setNotificationEmails(data as NotificationEmail[]);
+    }, [supabase]);
+
+    useEffect(() => {
+        let isCancelled = false;
+
+        const loadInitialData = async () => {
+            const [quotesRes, emailsRes] = await Promise.all([
+                supabase.from('quote_requests').select('*').order('created_at', { ascending: false }),
+                supabase.from('notification_emails').select('*').order('created_at', { ascending: false })
+            ]);
+
+            if (isCancelled) return;
+
+            if (quotesRes.error) {
+                setError("Impossible de charger les demandes : " + quotesRes.error.message);
+            } else {
+                const quotesData = quotesRes.data || [];
+                setQuotes(quotesData);
+                if (quotesData.length > 0) {
+                    setSelectedQuote(quotesData[0]);
+                }
+            }
+
+            if (!emailsRes.error && emailsRes.data) {
+                setNotificationEmails(emailsRes.data as NotificationEmail[]);
+            }
+
+            setLoading(false);
+        };
+
+        void loadInitialData();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [supabase]);
 
     // === ACTIONS EMAILS ===
     const handleAddNotificationEmail = async (e: React.FormEvent) => {
@@ -198,12 +216,12 @@ export default function QuotesInbox() {
             {/* SECTION: RÉCEPTION DES DEMANDES DE DEVIS */}
             <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm mb-8">
                 <h2 className="text-xl font-bold mb-2">Réception des demandes de devis</h2>
-                <p className="text-sm text-muted-foreground mb-6">Ajoutez les adresses e-mails de votre équipe. Dès qu'un client remplira un formulaire sur votre site, une alerte sera envoyée.</p>
+                <p className="text-sm text-muted-foreground mb-6">Ajoutez les adresses e-mails de votre équipe. Dès qu&apos;un client remplira un formulaire sur votre site, une alerte sera envoyée.</p>
 
                 <div className="space-y-3 mb-6">
                     {notificationEmails.length === 0 ? (
                         <div className="p-4 bg-muted/50 border border-border rounded-lg text-center text-sm text-muted-foreground">
-                            Aucune adresse e-mail configurée. Vous ne recevrez pas d'alerte.
+                            Aucune adresse e-mail configurée. Vous ne recevrez pas d&apos;alerte.
                         </div>
                     ) : (
                         notificationEmails.map((item) => (
@@ -240,7 +258,7 @@ export default function QuotesInbox() {
                         required
                     />
                     <button type="submit" className="bg-foreground text-background hover:bg-foreground/90 px-6 py-3 rounded-lg text-sm font-bold transition-colors shadow-sm">
-                        Ajouter l'e-mail
+                        Ajouter l&apos;e-mail
                     </button>
                 </form>
             </div>
@@ -255,7 +273,7 @@ export default function QuotesInbox() {
                 <div className="text-center py-20 bg-card border border-border rounded-xl shadow-sm">
                     <span className="text-5xl mb-4 block">📥</span>
                     <h3 className="text-xl font-bold text-foreground">Boîte de réception vide</h3>
-                    <p className="text-muted-foreground mt-2">Aucun client n'a encore soumis de formulaire de contact.</p>
+                    <p className="text-muted-foreground mt-2">Aucun client n&apos;a encore soumis de formulaire de contact.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">

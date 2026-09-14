@@ -4,6 +4,11 @@ const isDev = process.env.NODE_ENV === 'development';
 
 const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.1.78'],
+  // ⚡ Purge agressive de la mémoire en dev : libère les pages inactives et limite le buffer
+  onDemandEntries: {
+    maxInactiveAge: 15 * 1000, // 15 secondes d'inactivité avant déchargement de la page de la RAM
+    pagesBufferLength: 2,      // Ne conserve que 2 pages simultanément en cache mémoire
+  },
   images: {
     remotePatterns: [
       {

@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import Portfolio from "./_components/Portfolio";
-import AboutSection from "./_components/AboutSection";
 
 // 🛠️ CONFIGURATION MAJEURE SEO : Les métadonnées lues par les moteurs de recherche
 // A la base il s'agissais d'une section portfolio, mais j'ai décidé de faire une page dédiée pour mieux structurer le discours et les réalisations. D'où ce titre plus global.

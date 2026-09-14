@@ -105,7 +105,6 @@ const Contact = () => {
 
         load();
         return () => { cancelled = true; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [profile]);
 
     const handleProfileChange = (p: 'PARTICULIER' | 'ENTREPRISE') => {
@@ -171,7 +170,6 @@ const Contact = () => {
     };
 
     const fields = currentData.fields;
-    const formId = currentData.formId;
 
     return (
         <section className="bg-background text-foreground h-auto py-12 sm:py-16 md:py-24 px-4 sm:px-6 md:px-12 overflow-hidden">
@@ -249,7 +247,7 @@ const Contact = () => {
                             </div>
                         ) : fields.length === 0 ? (
                             <div className="col-span-full text-sm text-muted-foreground italic">
-                                Aucune question n'est configurée pour ce profil actuellement.
+                                Aucune question n&apos;est configurée pour ce profil actuellement.
                             </div>
                         ) : (
                             <AnimatePresence mode="popLayout">
@@ -327,7 +325,7 @@ const Contact = () => {
                     
                     <div className="space-y-1.5 sm:space-y-2">
                         <span className="text-foreground font-bold flex items-center gap-2">
-                            <span className="w-1 h-1 bg-primary/50 rounded-full"></span> Zone d'intervention
+                            <span className="w-1 h-1 bg-primary/50 rounded-full"></span> Zone d&apos;intervention
                         </span>
                         <div>
                             Région Île-de-France<br />

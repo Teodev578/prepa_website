@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import {
   UserCheck,
   Database,
@@ -16,10 +15,7 @@ import {
   Cookie,
   RefreshCw,
   Mail,
-  ArrowLeft,
-  Printer,
   ChevronRight,
-  FileCheck
 } from "lucide-react";
 
 const customEase = [0.16, 1, 0.3, 1] as const;

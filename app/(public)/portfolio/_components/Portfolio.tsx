@@ -48,6 +48,25 @@ const paragraphVariants = {
     }
 };
 
+interface DbPortfolioProject {
+    ref_id: string;
+    title: string;
+    treatment: string;
+    date_tag: string;
+    model: string;
+    img_single?: string;
+    img_before?: string;
+    img_after?: string;
+    carousel_images?: string[] | null;
+    time_spent?: string | null;
+    solution?: string | null;
+    impact?: string | null;
+    size?: string | null;
+    context?: string | null;
+    work_done?: string[] | null;
+    result?: string | null;
+}
+
 export default function Portfolio() {
     const [projects, setProjects] = React.useState<Project[]>([]);
     const [isLoading, setIsLoading] = React.useState(true);
@@ -63,7 +82,7 @@ export default function Portfolio() {
             if (error) {
                 console.error("Erreur lors de la récupération du portfolio:", error);
             } else if (data) {
-                const formatted: Project[] = data.map((p: any) => ({
+                const formatted: Project[] = (data as unknown as DbPortfolioProject[]).map((p) => ({
                     id: p.ref_id,
                     title: p.title,
                     treatment: p.treatment,

@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 
 interface BeforeAfterSliderProps {
     beforeImg: string;
@@ -23,16 +24,21 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
         const rect = containerRef.current.getBoundingClientRect();
         // Calcule la position en pourcentage en bloquant entre 0 et 100
         const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
-        const percent = (x / rect.width) * 100;
+        const percent = Math.max(0, Math.min((x / rect.width) * 100, 100));
         setSliderPos(percent);
     };
 
+    const handleMouseDown = () => setIsDragging(true);
+    const handleTouchStart = () => setIsDragging(true);
+
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (isDragging) handleMove(e.clientX);
+        if (!isDragging) return;
+        handleMove(e.clientX);
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
-        if (isDragging) handleMove(e.touches[0].clientX);
+        if (!isDragging) return;
+        handleMove(e.touches[0].clientX);
     };
 
     // Arrête le glissement si on lâche le clic n'importe où sur l'écran
@@ -55,21 +61,27 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
             onMouseLeave={() => setIsDragging(false)} // Sécurité si la souris sort du cadre
         >
             {/* Image APRÈS (Fond) */}
-            <img 
-                src={afterImg} 
-                className="absolute inset-1 w-[calc(100%-8px)] h-[calc(100%-8px)] object-cover" 
-                alt="After" 
-            />
+            <div className="absolute inset-1">
+                <Image 
+                    src={afterImg} 
+                    fill
+                    className="object-cover" 
+                    alt="Véhicule après préparation" 
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                />
+            </div>
 
             {/* Image AVANT (Masque de découpe) */}
             <div 
                 className="absolute inset-1 overflow-hidden"
                 style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
             >
-                <img 
+                <Image 
                     src={beforeImg} 
-                    className="absolute inset-0 w-full h-full object-cover grayscale" 
-                    alt="Before" 
+                    fill
+                    className="object-cover grayscale" 
+                    alt="Véhicule avant préparation" 
+                    sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 
                 {/* Étiquette AVANT - Reste primaire/neutre pour le constat de base */}
@@ -87,8 +99,8 @@ const BeforeAfterSlider: React.FC<BeforeAfterSliderProps> = ({
             <div 
                 className="absolute top-0 bottom-0 w-10 -ml-5 z-20 cursor-ew-resize flex items-center justify-center"
                 style={{ left: `${sliderPos}%` }}
-                onMouseDown={() => setIsDragging(true)}
-                onTouchStart={() => setIsDragging(true)}
+                onMouseDown={handleMouseDown}
+                onTouchStart={handleTouchStart}
             >
                 {/* La fine ligne visuelle - INTÉGRATION SECONDAIRE */}
                 <div className="absolute top-1 bottom-1 w-[1px] bg-secondary pointer-events-none shadow-[0_0_5px_rgba(0,0,0,0.3)]" />

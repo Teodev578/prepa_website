@@ -32,7 +32,7 @@ const TechnicalServices = () => {
                 {/* Métadonnées épurées et professionnelles */}
                 <div className="absolute top-8 right-6 md:right-12 hidden md:flex flex-col items-end gap-1 font-mono text-[10px] text-muted-foreground uppercase tracking-widest select-none">
                     <span className="text-primary font-bold">OFFRES EN FLUX TENDUS</span>
-                    <span>ZONE D'INTERVENTION : ÎLE-DE-FRANCE</span>
+                    <span>ZONE D&apos;INTERVENTION : ÎLE-DE-FRANCE</span>
                 </div>
             </div>
 
@@ -48,13 +48,13 @@ const TechnicalServices = () => {
                 <motion.article variants={cardVariants} className="flex-1 border-b lg:border-b-0 lg:border-r border-border p-8 md:p-10 flex flex-col justify-between bg-card group">
                     <div>
                         <div className="mb-10">
-                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">// BESOIN IMMÉDIAT</span>
+                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">{"// BESOIN IMMÉDIAT"}</span>
                             <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-foreground">FORFAIT URGENCE</h3>
                         </div>
                         
                         <div className="space-y-6 font-sans text-sm text-muted-foreground">
                             <p className="text-foreground/90 font-medium leading-relaxed">
-                                Idéal pour pallier une absence imprévue dans vos équipes ou absorber un pic d'activité soudain.
+                                Idéal pour pallier une absence imprévue dans vos équipes ou absorber un pic d&apos;activité soudain.
                             </p>
                             <ul className="space-y-3 pt-4 border-t border-border/60">
                                 <li className="flex gap-3 items-start"><span className="text-primary">■</span> Renfort opérationnel au pied levé</li>
@@ -76,7 +76,7 @@ const TechnicalServices = () => {
                 <motion.article variants={cardVariants} className="flex-1 border-b lg:border-b-0 lg:border-r border-border p-8 md:p-10 flex flex-col justify-between bg-foreground text-background relative group">
                     <div>
                         <div className="mb-10">
-                            <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-2 font-bold">// CONTRAT CADRE 6 MOIS</span>
+                            <span className="font-mono text-[10px] text-secondary uppercase tracking-widest block mb-2 font-bold">{"// CONTRAT CADRE 6 MOIS"}</span>
                             <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-background">FLEXIBILITÉ</h3>
                         </div>
                         
@@ -86,7 +86,7 @@ const TechnicalServices = () => {
                             </p>
                             <ul className="space-y-3 pt-4 border-t border-background/20">
                                 <li className="flex gap-3 items-start"><span className="text-primary">■</span> Engagement structuré sur une période de 6 mois</li>
-                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Volume de 10 jours d'intervention par mois</li>
+                                <li className="flex gap-3 items-start"><span className="text-primary">■</span> Volume de 10 jours d&apos;intervention par mois</li>
                                 <li className="flex gap-3 items-start"><span className="text-primary">■</span> Préparation esthétique complète (VN / VO)</li>
                                 <li className="flex gap-3 items-start"><span className="text-primary">■</span> Intégration de la logistique & convoyage inter-sites</li>
                             </ul>
@@ -104,13 +104,13 @@ const TechnicalServices = () => {
                 <motion.article variants={cardVariants} className="flex-1 p-8 md:p-10 flex flex-col justify-between bg-card group">
                     <div>
                         <div className="mb-10">
-                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">// PARTENARIAT RECURRENT 12 MOIS</span>
+                            <span className="font-mono text-[10px] text-primary uppercase tracking-widest block mb-2 font-bold">{"// PARTENARIAT RECURRENT 12 MOIS"}</span>
                             <h3 className="font-sans font-black text-3xl lg:text-4xl uppercase tracking-tighter text-foreground">FORFAIT EXPERT</h3>
                         </div>
                         
                         <div className="space-y-6 font-sans text-sm text-muted-foreground">
                             <p className="text-foreground/90 font-medium leading-relaxed">
-                                L'externalisation totale et permanente de votre pôle préparation pour une visibilité financière parfaite.
+                                L&apos;externalisation totale et permanente de votre pôle préparation pour une visibilité financière parfaite.
                             </p>
                             <ul className="space-y-3 pt-4 border-t border-border/60">
                                 <li className="flex gap-3 items-start"><span className="text-primary">■</span> Engagement long terme (minimum 12 mois)</li>

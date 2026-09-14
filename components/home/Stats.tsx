@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, useInView, useAnimation } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 function Counter({ from, to, duration = 2, suffix = "" }: { from: number, to: number, duration?: number, suffix?: string }) {
   const nodeRef = useRef<HTMLSpanElement>(null);

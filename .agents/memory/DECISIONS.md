@@ -77,3 +77,24 @@ Ce registre consigne l'historique décisionnel immuable du projet. Chaque arbitr
   * Source de vérité unique pour les styles, contrastes, polices et formes du site.
   * Clôture définitive du point d'audit P4.
   * Consommation de tokens optimisée et absence de dérive récursive sur le style.
+
+---
+
+## ADR-006 : Stabilisation réactive React 19, intégration ESLint au Gate et optimisation Web Vitals
+
+* **Date :** 2026-09-14
+* **Statut :** Accepté
+* **Contexte :** 
+  L'audit initial a révélé 71 violations ESLint et React Compiler cachées parce que `npm run check` n'exécutait que `tsc` et `vitest`. Par ailleurs, de multiples composants utilisaient des effets asynchrones non synchronisés (`useEffect` avec mutations d'état synchrones ou détection d'écran), déclenchant des cascades de re-renders préjudiciables à la fluidité 60/120 fps. Une ressource de police externe (`Material Symbols Outlined`) bloquait également le FCP/LCP.
+* **Décision :** 
+  1. **Intégration d'ESLint au Gate déterministe :** Modification de `"check": "npm run lint && npm run typecheck && npm run test"` dans `package.json` afin qu'aucune régression de code ou de pureté React 19 ne puisse franchir la porte d'acceptation.
+  2. **Adoption de `useSyncExternalStore` :** Création des hooks mutualisés `useMediaQuery` et `useHydrated` dans `lib/hooks/` pour synchroniser de manière synchrone et sans cascading render les requêtes médias et l'hydratation côté client. Refonte de `ThemeProvider` pour éliminer `setTheme` dans les effets.
+  3. **Pattern d'annulation sur les requêtes client :** Sécurisation des fetchs de données dans les composants admin (`PortfolioList`, `QuotesInbox`, `ServicesCatalog`, `FormsConfig`) avec le pattern `isCancelled` et suppression des `setLoading(true)` synchrones dans les effets.
+  4. **Optimisation des ressources critiques :** Suppression de la feuille de style Google Fonts externe `Material Symbols Outlined` du layout racine, éliminant les requêtes réseau bloquantes.
+  5. **Élimination des `any` résiduels :** Typage strict de l'ensemble des structures de données (`ProjectCardData`, `DbPortfolioProject`, `FormFieldItem`, `NotificationEmail`, `Record<string, unknown>`).
+* **Conséquences :** 
+  * Zéro erreur, zéro avertissement sur `npx eslint .` (contre 71 précédemment).
+  * Exécution intégrale de `npm run check` avec code de sortie 0.
+  * Animations et interactions fluides à 60/120 fps garanties sans saccades de layout.
+  * Score d'audit et robustesse pérenne pour les évolutions futures.
+

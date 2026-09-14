@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 
 const customEase = [0.16, 1, 0.3, 1] as [number, number, number, number];
@@ -88,7 +89,7 @@ export default function AboutSection() {
                                 Nous nous positionnons comme votre partenaire privilégié, mobilisable selon vos réels besoins. En nous déléguant la préparation de vos véhicules, vous transformez une masse salariale rigide en une charge 100 % variable.
                             </p>
                             <p className="text-lg text-muted-foreground leading-relaxed mt-4">
-                                L'objectif est clair : accélérer les ventes de vos véhicules d'occasion et valoriser vos véhicules neufs grâce à une externalisation complète de votre préparation esthétique et de votre convoyage, le tout piloté par un reporting rigoureux.
+                                L&apos;objectif est clair : accélérer les ventes de vos véhicules d&apos;occasion et valoriser vos véhicules neufs grâce à une externalisation complète de votre préparation esthétique et de votre convoyage, le tout piloté par un reporting rigoureux.
                             </p>
                         </motion.div>
 
@@ -101,7 +102,7 @@ export default function AboutSection() {
                                 {/* INTÉGRATION SECONDAIRE : Numérotation d'impact */}
                                 <span className="text-2xl block text-secondary font-black mb-2">01.</span>
                                 <h4 className="font-bold uppercase tracking-wide text-sm">Constante Qualité</h4>
-                                <p className="text-xs text-muted-foreground font-mono">Standards d'excellence maintenus sur chaque unité.</p>
+                                <p className="text-xs text-muted-foreground font-mono">Standards d&apos;excellence maintenus sur chaque unité.</p>
                             </motion.div>
                             <motion.div variants={itemVariants} className="space-y-2">
                                 <span className="text-2xl block text-secondary font-black mb-2">02.</span>
@@ -111,7 +112,7 @@ export default function AboutSection() {
                             <motion.div variants={itemVariants} className="space-y-2">
                                 <span className="text-2xl block text-secondary font-black mb-2">03.</span>
                                 <h4 className="font-bold uppercase tracking-wide text-sm">Optimisation Coûts</h4>
-                                <p className="text-xs text-muted-foreground font-mono">Facturation à l'unité, aucune charge fixe inutile.</p>
+                                <p className="text-xs text-muted-foreground font-mono">Facturation à l&apos;unité, aucune charge fixe inutile.</p>
                             </motion.div>
                         </motion.div>
                     </motion.div>
@@ -125,15 +126,13 @@ export default function AboutSection() {
                         className="lg:col-span-5 grid grid-cols-2 gap-4 relative"
                     >
                         <motion.div variants={itemVariants} className="aspect-[3/4] bg-muted relative rounded-sm overflow-hidden border border-border group">
-                            {/* TODO: Remplacer le src par la photo "En tenue pro" */}
-                            <img src="/placeholder-pro.jpg" alt="Équipe Law Clean Center en tenue professionnelle" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                            <Image src="/images/2.jpeg" alt="Équipe Law Clean Center en tenue professionnelle" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                             {/* INTÉGRATION SECONDAIRE : Étiquette style industriel */}
                             <div className="absolute bottom-3 left-3 bg-background/95 backdrop-blur font-mono text-[9px] font-bold text-secondary uppercase px-2 py-1 border border-secondary shadow-sm">ÉQUIPE_SUR_SITE</div>
                         </motion.div>
                         <motion.div variants={itemVariants} className="flex flex-col gap-4">
                             <div className="aspect-square bg-muted relative rounded-sm overflow-hidden border border-border group">
-                                {/* TODO: Remplacer le src par la photo "Matériel / Voiture Allemande" */}
-                                <img src="/placeholder-materiel.jpg" alt="Matériel professionnel de polissage" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+                                <Image src="/images/1.jpeg" alt="Matériel professionnel de polissage" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                                 {/* INTÉGRATION SECONDAIRE : Étiquette style industriel */}
                                 <div className="absolute bottom-3 left-3 bg-background/95 backdrop-blur font-mono text-[9px] font-bold text-secondary uppercase px-2 py-1 border border-secondary shadow-sm">MATÉRIEL_TECH.</div>
                             </div>

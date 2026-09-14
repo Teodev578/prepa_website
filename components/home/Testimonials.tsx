@@ -3,6 +3,7 @@
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Star } from "lucide-react";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 const TESTIMONIALS = [
   {
@@ -54,13 +55,9 @@ export default function Testimonials() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollRange, setScrollRange] = useState(0);
 
-  // PERF: matchMedia pour isDesktop = pas de re-render au simple resize
-  const [isDesktop, setIsDesktop] = useState(false);
+  const isDesktop = useMediaQuery("(min-width: 1024px)", false);
 
   useEffect(() => {
-    const mq = window.matchMedia("(min-width: 1024px)");
-    setIsDesktop(mq.matches);
-
     const updateRange = () => {
       if (scrollRef.current) {
         setScrollRange(scrollRef.current.scrollWidth - window.innerWidth);
@@ -70,16 +67,11 @@ export default function Testimonials() {
 
     const observer = new ResizeObserver(updateRange);
     if (scrollRef.current) observer.observe(scrollRef.current);
-
-    const handler = (e: MediaQueryListEvent) => {
-      setIsDesktop(e.matches);
-      updateRange();
-    };
-    mq.addEventListener("change", handler);
+    window.addEventListener("resize", updateRange);
 
     return () => {
       observer.disconnect();
-      mq.removeEventListener("change", handler);
+      window.removeEventListener("resize", updateRange);
     };
   }, []);
 
@@ -141,7 +133,7 @@ export default function Testimonials() {
               >
                 {/* Filigrane Guillemet géant */}
                 <div className="absolute -top-10 -right-4 text-[12rem] font-serif text-primary opacity-[0.03] select-none pointer-events-none group-hover:opacity-[0.06] transition-opacity duration-500">
-                  "
+                  &ldquo;
                 </div>
 
                 {/* Top Accent line & ID */}
@@ -167,7 +159,7 @@ export default function Testimonials() {
                   
                   {/* Le texte repasse en casse normale pour une lisibilité parfaite */}
                   <blockquote className="mb-10 font-sans text-base md:text-lg leading-relaxed text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                    "{testimonial.quote}"
+                    &ldquo;{testimonial.quote}&rdquo;
                   </blockquote>
 
                   {/* Footer de la carte */}

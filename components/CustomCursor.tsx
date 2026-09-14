@@ -2,31 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useHydrated } from "@/lib/hooks/useHydrated";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 export default function CustomCursor() {
+  const isMounted = useHydrated();
+  const isFinePointer = useMediaQuery("(pointer: fine)", false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  const [isFinePointer, setIsFinePointer] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-    
-    // Listen for pointer type changes (e.g., toggling devtools mobile mode)
-    const mediaQuery = window.matchMedia("(pointer: fine)");
-    setIsFinePointer(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) => {
-      setIsFinePointer(e.matches);
-      if (!e.matches) {
-        setIsVisible(false);
-      }
-    };
-
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
 
   useEffect(() => {
     if (!isFinePointer) return;
@@ -66,8 +50,8 @@ export default function CustomCursor() {
     };
   }, [isFinePointer]);
 
-  // Render nothing on server and until mounted (avoids hydration mismatch)
-  if (!isMounted) return null;
+  // Render nothing on server and until mounted (avoids hydration mismatch) or if coarse pointer
+  if (!isMounted || !isFinePointer) return null;
 
   return (
     <>

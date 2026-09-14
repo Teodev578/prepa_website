@@ -287,8 +287,9 @@ export async function POST(request: Request) {
         console.log("Email envoyé avec succès par Resend. ID :", sendResult.data?.id);
         return NextResponse.json({ success: true });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Erreur serveur interne";
         console.error("Erreur serveur lors de l'envoi de la notification :", error);
-        return NextResponse.json({ error: error.message || "Erreur serveur interne" }, { status: 500 });
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

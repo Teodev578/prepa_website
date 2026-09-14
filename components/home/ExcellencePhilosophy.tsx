@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import RevealText from '@/components/RevealText';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 
 const ExcellencePhilosophy = () => {
     // PERF: useScroll scopé sur la section, pas sur la page entière
@@ -15,14 +16,7 @@ const ExcellencePhilosophy = () => {
     });
     const yParallax = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
 
-    const [isDesktop, setIsDesktop] = useState(true);
-    useEffect(() => {
-        const mq = window.matchMedia("(min-width: 1024px)");
-        setIsDesktop(mq.matches);
-        const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches);
-        mq.addEventListener("change", handler);
-        return () => mq.removeEventListener("change", handler);
-    }, []);
+    const isDesktop = useMediaQuery("(min-width: 1024px)", true);
 
     return (
         <section ref={sectionRef} className="bg-background text-foreground relative border-b border-border w-full max-w-[100vw] overflow-hidden">

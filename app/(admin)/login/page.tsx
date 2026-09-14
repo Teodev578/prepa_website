@@ -4,6 +4,14 @@ import React, { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 
+async function applyAntiBruteForceDelay(startTime: number) {
+    const elapsed = Date.now() - startTime;
+    const minDelay = 1500;
+    if (elapsed < minDelay) {
+        await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
+    }
+}
+
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,15 +53,6 @@ export default function LoginPage() {
         }
     };
 
-    // Maintien du mécanisme de sécurité anti brute-force
-    const applyAntiBruteForceDelay = async (startTime: number) => {
-        const elapsed = Date.now() - startTime;
-        const minDelay = 1500;
-        if (elapsed < minDelay) {
-            await new Promise(resolve => setTimeout(resolve, minDelay - elapsed));
-        }
-    };
-
     return (
         <div className="min-h-screen bg-slate-950 text-slate-200 flex items-center justify-center p-6 font-mono">
             <div className="max-w-md w-full border border-slate-800 p-8 bg-slate-900 shadow-2xl relative">
@@ -83,7 +82,7 @@ export default function LoginPage() {
                     </div>
 
                     <div>
-                        <label className="block text-xs uppercase tracking-wider mb-2 text-slate-400">Code d'accès</label>
+                        <label className="block text-xs uppercase tracking-wider mb-2 text-slate-400">Code d&apos;accès</label>
                         <div className="relative">
                             <input
                                 type={showPassword ? "text" : "password"}

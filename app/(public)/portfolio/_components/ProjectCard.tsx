@@ -1,10 +1,34 @@
 "use client";
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import BeforeAfterSlider from './BeforeAfterSlider';
 import CarouselSlider from './CarouselSlider';
 
 const customEase = [0.16, 1, 0.3, 1] as const;
+
+export interface ProjectCardData {
+    id: string;
+    title: string;
+    treatment: string;
+    date: string;
+    model: string;
+    img?: string;
+    imgBefore?: string;
+    imgAfter?: string;
+    carouselImages?: string[];
+    techData: {
+        time: string;
+        products: string;
+        defect: string;
+    };
+    size: 'small' | 'medium' | 'large';
+    details: {
+        context: string;
+        workDone: string[];
+        result: string;
+    };
+}
 
 const fadeInUp = {
     initial: { opacity: 0, y: 40 },
@@ -20,7 +44,7 @@ const sizeConfig = {
     large: { colSpan: 'col-span-1 md:col-span-12' }
 };
 
-export default function ProjectCard({ project, index }: { project: any, index: number }) {
+export default function ProjectCard({ project, index }: { project: ProjectCardData, index: number }) {
     const [isOpen, setIsOpen] = useState(false);
     const config = sizeConfig[project.size as 'small' | 'medium' | 'large'] || sizeConfig.small;
     const displayImage = project.img || project.imgAfter || project.imgBefore;
@@ -52,11 +76,12 @@ export default function ProjectCard({ project, index }: { project: any, index: n
                         afterImg={project.imgAfter}
                     />
                 ) : displayImage ? (
-                    <img
+                    <Image
                         src={displayImage}
                         alt={`Réalisation ${project.title} : ${project.treatment} sur objet ${project.model}`}
-                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
-                        loading="lazy" 
+                        fill
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                        sizes="(max-width: 768px) 100vw, 50vw"
                     />
                 ) : (
                     <div className="w-full h-full bg-muted flex items-center justify-center text-muted-foreground font-mono text-xs uppercase tracking-widest">

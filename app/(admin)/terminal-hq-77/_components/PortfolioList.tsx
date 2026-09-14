@@ -1,5 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 
 // Structure complète du projet (alignée avec votre base de données)
@@ -22,36 +23,61 @@ type Project = {
     created_at: string;
 };
 
+interface EditProjectFormState {
+    id?: string;
+    ref_id?: string;
+    title?: string;
+    treatment?: string;
+    model?: string;
+    img_single?: string;
+    img_before?: string;
+    img_after?: string;
+    time_spent?: string;
+    solution?: string;
+    impact?: string;
+    context?: string;
+    work_done?: string | string[];
+    result?: string;
+    size?: string;
+}
+
 export default function PortfolioList() {
     const supabase = createClient();
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
-    // === ÉTATS POUR LA MODIFICATION ===
-    const [editingProject, setEditingProject] = useState<Project | null>(null);
-    const [editFormData, setEditFormData] = useState<any>({});
-    const [isUpdating, setIsUpdating] = useState(false);
-
     // === CHARGEMENT DES DONNÉES ===
     useEffect(() => {
-        fetchProjects();
-    }, []);
+        let isCancelled = false;
 
-    const fetchProjects = async () => {
-        setLoading(true);
-        const { data, error } = await supabase
-            .from('portfolio_projects')
-            .select('*')
-            .order('created_at', { ascending: false });
+        const loadProjects = async () => {
+            const { data, error } = await supabase
+                .from('portfolio_projects')
+                .select('*')
+                .order('created_at', { ascending: false });
 
-        if (error) {
-            setError("❌ Impossible de charger les projets : " + error.message);
-        } else {
-            setProjects(data || []);
-        }
-        setLoading(false);
-    };
+            if (isCancelled) return;
+
+            if (error) {
+                setError("❌ Impossible de charger les projets : " + error.message);
+            } else {
+                setProjects(data || []);
+            }
+            setLoading(false);
+        };
+
+        void loadProjects();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [supabase]);
+
+    // === ÉTATS POUR LA MODIFICATION ===
+    const [editingProject, setEditingProject] = useState<Project | null>(null);
+    const [editFormData, setEditFormData] = useState<EditProjectFormState>({});
+    const [isUpdating, setIsUpdating] = useState(false);
 
     // === SUPPRESSION ===
     const handleDelete = async (project: Project) => {
@@ -87,7 +113,7 @@ export default function PortfolioList() {
     };
 
     // === GESTION DE LA SAISIE (MODIFICATION) ===
-    const handleEditChange = (e: any) => {
+    const handleEditChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         setEditFormData({ ...editFormData, [e.target.name]: e.target.value });
     };
 
@@ -98,7 +124,7 @@ export default function PortfolioList() {
         // On re-transforme le texte en tableau pour Supabase
         const workArray = typeof editFormData.work_done === 'string' 
             ? editFormData.work_done.split(',').map((item: string) => item.trim()).filter(Boolean)
-            : editFormData.work_done;
+            : (editFormData.work_done || []);
 
         const updatedData = {
             title: editFormData.title?.toUpperCase() || '',
@@ -154,7 +180,7 @@ export default function PortfolioList() {
                 <div className="text-center p-12 bg-card border border-border rounded-lg shadow-sm">
                     <p className="text-4xl mb-4">📭</p>
                     <h3 className="text-lg font-bold mb-2">Aucun projet trouvé</h3>
-                    <p className="text-muted-foreground text-sm">Vous n'avez pas encore publié de réalisation. Utilisez l'onglet "Ajout Portfolio" pour commencer.</p>
+                    <p className="text-muted-foreground text-sm">Vous n&apos;avez pas encore publié de réalisation. Utilisez l&apos;onglet &ldquo;Ajout Portfolio&rdquo; pour commencer.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -165,14 +191,14 @@ export default function PortfolioList() {
                             <div key={project.id} className="bg-card border border-border rounded-lg overflow-hidden shadow-md flex flex-col group transition-all hover:border-primary/50 hover:shadow-lg">
                                 <div className="h-48 w-full bg-muted relative border-b border-border">
                                     {displayImage ? (
-                                        <img src={displayImage} alt={project.title} className="w-full h-full object-cover" />
+                                        <Image src={displayImage} alt={project.title} fill unoptimized className="object-cover" />
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">
                                             Aucune image
                                         </div>
                                     )}
                                     {(project.img_before || project.img_after) && !project.img_single && (
-                                        <div className="absolute top-2 left-2 bg-black/70 text-white text-[10px] uppercase px-2 py-1 rounded backdrop-blur-sm">
+                                        <div className="absolute top-2 left-2 bg-black/70 text-white text-[10px] uppercase px-2 py-1 rounded backdrop-blur-sm z-10">
                                             Avant / Après
                                         </div>
                                     )}
@@ -244,7 +270,7 @@ export default function PortfolioList() {
                                         <input id="pl-model" className="border border-border p-3 rounded bg-background" name="model" value={editFormData.model || ''} onChange={handleEditChange} />
                                     </div>
                                     <div className="flex flex-col gap-1">
-                                        <label htmlFor="pl-size" className="text-xs font-semibold text-muted-foreground uppercase">Taille d'affichage</label>
+                                        <label htmlFor="pl-size" className="text-xs font-semibold text-muted-foreground uppercase">Taille d&apos;affichage</label>
                                         <select id="pl-size" className="border border-border p-3 rounded bg-background" name="size" value={editFormData.size || 'small'} onChange={handleEditChange}>
                                             <option value="small">Taille normale</option>
                                             <option value="medium">Taille moyenne</option>
@@ -256,7 +282,7 @@ export default function PortfolioList() {
 
                             {/* BLOC 2 : DÉTAILS DE L'INTERVENTION */}
                             <div>
-                                <h3 className="text-sm font-bold text-foreground mb-3 border-b border-border pb-1">2. Détails de l'intervention</h3>
+                                <h3 className="text-sm font-bold text-foreground mb-3 border-b border-border pb-1">2. Détails de l&apos;intervention</h3>
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                     <div className="flex flex-col gap-1">
                                         <label htmlFor="pl-time-spent" className="text-xs font-semibold text-muted-foreground uppercase">Temps passé</label>

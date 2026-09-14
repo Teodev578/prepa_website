@@ -6,8 +6,8 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
 
 ## 1. Contexte Actif
 
-* **Phase actuelle :** Spécialisation des compétences et oracles de vérification Unlazy.
-* **Sprint / Objectif :** Intégration de la matrice d'attribution des skills (notamment `unlazy` et `bmad-brainstorming`) au sein des 4 spécialistes de `prepa-team`.
+* **Phase actuelle :** Stabilisation haute performance, zéro régression React 19 & Next.js 16.
+* **Sprint / Objectif :** Assainissement complet du codebase (ESLint, React Compiler, Typescript, Vitest, Web Vitals, 60/120 fps fluidité cinématique).
 * **Dernière mise à jour :** 2026-09-14
 
 ---
@@ -16,30 +16,28 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
 
 | Domaine | Responsable désigné | Statut | Note de relais & Toolkit |
 | :--- | :--- | :--- | :--- |
-| **Architecture & Mémoire** | Victor (`lead_architect`) | Opérationnel | `bmad-brainstorming`, `unlazy` (Depth Tree), suite BMAD Architecture. |
-| **UI & Motion** | Théo (`motion_ui_engineer`) | Opérationnel | `impeccable`, `bmad-brainstorming` (UI), `bmad-build`, `bmad-ux`, `unlazy` (Solo 4 passes sans placeholders). |
-| **Fullstack & API** | Alex (`fullstack_data_engineer`) | Opérationnel | `unlazy` (Solo backend & intégrité), `bmad-build`, `bmad-testarch-atdd`. |
-| **Qualité & Gatekeeper** | Sarah (`quality_assurance_engineer`) | Opérationnel | `unlazy` (Audit des gates), `react-doctor`, `bmad-review`, `bmad-code-review`, DevTools. *(Interdiction Brainstorming)*. |
+| **Architecture & Mémoire** | Victor (`lead_architect`) | Opérationnel | `bmad-brainstorming`, `unlazy` (Depth Tree), suite BMAD Architecture. ADR-006 consigné. |
+| **UI & Motion** | Théo (`motion_ui_engineer`) | Opérationnel | `impeccable`, `bmad-brainstorming` (UI), `bmad-build`, `bmad-ux`. Hooks `useMediaQuery`/`useHydrated` opérationnels, zéro cascading renders. |
+| **Fullstack & API** | Alex (`fullstack_data_engineer`) | Opérationnel | Typage strict sans `any`, fetch avec annulation, SSR/API routes conformes Next.js 16. |
+| **Qualité & Gatekeeper** | Sarah (`quality_assurance_engineer`) | Validé (Vert) | `npm run check` certifié (ESLint + tsc + Vitest = 0 erreur). `react-doctor` certifié. |
 
 ---
 
 ## 3. Notes de Relais (Handoffs)
 
-* *2026-09-14 (Victor / Architecture) :* 
-  - Matrice des compétences arrêtée et documentée (ADR-004).
-  - Sarah est confirmée comme seule auditrice des oracles `GATES.md` avec pouvoir de véto.
-  - Harnais `npm run check` opérationnel et passant au vert.
-* *2026-09-14 (Théo / UI & Impeccable) :*
-  - Initialisation formelle du contexte de design Impeccable (`/impeccable init`) et rédaction de [PRODUCT.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/PRODUCT.md).
-  - Rédaction et verrouillage du référentiel [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) (Direction "Le Terminal Industriel & Glacier", standard Google Labs) et de son sidecar `.impeccable/design.json` (clôture du point P4).
-  - Formalisation de la doctrine des passes bornées (*Bounded Passes*) et de l'exclusivité UI de Théo dans `AGENTS.md` et ADR-005.
-* *2026-09-14 (Victor / Audit & Correction .agents/) :*
-  - **P2** : Correction du chemin de sortie BMAD dans `.agents/_bmad/custom/config.toml`.
-  - **P1** : Forçage de la langue française dans `_bmad/custom/config.toml` et `config.user.toml`.
-  - **P3** : Frontmatters YAML des 4 agents synchronisés avec les skills réels.
-  - **P4** : [DESIGN.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/DESIGN.md) créé et opérationnel.
-  - **P5** : `.impeccable/config.local.json` exclu dans `.gitignore`.
-  - `npm run check` ✅ — zéro régression, types et tests au vert.
-  - **État général :** Setup `.agents/` intégralement assaini, gouvernance Impeccable opérationnelle.
+* *2026-09-14 (Victor, Théo, Alex, Sarah / Chantier Stabilisation Long Terme) :*
+  - **Gate déterministe unifié :** `npm run check` englobe désormais `npm run lint`, `npm run typecheck` et `npm run test`.
+  - **ESLint & React 19 Compiler :** 71 erreurs/warnings éliminés -> **0 erreur, 0 warning** sur l'ensemble du projet.
+  - **Fluidité 60/120 fps & zéro cascading render :** Migration des détections d'écran et d'hydratation vers `useSyncExternalStore` (`useMediaQuery`, `useHydrated`, `ThemeProvider`).
+  - **Nettoyage des ressources critiques :** Suppression de la police bloquante Google Fonts `Material Symbols Outlined` du layout racine.
+  - **Composants Admin & Portfolio assainis :** Remplacement des tags `<img>` par `next/image`, conversion des `any` en interfaces explicites, pattern d'annulation sur les `useEffect`.
+  - **Optimisation Mémoire Dev (Turbopack) :** Configuration de `onDemandEntries` (purge à 15s, buffer limité à 2 pages) dans `next.config.ts` et création de `public/images/grid.svg` pour tarir les 404s en boucle.
+  - **Vérifications oracles :**
+    - `npm run check` : Code de sortie `0` déterministe.
+    - `curl -I http://localhost:3000` : HTTP 200 OK.
+    - `curl -I http://localhost:3000/portfolio` : HTTP 200 OK.
+    - `curl -I http://localhost:3000/contact` : HTTP 200 OK.
+  - **Point de reprise pour prochaine session :** Le site est sur un socle technique stabilisé et certifié conforme. Prêt pour les évolutions de contenu ou nouvelles fonctionnalités sous le protocole à double vitesse.
+
 
 

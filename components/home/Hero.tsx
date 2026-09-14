@@ -6,6 +6,7 @@ import Link from "next/link";
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, Variants } from "framer-motion";
 import RevealText from "@/components/RevealText";
 import Magnetic from "@/components/Magnetic";
+import { useMediaQuery } from "@/lib/hooks/useMediaQuery";
 
 const images = [
   "/images/8.jpeg",
@@ -49,32 +50,31 @@ export default function Hero() {
 
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
-  // PERF: matchMedia ne provoque pas de re-render React au resize
-  const isDesktop = useRef(true);
-  useEffect(() => {
-    const mq = window.matchMedia("(min-width: 768px)");
-    isDesktop.current = mq.matches;
-    const handler = (e: MediaQueryListEvent) => { isDesktop.current = e.matches; };
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
+  const isDesktop = useMediaQuery("(min-width: 768px)", true);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let timer: ReturnType<typeof setInterval> | null = null;
     const startTimer = () => {
+      if (timer) clearInterval(timer);
       timer = setInterval(() => setCurrentIndex((prev) => (prev + 1) % images.length), 8000);
     };
 
     const handleVisibilityChange = () => {
-      if (document.hidden) clearInterval(timer);
-      else startTimer();
+      if (document.hidden) {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      } else {
+        startTimer();
+      }
     };
 
     startTimer();
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
-      clearInterval(timer);
+      if (timer) clearInterval(timer);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, []);
@@ -86,7 +86,7 @@ export default function Hero() {
     >
       {/* BACKGROUND IMAGE WITH PARALLAX — calque GPU uniquement */}
       <motion.div
-        style={{ y: isDesktop.current ? smoothYParallax : 0, opacity: heroOpacity, willChange: "transform, opacity" }}
+        style={{ y: isDesktop ? smoothYParallax : 0, opacity: heroOpacity, willChange: "transform, opacity" }}
         className="absolute inset-0 z-0 w-full h-full"
       >
         <AnimatePresence mode="sync">
@@ -138,7 +138,7 @@ export default function Hero() {
           variants={itemVariants}
           className="text-muted-foreground font-medium text-sm sm:text-base md:text-xl leading-relaxed mb-8 md:mb-12 max-w-2xl"
         >
-          Avec <strong className="text-foreground font-bold">Law Clean Center</strong>, vous n'avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
+          Avec <strong className="text-foreground font-bold">Law Clean Center</strong>, vous n&apos;avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
         </motion.p>
         
         <motion.div

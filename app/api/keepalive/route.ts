@@ -19,7 +19,7 @@ export async function GET(request: Request) {
         }
 
         // Requête légère pour réveiller la base de données
-        const { data, error } = await supabase
+        const { error } = await supabase
             .from('portfolio_projects')
             .select('id')
             .limit(1);
@@ -31,8 +31,9 @@ export async function GET(request: Request) {
 
         return NextResponse.json({ success: true, timestamp: new Date().toISOString() }, { status: 200 });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
+        const message = error instanceof Error ? error.message : "Erreur inconnue";
         console.error("Erreur serveur lors du ping :", error);
-        return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+        return NextResponse.json({ success: false, error: message }, { status: 500 });
     }
 }

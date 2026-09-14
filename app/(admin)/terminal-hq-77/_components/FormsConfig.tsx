@@ -2,13 +2,24 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { createClient } from '@/lib/supabase/client';
 
+interface FormFieldItem {
+    id: string;
+    form_id: string;
+    field_name: string;
+    field_label: string;
+    field_type: string;
+    options?: string[] | null;
+    is_required: boolean;
+    display_order: number;
+}
+
 export default function FormsConfig() {
     const supabase = createClient();
 
     // ÉTATS GESTION FORMULAIRES
     const [activeProfile, setActiveProfile] = useState<'PARTICULIER' | 'ENTREPRISE'>('PARTICULIER');
     const [currentFormId, setCurrentFormId] = useState<string | null>(null);
-    const [formFields, setFormFields] = useState<any[]>([]);
+    const [formFields, setFormFields] = useState<FormFieldItem[]>([]);
 
     // 🛠️ ÉTATS MODE ÉDITION
     const [editingFieldId, setEditingFieldId] = useState<string | null>(null);
@@ -21,6 +32,11 @@ export default function FormsConfig() {
     // ÉTATS UI
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [status, setStatus] = useState<{ type: 'success' | 'error', text: string } | null>(null);
+
+    const handleCancelEdit = () => {
+        setEditingFieldId(null);
+        setNewField({ field_label: '', field_type: 'text', options: '', is_required: true });
+    };
 
     // === CHARGEMENT CONFIGURATION ===
     const loadFormConfig = useCallback(async () => {
@@ -53,7 +69,7 @@ export default function FormsConfig() {
                     .in('form_id', allFormIds)
                     .order('display_order', { ascending: true });
 
-                setFormFields(fields || []);
+                setFormFields((fields as FormFieldItem[]) || []);
 
                 if (forms && forms.length > 1) {
                     const duplicateIds = forms.slice(1).map(f => f.id);
@@ -67,10 +83,63 @@ export default function FormsConfig() {
     }, [activeProfile, supabase]);
 
     useEffect(() => {
-        loadFormConfig();
-        setStatus(null);
-        handleCancelEdit(); // Réinitialise l'édition quand on change d'onglet
-    }, [loadFormConfig]);
+        let isCancelled = false;
+
+        const loadInitialConfig = async () => {
+            try {
+                const { data: forms } = await supabase
+                    .from('forms')
+                    .select('id')
+                    .eq('profile_type', activeProfile)
+                    .order('created_at', { ascending: true });
+
+                if (isCancelled) return;
+
+                let activeFormId = null;
+
+                if (!forms || forms.length === 0) {
+                    const { data: newForm } = await supabase
+                        .from('forms')
+                        .insert([{ profile_type: activeProfile, title: `Formulaire ${activeProfile}`, is_active: true }])
+                        .select('id')
+                        .single();
+                    if (newForm) activeFormId = newForm.id;
+                } else {
+                    activeFormId = forms[0].id;
+                }
+
+                if (isCancelled) return;
+
+                if (activeFormId) {
+                    setCurrentFormId(activeFormId);
+                    const allFormIds = forms && forms.length > 0 ? forms.map(f => f.id) : [activeFormId];
+                    const { data: fields } = await supabase
+                        .from('form_fields')
+                        .select('*')
+                        .in('form_id', allFormIds)
+                        .order('display_order', { ascending: true });
+
+                    if (isCancelled) return;
+
+                    setFormFields((fields as FormFieldItem[]) || []);
+
+                    if (forms && forms.length > 1) {
+                        const duplicateIds = forms.slice(1).map(f => f.id);
+                        await supabase.from('form_fields').update({ form_id: activeFormId }).in('form_id', duplicateIds);
+                        await supabase.from('forms').delete().in('id', duplicateIds);
+                    }
+                }
+            } catch (err) {
+                console.error("Erreur:", err);
+            }
+        };
+
+        void loadInitialConfig();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [activeProfile, supabase]);
 
     // === 🛠️ ACTIONS SUR LES QUESTIONS DU FORMULAIRE ===
     const handleSaveField = async () => {
@@ -117,7 +186,7 @@ export default function FormsConfig() {
         setIsSubmitting(false);
     };
 
-    const handleEditClick = (field: any) => {
+    const handleEditClick = (field: FormFieldItem) => {
         setEditingFieldId(field.id);
         setNewField({
             field_label: field.field_label,
@@ -129,11 +198,6 @@ export default function FormsConfig() {
         setTimeout(() => {
             formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
-    };
-
-    const handleCancelEdit = () => {
-        setEditingFieldId(null);
-        setNewField({ field_label: '', field_type: 'text', options: '', is_required: true });
     };
 
     const handleDeleteField = async (id: string, label: string) => {
@@ -199,10 +263,14 @@ export default function FormsConfig() {
                 <h2 className="text-xl font-bold mb-6">Questions du formulaire</h2>
 
                 <div className="flex bg-muted p-1 rounded-lg w-fit mb-8 border border-border">
-                    {['PARTICULIER', 'ENTREPRISE'].map((p) => (
+                    {(['PARTICULIER', 'ENTREPRISE'] as const).map((p) => (
                         <button type="button"
                             key={p}
-                            onClick={() => setActiveProfile(p as any)}
+                            onClick={() => {
+                                setActiveProfile(p);
+                                setStatus(null);
+                                handleCancelEdit();
+                            }}
                             className={`px-6 py-2.5 text-sm font-bold rounded-md transition-all ${activeProfile === p ? 'bg-card text-primary shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
                         >
                             Pour les {p === 'PARTICULIER' ? 'Particuliers' : 'Entreprises (B2B)'}
@@ -306,7 +374,7 @@ export default function FormsConfig() {
                                 onChange={e => setNewField({ ...newField, field_type: e.target.value })}
                                 className="border border-border p-3.5 text-sm bg-background rounded-lg outline-none focus:border-primary cursor-pointer shadow-sm"
                             >
-                                <option value="text">Texte libre (Le client tape ce qu'il veut)</option>
+                                <option value="text">Texte libre (Le client tape ce qu&apos;il veut)</option>
                                 <option value="email">Adresse E-mail (Vérifie le format @)</option>
                                 <option value="select">Choix multiples (Le client choisit dans une liste)</option>
                             </select>

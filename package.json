@@ -7,10 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "doctor": "npx react-doctor@latest",
+    "doctor": "react-doctor",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "check": "npm run typecheck && npm run test"
+    "check": "npm run lint && npm run typecheck && npm run test"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",

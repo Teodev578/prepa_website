@@ -25,23 +25,30 @@ export default function ServicesCatalog() {
     const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
-        fetchServices();
-    }, []);
+        let isCancelled = false;
 
-    const fetchServices = async () => {
-        setLoading(true);
-        const { data, error } = await supabase
-            .from('services')
-            .select('*')
-            .order('id', { ascending: true });
+        const loadServices = async () => {
+            const { data, error } = await supabase
+                .from('services')
+                .select('*')
+                .order('id', { ascending: true });
 
-        if (error) {
-            setError("❌ Impossible de charger le catalogue : " + error.message);
-        } else {
-            setServices(data || []);
-        }
-        setLoading(false);
-    };
+            if (isCancelled) return;
+
+            if (error) {
+                setError("❌ Impossible de charger le catalogue : " + error.message);
+            } else {
+                setServices(data || []);
+            }
+            setLoading(false);
+        };
+
+        void loadServices();
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [supabase]);
 
     // ⚡ TOGGLE ACTIF / INACTIF INSTANTANÉ
     const handleToggleActive = async (id: string, currentStatus: boolean) => {
@@ -149,7 +156,7 @@ export default function ServicesCatalog() {
                 <div className="text-center p-12 bg-card border border-border rounded-lg">
                     <p className="text-4xl mb-4">🛠️</p>
                     <h3 className="text-lg font-bold">Catalogue vide</h3>
-                    <p className="text-muted-foreground text-sm mt-1">Vous n'avez pas encore configuré de services de detailing en base de données.</p>
+                    <p className="text-muted-foreground text-sm mt-1">Vous n&apos;avez pas encore configuré de services de detailing en base de données.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

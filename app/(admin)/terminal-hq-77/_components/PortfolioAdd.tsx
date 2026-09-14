@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { createClient } from '@/lib/supabase/client';
 
 // 🛡️ 1. Définition stricte de la structure des données du formulaire
@@ -22,8 +23,17 @@ interface PortfolioFormData {
     carousel_images: string[];
 }
 
+function generateUniqueFileName(file: File): string {
+    const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+    return `${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
+}
+
+function generateRefId(): string {
+    return `REA_${Date.now()}`;
+}
+
 const getInitialState = (): PortfolioFormData => ({
-    ref_id: `REA_${Date.now()}`,
+    ref_id: '',
     title: '', treatment: '', date_tag: 'ÉTUDE_DE_CAS', model: '',
     time_spent: '', solution: '', impact: '', context: '', work_done: '', result: '',
     size: 'small', img_single: '', img_before: '', img_after: '', carousel_images: []
@@ -61,9 +71,7 @@ export default function PortfolioAdd() {
         setImageStatus('Chargement de la photo en cours... ⏳');
         setSubmitStatus('');
 
-        // Extraction propre de l'extension sans paramètres parasites
-        const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-        const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
+        const fileName = generateUniqueFileName(file);
         
         const { error } = await supabase.storage.from('portfolio-images').upload(fileName, file);
 
@@ -118,8 +126,7 @@ export default function PortfolioAdd() {
                 continue;
             }
 
-            const fileExt = file.name.split('.').pop()?.toLowerCase() || 'jpg';
-            const fileName = `${Date.now()}_${Math.floor(Math.random() * 1000)}.${fileExt}`;
+            const fileName = generateUniqueFileName(file);
             
             const { error } = await supabase.storage.from('portfolio-images').upload(fileName, file);
             if (!error) {
@@ -170,9 +177,11 @@ export default function PortfolioAdd() {
         setSubmitStatus('Enregistrement de votre projet en cours... ⏳');
         
         const workArray = formData.work_done.split(',').map(item => item.trim()).filter(Boolean);
+        const ref_id = formData.ref_id || generateRefId();
         
         const { error } = await supabase.from('portfolio_projects').insert([{
             ...formData,
+            ref_id,
             work_done: workArray,
             title: formData.title.trim().toUpperCase(),
             treatment: formData.treatment.trim().toUpperCase()
@@ -202,7 +211,7 @@ export default function PortfolioAdd() {
             <div className="mb-10 bg-background/50 p-6 rounded-md border border-border">
                 <div className="mb-6">
                     <h2 className="text-lg font-semibold">1. Les photos du projet</h2>
-                    <p className="text-sm text-muted-foreground">Choisissez soit de mettre une seule belle photo, un avant/après, ou un carrousel (jusqu'à 5 photos).</p>
+                    <p className="text-sm text-muted-foreground">Choisissez soit de mettre une seule belle photo, un avant/après, ou un carrousel (jusqu&apos;à 5 photos).</p>
                 </div>
 
                 {imageStatus && (
@@ -221,14 +230,14 @@ export default function PortfolioAdd() {
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
-                                <img src={formData.img_single} alt="Aperçu" className="w-full h-full object-cover" />
-                                <button type="button" onClick={() => handleRemoveImage('img_single')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <Image src={formData.img_single} alt="Aperçu" fill unoptimized className="object-cover" />
+                                <button type="button" onClick={() => handleRemoveImage('img_single')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md z-10">Retirer</button>
                             </div>
                         )}
                     </div>
 
                     <div className={`flex flex-col gap-2 ${hasSingleImage || hasCarousel ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
-                        <label className="text-sm font-bold">Photo "Avant"</label>
+                        <label className="text-sm font-bold">Photo &ldquo;Avant&rdquo;</label>
                         {!formData.img_before ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
                                 <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_before')} disabled={uploading || hasSingleImage || hasCarousel || isSubmitting} />
@@ -236,14 +245,14 @@ export default function PortfolioAdd() {
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
-                                <img src={formData.img_before} alt="Aperçu Avant" className="w-full h-full object-cover" />
-                                <button type="button" onClick={() => handleRemoveImage('img_before')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <Image src={formData.img_before} alt="Aperçu Avant" fill unoptimized className="object-cover" />
+                                <button type="button" onClick={() => handleRemoveImage('img_before')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md z-10">Retirer</button>
                             </div>
                         )}
                     </div>
 
                     <div className={`flex flex-col gap-2 ${hasSingleImage || hasCarousel ? 'opacity-40 grayscale pointer-events-none' : ''}`}>
-                        <label className="text-sm font-bold">Photo "Après"</label>
+                        <label className="text-sm font-bold">Photo &ldquo;Après&rdquo;</label>
                         {!formData.img_after ? (
                             <div className="relative border-2 border-dashed border-primary/40 rounded-lg h-32 flex items-center justify-center bg-background hover:bg-primary/5 transition-colors cursor-pointer">
                                 <input type="file" accept="image/*" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={(e) => handleFileUpload(e, 'img_after')} disabled={uploading || hasSingleImage || hasCarousel || isSubmitting} />
@@ -251,8 +260,8 @@ export default function PortfolioAdd() {
                             </div>
                         ) : (
                             <div className="relative h-32 rounded-lg overflow-hidden border border-border group">
-                                <img src={formData.img_after} alt="Aperçu Après" className="w-full h-full object-cover" />
-                                <button type="button" onClick={() => handleRemoveImage('img_after')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">Retirer</button>
+                                <Image src={formData.img_after} alt="Aperçu Après" fill unoptimized className="object-cover" />
+                                <button type="button" onClick={() => handleRemoveImage('img_after')} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md z-10">Retirer</button>
                             </div>
                         )}
                     </div>
@@ -263,8 +272,8 @@ export default function PortfolioAdd() {
                     <div className="flex flex-wrap gap-4">
                         {formData.carousel_images.map((img, i) => (
                             <div key={i} className="relative h-32 w-32 rounded-lg overflow-hidden border border-border group">
-                                <img src={img} alt={`Carrousel ${i}`} className="w-full h-full object-cover" />
-                                <button type="button" onClick={() => handleRemoveCarouselImage(i)} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md">X</button>
+                                <Image src={img} alt={`Carrousel ${i}`} fill unoptimized className="object-cover" />
+                                <button type="button" onClick={() => handleRemoveCarouselImage(i)} disabled={isSubmitting} className="absolute top-2 right-2 bg-destructive text-white text-xs px-2 py-1 rounded shadow-md z-10">X</button>
                             </div>
                         ))}
                         {formData.carousel_images.length < 5 && (
@@ -294,7 +303,7 @@ export default function PortfolioAdd() {
                         <input id="pa-model" className="border border-border p-3 rounded bg-background" name="model" value={formData.model} placeholder="Ex: Berline noire" onChange={handleTextChange} disabled={isSubmitting} />
                     </div>
                     <div className="flex flex-col gap-1">
-                        <label htmlFor="pa-size" className="text-xs font-semibold text-muted-foreground uppercase">Taille d'affichage</label>
+                        <label htmlFor="pa-size" className="text-xs font-semibold text-muted-foreground uppercase">Taille d&apos;affichage</label>
                         <select id="pa-size" className="border border-border p-3 rounded bg-background" name="size" value={formData.size} onChange={handleTextChange} disabled={isSubmitting}>
                             <option value="small">Taille normale</option>
                             <option value="medium">Taille moyenne</option>

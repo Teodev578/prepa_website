@@ -57,7 +57,7 @@ export interface QuoteRequest {
   id: string;
   form_id: string;
   client_email: string;
-  form_data: Record<string, any>; // C'est ici qu'on gère le fameux JSONB ! (Équivalent de Map<String, dynamic> en Dart)
+  form_data: Record<string, unknown>; // JSONB typé de manière sûre
   status: 'NOUVEAU' | 'EN_COURS' | 'DEVIS_ENVOYE' | 'REFUSE' | 'ACCEPTE';
   created_at?: string;
 }

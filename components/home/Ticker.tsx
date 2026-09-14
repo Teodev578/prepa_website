@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useHydrated } from "@/lib/hooks/useHydrated";
 
 const tickerItems = [
   "PRÉPARATION ESTHÉTIQUE B2B",
@@ -13,11 +13,7 @@ const tickerItems = [
 ];
 
 export default function ServiceTicker() {
-  const [isMounted, setIsMounted] = useState(false);
-
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
+  const isMounted = useHydrated();
 
   if (!isMounted) return <div className="h-12 border-b border-border bg-background w-full" />;
 

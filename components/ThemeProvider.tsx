@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useContext, useMemo, useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
@@ -14,33 +14,50 @@ const ThemeContext = createContext<ThemeContextValue>({
   toggleTheme: () => {},
 });
 
+const themeListeners = new Set<() => void>();
+
+function notifyThemeChange() {
+  themeListeners.forEach((listener) => listener());
+}
+
+function subscribeTheme(callback: () => void) {
+  themeListeners.add(callback);
+  return () => {
+    themeListeners.delete(callback);
+  };
+}
+
+function getThemeSnapshot(): Theme {
+  if (typeof document === "undefined") return "light";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
+}
+
+function getServerThemeSnapshot(): Theme {
+  return "light";
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>("light");
-
-  useEffect(() => {
-    // Lire la préférence sauvegardée ou utiliser la préférence système
-    const stored = localStorage.getItem("theme") as Theme | null;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initial: Theme = stored ?? (prefersDark ? "dark" : "light");
-    setTheme(initial);
-  }, []);
-
-  // Side effects run in an effect (never inside the updater), so React can
-  // call the state updater multiple times safely in concurrent / strict mode.
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-    document.documentElement.classList.toggle("dark", theme === "dark");
-  }, [theme]);
+  const theme = useSyncExternalStore(
+    subscribeTheme,
+    getThemeSnapshot,
+    getServerThemeSnapshot
+  );
 
   const toggleTheme = () => {
-    // Pure updater — returns next state only, no side effects.
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    const current = getThemeSnapshot();
+    const next: Theme = current === "light" ? "dark" : "light";
+    try {
+      localStorage.setItem("theme", next);
+    } catch {
+      // Ignoré si local storage indisponible
+    }
+    document.documentElement.classList.toggle("dark", next === "dark");
+    notifyThemeChange();
   };
 
   const contextValue = useMemo(
     () => ({ theme, toggleTheme }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [theme] // toggleTheme is stable (no closure over mutable state)
+    [theme]
   );
 
   return (
