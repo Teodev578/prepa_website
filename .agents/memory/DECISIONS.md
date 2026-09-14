@@ -45,3 +45,20 @@ Ce registre consigne l'historique décisionnel immuable du projet. Chaque arbitr
   * Vélocité préservée sur le front-end sans compromettre la rigueur.
   * Zéro régression de type ou de test unitaire admise dans le dépôt.
 
+---
+
+## ADR-004 : Affectation des compétences et protocoles d'usage (`unlazy` & `bmad-brainstorming`)
+
+* **Date :** 2026-09-14
+* **Statut :** Accepté
+* **Contexte :** 
+  Injecter 41 compétences à chaque sous-agent dilue le contexte et crée de la confusion procédurale. En particulier, `unlazy` (anti-bâclage par oracles d'acceptation) et `bmad-brainstorming` (divergence créative) ont des finalités orthogonales qui nécessitent un cadrage par rôle.
+* **Décision :** 
+  1. `bmad-brainstorming` est restreint aux phases amont et alloué uniquement à Victor (stratégie/macro-architecture) et Théo (design d'interaction). Il est formellement interdit à Sarah pour protéger sa rigueur d'audit.
+  2. `unlazy` est alloué à Sarah (contrôle des gates), Alex et Théo (mode solo 4 passes sans placeholders sur tâches substantielles) et Victor (Depth Tree de découpage).
+  3. Chaque sous-agent dispose d'une section explicite `## Boîte à Outils & Compétences Dédiées` dans sa définition.
+* **Conséquences :** 
+  * Focus mental préservé pour chaque spécialiste.
+  * Élimination de la complétion fantôme (*phantom completeness*) sur les tâches de production.
+
+
