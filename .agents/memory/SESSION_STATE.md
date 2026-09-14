@@ -29,3 +29,7 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
   - Matrice des compétences arrêtée et documentée (ADR-004).
   - Sarah est confirmée comme seule auditrice des oracles `GATES.md` avec pouvoir de véto.
   - Harnais `npm run check` opérationnel et passant au vert.
+* *2026-09-14 (Théo / UI & Impeccable) :*
+  - Initialisation formelle du contexte de design Impeccable (`/impeccable init`).
+  - Rédaction et validation du document d'autorité produit [PRODUCT.md](file:///home/fabien/Documents/Projets/Pro/prepa_website/PRODUCT.md).
+  - Configuration du workflow par défaut en mode `code-first` (`.impeccable/config.json`).
