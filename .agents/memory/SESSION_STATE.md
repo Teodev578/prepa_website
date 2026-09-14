@@ -38,6 +38,16 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
     - `curl -I http://localhost:3000/portfolio` : HTTP 200 OK.
     - `curl -I http://localhost:3000/contact` : HTTP 200 OK.
   - **Point de reprise pour prochaine session :** Le site est sur un socle technique stabilisé et certifié conforme. Prêt pour les évolutions de contenu ou nouvelles fonctionnalités sous le protocole à double vitesse.
+* *2026-09-14 (Théo, Sarah / Intégration Marque & Favicon) :*
+  - **Identité de marque dans l'onglet navigateur :** Remplacement de l'icône Next.js / Vercel par le logo officiel haute définition de Law Clean Center (`public/logo.png`).
+  - **Déclinaison multi-format & multi-résolution :**
+    - `app/favicon.ico` et `public/favicon.ico` : Format ICO multi-résolution (16x16, 32x32, 48x48) avec canal alpha.
+    - `app/icon.png` : PNG 32x32 pour la convention automatique Next.js App Router.
+    - `app/apple-icon.png` : PNG 180x180 pour les écrans tactiles Apple / Safari.
+  - **Métadonnées de layout :** Ajout de la clé `icons` dans `export const metadata: Metadata` de `app/layout.tsx`.
+  - **Titre d'onglet simplifié :** Ajustement de `metadata.title.default` et `metadata.title.template` à `LAW CLEAN CENTER` pour un affichage épuré dans l'onglet du navigateur sans le descriptif rallongé.
+  - **Validation :** `npm run check` validé (0 erreur, 0 warning), balise `<title>LAW CLEAN CENTER</title>` vérifiée dans le HTML servi.
+
 
 
 

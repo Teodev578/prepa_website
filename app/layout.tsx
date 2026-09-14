@@ -26,8 +26,8 @@ const serif = Libre_Baskerville({
 export const metadata: Metadata = {
   metadataBase: new URL('https://lawcleancenter.com'),
   title: {
-    default: "Law Clean Center | Préparation Esthétique & Convoyage de Véhicules B2B",
-    template: "%s | Law Clean Center"
+    default: "LAW CLEAN CENTER",
+    template: "%s | LAW CLEAN CENTER"
   },
   description: "Externalisez la préparation esthétique VN/VO et le convoyage de vos véhicules en Île-de-France. Solutions de logistique et de nettoyage esthétique sur-mesure pour professionnels.",
   keywords: [
@@ -79,6 +79,17 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "32x32" },
+      { url: "/logo.png", type: "image/png", sizes: "500x500" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
   },
 };
 
