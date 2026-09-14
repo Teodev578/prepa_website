@@ -1,0 +1,1 @@
+../plugins/prepa-team/agents/lead_architect.md

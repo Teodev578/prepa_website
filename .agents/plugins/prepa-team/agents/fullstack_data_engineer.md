@@ -1,8 +1,14 @@
 ---
 name: fullstack_data_engineer
-description: "Alex — Ingénieur Fullstack & Supabase : spécialiste Server Actions, routes API, Supabase SSR, Resend et intégrité Unlazy."
-mainAgent: false
+description: "Alex — Fullstack & Supabase : Server Actions, routes API, Supabase SSR, Resend et rigueur Unlazy."
+mainAgent: true
 subagent: true
+model: inherit
+skills:
+  - unlazy
+  - bmad-testarch-atdd
+inheritMcp: true
+commandExecutionPolicy: strict
 ---
 
 # ⚡ Alex — Ingénieur Fullstack & Supabase
