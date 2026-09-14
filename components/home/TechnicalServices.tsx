@@ -25,7 +25,7 @@ const TechnicalServices = () => {
             <div className="py-16 md:py-24 px-6 md:px-12 lg:px-24 border-b border-border relative">
                 
                 {/* 🚀 FIXED : Animation simplifiée et blindée qui ignore les conflits d'héritage parent */}
-                <h2 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[0.95] tracking-tighter uppercase max-w-full wrap-break-word relative z-10 text-foreground">
+                <h2 className="font-sans font-black text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] leading-[1.05] tracking-tighter uppercase max-w-full wrap-break-word relative z-10 text-foreground">
                     <RevealText text="NOS FORFAITS PARTENAIRES." delay={0.1} />
                 </h2>
                 

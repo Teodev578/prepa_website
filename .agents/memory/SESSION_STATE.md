@@ -47,7 +47,16 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
   - **Métadonnées de layout :** Ajout de la clé `icons` dans `export const metadata: Metadata` de `app/layout.tsx`.
   - **Titre d'onglet simplifié :** Ajustement de `metadata.title.default` et `metadata.title.template` à `LAW CLEAN CENTER` pour un affichage épuré dans l'onglet du navigateur sans le descriptif rallongé.
   - **Validation :** `npm run check` validé (0 erreur, 0 warning), balise `<title>LAW CLEAN CENTER</title>` vérifiée dans le HTML servi.
-
-
-
-
+* *2026-09-14 (Théo, Sarah / Résolution des chevauchements typographiques) :*
+  - **Interlignage & DA Swiss :** Remplacement des ratios d'interlignage ultra-compressés (`leading-[0.85]` et `leading-[0.95]`) par un ratio d'or compact sans collision (`leading-[1.02]` à `leading-[1.05]`) sur l'ensemble des titres de page (`Hero`, `Portfolio`, `Services`, `Contact`, `Testimonials`, `TechnicalServices`, `ExcellencePhilosophy`).
+  - **Résolution des collisions de diacritiques :** Dégagement franc entre `NOS` et `RÉALISATIONS` (`mb-2 sm:mb-3` sur le premier bloc) pour éliminer le chevauchement de l'accent aigu majuscule sur les glyphes de la ligne supérieure.
+  - **Composant RevealText fiabilisé :** Découpage par ligne avec gestion native des sauts de ligne `\n`, application d'un padding vertical équilibré (`py-[0.18em] -my-[0.18em]`) pour parer à tout rognage (*clipping*) par `overflow-hidden` sur les accents et apostrophes (`L'`).
+  - **Cartes de réalisation (ProjectCard) :** Application explicite de `leading-[1.18]` sur les `h2` multi-lignes pour un confort de lecture irréprochable sur mobile.
+  - **Validation :** `npm run check` validé (Code 0 : ESLint, tsc, Vitest). Vérification visuelle multi-viewport (desktop 1440px et mobile 390px/360px) via DevTools.
+* *2026-09-14 (Théo, Sarah / Recalibrage Proportions & Cadrage 100% Viewport du Hero) :*
+  - **Élimination du débordement de "SANS" :** Échelle typographique harmonisée (`text-[9.5vw] sm:text-[8vw] md:text-6xl lg:text-[4.75rem] xl:text-[5.5rem] 2xl:text-[6.5rem]`), supprimant le palier surdimensionné `xl:text-[8rem]` (128px) qui provoquait l'écrasement horizontal de la ligne 2 contre les marges droites.
+  - **Cadrage 100% Viewport strict :** Rétablissement de la hauteur utile sous la barre de navigation (`pt-20 pb-8 sm:pt-24 sm:pb-10`), suppression de l'écrasement vertical des boutons CTA sous le pli d'écran.
+  - **Mise en valeur du véhicule :** Les 3 lignes de titre occupent désormais ~45-50% de la largeur du conteneur sur desktop, dévoilant élégamment le véhicule DS en arrière-plan sans obstruction visuelle excessive.
+  - **Boutons & micro-typographie :** Ajustement des hauteurs et paddings des boutons (`min-h-12 sm:min-h-13 px-6 sm:px-8 py-3 sm:py-3.5`), fluidification du paragraphe descriptif (`text-xs sm:text-sm md:text-base lg:text-lg`).
+  - **Élimination du rognage des glyphes d'extrémité (AUTO & SANS) :** Identification du micro-clipping horizontal causé par `tracking-tighter` (-0.05em / -4.4px de letter-spacing négatif). L'élément conteneur `overflow-hidden` tronquait les courbes d'extrémité droite des lettres rondes (`O` de `AUTO`, `S` de `SANS`). Résolu par l'ajout d'une marge de sécurité interne horizontale `px-[0.1em] -mx-[0.1em]` (+8.8px de marge de dégagement) dans `RevealText.tsx`.
+  - **Validation :** `npm run check` certifié (Code 0). Rendu validé par capture sur 1280x720 (laptop), 1440x900 (desktop), 1024x768 (tablette paysage), 768x1024 (tablette portrait) et 390x844 (mobile).

@@ -135,12 +135,12 @@ export default function Portfolio() {
                         </span>
                     </div>
 
-                    <div className="overflow-hidden py-2">
+                    <div className="overflow-hidden py-2 sm:py-3">
                         <motion.h1
                             variants={textRevealVariants}
-                            className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
+                            className="font-black text-[12vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[1.02] sm:leading-[1] mb-6 md:mb-8 uppercase tracking-tighter"
                         >
-                            <span className="block pb-2 sm:pb-4">NOS</span>
+                            <span className="block mb-2 sm:mb-3">NOS</span>
                             <span className="block">RÉALISATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30"></span></span>
                         </motion.h1>
                     </div>

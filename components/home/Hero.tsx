@@ -121,34 +121,34 @@ export default function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="relative z-20 w-full h-full pt-28 md:pt-20 flex flex-col items-start justify-center"
+        className="relative z-20 w-full h-full pt-20 pb-8 sm:pt-24 sm:pb-10 flex flex-col items-start justify-center"
       >
-        <div className="w-full max-w-7xl mx-auto px-6 md:px-12">
-          <motion.div variants={itemVariants} className="font-mono text-[10px] sm:text-xs uppercase font-semibold tracking-widest text-primary mb-6 flex items-center gap-4">
+        <div className="w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col justify-center">
+          <motion.div variants={itemVariants} className="font-mono text-[10px] sm:text-xs uppercase font-semibold tracking-widest text-primary mb-3 sm:mb-4 md:mb-5 flex items-center gap-3 sm:gap-4">
             <span className="w-8 h-px bg-primary"></span>
             SPÉCIALISTE ÎLE-DE-FRANCE
           </motion.div>
 
-        <h1 className="font-sans font-black text-[11vw] sm:text-[10vw] md:text-[9vw] lg:text-[8vw] xl:text-[8rem] tracking-tighter uppercase text-foreground leading-[0.95] md:leading-[0.85] mb-6 md:mb-8 relative w-full">
+        <h1 className="font-sans font-black text-[9.5vw] sm:text-[8vw] md:text-6xl lg:text-[4.75rem] xl:text-[5.5rem] 2xl:text-[6.5rem] tracking-tighter uppercase text-foreground leading-[1.03] sm:leading-[1.01] md:leading-[0.98] mb-4 sm:mb-6 md:mb-8 relative w-full">
           <span className="sr-only">Law Clean Center - Préparation Esthétique B2B</span>
-          <RevealText text={"L'EXCELLENCE AUTO\nSANS CONTRAINTE."} delay={0.4} />
+          <RevealText text={"L'EXCELLENCE\nAUTO SANS\nCONTRAINTE."} delay={0.4} />
         </h1>
 
         <motion.p
           variants={itemVariants}
-          className="text-muted-foreground font-medium text-sm sm:text-base md:text-xl leading-relaxed mb-8 md:mb-12 max-w-2xl"
+          className="text-muted-foreground font-medium text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed mb-6 sm:mb-8 md:mb-10 max-w-xl lg:max-w-2xl"
         >
           Avec <strong className="text-foreground font-bold">Law Clean Center</strong>, vous n&apos;avez plus à vous soucier de la préparation ou du déplacement de vos véhicules. On gère tout, à la carte, selon vos besoins.
         </motion.p>
         
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row gap-4 font-mono text-xs uppercase tracking-widest font-bold mt-4 w-full sm:w-auto"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 font-mono text-[11px] sm:text-xs uppercase tracking-widest font-bold w-full sm:w-auto"
         >
           <Magnetic magneticPull={0.1} className="w-full sm:w-auto">
             <Link href="/contact" className="w-full block">
               <motion.div
-                className="w-full min-h-15 relative px-8 py-4 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-(--radius) transition-colors"
+                className="w-full min-h-12 sm:min-h-13 relative px-6 sm:px-8 py-3 sm:py-3.5 bg-primary text-primary-foreground group overflow-hidden flex items-center justify-center rounded-(--radius) transition-colors"
               >
                 <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-background transition-colors duration-300">
@@ -162,7 +162,7 @@ export default function Hero() {
           <Magnetic magneticPull={0.1} className="w-full sm:w-auto">
             <Link href="/services" className="w-full block">
               <motion.div
-                className="w-full min-h-15 relative px-8 py-4 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center rounded-(--radius) transition-colors hover:border-foreground"
+                className="w-full min-h-12 sm:min-h-13 relative px-6 sm:px-8 py-3 sm:py-3.5 border border-border bg-transparent text-foreground group overflow-hidden flex items-center justify-center rounded-(--radius) transition-colors hover:border-foreground"
               >
                 <div className="absolute inset-0 bg-foreground translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
                 <span className="relative z-10 group-hover:text-background transition-colors duration-300 text-center">DÉCOUVRIR NOS SERVICES</span>
@@ -178,13 +178,13 @@ export default function Hero() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-8 left-6 md:left-12 z-20 flex-col items-center gap-4 hidden md:flex"
+        className="absolute bottom-6 left-6 md:left-12 z-20 flex-col items-center gap-2 hidden md:flex"
       >
-        <span className="font-mono text-[9px] uppercase tracking-widest text-muted-foreground rotate-90 origin-left translate-y-8 translate-x-1.5">SCROLL</span>
+        <span className="font-mono text-[8px] uppercase tracking-widest text-muted-foreground rotate-90 origin-left translate-y-6 translate-x-1">SCROLL</span>
         <motion.div 
-          animate={{ y: [0, 10, 0] }}
+          animate={{ y: [0, 8, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-px h-12 bg-foreground"
+          className="w-px h-8 md:h-10 bg-foreground/60"
         />
       </motion.div>
 

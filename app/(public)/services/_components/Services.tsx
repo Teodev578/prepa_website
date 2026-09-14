@@ -63,13 +63,13 @@ export default function Services() {
                 </span>
             </div>
 
-            <div className="overflow-hidden py-2">
+            <div className="overflow-hidden py-2 sm:py-3">
                 <motion.h1
                     variants={textRevealVariants}
-                    className="font-black text-[13vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[0.85] mb-6 md:mb-8 uppercase tracking-tighter"
+                    className="font-black text-[12vw] sm:text-[9vw] md:text-7xl lg:text-[6.5rem] xl:text-[8rem] text-foreground leading-[1.02] sm:leading-[1] mb-6 md:mb-8 uppercase tracking-tighter"
                 >
-                    NOS <br /> 
-                    PRESTATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30"></span>
+                    <span className="block pb-1 sm:pb-2">NOS</span>
+                    <span className="block">PRESTATIONS <span className="text-foreground inline-block transform translate-y-1 md:translate-y-2 opacity-30"></span></span>
                 </motion.h1>
             </div>
 

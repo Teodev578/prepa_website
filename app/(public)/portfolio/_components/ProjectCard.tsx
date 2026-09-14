@@ -106,7 +106,7 @@ export default function ProjectCard({ project, index }: { project: ProjectCardDa
                 <div className={`grid gap-8 mb-4 ${project.size === 'large' ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
                     
                     <div className="tech-corner pl-6 border-l-2 border-primary/30">
-                        <h2 className="text-3xl md:text-4xl font-black uppercase mb-3">{project.title}</h2>
+                        <h2 className="text-3xl md:text-4xl font-black uppercase mb-3 leading-[1.18]">{project.title}</h2>
                         <div className="flex flex-wrap items-center gap-3 mb-6 font-mono text-xs md:text-sm uppercase tracking-wider">
                             <span className="text-muted-foreground">PROJET: {project.model}</span>
                             <div className="w-1.5 h-1.5 bg-primary rounded-full hidden sm:block" />

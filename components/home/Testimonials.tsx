@@ -107,7 +107,7 @@ export default function Testimonials() {
                 <div className="w-16 h-px bg-border"></div>
               </div>
               
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[0.95] mb-6">
+              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4.5rem] font-sans font-black text-foreground tracking-tighter uppercase leading-[1.05] mb-6">
                 AVIS & <br className="hidden md:block" />
                 <span className="text-primary">RAPPORTS CLIENTS.</span>
               </h2>

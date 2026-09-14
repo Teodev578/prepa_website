@@ -27,7 +27,7 @@ const ExcellencePhilosophy = () => {
                 <div className="w-full lg:w-1/3 xl:w-4/12 px-6 py-16 md:px-12 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-border z-10 bg-background">
                     
                     {/* Titre */}
-                    <h2 className="font-sans font-black text-4xl sm:text-5xl lg:text-5xl xl:text-6xl uppercase tracking-tighter leading-[0.95] text-foreground mb-10 mt-4 lg:mt-0">
+                    <h2 className="font-sans font-black text-4xl sm:text-5xl lg:text-5xl xl:text-6xl uppercase tracking-tighter leading-[1.05] text-foreground mb-10 mt-4 lg:mt-0">
                         <RevealText text={"NOTRE EXPERTISE \n EN IMAGES."} delay={0.2} />
                     </h2>
                     {/* Sous-titre */}

@@ -35,30 +35,30 @@ export default function AboutSection() {
     return (
         <section className="bg-background text-foreground py-16 md:py-24 px-6 md:px-12 border-b border-border overflow-hidden">
             <div className="max-w-7xl mx-auto">
-                
+
                 {/* En-tête de la section */}
                 <div className="mb-16 md:mb-20">
                     <div className="flex items-center gap-4 mb-6">
-                        <motion.div 
+                        <motion.div
                             initial={{ scaleX: 0 }}
                             whileInView={{ scaleX: 1 }}
                             viewport={{ once: false }}
                             transition={{ duration: 1, ease: customEase }}
-                            className="w-12 h-px bg-primary origin-left" 
+                            className="w-12 h-px bg-primary origin-left"
                         />
                         <span className="text-primary font-mono text-xs uppercase tracking-[0.2em]">NOTRE_ADN_&_VISION</span>
                     </div>
-                    
+
                     <div className="overflow-hidden py-2">
-                        <motion.h2 
+                        <motion.h2
                             variants={textRevealVariants}
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false }}
-                            className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-foreground max-w-4xl leading-[0.9]"
+                            className="text-4xl md:text-5xl lg:text-6xl font-black uppercase tracking-tighter text-foreground max-w-4xl leading-[1.05]"
                         >
                             A propos de nous
-                            <br className="hidden md:block"/>
+                            <br className="hidden md:block" />
                             {/* Soulignement primaire conservé pour la structure principale */}
                             {/*<span className="text-primary border-b-4 border-primary">LAW CLEAN CENTER</span>*/}
                         </motion.h2>
@@ -66,9 +66,9 @@ export default function AboutSection() {
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
-                    
+
                     {/* Colonne Texte (Histoire & Proposition de valeur) */}
-                    <motion.div 
+                    <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         whileInView="show"
@@ -94,7 +94,7 @@ export default function AboutSection() {
                         </motion.div>
 
                         {/* Les 3 Piliers avec Stagger */}
-                        <motion.div 
+                        <motion.div
                             variants={containerVariants}
                             className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 border-t border-border mt-8"
                         >
@@ -118,14 +118,14 @@ export default function AboutSection() {
                     </motion.div>
 
                     {/* Colonne Visuels (Espaces prévus pour les photos du brief) */}
-                    <motion.div 
+                    <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: false, margin: "-50px" }}
                         className="lg:col-span-5 grid grid-cols-2 gap-4 relative"
                     >
-                        <motion.div variants={itemVariants} className="aspect-[3/4] bg-muted relative rounded-sm overflow-hidden border border-border group">
+                        <motion.div variants={itemVariants} className="aspect-3/4 bg-muted relative rounded-sm overflow-hidden border border-border group">
                             <Image src="/images/2.jpeg" alt="Équipe Law Clean Center en tenue professionnelle" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
                             {/* INTÉGRATION SECONDAIRE : Étiquette style industriel */}
                             <div className="absolute bottom-3 left-3 bg-background/95 backdrop-blur font-mono text-[9px] font-bold text-secondary uppercase px-2 py-1 border border-secondary shadow-sm">ÉQUIPE_SUR_SITE</div>
@@ -139,7 +139,7 @@ export default function AboutSection() {
                             {/* INTÉGRATION SECONDAIRE : Encart partenaire pour équilibrer la couleur */}
                             <div className="flex-1 bg-secondary/5 border border-secondary/20 flex flex-col items-center justify-center p-6 text-center rounded-sm transition-colors hover:bg-secondary/10 cursor-default">
                                 <span className="font-mono text-secondary font-bold text-xs uppercase tracking-widest mb-2">Partenaire</span>
-                                <span className="font-black text-foreground uppercase tracking-tight text-xl leading-none">Esthétique<br/>Automobile</span>
+                                <span className="font-black text-foreground uppercase tracking-tight text-xl leading-none">Esthétique<br />Automobile</span>
                             </div>
                         </motion.div>
                     </motion.div>

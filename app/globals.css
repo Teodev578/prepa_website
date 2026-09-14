@@ -88,9 +88,9 @@
     }
   }
 
-  /* 🛠️ NOUVEAU : Titres standards revus pour la DA "Swiss" (Medium + Ultra serré) */
+  /* 🛠️ NOUVEAU : Titres standards revus pour la DA "Swiss" (Medium + compact sans collision) */
   h1, h2, h3, h4, h5, h6 {
-    @apply font-medium uppercase leading-[0.95] tracking-tighter text-foreground;
+    @apply font-medium uppercase leading-[1.05] tracking-tighter text-foreground;
   }
 
   /* 🛠️ NOUVEAU : Paragraphes plus élégants */
