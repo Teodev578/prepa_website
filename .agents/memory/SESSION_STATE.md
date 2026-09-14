@@ -38,6 +38,10 @@ Ce document reflète l'état opérationnel courant, les chantiers en cours et le
     - `curl -I http://localhost:3000/portfolio` : HTTP 200 OK.
     - `curl -I http://localhost:3000/contact` : HTTP 200 OK.
   - **Point de reprise pour prochaine session :** Le site est sur un socle technique stabilisé et certifié conforme. Prêt pour les évolutions de contenu ou nouvelles fonctionnalités sous le protocole à double vitesse.
+* *2026-09-14 (Alex, Sarah / Supabase Keep-Alive Automation) :*
+  - **Maintien d'activité Supabase Free Tier :** Création du workflow GitHub Actions `.github/workflows/supabase-keepalive.yml` exécuté tous les 3 jours à 04:15 UTC (et déclenchable manuellement via `workflow_dispatch`).
+  - **Ciblage PostgREST direct :** Requête HTTP GET authentifiée sur `/rest/v1/portfolio_projects?select=id&limit=1` garantissant une transaction dynamique réelle sans toucher aux quotas Vercel Hobby.
+  - **Validation oracles :** Requête API testée et validée (HTTP 200 OK avec payload dynamique). `npm run check` certifié (ESLint + tsc + Vitest = 0 erreur).
 * *2026-09-14 (Théo, Sarah / Intégration Marque & Favicon) :*
   - **Identité de marque dans l'onglet navigateur :** Remplacement de l'icône Next.js / Vercel par le logo officiel haute définition de Law Clean Center (`public/logo.png`).
   - **Déclinaison multi-format & multi-résolution :**

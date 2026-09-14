@@ -1,0 +1,38 @@
+name: Supabase Keep-Alive
+
+on:
+  schedule:
+    # Exécution tous les 3 jours à 04:15 UTC pour renouveler le compteur d'inactivité (seuil Supabase : 7 jours)
+    - cron: '15 4 */3 * *'
+  workflow_dispatch: # Déclenchement manuel possible depuis l'interface GitHub
+
+jobs:
+  keep-alive:
+    name: Ping Supabase Database
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping PostgREST Table
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          # Validation de présence des secrets
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::Secrets SUPABASE_URL ou SUPABASE_ANON_KEY manquants dans GitHub Settings > Secrets and variables > Actions."
+            exit 1
+          fi
+
+          # Requête légère sur une table existante pour forcer l'activité PostgREST & Postgres
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X GET "${SUPABASE_URL}/rest/v1/portfolio_projects?select=id&limit=1" \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}")
+
+          echo "Statut HTTP renvoyé : $STATUS"
+
+          if [ "$STATUS" -eq 200 ]; then
+            echo "Instance Supabase active. Compteur d'inactivité réinitialisé avec succès."
+          else
+            echo "::error::Échec du ping Supabase avec code HTTP $STATUS"
+            exit 1
+          fi
